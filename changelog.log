@@ -1,0 +1,134 @@
+=====================================================================
+                             CHANGELOG
+=====================================================================
+v0.26 (Episode 5)
+---------------------------------------------------------------------
++ ADDED:
+  • 197 new renders
+  • New character unlockables for Character Screen
+  • Walkthrough updated for Episode 5 decisions
+
+~ CHANGED:
+  • Achievements screen divided by Acts
+  • Character screen redesigned
+
+! FIXED:
+  • Graphical issues on main menu buttons
+
+* TECHNICAL:
+  • Updated Denoiser to Intel OIDN 2.3.3
+
+v0.25 (Episode 5)
+---------------------------------------------------------------------
++ ADDED:
+  • 197 new renders
+  • 2 new animations involving Elizabeth
+  • 2 new achievements
+  • Some SFX and BGM for Episode 5
+  • Walkthrough updated for Episode 5 decisions
+
+~ CHANGED:
+  • Isabella old skin on v0.24 release
+
+! FIXED:
+  • Graphical issues on main menu buttons
+  • Critical reset-LI stats bug. It is important to use a save from v0.23 so you don't lose your stats
+  • Bug where Elizabeth didn't get "known" status
+  • Bug where Nanami will swap her clothes at the pool @ episode 4
+  • Bug on achievements notifications
+
+v0.24 (Episode 5)
+---------------------------------------------------------------------
++ ADDED:
+  • 168 new renders involving Nanami, Amber, Madison, Elizabeth and Isabella
+  • 4 new animations (292 renders) involving Amber
+  • 2 new achievements
+  • Walkthrough updated for Episode 5 decisions
+
+~ CHANGED:
+  • Added core-strike system for LIs
+
+! FIXED:
+  • Several Ambience and FX path errors on past episodes
+  • Fixed Discord link
+
+* TECHNICAL:
+  • AI picture-blending discarded from now on
+  • Changed to Intel OIDN 2.3.2 (previously used 1.0 or Nvidia Optix)
+
+v0.23 (Episode 4)
+---------------------------------------------------------------------
+
++ ADDED:
+  • New scenes involving Nanami, Amber, Madison, Elizabeth and Isabella
+  • 701 new renders
+  • 4 new achievements
+  • Walkthrough updated for Episode 4 decisions
+  • New "Save Name" screen (beta version)
+  • Added notifications for LI's corruption and love level increases
+
+~ CHANGED:
+  • Modularized RPA archives for easy updates - players now only need to download changed content
+  • Replaced music and sound assets handling code
+  • Replaced character definitions code
+  • Replaced title screen code
+  • Replaced notifications code
+  • Achievements system code changed
+  • Updated Walkthrough coding
+  • Removed shaking effect on sex scenes
+
+! FIXED:
+  • Corrected Episode 3 variable errors (fix for old savegames)
+  • Resolved Paz SMS bug (picture click issue)
+  • Fixed some render clipping issues from previous releases
+
+* TECHNICAL:
+  • icode changed, previous versions may not be compatible
+  • JPEG and PNG images replaced by AVIF format
+  • JPEG color banding and DDS texture issues fixed on all renders
+
+=====================================================================
+
+v0.22 (Episode 4)
+---------------------------------------------------------------------
+
++ ADDED:
+  • 265 new renders
+  • New scenes involving Nanami, Amber, Isabella and Paz
+  • 4 new achievements
+  • Walkthrough updated for Episode 4 decisions
+
+! FIXED:
+  • Fixed SMS bug in Episode 3
+
+~ CHANGED:
+  • Updated SMS code
+  • Updated Walkthrough screen code
+
+=====================================================================
+
+v0.21 
+---------------------------------------------------------------------
+
+! FIXED:
+  • Savegame bug fixed
+
+=====================================================================
+
+v0.2 (Episode 3)
+---------------------------------------------------------------------
+
++ ADDED:
+  • Episode 3 released with 274 renders (49% new renders)
+  • 3 new achievements for Episode 3 (3 new renders)
+  • Added overlooked lines in Episodes 1 and 2 Walkthrough
+
+~ CHANGED:
+  • Fixed typos in Episodes 1 and 2
+  • Modified some dialogues in Episodes 1 and 2
+  • Changed Achievements GUI and handling (now zoomable and draggable)
+  • Updated white balance on some renders in Episodes 1 and 2
+  • Updated one line in Episode 1 Walkthrough
+  • Updated all necessary lines for Episode 3 Walkthrough
+
+=====================================================================

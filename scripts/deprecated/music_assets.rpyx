@@ -1,0 +1,181 @@
+init python:
+#------VARIOUS---------------
+
+  #yukana theme // Ottom @ Artlist
+  yukana_theme = "music/ottom_cherry-blossom.opus"
+  #discussion theme // craft case @ EPIDEMIC SOUND*
+  discussion_theme = "music/es_indus-valley-craft-case.opus"
+  #danger theme // ian post @ Artlist*
+  danger_theme = "music/gone-rough-no-keys-by-ian-post.opus"
+  #photos theme // ian post @ Artlist*
+  photos_theme = "music/sundays-by-aves.opus"
+  #title theme // epidemic*
+  title_theme = "music/thetomb.opus"
+  #tobita theme // epidemic*
+  tobita_theme = "music/totalbliss.opus"
+  #dotonbori theme // epidemic*
+  dotonbori_theme = "music/hurracaine.opus"
+  #yakuza theme // epidemic*
+  yakuza_theme = "music/hesitation.opus"
+
+
+#------ANTONELLA-------------
+  #antonella mistery theme // idokay @ Artlist*
+  antonella_mistery_theme = "music/cicada-killer-by-idokay.opus"
+  #antonella theme // ambre jaune @ EPIDEMIC SOUND*
+  antonella_theme = "music/es_erudition-ambre-jaune.opus"
+  #antonella love theme // EPIDEMIC SOUND*
+  antonella_love = "music/smellofmorningcoffee.opus"
+  #antonella sad theme // idokay @ Artlist*
+  antonella_sad_theme = "music/thirdperson.opus"
+  #antonella past theme // EPIDEMIC SOUND*
+  antonella_past_theme = "music/canibeforgiven.opus"
+  #antonella game theme // EPIDEMIC SOUND*
+  antonella_game_theme = "music/tasteofsangria.opus"
+  #antonella sexy theme // EPIDEMIC SOUND*
+  antonella_sexy_theme = "music/babyitsyou.opus"
+  #antonella past happy theme // EPIDEMIC SOUND*
+  antonella_past_happy_theme = "music/racinglightbeam.opus"
+  #red kitsune theme // ES_Rivers Run Red - Christoffer Moe Ditlevsen*
+  redkitsune_theme = "music/red_kitsune.opus"
+
+
+#------AMBER-------------
+  #amber 2nd theme // oak and cherry @ Artlist*
+  amber_2nd_theme = "music/darktavern.opus"
+  #amber theme // oak and cherry @ Artlist*
+  amber_theme = "music/oak-and-cherry-flower.opus"
+  #amber anger theme // carvings @ EPIDEMIC SOUND*
+  amber_anger_theme = "music/es_blood-of-garuda-(instrumental-version)-carvings.opus"
+  #amber sad theme // alon peretz @ Artlist*
+  amber_sad_theme = "music/alon-peretz-spiral.opus"
+  #amber sexy theme // clandestyne @ EPIDEMIC SOUND*
+  amber_sexy_theme = "music/es_get-back-in-the-game-(instrumental-version)-clandestyne.opus"
+  #amber sexy theme 2 // clandestyne @ Artlist*
+  amber_sexy_theme2 = "music/notize-come-closer-(instrumental).opus"
+  #amber action theme // off cuts @ EPIDEMIC SOUND*
+  amber_action_theme = "music/es_spread-the-wings-of-winter-off-cuts.opus"
+
+#------ARLETTE-------------
+  #arlette theme // epidemic sound*
+  arlette_theme = "music/wedontlisten.opus"
+  #arlette love theme // epidemic sound*
+  arlette_love_theme = "music/present.opus"
+  #arlette nostalgia theme // epidemic sound*
+  arlette_nostalgia_theme = "music/clairedelune.opus"
+  #arlette sexy theme // epidemic sound*
+  arlette_sexy_theme = "music/trappedintime.opus"
+  #arlette sad theme // epidemic sound*
+  arlette_sad_theme = "music/lasthope.opus"
+
+#------ELIZABETH-------------
+  #elizabeth theme // sensitive detective @ Artlist*
+  elizabeth_theme = "music/clouds-instrumental-version-by-sensitive-detective.opus"
+  #elizabeth sexy theme // dogbeat @ Artlist*
+  elizabeth_sexy_theme = "music/dogbeat-love-boat.opus"
+  #elizabeth sexy theme2 // dogbeat @ Artlist*
+  elizabeth_sexy_theme2 = "music/copenhagen-instrumental-version-by-oran-loyfer.opus"
+  #elizabeth anger theme // craft case @ Artlist*
+  elizabeth_anger_theme = "music/es_bimini-road-craft-case.opus"
+  #elizabeth sad theme // tengrams @ Artlist*
+  elizabeth_sad_theme = "music/a-different-meaning-by-tengrams.opus"
+  #elizabeth playful theme // repina @ Artlist*
+  elizabeth_play_theme = "music/ticket-to-ride-by-repina.opus"
+
+
+#------ISABELLA-------------
+  #isabella guitar theme // daniel kaede @ EPIDEMIC SOUND*
+  isabella_guitar = "music/es_northern-stems-instruments-daniel-kaede.opus"
+  #isabella theme w/vocals // livingrooms @ Artlist*
+  isabella_themev = "music/livingrooms-hold-me-closer.opus"
+  #isabella guitar theme // ivingroom @ Artlist*
+  isabella_theme = "music/hold-me-closer-instrumental-version-by-livingrooms.opus"
+  #isabella anger theme + bass // pearce roswell @ EPIDEMIC SOUND*
+  isabella_anger_theme_b = "music/es_approaching-meltdown-stems-bass-pearce-roswell.opus"
+  #isabella anger theme + drums // pearce roswell @ EPIDEMIC SOUND*
+  isabella_anger_theme_d = "music/es_approaching-meltdown-stems-drums-pearce-roswell.opus"
+  #isabella anger theme + instruments // pearce roswell @ EPIDEMIC SOUND*
+  isabella_anger_theme_i = "music/es_approaching-meltdown-stems-instruments-pearce-roswell.opus"
+  #isabella anger theme + melody // pearce roswell @ EPIDEMIC SOUND*
+  isabella_anger_theme_m = "music/es_approaching-meltdown-stems-melody-pearce-roswell.opus"
+  #isabella happy theme // holy see @ EPIDEMIC SOUND*
+  isabella_happy = "music/es_its-a-new-day-(instrumental-version)-holy-see.opus"
+  #isabella serious theme // ohad ben-ari @ Artlist*
+  isabella_serious = "music/ohad-ben-ari-prelude-cm.opus"
+  #isabella sad theme // birraj @ Artlist*
+  isabella_sad = "music/prelude-in-e-minor,-op.-28,-no.-4-by-birraj,-artlist-classics,-frederic-chopin.opus"
+
+
+#---------KANAE-------------
+  #kanae theme // franz gordon @ EPIDEMIC SOUND*
+  kanae_theme = "music/es_shapes-of-shadows-franz-gordon.opus"
+  #kanae love theme // franz gordon @ EPIDEMIC SOUND*
+  kanae_love = "music/es_togetherless-franz-gordon.opus"
+
+#-------------MC-------------
+  #mc peace theme // pangal and gana @ Artlist*
+  mc_peace_theme = "music/andean-feeling-by-pangal-and-gana.opus"
+  #mc theme // ambre jaune @ EPIDEMIC SOUND*
+  mc_theme = "music/es_chukou-ambre-jaune.opus"
+  #mc theme + BASS // ambre jaune @ EPIDEMIC SOUND*
+  mc_theme_b = "music/es_chukou-stems-bass-ambre-jaune.opus"
+  #mc theme + DRUMS // ambre jaune @ EPIDEMIC SOUND*
+  mc_theme_d = "music/es_chukou-stems-drums-ambre-jaune.opus"
+  #mc theme + INSTRUMENTS // ambre jaune @ EPIDEMIC SOUND*
+  mc_theme_i = "music/es_chukou-stems-instruments-ambre-jaune.opus"
+  #mc theme + MELODY // ambre jaune @ EPIDEMIC SOUND*
+  mc_theme_m = "music/es_chukou-stems-melody-ambre-jaune.opus"
+  #mc thinking theme // EPIDEMIC SOUND*
+  mc_thinking_theme = "music/criticalthinking.opus"
+  #mc broken theme // EPIDEMIC SOUND*
+  mc_broken_theme = "music/whispersofthewasteland.opus"
+  #mc hopeful theme // EPIDEMIC SOUND*
+  mc_hope_theme = "music/anomadsjourney.opus"
+  #mc alone theme // EPIDEMIC SOUND*
+  mc_alone_theme = "music/arizona.opus"
+  #mc suspense theme // EPIDEMIC SOUND*
+  mc_suspense_theme = "music/steepencounters.opus"
+  #mc action theme // EPIDEMIC SOUND*
+  mc_action_theme = "music/lostregister.opus"
+
+#-------------MADISON-------------
+  #madison theme // Artlist*
+  madison_theme = "music/blueberrysmoker.opus"
+  #madison bad bitch theme // EPIDEMIC SOUND*
+  madison_bad_theme = "music/madison_bad_theme.opus"
+  #madison nanami relationship theme // EPIDEMIC SOUND*
+  madison_nan_theme = "music/madison_nanami_theme.opus"
+  
+
+
+#-------------NANAMI-------------
+  #nanami chill theme // i'min @ EPIDEMIC SOUND*
+  nanami_chill_theme = "music/es_after-image-(instrumental-version)-i'min.opus"
+  #nanami theme // Nbdy Nprtnt - -'06 Honda *
+  nanami_theme = "music/nanamitheme.opus"
+  #nanami love theme // shu - Falling Snow - Instrumental Version*
+  nanami_love_theme = "music/nanami_love.opus"
+  #nanami love theme // shu - LOVU - No Lead Vocals*
+  nanami_secure_theme = "music/nanami_secure.opus"
+  #nanami love theme // Egozi - Parody - Instrumental Version.opus*
+  nanami_clumsy_theme = "music/nanami_clumsy.opus"
+
+#-------------PAZ-------------
+  #paz peace theme // i'min @ EPIDEMIC SOUND*
+  paz_peace_theme = "music/justbones.opus"
+
+
+#-------------RELATIONSHIP THEMES-------------
+  #mc elizabeth relationship theme // ben goldstein @ Artlist*
+  mc_elizabeth_theme = "music/phoenix-instrumental-version-by-ben-goldstein.opus"
+  #mc nanami relationship theme // samurai royal @ Artlist*
+  mc_nanami_theme = "music/samurai-royal-magic-hour.opus"
+  #mc amber sex theme // Nils Baumgärtel @ Artlist*
+  mc_amber_x_theme = "music/stunned-man-by-nils-baumgartel.opus"
+  #mc isabella relationship theme // yulvar vilner @ Artlist*
+  mc_isabella_theme = "music/yuval-vilner-nocturne-in-e-flat-major-(op.-9-no.-2).opus"
+
+
+  #-------------TAKEO-------------
+  #takeo theme // Christoffer Moe  @ EPIDEMIC SOUND*
+  takeo_theme = "music/es_the-detective-christoffer-moe-ditlevsen.opus"
