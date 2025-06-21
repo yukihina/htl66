@@ -11,7 +11,7 @@ label ep01_start:
     show ep01_1stdream00
     $ config.rollback_enabled = True
     $ setChannelVolume(channel="music", subchannel=2, volume=0.5)
-    $ playAudio(isabella_guitar, "music", 2, True, 5, 0)
+    $ playAudio(isabella_theme, "music", 2, True, 5, 0)
     show osaka_location zorder 2 with dissolve
     pause 2
     hide osaka_location with dissolve
@@ -527,6 +527,7 @@ label ep01_3rddream:
     anto "[renpy.substitute(dialogues['E01S04_d034'])]"
     anto "[renpy.substitute(dialogues['E01S04_d035'])]"
     mc_s "[renpy.substitute(dialogues['E01S04_d036'])]"
+    $ unlock_memory("m_ep01_library")
     show ep01_3rddream10
     anto "[renpy.substitute(dialogues['E01S04_d037'])]"
     anto "[renpy.substitute(dialogues['E01S04_d038'])]"
@@ -1812,6 +1813,7 @@ label ep01_proleather:
     mc_s "[renpy.substitute(dialogues['E01S19_d012'])]"
     mc_s "[renpy.substitute(dialogues['E01S19_d013'])]"
     "Goth Girl" "[renpy.substitute(dialogues['E01S19_d020'])]"
+    $ unlock_memory("m_ep01_clothes")
     show ep01_clothing10
     mc_t "[renpy.substitute(dialogues['E01S19_d014'])]"
     mc_t "[renpy.substitute(dialogues['E01S19_d015'])]"
@@ -1993,7 +1995,7 @@ label ep01_park_situation:
     show ep01_thepark05 with slowfade
     mc_t "[renpy.substitute(dialogues['E01S21_d023'])]"
     $ setChannelVolume(channel="music", subchannel=4, volume=0.5)
-    $ playAudio(amber_2nd_theme, "music", 4, True, 3, 0)
+    $ playAudio(amber_theme, "music", 4, True, 3, 0)
     mc_t "[renpy.substitute(dialogues['E01S21_d024'])]"
     show ep01_thepark06 with vpunch
     amb "[renpy.substitute(dialogues['E01S21_d025'])]"
@@ -2307,7 +2309,7 @@ label ep01_postpark:
     amb "[renpy.substitute(dialogues['E01S24_d002'])]"
     mc_s "[renpy.substitute(dialogues['E01S24_d003'])]"
     amb "[renpy.substitute(dialogues['E01S24_d004'])]"
-    $ playAudio(amber_2nd_theme, "music", 2, True, 2.5, 0)
+    $ playAudio(amber_theme, "music", 2, True, 2.5, 0)
     show ep01_home02 with slowfade
     amb "[renpy.substitute(dialogues['E01S24_d005'])]"
     amb "[renpy.substitute(dialogues['E01S24_d006'])]"
@@ -2522,7 +2524,8 @@ label ep01_postpark:
         else:
             amb "[renpy.substitute(dialogues['E01S24_d129'])]"
             mc_s "[renpy.substitute(dialogues['E01S24_d136'])]"
-            mc_s "[renpy.substitute(dialogues['E01S24_d069'])]"  
+            mc_s "[renpy.substitute(dialogues['E01S24_d069'])]"
+    $ unlock_memory("m_ep01_home")
 
 #ALONE AT LIVINGROOM
     scene eigengrau with dissolve
@@ -2874,11 +2877,12 @@ label ep01_home:
     mc_s "[renpy.substitute(dialogues['E01S27_d016'])]"
     amb "[renpy.substitute(dialogues['E01S27_d017'])]"
     mc_s "[renpy.substitute(dialogues['E01S27_d018'])]"
-    $ playAudio(amber_action_theme, "music", 2, True, 2.5, 0)
+    $ playAudio(amber_anger_theme, "music", 2, True, 2.5, 0)
     show ep01_amberfail05
     amb "[renpy.substitute(dialogues['E01S27_d019'])]"
     mc_s "[renpy.substitute(dialogues['E01S27_d020'])]"
     show ep01_amberfail06
+    $ unlock_memory("m_ep01_laundry")
     amb "[renpy.substitute(dialogues['E01S27_d021'])]"
     amb "[renpy.substitute(dialogues['E01S27_d022'])]"
     mc_s "[renpy.substitute(dialogues['E01S27_d023'])]"
@@ -2987,6 +2991,7 @@ label ep01_home:
     amb "[renpy.substitute(dialogues['E01S28_d037'])]"
     amb "[renpy.substitute(dialogues['E01S28_d038'])]"
     show ep01_amberconfess11
+    $ unlock_memory("m_ep01_confession")
     amb "[renpy.substitute(dialogues['E01S28_d039'])]"
     amb "[renpy.substitute(dialogues['E01S28_d040'])]"
     mc_s "[renpy.substitute(dialogues['E01S28_d041'])]"

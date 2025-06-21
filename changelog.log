@@ -4,19 +4,24 @@
 v0.26 (Episode 5)
 ---------------------------------------------------------------------
 + ADDED:
-  • 197 new renders
+  • 182 new renders (H-scenes with Amber, Elizabeth, Madison)
+  • 6 new animations (4 more on amber, 14 more on madison, 1 more on nanami)
   • New character unlockables for Character Screen
   • Walkthrough updated for Episode 5 decisions
+  • 65 new BGM tracks made exclusively for this game
+  • Memories screen added. Requires a new playthrough to unlock (not compatible with older save files)
 
 ~ CHANGED:
   • Achievements screen divided by Acts
   • Character screen redesigned
+  • Changed all BGM music for copyright reasons
 
 ! FIXED:
-  • Graphical issues on main menu buttons
+  • 
 
 * TECHNICAL:
   • Updated Denoiser to Intel OIDN 2.3.3
+  • Changed resample method to Lanczos.
 
 v0.25 (Episode 5)
 ---------------------------------------------------------------------

@@ -61,112 +61,94 @@ init -6 python:
     # All themes
     all_themes = define_tracks({
         # Various themes
-        "yukana_theme": "ottom_cherry-blossom",
-        "discussion_theme": "es_indus-valley-craft-case",
-        "danger_theme": "gone-rough-no-keys-by-ian-post",
-        "photos_theme": "sundays-by-aves",
-        "title_theme": "thetomb",
-        "tobita_theme": "totalbliss",
-        "dotonbori_theme": "hurracaine",
-        "yakuza_theme": "hesitation",
-        "heaven_theme": "jakub_pietras_-_heirloom",
-        "hell_theme": "quinten_john_coblentz_-_thursday",
-        "chaos_theme": "chaos_theme",
+        "photos_theme": "sundays-by-aves",#Diamond Pulse
+        "title_theme": "thetomb",#闇の刻 (Yami no Koku)
+        "tobita_theme": "totalbliss",#鬼灯の影 (Hōzuki no Kage)
+        "dotonbori_theme": "hurracaine",#No Signal
+        "yakuza_theme": "hesitation",#影の儀式 (Kage no Gishiki)
+        "heaven_theme": "jakub_pietras_-_heirloom",#Éclats d’aurore
+        "hell_theme": "quinten_john_coblentz_-_thursday",#Valse pour l’Enfer
+        "chaos_theme": "chaos_theme",#Fractured Identity
 
         # Antonella themes
         "antonella_mistery_theme": "cicada-killer-by-idokay",
-        "antonella_theme": "es_erudition-ambre-jaune",
-        "antonella_love": "smellofmorningcoffee",
-        "antonella_sad_theme": "thirdperson",
-        "antonella_past_theme": "canibeforgiven",
-        "antonella_game_theme": "tasteofsangria",
-        "antonella_sexy_theme": "babyitsyou",
-        "antonella_past_happy_theme": "racinglightbeam",
-        "redkitsune_theme": "red_kitsune",
+        "antonella_theme": "es_erudition-ambre-jaune",#Sakura in Spring
+        "antonella_love": "smellofmorningcoffee",#sakura memories
+        "antonella_sad_theme": "thirdperson", #unborn sakura
+        "antonella_past_theme": "canibeforgiven", #a little bit of hope
+        "antonella_game_theme": "tasteofsangria", #any questions
+        "antonella_sexy_theme": "babyitsyou", #a game of skin
+        "antonella_past_happy_theme": "racinglightbeam", #race of hearts
+        "redkitsune_theme": "red_kitsune",#kitsune theme - red
 
         # Amber themes
-        "amber_2nd_theme": "darktavern",
-        "amber_theme": "oak-and-cherry-flower",
-        "amber_anger_theme": "es_blood-of-garuda-(instrumental-version)-carvings",
-        "amber_sad_theme": "alon-peretz-spiral",
-        "amber_sexy_theme": "es_get-back-in-the-game-(instrumental-version)-clandestyne",
-        "amber_sexy_theme2": "notize-come-closer-(instrumental)",
-        "amber_action_theme": "es_spread-the-wings-of-winter-off-cuts",
+        "amber_2nd_theme": "darktavern",#A Day Without You
+        "amber_theme": "oak-and-cherry-flower",#Frost & Ashes
+        "amber_anger_theme": "es_blood-of-garuda-(instrumental-version)-carvings",#Fuel the Fire
+        "amber_sad_theme": "alon-peretz-spiral",#Fading Lullaby
+        "amber_sexy_theme": "es_get-back-in-the-game-(instrumental-version)-clandestyne",#Sin & Silence
+        "amber_sexy_theme2": "notize-come-closer-(instrumental)",#Shadow Waltz
+        "amber_happy_theme": "es_spread-the-wings-of-winter-off-cuts",#veil of joy
 
         # Arlette themes
-        "arlette_theme": "wedontlisten",
-        "arlette_love_theme": "present",
-        "arlette_nostalgia_theme": "clairedelune",
-        "arlette_sexy_theme": "trappedintime",
-        "arlette_sad_theme": "lasthope",
+        "arlette_theme": "wedontlisten",#L’écho d’un adieu
+        "arlette_love_theme": "present",#Un dernier espoir
+        "arlette_nostalgia_theme": "clairedelune",#Dans l’ombre du passé
+        "arlette_sexy_theme": "trappedintime",#À fleur de peau
+        "arlette_sad_theme": "lasthope",#Le temps suspendu
 
         # Elizabeth themes
-        "elizabeth_theme": "clouds-instrumental-version-by-sensitive-detective",
-        "elizabeth_sexy_theme": "dogbeat-love-boat",
-        "elizabeth_sexy_theme2": "copenhagen-instrumental-version-by-oran-loyfer",
-        "elizabeth_anger_theme": "es_bimini-road-craft-case",
-        "elizabeth_sad_theme": "a-different-meaning-by-tengrams",
-        "elizabeth_play_theme": "ticket-to-ride-by-repina",
-        "elizabeth_singing_song": "elizabeth_song",
+        "elizabeth_theme": "clouds-instrumental-version-by-sensitive-detective",#Paper Skyline
+        "elizabeth_sexy_theme": "dogbeat-love-boat",#Falling in Slow Motion
+        "elizabeth_sexy_theme2": "copenhagen-instrumental-version-by-oran-loyfer",#Smoke & Silk
+        "elizabeth_anger_theme": "es_bimini-road-craft-case",#Distorted Memory
+        "elizabeth_sad_theme": "a-different-meaning-by-tengrams",#Unfinished Goodbyes
+        "elizabeth_play_theme": "ticket-to-ride-by-repina",#Glimmer Between Us
+        "elizabeth_singing_song": "elizabeth_song",#レコードに落ちる涙 (Tears on Vinyl)
 
         # Isabella themes
-        "isabella_guitar": "es_northern-stems-instruments-daniel-kaede",
-        "isabella_themev": "livingrooms-hold-me-closer",
-        "isabella_theme": "hold-me-closer-instrumental-version-by-livingrooms",
-        "isabella_anger_theme_b": "es_approaching-meltdown-stems-bass-pearce-roswell",
-        "isabella_anger_theme_d": "es_approaching-meltdown-stems-drums-pearce-roswell",
-        "isabella_anger_theme_i": "es_approaching-meltdown-stems-instruments-pearce-roswell",
-        "isabella_anger_theme_m": "es_approaching-meltdown-stems-melody-pearce-roswell",
-        "isabella_happy": "es_its-a-new-day-(instrumental-version)-holy-see",
-        "isabella_serious": "ohad-ben-ari-prelude-cm",
-        "isabella_sad": "prelude-in-e-minor,-op.-28,-no.-4-by-birraj,-artlist-classics,-frederic-chopin",
-        "isabella_sexy": "slow_hands_-_master",
+        "isabella_theme": "hold-me-closer-instrumental-version-by-livingrooms",#Midnight Serenade
+        "isabella_anger_theme": "es_approaching-meltdown-stems-bass-pearce-roswell",#Rupture of Silence
+        "isabella_happy": "es_its-a-new-day-(instrumental-version)-holy-see",#Skipping Notes
+        "isabella_serious": "ohad-ben-ari-prelude-cm",#Resonance of Resistance
+        "isabella_sad": "prelude-in-e-minor,-op.-28,-no.-4-by-birraj,-artlist-classics,-frederic-chopin",#Adagio for Lost Time
+        "isabella_sexy": "slow_hands_-_master",#Between the Lines
 
         # Kanae themes
-        "kanae_theme": "es_shapes-of-shadows-franz-gordon",
-        "kanae_love": "es_togetherless-franz-gordon",
 
         # Madison themes
-        "madison_theme": "blueberrysmoker",
-        "madison_bad_theme": "madison_bad_theme",
-        "madison_nan_theme": "madison_nanami_theme",
-        "madison_dom_theme": "walz_-_hellhound",
-        "madison_sad_theme": "limbo_-_master",
-        "madison_sexy_theme": "es_lurking in the shadows",
+        "madison_theme": "blueberrysmoker",#Sugartrap
+        "madison_bad_theme": "madison_bad_theme",#Glassfang
+        "madison_nan_theme": "madison_nanami_theme",#Through Her Eyes, I Vanish
+        "madison_dom_theme": "walz_-_hellhound",#Queen of the Hollow
+        "madison_sad_theme": "limbo_-_master",#Residue of Me
+        "madison_sexy_theme": "es_lurking in the shadows",#Undress the Night
 
         # Nanami themes
-        "nanami_chill_theme": "es_after-image-(instrumental-version)-i'min",
-        "nanami_theme": "nanamitheme",
-        "nanami_love_theme": "nanami_love",
-        "nanami_secure_theme": "nanami_secure",
-        "nanami_clumsy_theme": "nanami_clumsy",
-        "nanami_innocence_theme": "eva_tiedemann_-_what_falling_in_love_feels_like",
+        "nanami_chill_theme": "es_after-image-(instrumental-version)-i'min",#Fuwari Yume - ふわり夢
+        "nanami_theme": "nanamitheme",#Hikari no Uta - 光の歌
+        "nanami_love_theme": "nanami_love",#Himitsu no Koi - 秘密の恋
+        "nanami_secure_theme": "nanami_secure",#Yume no Naka de - 夢の中で
+        "nanami_clumsy_theme": "nanami_clumsy",#Chotto Matte! - ちょっと待って!
+        "nanami_innocence_theme": "eva_tiedemann_-_what_falling_in_love_feels_like",#Hakanai Negai  - 儚い願い
 
         # Paz themes
-        "paz_peace_theme": "justbones",
+        "paz_peace_theme": "justbones",#Golden Tide
 
         # MC themes
-        "mc_peace_theme": "andean-feeling-by-pangal-and-gana",
-        "mc_theme": "es_chukou-ambre-jaune",
-        "mc_theme_b": "es_chukou-stems-bass-ambre-jaune",
-        "mc_theme_d": "es_chukou-stems-drums-ambre-jaune",
-        "mc_theme_i": "es_chukou-stems-instruments-ambre-jaune",
-        "mc_theme_m": "es_chukou-stems-melody-ambre-jaune",
-        "mc_thinking_theme": "criticalthinking",
-        "mc_broken_theme": "whispersofthewasteland",
-        "mc_hope_theme": "anomadsjourney",
-        "mc_alone_theme": "arizona",
-        "mc_suspense_theme": "steepencounters",
-        "mc_action_theme": "lostregister",
+        "mc_theme": "es_chukou-ambre-jaune",#戻らぬ時 (Modoranu Toki)
+        "mc_thinking_theme": "criticalthinking",#夢と分析 (Yume to Bunseki)
+        "mc_broken_theme": "whispersofthewasteland",#帰らぬ昨日 (Kaeranu Kinō)
+        "mc_suspense_theme": "steepencounters",#終わらない連鎖 (Owaranai Rensa)
+        "mc_action_theme": "lostregister",#狂乱の刻 (Kyōran no Koku)
+        "mc_action_theme2": "lostregister",#怒れる地響き (Ikareru Jihibiki)
 
         # Takeo themes
-        "takeo_theme": "es_the-detective-christoffer-moe-ditlevsen",
 
         # Relationship themes
-        "mc_elizabeth_theme": "phoenix-instrumental-version-by-ben-goldstein",
-        "mc_nanami_theme": "samurai-royal-magic-hour",
-        "mc_amber_x_theme": "stunned-man-by-nils-baumgartel",
-        "mc_isabella_theme": "yuval-vilner-nocturne-in-e-flat-major-(op.-9-no.-2)"
+        "mc_elizabeth_theme": "phoenix-instrumental-version-by-ben-goldstein",#Echoes of You
+        "mc_nanami_theme": "samurai-royal-magic-hour", #Shizuka na Kokoro - 静かな心
+        "mc_amber_x_theme": "stunned-man-by-nils-baumgartel",#The Last Embrace
     })
 
     # Create global variables for each theme

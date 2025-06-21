@@ -258,6 +258,7 @@ init python:
     build.classify("game/images/overlay/**", "images_common")
     build.classify("game/images/wipes/**", "images_common")
     build.classify("game/images/common/**", "images_common")
+    build.classify("game/images/memories/**", "images_common")
 
     # ------------------------------------------------------------------------------
     # FALLBACK CLASSIFICATION

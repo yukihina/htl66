@@ -376,7 +376,7 @@ label ep03_reunion:
     show ep03_ambertalk04 with hpunch
     mc_t "[renpy.substitute(dialogues3['E03AMBREUNION_d008'])]"
     $ setChannelVolume(channel="music", subchannel=1, volume=0.7)
-    $ playAudio(amber_2nd_theme, "music", 1, True, 2.5, 0)
+    $ playAudio(amber_theme, "music", 1, True, 2.5, 0)
     show ep03_ambertalk05 with dissolve
     amb "[renpy.substitute(dialogues3['E03AMBREUNION_d009'])]"
     mc_s "[renpy.substitute(dialogues3['E03AMBREUNION_d010'])]"
@@ -1314,7 +1314,7 @@ label ep03_ambernite:
         amb "[renpy.substitute(dialogues3['E03AMBERNIGHT_d027'])]"
     show ep03_night03 with slowfade
     $ setChannelVolume(channel="music", subchannel=1, volume=0.3)
-    $ playAudio(amber_theme, "music", 1, True, 3, 0)
+    $ playAudio(amber_2nd_theme, "music", 1, True, 3, 0)
     if ep03_ambclothes == 2:
         amb "[renpy.substitute(dialogues3['E03AMBERNIGHT_d028'])]"
         mc_s "[renpy.substitute(dialogues3['E03AMBERNIGHT_d029'])]"

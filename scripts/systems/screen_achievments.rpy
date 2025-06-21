@@ -275,154 +275,155 @@ define achievement_data = {
 
 ## --- Achievement Conditions
 init python:
+
+    def create_achievement_condition(condition_func, persistent_var, notified_var, achievement_key):
+        return {
+            "condition": condition_func,
+            "persistent_var": persistent_var,
+            "notified_var": notified_var,
+            "achievement_key": achievement_key
+        }
+    
     # List of achievements with their unlock conditions
     achievement_conditions = [
-        {
-            "condition": lambda: rm.get("isabella", "knows"),
-            "persistent_var": "ep01_ach1",
-            "notified_var": "ep01_ach1_notified",
-            "achievement_key": "ach_ep01_isabella"
-        },
-        {
-            "condition": lambda: ep01_bestprize,
-            "persistent_var": "ep01_ach2",
-            "notified_var": "ep01_ach2_notified",
-            "achievement_key": "ach_ep01_antonella2"
-        },
-        {
-            "condition": lambda: ep01_amblove,
-            "persistent_var": "ep01_ach3",
-            "notified_var": "ep01_ach3_notified",
-            "achievement_key": "ach_ep01_amber2"
-        },
-        {
-            "condition": lambda: ep01_first,
-            "persistent_var": "ep01_ach4",
-            "notified_var": "ep01_ach4_notified",
-            "achievement_key": "ach_ep01_amber"
-        },
-        {
-            "condition": lambda: ep01_antobday,
-            "persistent_var": "ep01_ach5",
-            "notified_var": "ep01_ach5_notified",
-            "achievement_key": "ach_ep01_antonella"
-        },
-        {
-            "condition": lambda: rm.get("paz", "knows"),
-            "persistent_var": "ep02_ach1",
-            "notified_var": "ep02_ach1_notified",
-            "achievement_key": "ach_ep02_paz"
-        },
-        {
-            "condition": lambda: rm.get("arlette", "knows"),
-            "persistent_var": "ep02_ach2",
-            "notified_var": "ep02_ach2_notified",
-            "achievement_key": "ach_ep02_arlette"
-        },
-        {
-            "condition": lambda: ep02_hitrina,
-            "persistent_var": "ep02_ach3",
-            "notified_var": "ep02_ach3_notified",
-            "achievement_key": "ach_ep02_rina"
-        },
-        {
-            "condition": lambda: ep03_ambersex_l,
-            "persistent_var": "ep03_ach1",
-            "notified_var": "ep03_ach1_notified",
-            "achievement_key": "ach_ep03_amber2"
-        },
-        {
-            "condition": lambda: ep03_ambersex_c,
-            "persistent_var": "ep03_ach2",
-            "notified_var": "ep03_ach2_notified",
-            "achievement_key": "ach_ep03_amber1"
-        },
-        {
-            "condition": lambda: ep03_madcaught,
-            "persistent_var": "ep03_ach3",
-            "notified_var": "ep03_ach3_notified",
-            "achievement_key": "ach_ep03_madison"
-        },
-        {
-            "condition": lambda: ep04_ach_nanabikini,
-            "persistent_var": "ep04_ach1",
-            "notified_var": "ep04_ach1_notified",
-            "achievement_key": "ach_ep04_nanami1"
-        },
-        {
-            "condition": lambda: ep04_ach_nanagoth,
-            "persistent_var": "ep04_ach2",
-            "notified_var": "ep04_ach2_notified",
-            "achievement_key": "ach_ep04_nanami2"
-        },
-        {
-            "condition": lambda: ep03_madtalk and ep04_ach_madison,
-            "persistent_var": "ep04_ach3",
-            "notified_var": "ep04_ach3_notified",
-            "achievement_key": "ach_ep04_madison"
-        },
-        {
-            "condition": lambda: ep03_isahug and ep04_ach_isabella,
-            "persistent_var": "ep04_ach4",
-            "notified_var": "ep04_ach4_notified",
-            "achievement_key": "ach_ep04_isabella"
-        }
-        ,
-        {
-            "condition": lambda: ep04_mcdrunk and ep04_ach_isabella2,
-            "persistent_var": "ep04_ach5",
-            "notified_var": "ep04_ach5_notified",
-            "achievement_key": "ach_ep04_isabella2"
-        }
-        ,
-        {
-            "condition": lambda: ep04_ambnight_cum == 2 and ep04_ach_amber,
-            "persistent_var": "ep04_ach6",
-            "notified_var": "ep04_ach6_notified",
-            "achievement_key": "ach_ep04_amber"
-        }
-        ,
-        {
-            "condition": lambda: ep04_madpath == 2 and ep04_ach_madison2,
-            "persistent_var": "ep04_ach7",
-            "notified_var": "ep04_ach7_notified",
-            "achievement_key": "ach_ep04_madison2"
-        }
-        ,
-        {
-            "condition": lambda: ep04_elistay and ep04_ach_elizabeth,
-            "persistent_var": "ep04_ach8",
-            "notified_var": "ep04_ach8_notified",
-            "achievement_key": "ach_ep04_elizabeth"
-        }
-        ,
-        {
-            "condition": lambda: ep05_isacosplay == 4 and ep05_ach_isaintro,
-            "persistent_var": "ep05_ach2",
-            "notified_var": "ep05_ach2_notified",
-            "achievement_key": "ach_ep05_isabella2"
-        }
-        ,
-        {
-            "condition": lambda: ep05_isacosplay == -4 and ep05_ach_isaintro,
-            "persistent_var": "ep05_ach1",
-            "notified_var": "ep05_ach1_notified",
-            "achievement_key": "ach_ep05_isabella"
-        }
-        ,
-        {
-            "condition": lambda: ep05_ambersus_eli and ep05_ach_ambvseli,
-            "persistent_var": "ep05_ach3",
-            "notified_var": "ep05_ach3_notified",
-            "achievement_key": "ach_ep05_ambeli"
-        }
-        ,
-        {
-            "condition": lambda: ss.get("nanami", "strike") == 1 and ep05_ach_nanastrike,
-            "persistent_var": "ep05_ach4",
-            "notified_var": "ep05_ach4_notified",
-            "achievement_key": "ach_ep05_nanamad"
-        }
+        create_achievement_condition(
+            lambda: rm.get("isabella", "knows"),
+            "ep01_ach1",
+            "ep01_ach1_notified",
+            "ach_ep01_isabella"
+        ),
+        create_achievement_condition(
+            lambda: ep01_bestprize,
+            "ep01_ach2",
+            "ep01_ach2_notified",
+            "ach_ep01_antonella2"
+        ),
+        create_achievement_condition(
+            lambda: ep01_amblove,
+            "ep01_ach3",
+            "ep01_ach3_notified",
+            "ach_ep01_amber2"
+        ),
+        create_achievement_condition(
+            lambda: ep01_first,
+            "ep01_ach4",
+            "ep01_ach4_notified",
+            "ach_ep01_amber"
+        ),
+        create_achievement_condition(
+            lambda: ep01_antobday,
+            "ep01_ach5",
+            "ep01_ach5_notified",
+            "ach_ep01_antonella"
+        ),
+        create_achievement_condition(
+            lambda: rm.get("paz", "knows"),
+            "ep02_ach1",
+            "ep02_ach1_notified",
+            "ach_ep02_paz"
+        ),
+        create_achievement_condition(
+            lambda: rm.get("arlette", "knows"),
+            "ep02_ach2",
+            "ep02_ach2_notified",
+            "ach_ep02_arlette"
+        ),
+        create_achievement_condition(
+            lambda: ep02_hitrina,
+            "ep02_ach3",
+            "ep02_ach3_notified",
+            "ach_ep02_rina"
+        ),
+        create_achievement_condition(
+            lambda: ep03_ambersex_l,
+            "ep03_ach1",
+            "ep03_ach1_notified",
+            "ach_ep03_amber2"
+        ),
+        create_achievement_condition(
+            lambda: ep03_ambersex_c,
+            "ep03_ach2",
+            "ep03_ach2_notified",
+            "ach_ep03_amber1"
+        ),
+        create_achievement_condition(
+            lambda: ep03_madcaught,
+            "ep03_ach3",
+            "ep03_ach3_notified",
+            "ach_ep03_madison"
+        ),
+        create_achievement_condition(
+            lambda: ep04_ach_nanabikini,
+            "ep04_ach1",
+            "ep04_ach1_notified",
+            "ach_ep04_nanami1"
+        ),
+        create_achievement_condition(
+            lambda: ep04_ach_nanagoth,
+            "ep04_ach2",
+            "ep04_ach2_notified",
+            "ach_ep04_nanami2"
+        ),
+        create_achievement_condition(
+            lambda: ep03_madtalk and ep04_ach_madison,
+            "ep04_ach3",
+            "ep04_ach3_notified",
+            "ach_ep04_madison"
+        ),
+        create_achievement_condition(
+            lambda: ep03_isahug and ep04_ach_isabella,
+            "ep04_ach4",
+            "ep04_ach4_notified",
+            "ach_ep04_isabella"
+        ),
+        create_achievement_condition(
+            lambda: ep04_mcdrunk and ep04_ach_isabella2,
+            "ep04_ach5",
+            "ep04_ach5_notified",
+            "ach_ep04_isabella2"
+        ),
+        create_achievement_condition(
+            lambda: ep04_ambnight_cum == 2 and ep04_ach_amber,
+            "ep04_ach6",
+            "ep04_ach6_notified",
+            "ach_ep04_amber"
+        ),
+        create_achievement_condition(
+            lambda: ep04_madpath == 2 and ep04_ach_madison2,
+            "ep04_ach7",
+            "ep04_ach7_notified",
+            "ach_ep04_madison2"
+        ),
+        create_achievement_condition(
+            lambda: ep04_elistay and ep04_ach_elizabeth,
+            "ep04_ach8",
+            "ep04_ach8_notified",
+            "ach_ep04_elizabeth"
+        ),
+        create_achievement_condition(
+            lambda: ep05_isacosplay == 4 and ep05_ach_isaintro,
+            "ep05_ach2",
+            "ep05_ach2_notified",
+            "ach_ep05_isabella2"
+        ),
+        create_achievement_condition(
+            lambda: ep05_isacosplay == -4 and ep05_ach_isaintro,
+            "ep05_ach1",
+            "ep05_ach1_notified",
+            "ach_ep05_isabella"
+        ),
+        create_achievement_condition(
+            lambda: ep05_ambersus_eli and ep05_ach_ambvseli,
+            "ep05_ach3",
+            "ep05_ach3_notified",
+            "ach_ep05_ambeli"
+        ),
+        create_achievement_condition(
+            lambda: ss.get("nanami", "strike") == 1 and ep05_ach_nanastrike,
+            "ep05_ach4",
+            "ep05_ach4_notified",
+            "ach_ep05_nanamad"
+        )
     ]
 
     ## --- Define SetAchievements Function
@@ -548,8 +549,8 @@ screen achievements:
     frame:
         xsize 1260
         ysize 50
-        xpos 331
-        ypos 210
+        xpos 714
+        ypos 791
         
         hbox:
             xalign 0.5
@@ -557,25 +558,25 @@ screen achievements:
             spacing 30
             
             # ACT 1 Button (active by default)
-            button:
+            button at igm_appear_fg2:
                 text "ACT 1" style "act_button_text"
                 selected current_act == 1
                 action SetScreenVariable("current_act", 1)
                 
             # ACT 2 Button
-            button:
+            button at igm_appear_fg2:
                 text "ACT 2" style "act_button_text"
                 selected current_act == 2
                 action SetScreenVariable("current_act", 2)
             
             # ACT 3 Button (disabled)
-            button:
+            button at igm_appear_fg2:
                 text "ACT 3" style "act_button_text"
                 selected current_act == 3
                 action SetScreenVariable("current_act", 3)
                 
             # ACT 4 Button (disabled)
-            button:
+            button at igm_appear_fg2:
                 text "ACT 4" style "act_button_text"
                 selected current_act == 4
                 action SetScreenVariable("current_act", 4)

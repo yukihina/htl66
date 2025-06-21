@@ -1616,10 +1616,8 @@ label ep04_isajelously:
             $ rm.update("isabella", "trust", -2)
             $ check_levels("isabella", "trust", -2)
             mc_s "[renpy.substitute(dialogues4['E04ISAJEL_d026'])]"
-    $ setChannelVolume(channel="music", subchannel=1, volume=0.2)
-    $ playAudio(isabella_anger_theme_i, "music", 1, True, 0, 0)
     $ setChannelVolume(channel="music", subchannel=2, volume=0.2)
-    $ playAudio(isabella_anger_theme_b, "music", 2, True, 0, 0)
+    $ playAudio(isabella_anger_theme, "music", 2, True, 0, 0)
     show ep04_isajel03 at dramatic_realization
     if ep04_isatruth:
         isa "[renpy.substitute(dialogues4['E04ISAJEL_d027'])]"
