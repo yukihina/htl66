@@ -1,95 +1,41 @@
-# Documentation for the Ren'Py Episode Title Script
-# -------------------------------------------------
-# Purpose:
-# This script manages the creation and display of episode title screens in a
-# Ren'Py visual novel. It provides a dynamic and efficient way to handle
-# multiple episode titles with minimal code repetition.
+## screen_ep_titles.rpy
+## Episode Title System for Ren'Py - Complete English Version
+## 
+## How to use:
+## This script manages the creation and display of episode title screens in a
+## Ren'Py visual novel. It provides a dynamic and efficient way to handle
+## multiple episode titles with minimal code repetition.
+## 
+## To display an episode title, the game should jump to the corresponding label:
+## jump ep01_title
+## 
+## The system automatically:
+## - Creates background images for each episode dynamically
+## - Handles audio transitions and UI state management
+## - Provides interactive title screens with hover effects
+## - Manages scene transitions and rollback settings
+##
+## Episode Structure:
+## - Each episode has a number, title, and background image
+## - Title screens feature animated backgrounds and interactive logos
+## - Clicking the logo advances to the episode start
+## - Hover effects add visual feedback and immersion
+##
+## Adding New Episodes:
+## 1. Add a new entry to the episode_data dictionary
+## 2. Create a new background image named "ep{number}_title.avif"
+## 3. Add a new label following the pattern of existing labels
+## 4. The system automatically creates the necessary dynamic images
 
-# Main Components:
-# 1. episode_data Dictionary:
-#    Stores episode numbers as keys and their titles as values.
-
-# 2. Dynamic Image Creation:
-#    Automatically creates background images for each episode based on the
-#    episode_data dictionary.
-
-# 3. episode_bg_transform:
-#    Defines the animation for the episode background images.
-
-# 4. title_logo and title_logo2:
-#    Define the title logo images and their animations.
-
-# 5. Styles (title_ep_num and title_ep_name):
-#    Define the text styles for the episode number and name display.
-
-# 6. vignette_overlay Screen:
-#    Adds a vignette effect to the title screen.
-
-# 7. title Screen:
-#    Main screen for displaying the episode title.
-
-# 8. show_episode_title Function:
-#    Centralizes the logic for displaying an episode title screen.
-
-# 9. Episode Title Labels:
-#    One label per episode (ep01_title, ep02_title, etc.)
-
-# Usage:
-# The script automatically sets up episode title screens based on the episode_data dictionary.
-# To display an episode title, the game should jump to the corresponding label:
-# jump ep01_title
-
-# Adding New Episodes:
-# 1. Add a new entry to the episode_data dictionary.
-# 2. Create a new background image named "ep{number}_title.png" in the "title/" directory.
-# 3. Add a new label following the pattern of existing labels.
-
-# Example for adding episode 5:
-# In episode_data dictionary:
-#     5: "The New Adventure Begins"
-# 
-# Create image file:
-#     title/ep5_title.png
-# 
-# Add new label:
-#     label ep05_title:
-#         $ show_episode_title(5)
-
-# Customization:
-# - Modify the episode_bg_transform to change the background animation.
-# - Adjust the styles (title_ep_num and title_ep_name) to change text appearance.
-# - Modify the title screen to change the layout or add new elements.
-# - Update the show_episode_title function if you need to change the behavior
-#   of how episode titles are displayed.
-
-# File Structure:
-# - Episode background images should be in the "title/" directory.
-# - Image files should be named "ep{number}_title.png".
-
-# Performance Note:
-# This script creates images dynamically at init, which may impact initial loading time
-# for a large number of episodes. However, it ensures efficient memory usage and quick
-# access during gameplay.
-
-# Maintenance:
-# When updating this script, ensure that:
-# 1. New episodes are added to the episode_data dictionary.
-# 2. Corresponding background images are added to the "title/" directory.
-# 3. Any changes to the title screen layout or animation are reflected in the
-#    title screen and episode_bg_transform.
-
-# Dependencies:
-# This script assumes the existence of certain functions and assets:
-# - playAudio function for playing audio
-# - smoke transition
-# - eigengrau image or color
-# - animated_glitch function for logo animation
-# - heartbeat transform for vignette effect
-
-# Remember: Ensure all referenced assets (images, fonts, etc.) exist in your project.
-# This script only defines the episode title system, not the entire game structure or other screens.
+################################################################################
+## INITIALIZATION
+################################################################################
 
 init python:
+    ############################################################################
+    ## EPISODE DATA CONFIGURATION
+    ############################################################################
+    
     episode_data = {
         1: "In the Realm of Past and Dreams",
         2: "A Glimmer in the Darkness",
@@ -99,29 +45,68 @@ init python:
         # Add more episode titles here as needed
     }
 
-    # Dynamically create episode background images
+    ############################################################################
+    ## DYNAMIC IMAGE CREATION
+    ############################################################################
+    
+    # Dynamically create episode background images based on episode_data
     for ep_num in episode_data.keys():
         renpy.image("ep{}_tbg".format(ep_num), 
                     Transform("title/ep{}_title.avif".format(ep_num),
                               subpixel=True,
                               zoom=1))
 
-# Define the ATL transform as specified
-transform episode_bg_transform:
-    subpixel True
-    zoom 0.5
-    block:
-        zoom 0.5
-        linear 60 zoom 1.0
-        pause 0.1
-        linear 60 zoom 0.5
-        pause 0.1
-        repeat
+    ############################################################################
+    ## EPISODE TITLE HELPER FUNCTIONS
+    ############################################################################
+    
+    def show_episode_title(ep_num):
+        """
+        Centralized function for displaying episode title screens
+        Handles UI state, audio, and screen transitions
+        """
+        # Hide UI elements that shouldn't appear during title screens
+        renpy.hide_screen("stats_button")
+        renpy.hide_screen("walkthrough_icon")
+        
+        # Disable quick menu and rollback during title sequence
+        store.quick_menu = False
+        store.config.rollback_enabled = False
+        
+        # Set up scene with fade transition
+        renpy.scene()
+        renpy.show("eigengrau")
+        renpy.transition(smoke)
+        
+        # Play title theme music
+        store.playAudio(title_theme, "music", 1, True, 0.5, 0)
+        
+        # Show the title screen with episode data
+        renpy.show_screen("title", ep_num, episode_data[ep_num], "ep{:02d}_start".format(ep_num))
+        renpy.pause()
+    
+    def get_episode_title(ep_num):
+        """Get episode title by number"""
+        return episode_data.get(ep_num, "Unknown Episode")
+    
+    def get_total_episodes():
+        """Get total number of available episodes"""
+        return len(episode_data)
+    
+    def episode_exists(ep_num):
+        """Check if an episode exists"""
+        return ep_num in episode_data
 
+################################################################################
+## DYNAMIC TITLE LOGO IMAGES
+################################################################################
+
+## Static title logo
 image title_logo:
     "title/title_logo.webp"
     alpha 1.0
 
+## Animated title logo with breathing effect
 image title_logo2:
     "title/title_logo.webp"
     alpha 0.7
@@ -131,26 +116,46 @@ image title_logo2:
     pause 0.1
     repeat
 
-style title_ep_num:
-    kerning 0
-    size 24
-    font "fonts/quicksand.ttf"
-    color "#bbc7b5"
-    outlines [ (2, "#321414", 0, 0) ]
+################################################################################
+## TRANSFORMS AND ANIMATIONS
+################################################################################
 
-style title_ep_name:
-    kerning 0
-    size 26
-    font "fonts/quicksand.ttf"
-    color "#bbc7b5"
-    outlines [ (2, "#321414", 0, 0) ]
+init:
+    ## ATL transform for episode background animation
+    transform episode_bg_transform:
+        subpixel True
+        zoom 0.5
+        block:
+            zoom 0.5
+            linear 60 zoom 1.0
+            pause 0.1
+            linear 60 zoom 0.5
+            pause 0.1
+            repeat
 
+    ## Breathing animation for vignette overlay
+    transform heartbeat(start_zoom, end_zoom, duration):
+        zoom start_zoom
+        linear duration zoom end_zoom
+        linear duration zoom start_zoom
+        repeat
+
+################################################################################
+## EPISODE TITLE SCREENS
+################################################################################
+
+## Vignette overlay screen for immersive hover effect
 screen vignette_overlay():
     add "vignette" xalign 0.5 yalign 0.5 at heartbeat(1,1.4,0.7), igm_appear_nowait
 
+## Main episode title screen
 screen title(ep_num, ep_name, ep_label):
     modal True
+    
+    ## Animated background image
     add "ep{}_tbg".format(ep_num) at episode_bg_transform xalign 0.5 yalign 0.5
+    
+    ## Interactive title logo
     imagebutton:
         idle animated_glitch("title_logo2")
         hover animated_glitch("title_logo")
@@ -159,33 +164,135 @@ screen title(ep_num, ep_name, ep_label):
         action [Hide("title"), Hide("vignette_overlay"), Jump(ep_label)]
         hovered Show("vignette_overlay")
         unhovered Hide("vignette_overlay")
+    
+    ## Episode number text
     text "episode {}".format(ep_num).upper() style "title_ep_num" xalign 0.5 ypos 238
+    
+    ## Episode title text
     text ep_name.upper() style "title_ep_name" xalign 0.5 ypos 814
 
-init python:
-    def show_episode_title(ep_num):
-        renpy.hide_screen("stats_button")
-        renpy.hide_screen("walkthrough_icon")
-        store.quick_menu = False
-        store.config.rollback_enabled = False
-        renpy.scene()
-        renpy.show("eigengrau")
-        renpy.transition(smoke)
-        store.playAudio(title_theme, "music", 1, True, 0.5, 0)
-        renpy.show_screen("title", ep_num, episode_data[ep_num], "ep{:02d}_start".format(ep_num))
-        renpy.pause()
+################################################################################
+## EPISODE TITLE LABELS
+################################################################################
 
+## Episode 1 Title Screen
 label ep01_title:
     $ show_episode_title(1)
 
+## Episode 2 Title Screen
 label ep02_title:
     $ show_episode_title(2)
 
+## Episode 3 Title Screen
 label ep03_title:
     $ show_episode_title(3)
 
+## Episode 4 Title Screen
 label ep04_title:
     $ show_episode_title(4)
 
+## Episode 5 Title Screen
 label ep05_title:
     $ show_episode_title(5)
+
+################################################################################
+## EPISODE TITLE STYLES
+################################################################################
+
+## Episode number text style
+style title_ep_num:
+    kerning 0
+    size 24
+    font "fonts/quicksand.ttf"
+    color "#bbc7b5"
+    outlines [ (2, "#321414", 0, 0) ]
+
+## Episode title text style
+style title_ep_name:
+    kerning 0
+    size 26
+    font "fonts/quicksand.ttf"
+    color "#bbc7b5"
+    outlines [ (2, "#321414", 0, 0) ]
+
+################################################################################
+## INTEGRATION INSTRUCTIONS
+################################################################################
+
+## How to integrate this episode title system in your game:
+## 
+## 1. Episode titles are displayed by jumping to their corresponding labels:
+##    jump ep01_title
+##    jump ep02_title
+##    etc.
+##
+## 2. The system automatically:
+##    - Hides UI elements during title sequence
+##    - Disables quick menu and rollback
+##    - Plays title theme music
+##    - Transitions to episode start when logo is clicked
+##    - Manages scene transitions and effects
+##
+## 3. To add new episodes:
+##    - Add new entry to episode_data dictionary
+##    - Create background image: title/ep{number}_title.avif
+##    - Add new label: label ep0X_title: $ show_episode_title(X)
+##    - The system handles dynamic image creation automatically
+##
+## 4. Required assets:
+##    - Episode background images in title/ directory
+##    - Title logo images (title_logo.webp)
+##    - Vignette overlay image
+##    - Transition effects (smoke, eigengrau)
+##    - Font files (quicksand.ttf)
+##
+## 5. Required functions (should exist in your game):
+##    - playAudio() for music management
+##    - animated_glitch() for logo animation
+##    - smoke transition effect
+##    - igm_appear_nowait transform
+##
+## Example usage in episode flow:
+## label start:
+##     # Game introduction
+##     jump ep01_title
+##
+## label ep01_start:
+##     # Episode 1 content starts here
+##     "Welcome to Episode 1!"
+##     # ... episode content ...
+##     jump ep02_title
+##
+## label ep02_start:
+##     # Episode 2 content starts here
+##     "Welcome to Episode 2!"
+##     # ... episode content ...
+##
+## File structure:
+## title/
+##   ├── ep1_title.avif
+##   ├── ep2_title.avif
+##   ├── ep3_title.avif
+##   ├── ep4_title.avif
+##   ├── ep5_title.avif
+##   └── title_logo.webp
+##
+## Customization options:
+## - Modify episode_bg_transform for different background animations
+## - Adjust title styles for different fonts/colors
+## - Change logo positioning and hover effects
+## - Add additional UI elements to the title screen
+## - Implement different transition effects
+##
+## Performance considerations:
+## - Dynamic image creation happens at init time
+## - Background animations use ATL for efficiency
+## - Transitions are optimized for smooth gameplay
+## - Memory usage scales with number of episodes
+##
+## Maintenance notes:
+## - Keep episode_data dictionary updated with new episodes
+## - Ensure background images follow naming convention
+## - Test title sequences after adding new episodes
+## - Verify audio transitions work correctly
+## - Check that episode start labels exist before referencing them

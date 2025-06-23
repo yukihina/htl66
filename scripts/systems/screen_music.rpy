@@ -856,7 +856,7 @@ style music_current_track:
 style music_track_text:
     kerning 0
     size 18
-    font "fonts/UbuntuTitling-Bold.ttf"
+    font "fonts/wd7.otf"
     color "#34323d"
     xalign 0.0
     xoffset 10

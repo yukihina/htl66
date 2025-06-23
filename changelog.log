@@ -4,17 +4,19 @@
 v0.26 (Episode 5)
 ---------------------------------------------------------------------
 + ADDED:
-  • 182 new renders (H-scenes with Amber, Elizabeth, Madison)
+  • 182 new renders (H-scenes with Amber, Elizabeth, Madison, Ecchi scene with Paz)
   • 6 new animations (4 more on amber, 14 more on madison, 1 more on nanami)
   • New character unlockables for Character Screen
   • Walkthrough updated for Episode 5 decisions
   • 65 new BGM tracks made exclusively for this game
-  • Memories screen added. Requires a new playthrough to unlock (not compatible with older save files)
+  • New Memories screen (photo gallery). Requires a new playthrough to unlock (not compatible with older save files)
+  • New Music Player on Extras screen
 
 ~ CHANGED:
   • Achievements screen divided by Acts
   • Character screen redesigned
-  • Changed all BGM music for copyright reasons
+  • Erased all past BGM music for copyright reasons
+  • Reorganized most core scripts
 
 ! FIXED:
   • 
