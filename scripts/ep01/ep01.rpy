@@ -13,7 +13,7 @@ label ep01_start:
     $ setChannelVolume(channel="music", subchannel=2, volume=0.5)
     $ playAudio(isabella_theme, "music", 2, True, 5, 0)
     show osaka_location zorder 2 with dissolve
-    pause 2
+    pause 4
     hide osaka_location with dissolve
     mc_t "[renpy.substitute(dialogues['E01S01_d001'])]"
     mc_t "[renpy.substitute(dialogues['E01S01_d002'])]"

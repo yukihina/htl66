@@ -1,90 +1,53 @@
-# Documentation for the Ren'Py Core Relationship Management Script
-# ----------------------------------------------------------------
+## core.rpy
+## Core Relationship Management System for Ren'Py - Complete English Version
+## 
+## How to use:
+## This script forms the backbone of the game's relationship and attribute system.
+## It manages how characters relate to each other and how their attributes change throughout the game.
+## 
+## To initialize the RM system:
+## $ rm = RM()  # This is typically done automatically
+## 
+## The system automatically:
+## - Manages character relationships, corruption, trust, and integrity stats
+## - Handles sexual statistics tracking for all love interests
+## - Provides wardrobe/outfit management for all characters
+## - Maintains level-based notifications for stat changes
+## - Ensures save game compatibility across all versions
+##
+## Core Management Features:
+## - RM class: Relationship Management for all character attributes
+## - SexStats class: Sexual interaction tracking and statistics
+## - WM class: Wardrobe Management for character outfits
+## - Level-based progression system with notifications
+## - Character knowledge and relationship status tracking
+##
+## Critical Save Game Compatibility:
+## - All initialization priorities are preserved exactly (-900, -890, etc.)
+## - All class structures and methods remain identical
+## - All variable names and data structures are maintained
+## - Complete backward compatibility with existing save files
 
-# Purpose:
-# This script forms the backbone of the game's relationship and attribute system. It manages how characters relate to each other and how their attributes change throughout the game.
-
-# Main Components:
-# 1. RM (Relationship Management) Class:
-#    - Initializes and manages character data for all characters in the game.
-#    - Provides methods to update and retrieve character attributes.
-#    - Handles special cases like the main character's integrity and organization-specific trust.
-
-# 2. Attribute Levels:
-#    - Defines dictionaries for corruption_levels and trust_levels.
-#    - These dictionaries map numerical ranges to level categories (0-5).
-
-# 3. check_levels() Function:
-#    - Monitors changes in corruption and trust levels for all characters.
-#    - Triggers notification screens when levels change.
-
-# 4. Notification Screens:
-#    - corruption_notification: Displays when a character's corruption level changes.
-#    - trust_notification: Displays when a character's trust level changes.
-
-# Detailed Usage:
-# 1. Initializing the RM system:
-#    At the start of your game, create an instance of RM:
-#    $ rm = RM()
-
-# 2. Updating character attributes:
-#    Use rm.update() to change character attributes. For example:
-#    $ rm.update("amber", "cor", 10)  # Increases Amber's corruption by 10
-#    $ rm.update("takeo", "trust", -5)  # Decreases Takeo's trust by 5
-#    $ rm.update("mc", "integrity", 15)  # Increases MC's integrity by 15
-
-# 3. Retrieving character data:
-#    Use rm.get() to access character attributes. For example:
-#    $ amber_corruption = rm.get("amber", "cor")
-#    $ isabella_relationship = rm.get("isabella", "rel")
-
-# 4. Updating relationships:
-#    After changing trust levels, call rm.update_rel() to update relationship status:
-#    $ rm.update_rel("nanami")
-
-# 5. Setting character knowledge:
-#    Use rm.set_knows() to indicate that the MC has met a character:
-#    $ rm.set_knows("amber", True)
-
-# 6. Checking levels:
-#    Call check_levels() periodically (e.g., after significant events) to update and display notifications:
-#    $ check_levels()
-
-# 7. Using in conditional statements:
-#    You can use rm.get() in your script for conditional branching:
-#    if rm.get("amber", "cor") > 50:
-#        "Amber's behavior has become noticeably more corrupt."
-#    if rm.get("nanami", "rel"):
-#        "Nanami and MC are in a relationship."
-
-# Adding New Characters:
-# To add a new character to the system:
-# 1. Add the character's name to the self.chars list in the RM class __init__ method.
-# 2. If the character needs special attributes, add appropriate logic in the __init__ method.
-
-# Connections to Other Files:
-# - This script is closely connected to def_chars.rpy, which defines the character objects.
-# - The notification screens defined here are used in screens.rpy for display.
-# - The RM instance created here is used throughout the game script for managing character relationships and attributes.
-
-# Maintenance and Expansion:
-# When updating or expanding this script:
-# 1. Ensure any new attributes are properly initialized in the RM class.
-# 2. Update the check_levels() function if new attributes need to be monitored.
-# 3. Modify notification screens if you want to display additional information.
-# 4. If adding new methods to RM, document them thoroughly and update this documentation.
-
-# Note for Novices:
-# This script uses Ren'Py's Python support. If you're new to Python:
-# - The 'class' keyword defines a new type of object (RM in this case).
-# - Methods like update() and get() are functions that belong to the RM class.
-# - The 'self' parameter in these methods refers to the instance of RM you're working with.
-# - Dictionaries (like self.rels) are used to store key-value pairs, allowing quick access to character data.
-
-# Remember: This system is central to your game's mechanics. Always test thoroughly after making changes!
+################################################################################
+## CORE RELATIONSHIP MANAGEMENT SYSTEM
+################################################################################
 
 init -900 python:
-    class RM:  # RM stands for Relationship Management - handles all character relationships and attributes
+    ############################################################################
+    ## RM CLASS - RELATIONSHIP MANAGEMENT CORE
+    ############################################################################
+    
+    class RM:
+        """
+        RM stands for Relationship Management - handles all character relationships and attributes
+        
+        Core Features:
+        - Tracks corruption, trust, pregnancy, relationship status for love interests
+        - Manages main character integrity with locking mechanism
+        - Handles organization trust levels (takeo, tmpd, osaka)
+        - Provides safe stat updates with bounds checking
+        - Maintains character knowledge tracking
+        """
         def __init__(self):
             # List of all characters in the game that will have stats tracked
             self.chars = ["amber", "nanami", "elizabeth", "isabella", "kanae", "arlette", "antonella", "madison", "paz", "mc", "takeo", "tmpd", "osaka"]
@@ -103,7 +66,14 @@ init -900 python:
                     self.rels[char] = {"cor": 0, "trust": 0, "preg": False, "rel": False, "knows": False}
 
         def update(self, char, attr, val):
-            # Updates a character's attribute by adding/subtracting a value
+            """
+            Updates a character's attribute by adding/subtracting a value
+            
+            Args:
+                char (str): Character ID (e.g., "amber", "mc")
+                attr (str): Attribute to update ("cor", "trust", "integrity", etc.)
+                val (int): Value to add/subtract
+            """
             if char in self.rels:  # Check if character exists
                 if attr in ["cor", "trust", "integrity"]:  # These attributes are numerical (0-100)
                     # Special case: can't update integrity if it's locked
@@ -120,26 +90,59 @@ init -900 python:
                     self.rels[char][attr] = val
             
         def get(self, char, attr):
-            # Retrieves a character's attribute value
+            """
+            Retrieves a character's attribute value
+            
+            Args:
+                char (str): Character ID
+                attr (str): Attribute name
+                
+            Returns:
+                Value of the attribute or None if character doesn't exist
+            """
             if char in self.rels:
                 return self.rels[char][attr]
             return None  # Return None if character doesn't exist
 
         def update_rel(self, char):
-            # Updates relationship status based on trust level
-            # Only applies to regular characters (not mc, takeo, tmpd, osaka)
+            """
+            Updates relationship status based on trust level
+            Only applies to regular characters (not mc, takeo, tmpd, osaka)
+            
+            Args:
+                char (str): Character ID to update relationship status for
+            """
             if char in self.rels and char not in ["mc", "takeo", "tmpd", "osaka"]:
                 trust = self.rels[char]["trust"]
                 # Character becomes "in a relationship" if trust is 70 or higher
                 self.rels[char]["rel"] = trust >= 70
 
         def set_knows(self, char, value):
-            # Sets whether MC has met this character
-            # Only applies to regular characters
+            """
+            Sets whether MC has met this character
+            Only applies to regular characters
+            
+            Args:
+                char (str): Character ID
+                value (bool): Whether MC knows this character
+            """
             if char in self.rels and char not in ["mc", "takeo", "tmpd", "osaka"]:
                 self.rels[char]["knows"] = value
 
+    ############################################################################
+    ## SEXSTATS CLASS - SEXUAL INTERACTION TRACKING
+    ############################################################################
+    
     class SexStats:
+        """
+        Sexual statistics tracking system for all love interests
+        
+        Features:
+        - Tracks various sexual activities per character
+        - Manages virginity status
+        - Includes strike system for character interactions
+        - Provides safe stat access and modification
+        """
         def __init__(self):
             # List of characters eligible for sexual interactions (the female LIs)
             self.chars = ["amber", "nanami", "elizabeth", "isabella", "kanae", "arlette", "antonella", "madison", "paz"]
@@ -163,35 +166,54 @@ init -900 python:
                 }
         
         def get(self, char, stat):
+            """
+            Get a sexual statistic for a character
+            
+            Args:
+                char (str): Character ID
+                stat (str): Statistic name
+                
+            Returns:
+                int or bool: Value of the statistic, 0 if not found
+            """
             if char in self.stats and stat in self.stats[char]:
                 return self.stats[char][stat]
             return 0  # Return 0 if the character or stat doesn't exist
         
         def add(self, char, stat):
+            """
+            Increment a sexual statistic for a character
+            
+            Args:
+                char (str): Character ID
+                stat (str): Statistic name to increment
+            """
             if char in self.stats and stat in self.stats[char]:
                 self.stats[char][stat] += 1
         
         def set(self, char, stat, value):
+            """
+            Set a sexual statistic to a specific value
+            
+            Args:
+                char (str): Character ID
+                stat (str): Statistic name
+                value (int or bool): Value to set
+            """
             if char in self.stats and stat in self.stats[char]:
                 self.stats[char][stat] = value
 
+################################################################################
+## LEVEL SYSTEM AND CHARACTER CONFIGURATION
+################################################################################
 
-
-#  add+1
-#$ ss.add("amber", "blowjob")
-# $ ss.set("nanami", "virgin", False)
-# $ ss.set("paz", "virgin", True)
-
-# get value
-#$ amber_bj = ss.get("amber", "blowjob")
-# $ is_virgin = ss.get("nanami", "virgin")
-
-# specific value
-#$ ss.set("amber", "sex", 5)
-
-# Define dictionaries that map level numbers (0-5) to value ranges (0-100)
-# Used to determine corruption and trust levels for characters
 init python:
+    ############################################################################
+    ## CORRUPTION AND TRUST LEVEL DEFINITIONS
+    ############################################################################
+    
+    # Define dictionaries that map level numbers (0-5) to value ranges (0-100)
+    # Used to determine corruption and trust levels for characters
     corruption_levels = {
         0: (0, 16),    # Level 0: Pure/Innocent (0-16%)
         1: (17, 32),   # Level 1: Slightly corrupted (17-32%)
@@ -211,6 +233,10 @@ init python:
         5: (81, 100)   # Level 5: Intimate/Best Friend (81-100%)
     }
     
+    ############################################################################
+    ## CHARACTER CONFIGURATION AND DISPLAY NAMES
+    ############################################################################
+    
     # Dictionary mapping internal character IDs to their display names
     # Comments indicate how each character's stats are modified:
     # - love: how quickly they gain trust
@@ -227,20 +253,36 @@ init python:
         "paz": "Paz"               # 1X love / 1X corruption rate
     }
     
-    # Helper function that takes a numeric value and a level dictionary
-    # Returns which level (0-5) the value falls into
+    ############################################################################
+    ## LEVEL CHECKING AND NOTIFICATION FUNCTIONS
+    ############################################################################
+    
     def get_level_for_value(value, level_dict):
+        """
+        Helper function that takes a numeric value and a level dictionary
+        Returns which level (0-5) the value falls into
+        
+        Args:
+            value (int): Numeric value to check (0-100)
+            level_dict (dict): Dictionary mapping levels to ranges
+            
+        Returns:
+            int: Level number (0-5)
+        """
         for level, (min_val, max_val) in level_dict.items():
             if min_val <= value <= max_val:
                 return level
         return 0  # Default to level 0 if value doesn't fit in any range
     
-    # Main function to check and notify level changes
-    # Parameters:
-    # - char: character ID (e.g. "amber")
-    # - attr: attribute to check ("cor" for corruption or "trust")
-    # - val: how much the attribute changed
     def check_levels(char, attr, val):
+        """
+        Main function to check and notify level changes
+        
+        Args:
+            char (str): Character ID (e.g. "amber")
+            attr (str): Attribute to check ("cor" for corruption or "trust")
+            val (int): How much the attribute changed
+        """
         # Get the new value after change
         new_value = rm.get(char, attr)
         
@@ -284,9 +326,25 @@ init python:
         else:  # No change (val == 0)
             pass  # Do nothing
 
+################################################################################
+## WARDROBE MANAGEMENT SYSTEM
+################################################################################
 
 init -890 python:
-    class WM:  # WM stands for Wardrobe Manager - handles character outfits/clothing
+    ############################################################################
+    ## WM CLASS - WARDROBE MANAGEMENT
+    ############################################################################
+    
+    class WM:
+        """
+        WM stands for Wardrobe Manager - handles character outfits/clothing
+        
+        Features:
+        - Manages outfit unlocking and selection for all characters
+        - Tracks maximum available outfits per character
+        - Provides outfit navigation (next/previous)
+        - Ensures outfit availability before selection
+        """
         def __init__(self):
             # List of all characters in the game that will have wardrobes tracked
             self.chars = ["amber", "nanami", "elizabeth", "isabella", "kanae", "arlette", "antonella", "madison", "paz"]
@@ -318,7 +376,16 @@ init -890 python:
                 }
         
         def unlock(self, char, outfit_id):
-            """Unlocks a specific outfit for a character"""
+            """
+            Unlocks a specific outfit for a character
+            
+            Args:
+                char (str): Character ID
+                outfit_id (int or str): Outfit ID to unlock
+                
+            Returns:
+                bool: True if outfit was unlocked, False otherwise
+            """
             if char in self.wardrobes:
                 # Convert outfit_id to integer if it was passed as string
                 if isinstance(outfit_id, str) and outfit_id.isdigit():
@@ -331,7 +398,16 @@ init -890 python:
             return False
         
         def is_unlocked(self, char, outfit_id):
-            """Checks if a specific outfit is unlocked for a character"""
+            """
+            Checks if a specific outfit is unlocked for a character
+            
+            Args:
+                char (str): Character ID
+                outfit_id (int or str): Outfit ID to check
+                
+            Returns:
+                bool: True if outfit is unlocked, False otherwise
+            """
             if char in self.wardrobes:
                 # Convert outfit_id to integer if it was passed as string
                 if isinstance(outfit_id, str) and outfit_id.isdigit():
@@ -341,7 +417,16 @@ init -890 python:
             return False
         
         def set(self, char, outfit_id):
-            """Sets the current outfit for a character (if it's unlocked)"""
+            """
+            Sets the current outfit for a character (if it's unlocked)
+            
+            Args:
+                char (str): Character ID
+                outfit_id (int or str): Outfit ID to set as current
+                
+            Returns:
+                bool: True if outfit was set, False otherwise
+            """
             if char in self.wardrobes:
                 # Convert outfit_id to integer if it was passed as string
                 if isinstance(outfit_id, str) and outfit_id.isdigit():
@@ -354,19 +439,43 @@ init -890 python:
             return False
         
         def get_current(self, char):
-            """Gets the currently selected outfit for a character"""
+            """
+            Gets the currently selected outfit for a character
+            
+            Args:
+                char (str): Character ID
+                
+            Returns:
+                int: Current outfit ID, 0 if character doesn't exist
+            """
             if char in self.wardrobes:
                 return self.wardrobes[char]["current"]
             return 0  # Default to outfit 0 if character doesn't exist
         
         def get_all_unlocked(self, char):
-            """Gets all unlocked outfits for a character as a sorted list"""
+            """
+            Gets all unlocked outfits for a character as a sorted list
+            
+            Args:
+                char (str): Character ID
+                
+            Returns:
+                list: Sorted list of unlocked outfit IDs
+            """
             if char in self.wardrobes:
                 return sorted(list(self.wardrobes[char]["unlocked"]))
             return [0]  # Return only the default outfit if character doesn't exist
             
         def next_outfit(self, char):
-            """Changes to the next unlocked outfit for a character"""
+            """
+            Changes to the next unlocked outfit for a character
+            
+            Args:
+                char (str): Character ID
+                
+            Returns:
+                bool: True if outfit was changed, False otherwise
+            """
             if char in self.wardrobes:
                 unlocked = self.get_all_unlocked(char)
                 if len(unlocked) <= 1:
@@ -380,7 +489,15 @@ init -890 python:
             return False
             
         def prev_outfit(self, char):
-            """Changes to the previous unlocked outfit for a character"""
+            """
+            Changes to the previous unlocked outfit for a character
+            
+            Args:
+                char (str): Character ID
+                
+            Returns:
+                bool: True if outfit was changed, False otherwise
+            """
             if char in self.wardrobes:
                 unlocked = self.get_all_unlocked(char)
                 if len(unlocked) <= 1:
@@ -393,23 +510,131 @@ init -890 python:
                 return True
             return False
 
+    ############################################################################
+    ## WARDROBE HELPER FUNCTIONS
+    ############################################################################
+    
     # Create a global instance of the Wardrobe Manager
     wm = WM()
 
-    # Helper function for screen to get the appropriate image path
     def get_character_outfit_pic(char_name, knows=True):
         """
         Returns the appropriate image path for a character's current outfit
         
-        Parameters:
-        - char_name: The character's ID (e.g., 'nanami')
-        - knows: Whether the MC knows this character
+        Args:
+            char_name (str): The character's ID (e.g., 'nanami')
+            knows (bool): Whether the MC knows this character
         
         Returns:
-        - String path to the appropriate image file
+            str: String path to the appropriate image file
         """
         if not knows:
             return "gui/char_pic_null.webp"
         
         current_outfit = wm.get_current(char_name)
         return f"gui/{char_name}_outfit_{current_outfit}.png"
+
+################################################################################
+## INTEGRATION INSTRUCTIONS
+################################################################################
+
+## How to integrate this core relationship system in your game:
+## 
+## 1. The system initializes automatically with proper save game compatibility
+##    - RM, SexStats, and WM instances are created automatically
+##    - All initialization priorities are preserved for save compatibility
+##    - Character data structures remain identical to previous versions
+##
+## 2. Basic relationship management:
+##    $ rm.update("amber", "cor", 10)     # Increase Amber's corruption by 10
+##    $ rm.update("takeo", "trust", -5)   # Decrease Takeo's trust by 5
+##    $ rm.update("mc", "integrity", 15)  # Increase MC's integrity by 15
+##    $ rm.update_rel("nanami")           # Update relationship status based on trust
+##    $ rm.set_knows("amber", True)       # Set that MC has met Amber
+##
+## 3. Retrieving character data:
+##    $ amber_corruption = rm.get("amber", "cor")
+##    $ isabella_relationship = rm.get("isabella", "rel")
+##    $ mc_integrity = rm.get("mc", "integrity")
+##
+## 4. Sexual statistics management:
+##    $ ss.add("amber", "blowjob")        # Increment Amber's blowjob count
+##    $ ss.set("nanami", "virgin", False) # Set Nanami as non-virgin
+##    $ amber_bj = ss.get("amber", "blowjob")  # Get Amber's blowjob count
+##    $ is_virgin = ss.get("nanami", "virgin") # Check virginity status
+##
+## 5. Wardrobe management:
+##    $ wm.unlock("nanami", 3)            # Unlock outfit 3 for Nanami
+##    $ wm.set("nanami", 2)               # Set Nanami's current outfit to 2
+##    $ current_outfit = wm.get_current("nanami")  # Get current outfit
+##    $ wm.next_outfit("amber")           # Switch to next unlocked outfit
+##
+## 6. Level checking and notifications:
+##    $ check_levels("amber", "cor", 15)  # Check corruption level change
+##    $ check_levels("nanami", "trust", 20)  # Check trust level change
+##
+## Example usage in game script:
+## label amber_scene:
+##     # Update corruption and check for level changes
+##     $ rm.update("amber", "cor", 15)
+##     $ check_levels("amber", "cor", 15)
+##     
+##     # Check relationship status
+##     if rm.get("amber", "rel"):
+##         "Amber is now in a relationship with you."
+##     
+##     # Track sexual interaction
+##     $ ss.add("amber", "blowjob")
+##     
+##     # Unlock new outfit
+##     $ wm.unlock("amber", 2)
+##
+## Character attribute reference:
+## RM attributes:
+## - Love interests: "cor" (corruption), "trust", "preg" (pregnancy), "rel" (relationship), "knows"
+## - Main character: "integrity", "integrity_locked"
+## - Organizations: "trust" only
+##
+## SexStats attributes:
+## - "anal", "assjob", "blowjob", "creampie", "pussyjob", "sex", "titjob"
+## - "virgin" (boolean), "strike" (integer)
+##
+## WM methods:
+## - unlock(), set(), get_current(), next_outfit(), prev_outfit()
+## - is_unlocked(), get_all_unlocked()
+##
+## Level system:
+## - Corruption/Trust levels: 0-5 (ranges from 0-100 stats)
+## - Level 0: 0-16, Level 1: 17-32, Level 2: 33-48
+## - Level 3: 49-64, Level 4: 65-80, Level 5: 81-100
+## - Automatic notifications when levels change
+##
+## Save game compatibility:
+## - All initialization priorities preserved (-900, -890)
+## - All class structures maintained exactly
+## - All variable names and data types unchanged
+## - Complete backward compatibility ensured
+##
+## Character progression rates:
+## - Amber: 1X love / 1.5X corruption
+## - Antonella: 0.25X love / 1X corruption  
+## - Arlette: 1.5X love / 1.5X corruption
+## - Elizabeth: 2X love / 1X corruption
+## - Isabella: 1X love / 1X corruption
+## - Kanae: 0.5X love / 0.5X corruption
+## - Madison: 0.5X love / 2X corruption
+## - Nanami: 3X love / 1X corruption
+## - Paz: 1X love / 1X corruption
+##
+## Critical notes:
+## - Never modify initialization priorities (-900, -890)
+## - Never change class method signatures
+## - Never alter data structure names or types
+## - Always test save game loading after any modifications
+## - Use check_levels() after stat updates for proper notifications
+##
+## Troubleshooting:
+## - If stats don't update: Check character name spelling and attribute names
+## - If saves break: Verify no initialization priorities were changed
+## - If levels don't show: Ensure check_levels() is called after stat changes
+## - If outfits don't work: Check that outfit IDs are within max_outfits range

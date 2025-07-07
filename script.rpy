@@ -6,7 +6,7 @@
     default persistent.walkthrough_all = False
     default persistent.walkthrough_li = set()
     default persistent.disclaimer = False
-    default htl_episodes = 5.2
+    default htl_episodes = 5.3
     default rm = RM()
     default ss = SexStats()
 
@@ -31,8 +31,8 @@ init python:
 
     def update_htl_episodes():
         global htl_episodes
-        if not htl_episodes == 5.2:
-            htl_episodes = 5.2 
+        if not htl_episodes == 5.3:
+            htl_episodes = 5.3 
 
 label splashscreen:
     scene black

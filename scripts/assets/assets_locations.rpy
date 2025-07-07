@@ -2,17 +2,23 @@ init:
     #RANDOM TEXTS
     image minutes = Text("Minutes later...", style="minutes")
     image hours = Text("Hours later...", style="minutes")
+    image week = Text("1 Week later...", style="minutes")
+    image days = Text("Some days later...", style="minutes")
     ## LOCATIONS TEXT
     image osaka_location = Text("Shin-Imamiya, Osaka", style="location")
     image tobita_location = Text("Tobita Sinchi, Osaka", style="location")
     image doton_location = Text("Dōtonbori, Osaka", style="location")
     image kama_location = Text("Kamagasaki, Osaka", style="location")
     image taniwa_location = Text("Taniwa Beach, Osaka", style="location")
+
+    image asakusa_location = Text("Asakusa area, Taito ward, Tokyo", style="location")
     image nana_location = Text("Kita-senju, Adachi Ward, Tokyo", style="location")
     image home_location = Text("Den-en-chōfu, Ōta ward, Tokyo", style="location")
     image outside_home_for_work = Text("Futako-Tamagawa area, Ōta ward, Tokyo", style="location")
     image work_location = Text("Kasumigaseki area, Chiyoda ward, Tokyo", style="location")
     image shibuya_location = Text("Shibuya Crossing, Shibuya City, Tokyo", style="location")
+    image hospital_location = Text("Minami-Azabu area, Minato ward, Tokyo", style="location")
+    image murderroom_location = Text("Ōi Futo area, Shinagawa ward, Tokyo", style="location")
     ## LOCATION PICTURES
     # image ep06_mcnightie01 = "scene6_location" #MICHAELS HOUSE - FRONT DOOR @ NIGHT
     # image ep06_mornwork08 = "ep6_s3_p2_sub03_a03" #TOKYO POLICE DPT - FRONT DOOR @ DAY

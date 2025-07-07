@@ -12,6 +12,10 @@ label ep05_start:
 label ep05_intro:
     $ config.rollback_enabled = True
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 1, 0.6, 0)
     $ playAudio(sfx_earlymor, "amb", 1, True, 2, 0)
     show ep05_coffee01 at ken_burns_right_to_left with slowfade
@@ -46,6 +50,10 @@ label ep05_intro:
 
 label ep05_madyoga:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 1, 0.4, 0)
     $ setChannelVolume("amb", 2, 0.5, 0)
     $ playAudio(sfx_windyprairie, "amb", 1, True, 1, 0)
@@ -327,6 +335,10 @@ label ep05_madyoga:
 
 label ep05_ambercof:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 1, 0.6, 0)
     $ playAudio(sfx_earlymor, "amb", 1, True, 2, 0)
     show ep05_amberintro01 at dramatic_focus with circlewipe
@@ -632,6 +644,10 @@ label ep05_ambercof:
 
 label ep05_isacos:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 1, 0.4, 0)
     $ playAudio(sfx_earlymor, "amb", 1, True, 2, 0)
     if ep05_ambignore:
@@ -999,6 +1015,10 @@ label ep05_isacos:
 
 label ep05_elizintro:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("sfx", 1, 1, 0)
     $ playAudio(sfx_doorclose, "sfx", 1, False, 0, 0)
     pause 1.5
@@ -1079,7 +1099,10 @@ label ep05_elipast:
     $ stopAudio("amb", 1, 2)
     $ stopAllSubchannels(channel="music", fadeout=1.5)
     scene white with slowflash
-    pause 1.2
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 2, 0.4, 0)
     $ playAudio(sfx_tokyo_residential, "amb", 2, True, 2, 0)
     show ep05_elipast01 at focus_shift, subtle_zoom_out
@@ -1454,7 +1477,10 @@ label ep05_elipast:
 
 label ep05_elishower:
     scene white with slowflash
-    pause 1
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     # Initial sequence (01-05)
     show ep05_elibath01
     $ setChannelVolume("amb", 5, 0.5, 0)
@@ -1671,7 +1697,10 @@ label ep05_elishower:
 
 label ep05_smspaz_intro:
     scene eigengrau with slowfade
-    pause 1
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     show ep05_smspz01 at ken_burns_left_to_right with circlewipe
     $ setChannelVolume("amb", 6, 0.5, 0)
     $ playAudio(sfx_earlypast, "amb", 6, True, 2, 0)
@@ -1896,6 +1925,10 @@ label ep05_pazvc:
 
 label ep05_intromn:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     show ep05_mnintro01 at ken_burns_left_to_right
     mc_t "[renpy.substitute(dialogues5['E05NMBATH_d001'])]"
     mc_t "[renpy.substitute(dialogues5['E05NMBATH_d002'])]"
@@ -2360,7 +2393,13 @@ label ep05_intromn:
             $ rm.update("nanami", "trust", -10)
             $ check_levels("nanami", "trust", -10)
             $ ss.add("nanami", "strike")
-            $ show_custom_notification("strike1")
+            $ nanami_strikes = ss.get("nanami", "strike")
+            if nanami_strikes == 1:
+                $ show_custom_notification("strike1")
+            elif nanami_strikes == 2:
+                $ show_custom_notification("strike2")
+            elif nanami_strikes >= 3:
+                $ show_custom_notification("strike3")
             mc_s "[renpy.substitute(dialogues5['E05NMBATH_d281'])]"
             nana "[renpy.substitute(dialogues5['E05NMBATH_d282'])]"
             nana "[renpy.substitute(dialogues5['E05NMBATH_d283'])]"
@@ -2463,7 +2502,10 @@ label ep05_intromn:
 
 label ep05_elibdown:
     scene eigengrau with slowfade
-    pause 1
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+    
     show ep05_elibreak01 at ken_burns_left_to_right
     $ setChannelVolume("amb", 4, 0.5, 0)
     $ playAudio(sfx_earlymor, "amb", 4, True, 2, 0)
@@ -2641,3 +2683,4 @@ label ep05_elibdown:
         return
     else:
         jump ep05_elisuicide
+

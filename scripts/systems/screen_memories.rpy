@@ -46,16 +46,31 @@ init python:
     
     # List of all memory IDs organized by release order
     all_memories = [
+        # EP01 Memories
         "m_ep01_library",
-        "m_ep01_clothes", 
+        "m_ep01_clothes",
         "m_ep01_home",
         "m_ep01_laundry",
         "m_ep01_confession",
+        # EP02 Memories
+        "m_ep02_opening",
+        "m_ep02_morning",
+        "m_ep02_encounter",
+        "m_ep02_discovery",
+        "m_ep02_tension",
+        "m_ep02_revelation",
+        "m_ep02_climax",
+        # EP03 Memories
+        "m_ep03_beginning",
+        "m_ep03_development",
+        "m_ep03_confrontation",
+        "m_ep03_resolution",
         # Add new memory IDs here following the same pattern
     ]
     
     # Memory definitions with metadata and image sequences
     memories_dict = {
+        # ===== EP01 MEMORIES =====
         "m_ep01_library": {
             "name": "Meeting Antonella at library",
             "thumbnail_idle": "memories/m_ep01_library_thumb_idle.png",
@@ -63,7 +78,7 @@ init python:
             "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep01_3rddream01",
-                "ep01_3rddream02", 
+                "ep01_3rddream02",
                 "ep01_3rddream03",
                 "ep01_3rddream05",
                 "ep01_3rddream07",
@@ -78,7 +93,7 @@ init python:
             "images": [
                 "ep01_clothing04",
                 "ep01_clothing05",
-                "ep01_clothing06", 
+                "ep01_clothing06",
                 "ep01_clothing07",
                 "ep01_clothing08"
             ]
@@ -117,13 +132,179 @@ init python:
             "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep01_amberconfess02",
-                "ep01_amberconfess09", 
+                "ep01_amberconfess09",
                 "ep01_amberconfess10"
             ]
+        },
+        # ===== EP02 MEMORIES =====
+        "m_ep02_opening": {
+            "name": "Episode 2 Opening",
+            "thumbnail_idle": "memories/m_ep02_opening_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep02_opening_thumb_hover.png", 
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep02_booze09",
+                "ep02_booze11",
+                "ep02_booze12",
+                "ep02_booze13",
+                "ep02_booze15",
+                "ep02_booze16"
+            ]
+        },
+        "m_ep02_morning": {
+            "name": "Morning Sequence",
+            "thumbnail_idle": "memories/m_ep02_morning_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep02_morning_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep02_whore09",
+                "ep02_whore10",
+                "ep02_whore13",
+                "ep02_whore15",
+                "ep02_whore16",
+                "ep02_whore18",
+                "ep02_whore19",
+                "ep02_whore20",
+                "ep02_whore21",
+                "ep02_whore22"
+            ]
+        },
+        "m_ep02_encounter": {
+            "name": "Unexpected Encounter",
+            "thumbnail_idle": "memories/m_ep02_encounter_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep02_encounter_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep02_nxtbooze06",
+                "ep02_nxtbooze07",
+                "ep02_nxtbooze08"
+            ]
+        },
+        "m_ep02_discovery": {
+            "name": "Important Discovery",
+            "thumbnail_idle": "memories/m_ep02_discovery_thumb_idle.png", 
+            "thumbnail_hover": "memories/m_ep02_discovery_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep02_friends03",
+                "ep02_friends04",
+                "ep02_friends05",
+                "ep02_friends06",
+                "ep02_friends07",
+                "ep02_friends08",
+                "ep02_friends09",
+                "ep02_friends10",
+                "ep02_friends11"
+            ]
+        },
+        "m_ep02_tension": {
+            "name": "Rising Tension",
+            "thumbnail_idle": "memories/m_ep02_tension_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep02_tension_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep02_arlehotel20",
+                "ep02_arlehotel21",
+                "ep02_arlehotel22",
+                "ep02_arlehotel23"
+            ]
+        },
+        "m_ep02_revelation": {
+            "name": "Unexpected Revelation",
+            "thumbnail_idle": "memories/m_ep02_revelation_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep02_revelation_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep02_escort01",
+                "ep02_escort05",
+                "ep02_escort08"
+            ]
+        },
+        "m_ep02_climax": {
+            "name": "Episode Climax",
+            "thumbnail_idle": "memories/m_ep02_climax_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep02_climax_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep02_arledeath01",
+                "ep02_arledeath02",
+                "ep02_arledeath03",
+                "ep02_arledeath04",
+                "ep02_arledeath05"
+            ]
+        },
+        # ===== EP03 MEMORIES =====
+        "m_ep03_beginning": {
+            "name": "Episode 3 Beginning",
+            "thumbnail_idle": "memories/m_ep03_beginning_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep03_beginning_thumb_hover.png", 
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep03_ambertalk07",
+                "ep03_ambertalk08",
+                "ep03_ambertalk09",
+                "ep03_ambertalk10",
+                "ep03_ambertalk33",
+                "ep03_ambertalk38",
+                "ep03_ambertalk49"
+            ]
+        },
+        "m_ep03_development": {
+            "name": "Story Development",
+            "thumbnail_idle": "memories/m_ep03_development_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep03_development_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep03_ambernight18",
+                "ep03_ambernight19",
+                "ep03_afterpool01",
+                "ep03_afterpool02",
+                "ep03_afterpool05",
+                "ep03_afterpool06",
+                "ep03_afterpool07",
+                "ep03_afterpool08",
+                "ep03_afterpool09",
+                "ep03_afterpool10",
+                "ep03_afterpool11",
+                "ep03_afterpool12",
+                "ep03_afterpool13",
+                "ep03_afterpool14",
+                "ep03_afterpool15",
+                "ep03_afterpool16"
+            ]
+        },
+        "m_ep03_confrontation": {
+            "name": "Critical Confrontation",
+            "thumbnail_idle": "memories/m_ep03_confrontation_thumb_idle.png",
+            "thumbnail_hover": "memories/m_ep03_confrontation_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep03_caught3",
+                "ep03_caught4",
+                "ep03_caught5",
+                "ep03_caught6",
+                "ep03_caught7"
+            ]
+        },
+        "m_ep03_resolution": {
+            "name": "Episode Resolution",
+            "thumbnail_idle": "memories/m_ep03_resolution_thumb_idle.png", 
+            "thumbnail_hover": "memories/m_ep03_resolution_thumb_hover.png",
+            "thumbnail_locked": "gui/thumb_locked.png",
+            "images": [
+                "ep03_madtalk03",
+                "ep03_madtalk04",
+                "ep03_madtalk05",
+                "ep03_madtalk06",
+                "ep03_madtalk07",
+                "ep03_madtalk08",
+                "ep03_madtalk09",
+                "ep03_madtalk10",
+                "ep03_madtalk11",
+                "ep03_madtalk12"
+            ]
         }
-        # Add new memory dictionaries here following the same pattern
     }
-    
     ############################################################################
     ## MEMORY MANAGEMENT FUNCTIONS
     ############################################################################

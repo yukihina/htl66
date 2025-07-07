@@ -204,12 +204,11 @@ init:
     style minutes:
         size 150
         outlines [ (4, "#535353", 0, 0) ]
-        font "fonts/omnes.otf"
+        font "fonts/quicksand.ttf"
         color "#F5F5F5"
+        text_align 0.5
         xalign 0.5
         yalign 0.9
-        xanchor center
-        yanchor center
 
     style location:
         size 50

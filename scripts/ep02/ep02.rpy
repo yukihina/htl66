@@ -30,7 +30,7 @@ label ep02_lovehotel:
     $ setChannelVolume(channel="amb", subchannel=2, volume=1)
     $ playAudio(sfx_nightroad, "amb", 2, True, 1.5, 0)
     show osaka_location zorder 2 with dissolve
-    pause 2
+    pause 4
     hide osaka_location with dissolve
     mc_t "[renpy.substitute(dialogues2['E02LOVEHOTEL_d001'])]"
     mc_t "[renpy.substitute(dialogues2['E02LOVEHOTEL_d002'])]"
@@ -343,7 +343,7 @@ label ep02_tobita_sinchi:
     $ playAudio(sfx_nighttobita, "amb", 2, True, 2.5, 0)
     show ep02_tobita1
     show tobita_location zorder 2 with dissolve
-    pause 2
+    pause 4
     hide tobita_location with dissolve
     mc_t "[renpy.substitute(dialogues2['E02TOBITA_d001'])]"
     mc_t "[renpy.substitute(dialogues2['E02TOBITA_d002'])]"
@@ -592,7 +592,7 @@ label ep02_yakuza_club:
     $ playAudio(sfx_evenstreet, "amb", 3, True, 2.5, 0)
     show ep02_dotonbori1 with slowfade
     show doton_location zorder 2 with dissolve
-    pause 2
+    pause 4
     hide doton_location with dissolve
     mc_t "[renpy.substitute(dialogues2['E02YAKUCLUB_d001'])]"
     mc_t "[renpy.substitute(dialogues2['E02YAKUCLUB_d002'])]"
@@ -686,7 +686,7 @@ label ep02_arle_intro:
     $ playAudio(sfx_eveningtraffic, "amb", 2, True, 2.5, 0)
     show ep02_friends01 with slowfade
     show kama_location zorder 2 with dissolve
-    pause 2
+    pause 4
     hide kama_location with dissolve
     arl "[renpy.substitute(dialogues2['E02ARLEINTRO_d001'])]"
     rin "[renpy.substitute(dialogues2['E02ARLEINTRO_d002'])]"
@@ -819,7 +819,7 @@ label ep02_mc_meet_arle:
     $ playAudio(sfx_evenstreet, "amb", 3, True, 2.5, 0)
     show ep02_dotonite1 with slowfade
     show doton_location zorder 2 with dissolve
-    pause 2
+    pause 4
     hide doton_location with dissolve
     pa_s "[renpy.substitute(dialogues2['E02MCMEETARLE_d001'])]"
     mc_s "[renpy.substitute(dialogues2['E02MCMEETARLE_d002'])]"
@@ -1015,7 +1015,7 @@ label ep02_arle_past:
     $ playAudio(sfx_beach, "amb", 1, True, 2.5, 0)
     show ep02_arlestory01 with slowfade
     show taniwa_location zorder 2 with dissolve
-    pause 2
+    pause 4
     hide taniwa_location with dissolve
     mc_t "[renpy.substitute(dialogues2['E02ARLEPAST_d001'])]"
     mc_t "[renpy.substitute(dialogues2['E02ARLEPAST_d002'])]"

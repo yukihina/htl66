@@ -8,7 +8,11 @@ label ep04_start:
 ## -- INTRO SCENE HOME
 
 label ep04_intro:
-    
+    scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     call showNoise(0.1, 0.15, transition=dissolve)
     $ config.rollback_enabled = True
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.4)
@@ -38,7 +42,10 @@ label ep04_intro:
 
 label ep04_nanapool:
     scene eigengrau with bokeh2
-    pause 2
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.4, fade_duration=1.5)
     $ setChannelVolume(channel="amb", subchannel=2, volume=0.5, fade_duration=1.5)
     show ep04_nan_intro01 at slow_reveal with slowfade
@@ -312,7 +319,10 @@ label ep04_nanapool:
 
 label ep04_nanpool:
     scene eigengrau with slowfade
-    pause 1.5 
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.4, fade_duration=1.5)
     $ setChannelVolume(channel="amb", subchannel=2, volume=0.5, fade_duration=1.5)
     show ep04_nan_bikini01 at dramatic_realization with circlewipe
@@ -1187,7 +1197,10 @@ label ep04_nantowel2:
 
 label ep04_madcaught:
     scene eigengrau with slowfade
-    pause 2
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.4, fade_duration=1.5)
     $ setChannelVolume(channel="amb", subchannel=2, volume=0.5, fade_duration=1.5)
     $ setChannelVolume(channel="music", subchannel=1, volume=0.3)
@@ -1479,7 +1492,10 @@ label ep04_madcaught_agree:
 
 label ep04_nanarun:
     scene eigengrau with slowfade
-    pause 2
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=3, volume=0.3)
     $ playAudio(sfx_earlymor, "amb", 3, True, 1, 0)   
     $ setChannelVolume(channel="sfx", subchannel=1, volume=1)
@@ -1565,7 +1581,10 @@ label ep04_nanarun:
 
 label ep04_isajelously:
     scene eigengrau with slowfade
-    pause 2
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=4, volume=0.8)
     $ playAudio(sfx_midnightpast, "amb", 4, True, 1, 0)
     $ setChannelVolume(channel="sfx", subchannel=1, volume=0.8)
@@ -1962,6 +1981,10 @@ label ep04_isajelously:
 
 label ep04_pazosaka:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=1, volume=1)
     $ playAudio(sfx_quietnite, "amb", 1, True, 1, 0)
     show ep04_mcapartment at ken_burns_bottom_to_top with ccirclewipe
@@ -2113,8 +2136,11 @@ label ep04_mcnananight:
 
 
 label ep04_nanameet:
-    
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="sfx", subchannel=1, volume=0.6)
     $ playAudio(sfx_dooropen, "sfx", 1, False, 0, 0)
     pause 1.0
@@ -2337,6 +2363,10 @@ label ep04_nanameet:
 label ep04_nanamilk:
     $ setAllSubchannelsVolume("amb", 0, 1.0)
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="sfx", subchannel=1, volume=1)
     $ playAudio(sfx_chair_lather_sit, "sfx", 1, False, 0, 0)
     pause 1
@@ -2895,6 +2925,10 @@ label ep04_nana2ndkiss:
 label ep04_nanabooze:
     $ setAllSubchannelsVolume("amb", 0, 1.0)
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="sfx", subchannel=1, volume=1)
     $ playAudio(sfx_chair_lather_sit, "sfx", 1, False, 0, 0)
     pause 1
@@ -3299,6 +3333,10 @@ label ep04_nana_nobooze:
 label ep04_nanamorebooze:
     $ stopAllSubchannels("music", 2.0)
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setAllSubchannelsVolume("amb", 0.3, 1.0)
     show ep04_nanakitdrunk07 with circlewipe
     mc_t "[renpy.substitute(dialogues4['E04MCNANMBO_d001'])]"
@@ -3403,8 +3441,11 @@ label ep04_nanamorebooze:
 
 
 label ep04_nanadrunkmcroom:
-    
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=2, volume=0.3)
     $ playAudio(sfx_mc_room_night, "amb", 2, True, 1.5, 0)
     show ep04_nanamcroom01 at ken_burns_top_to_bottom with circlewipe
@@ -4018,6 +4059,10 @@ label ep04_nanacarrybed:
 
 label ep04_nana_sleepbed:
     scene eigengrau with normalfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("sfx", 1, 1, 0)
     $ playAudio(sfx_bedmove2, "sfx", 1, False, 0, 0)
     show ep04_nanamcroom32 at ken_burns_right_to_left with normalfade
@@ -4052,6 +4097,10 @@ label ep04_nana_sleepbed:
 
 label ep04_nanalicking:
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     show ep04_nanadrunknude02 with hpunch
     $ setChannelVolume("sfx", 1, 0.5, 0)
     $ playAudio(sfx_sigh_nana, "sfx", 1, False, 0, 0)
@@ -4300,6 +4349,10 @@ label ep04_nanaleave:
 label ep04_nanaleave2:
     $ stopAllSubchannels("music", 2.0)
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     show ep04_nanadrunkleave01 with circlewipe
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANLV2_d001'])]"
@@ -4345,6 +4398,10 @@ label ep04_nanaleave2:
 
 label ep04_nanaleave_bed:
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("music",2, 0.3, 1.0)
     $ playAudio(nanami_love_theme, "music", 2, True, 2.0, 1.0)
     show ep04_nanadrunkleave03
@@ -4549,6 +4606,10 @@ label ep04_ambhall:
     $ setChannelVolume("music", 1, 0.4, 0)
     $ playAudio(amber_2nd_theme, "music", 1, True, 5.0, 0)
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     show ep04_hallmeeting05 at ken_burns_bottom_to_top
     amb "[renpy.substitute(dialogues4['E04AMBHAL_d001'])]"
     mc_s "[renpy.substitute(dialogues4['E04AMBHAL_d002'])]"
@@ -4614,6 +4675,10 @@ label ep04_ambhall:
 label ep04_ambroom_intro:
     
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=4, volume=0.3)
     $ playAudio(sfx_mc_room_night, "amb", 4, True, 1.5, 0)
     show ep04_ambroom01 at ken_burns_left_to_right with circlewipe
@@ -4698,6 +4763,9 @@ label ep04_ambroom_intro:
 label ep04_amber_dancing:
     scene eigengrau
     pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 4, 0.3, 1.0)
     show ep04_ambdance01 at ken_burns_left_to_right with normalfade
     amb "[renpy.substitute(dialogues4['E04AMBDAN_d001'])]"
@@ -4849,6 +4917,10 @@ label ep04_amber_tasting_d:
 
 label ep04_amber_bj:
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ ss.add("amber", "blowjob")
     show ep04_amber_bj01
     $ setChannelVolume("sfx", 5, 0.5, 0)
@@ -5033,6 +5105,10 @@ label ep04_amber_endscene:
 label ep04_mad_mcroom:
     
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=2, volume=0.3)
     $ playAudio(sfx_mc_room_night, "amb", 2, True, 1.5, 0)
     show ep04_madmcroom01 with circlewipe
@@ -5178,6 +5254,10 @@ label ep04_mad_mcroom:
 
 label ep04_mad_massagebody:
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     show ep04_madmassage01
     $ rm.update("madison", "trust", 1)
     $ check_levels("madison", "trust", 1)
@@ -5374,6 +5454,10 @@ label ep04_mad_massagebody:
 
 label ep04_mad_reward:
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("music", 2, 0.3, 1.0)
     $ playAudio(madison_theme, "music", 2, True, 2.0, 1.0)
     show ep04_madnopanties01
@@ -5498,6 +5582,10 @@ label ep04_mad_reward:
 
 label ep04_mad_assjob_deny:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("music", 2, 0.3, 1.0)
     $ playAudio(madison_bad_theme, "music", 2, True, 2.0, 1.0)
     show ep04_madisonleave03 with vpunch
@@ -5545,6 +5633,10 @@ label ep04_mad_assjob_deny:
 
 label ep04_mad_assjob:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("music", 1, 0.2, 1.0)
     $ playAudio(madison_sexy_theme, "music", 1, True, 2.0, 1.0)
     show ep04_madmovingass01 at concentrate with hpunch
@@ -5853,6 +5945,10 @@ label ep04_mad_assjob:
 
 label ep04_elimeet_intro:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.3)
     $ playAudio(sfx_nightsleep, "amb", 1, True, 1.5, 0)
     $ setChannelVolume(channel="amb", subchannel=8, volume=0.3)
@@ -6251,6 +6347,10 @@ label ep04_elimeet_intro:
 
 label ep04_elizabeth_gold:
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     if ep04_elilook:
         show ep04_eligold01 with normalfade
         mc_t "[renpy.substitute(dialogues4['E04ELIGOL_d001'])]"
@@ -6437,6 +6537,10 @@ label ep04_isabella_mcroom:
     
     call hideNoise(transition=dissolve)
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.3)
     $ playAudio(sfx_mc_room_night, "amb", 1, True, 1.5, 0)
     show ep04_isamcroom01 with circlewipe
@@ -6608,6 +6712,10 @@ label ep04_isabella_mcroom:
 
 label ep04_isabella_nobra:
     scene eigengrau
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     show ep04_isanobra01
     isa "[renpy.substitute(dialogues4['E04ISANOBR_d001'])]"
     mc_s "[renpy.substitute(dialogues4['E04ISANOBR_d002'])]"
@@ -6830,6 +6938,9 @@ label ep04_isabella_sleepnight:
 label ep04_isabella_dream:
     scene eigengrau with slowfade
     pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 5, 0.3, 1.0)
     show vignette zorder 1.0 at pov_die
     show ep04_isanight24
@@ -7060,6 +7171,9 @@ label ep04_isabella_dream:
 label ep04_isabella_masturbation:
     scene eigengrau with slowfade
     pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume("amb", 5, 0.3, 1.0)
     show ep04_isanight16 at ken_burns_right_to_left with circlewipe
     isa_t "[renpy.substitute(dialogues4['E04ISAMAST_d001'])]"
@@ -7214,6 +7328,10 @@ label ep04_isabella_masturbation:
 
 label ep04_pazcall:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.15)
     $ playAudio(sfx_morning, "amb", 1, True, 1.5, 0)
     $ setChannelVolume("music", 1, 0, 1.0)
@@ -7279,6 +7397,10 @@ label ep04_pazcall_post:
 
 label ep04_antonella_return:
     scene eigengrau with slowfade
+    pause 1.0
+    $ renpy.free_memory()
+    pause 1.0
+    
     $ setChannelVolume(channel="amb", subchannel=3, volume=0.3)
     $ playAudio(sfx_morning_late, "amb", 3, True, 1.5, 0)
     show ep04_antoshow01 at dramatic_focus_out

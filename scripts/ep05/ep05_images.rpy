@@ -620,3 +620,366 @@ init:
 
     image ep05_elishower1 = Movie(play="images/ep5/elishower01.webm", loop=True)
     image ep05_elishower2 = Movie(play="images/ep5/elishower02.webm", loop=True)
+
+
+    image ep05_hosd1_nan01 = "hospital_nanami_00"
+    image ep05_hosd1_nan02 = "hospital_nanami_01"
+    image ep05_hosd1_nan03 = "hospital_nanami_02"
+    image ep05_hosd1_nan04 = "hospital_nanami_03"
+    image ep05_hosd1_nan05 = "hospital_nanami_04"
+    image ep05_hosd1_nan06 = "hospital_nanami_05"
+    image ep05_hosd1_nan07 = "hospital_nanami_06"
+    image ep05_hosd1_nan08 = "hospital_nanami_07"
+    image ep05_hosd1_nan09 = "hospital_nanami_08"
+    image ep05_hosd1_nan10 = "hospital_nanami_09"
+    image ep05_hosd1_nan11 = "hospital_nanami_10"
+    image ep05_hosd1_nan12 = "hospital_nanami_11"
+    image ep05_hosd1_nan13 = "hospital_nanami_12"
+    image ep05_hosd1_nan14 = "hospital_nanami_13"
+    image ep05_hosd1_nan15 = "hospital_nanami_14a"
+    image ep05_hosd1_nan16 = "hospital_nanami_14b"
+    image ep05_hosd1_nan17 = "hospital_nanami_14c"
+    image ep05_hosd1_nan18 = Movie(play="images/ep5/ep5_final-anim11.webm", loop=True)
+
+    image ep05_hosd1_mad01 = "hospital_madison_01"
+    image ep05_hosd1_mad02 = "hospital_madison_02"
+    image ep05_hosd1_mad03 = "hospital_madison_03"
+    image ep05_hosd1_mad04 = "hospital_madison_04"
+    image ep05_hosd1_mad05 = "hospital_madison_05"
+    image ep05_hosd1_mad06 = "hospital_madison_05_2"
+    image ep05_hosd1_mad07 = "hospital_madison_06a"
+    image ep05_hosd1_mad08 = "hospital_madison_06b"
+    image ep05_hosd1_mad09 = "hospital_madison_06c"
+    image ep05_hosd1_mad10 = "hospital_madison_07"
+    image ep05_hosd1_mad11 = "hospital_madison_07a2"
+    image ep05_hosd1_mad12 = "hospital_madison_07a"
+    image ep05_hosd1_mad13 = "hospital_madison_07b2"
+    image ep05_hosd1_mad14 = "hospital_madison_07b"
+    image ep05_hosd1_mad15 = "hospital_madison_07c2"
+    image ep05_hosd1_mad16 = "hospital_madison_07c"
+    image ep05_hosd1_mad17 = "hospital_madison_07d2"
+    image ep05_hosd1_mad18 = "hospital_madison_07d"
+    image ep05_hosd1_mad19 = "hospital_madison_07e"
+    image ep05_hosd1_mad20 = "hospital_madison_07f2"
+    image ep05_hosd1_mad21 = "hospital_madison_07f"
+    image ep05_hosd1_mad22 = "hospital_madison_08"
+    image ep05_hosd1_mad23 = "hospital_madison_08a2"
+    image ep05_hosd1_mad24 = "hospital_madison_08a"
+    image ep05_hosd1_mad25 = "hospital_madison_08b"
+    image ep05_hosd1_mad26 = "hospital_madison_08c2"
+    image ep05_hosd1_mad27 = "hospital_madison_08c"
+    image ep05_hosd1_mad28 = "hospital_madison_08d2"
+    image ep05_hosd1_mad29 = "hospital_madison_08d"
+    image ep05_hosd1_mad30 = "hospital_madison_09"
+    image ep05_hosd1_mad31 = "hospital_madison_09_2"
+    image ep05_hosd1_mad32 = "hospital_madison_09a2"
+    image ep05_hosd1_mad33 = "hospital_madison_09a"
+    image ep05_hosd1_mad34 = "hospital_madison_09b"
+    image ep05_hosd1_mad35 = "hospital_madison_09c"
+    image ep05_hosd1_mad36 = "hospital_madison_09d2"
+    image ep05_hosd1_mad37 = "hospital_madison_09d"
+    image ep05_hosd1_mad38 = "hospital_madison_09e2"
+    image ep05_hosd1_mad39 = "hospital_madison_09e"
+    image ep05_hosd1_mad40 = "hospital_madison_09f"
+    image ep05_hosd1_mad41 = "hospital_madison_10"
+    image ep05_hosd1_mad42 = "hospital_madison_11"
+    image ep05_hosd1_mad43 = Movie(play="images/ep5/ep5_final-anim8_a.webm", loop=True)
+    image ep05_hosd1_mad44 = Movie(play="images/ep5/ep5_final-anim8_b.webm", loop=True)
+    image ep05_hosd1_mad45 = Movie(play="images/ep5/ep5_final-anim9.webm", loop=True)
+    image ep05_hosd1_mad46 = Movie(play="images/ep5/ep5_final-anim10.webm", loop=True)
+    image ep05_hosd1_mad47 = Movie(play="images/ep5/ep5_final-anim12.webm", loop=True)
+
+    image ep05_hosd2_paz01 = "paz_call_01"
+    image ep05_hosd2_paz02 = "paz_call_01_1"
+    image ep05_hosd2_paz03 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_01a", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz04 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_02", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz05 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_03", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz06 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_04", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz07 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_05", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz08 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_06", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz09 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_07", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz10 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_08", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz11 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_09", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz12 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_10", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz13 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_11", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz14 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_12a", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz15 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_12b", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz16 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_12c", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz17 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_13a", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz18 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_13b", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz19 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_13c", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz20 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_14a", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz21 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_15a", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz22 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_16", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+
+    image ep05_hosd2_paz23 = Composite(
+        (960,1080),
+        (0,0), AlphaMask("paz_call_17", "gui/masks_vc.png"),
+        (0,0), "phone_vc_gui_top_rec",
+        (0,0), "gui/phone_vc_gui.png"
+    )
+    image ep05_hosd2_paz24 = "paz_call_18"
+
+    image ep05_hosd3_amb01 = "amber_roof_00"
+    image ep05_hosd3_amb02 = "amber_roof_01"
+    image ep05_hosd3_amb03 = "amber_roof_02"
+    image ep05_hosd3_amb04 = "amber_roof_03"
+    image ep05_hosd3_amb05 = "amber_roof_04"
+    image ep05_hosd3_amb06 = "amber_roof_05"
+    image ep05_hosd3_amb07 = "amber_roof_06"
+    image ep05_hosd3_amb08 = "amber_roof_07"
+    image ep05_hosd3_amb09 = "amber_roof_08"
+    image ep05_hosd3_amb10 = "amber_roof_09"
+    image ep05_hosd3_amb11 = "amber_roof_10"
+    image ep05_hosd3_amb12 = "amber_roof_11a"
+    image ep05_hosd3_amb13 = "amber_roof_11b"
+    image ep05_hosd3_amb14 = "amber_roof_11c"
+    image ep05_hosd3_amb15 = "amber_roof_12"
+    image ep05_hosd3_amb16 = "amber_roof_13"
+    image ep05_hosd3_amb17 = "amber_roof_13a2"
+    image ep05_hosd3_amb18 = "amber_roof_13a"
+    image ep05_hosd3_amb19 = "amber_roof_13b"
+    image ep05_hosd3_amb20 = "amber_roof_13c"
+    image ep05_hosd3_amb21 = "amber_roof_14"
+    image ep05_hosd3_amb22 = "amber_roof_14a"
+    image ep05_hosd3_amb23 = "amber_roof_14b"
+    image ep05_hosd3_amb24 = "amber_roof_14c2"
+    image ep05_hosd3_amb25 = "amber_roof_14c"
+    image ep05_hosd3_amb26 = "amber_roof_14d"
+    image ep05_hosd3_amb27 = "amber_roof_14d2"
+    image ep05_hosd3_amb28 = "amber_roof_14d3"
+    image ep05_hosd3_amb29 = "amber_roof_14d4"
+    image ep05_hosd3_amb30 = "amber_roof_14e2"
+    image ep05_hosd3_amb31 = "amber_roof_14e"
+    image ep05_hosd3_amb32 = "amber_roof_15"
+    image ep05_hosd3_amb33 = "amber_roof_15_2"
+    image ep05_hosd3_amb34 = "amber_roof_15a"
+    image ep05_hosd3_amb35 = "amber_roof_15a2"
+    image ep05_hosd3_amb36 = "amber_roof_15b"
+    image ep05_hosd3_amb37 = "amber_roof_15b2"
+    image ep05_hosd3_amb38 = "amber_roof_15c2"
+    image ep05_hosd3_amb39 = "amber_roof_15c"
+    image ep05_hosd3_amb40 = "amber_roof_16"
+    image ep05_hosd3_amb41 = "amber_roof_16_1"
+    image ep05_hosd3_amb42 = "amber_roof_16a2"
+    image ep05_hosd3_amb43 = "amber_roof_16a"
+    image ep05_hosd3_amb44 = "amber_roof_16b2"
+    image ep05_hosd3_amb45 = "amber_roof_16b"
+    image ep05_hosd3_amb46 = "amber_roof_16c"
+    image ep05_hosd3_amb47 = "amber_roof_16d2"
+    image ep05_hosd3_amb48 = "amber_roof_16d"
+    image ep05_hosd3_amb49 = "amber_roof_17"
+    image ep05_hosd3_amb50 = "amber_roof_18"
+    image ep05_hosd3_amb51 = "amber_roof_19"
+    image ep05_hosd3_amb52 = "amber_roof_20"
+    image ep05_hosd3_amb53 = "amber_roof_21"
+    image ep05_hosd3_amb54 = "amber_roof_22"
+    image ep05_hosd3_amb55 = "amber_roof_23"
+    image ep05_hosd3_amb56 = Movie(play="images/ep5/ep5_final-anim1.webm", loop=True)
+    image ep05_hosd3_amb57 = Movie(play="images/ep5/ep5_final-anim2.webm", loop=True)
+    image ep05_hosd3_amb58 = Movie(play="images/ep5/ep5_final-anim3_a.webm", loop=True)
+    image ep05_hosd3_amb59 = Movie(play="images/ep5/ep5_final-anim3_b.webm", loop=True)
+    image ep05_hosd3_amb60 = Movie(play="images/ep5/ep5_final-anim4.webm", loop=True)
+    image ep05_hosd3_amb61 = Movie(play="images/ep5/ep5_final-anim5.webm", loop=True)
+
+
+    image ep05_hosd3_eli01 = "elizabeth_dream_01"
+    image ep05_hosd3_eli02 = "elizabeth_dream_02"
+    image ep05_hosd3_eli03 = "elizabeth_dream_03"
+    image ep05_hosd3_eli04 = "elizabeth_dream_04"
+    image ep05_hosd3_eli05 = "elizabeth_dream_05"
+    image ep05_hosd3_eli06 = "elizabeth_dream_06"
+    image ep05_hosd3_eli07 = "elizabeth_dream_07"
+    image ep05_hosd3_eli08 = "elizabeth_dream_08"
+    image ep05_hosd3_eli09 = "elizabeth_dream_09"
+    image ep05_hosd3_eli10 = "elizabeth_dream_09_2"
+    image ep05_hosd3_eli11 = "elizabeth_dream_09b"
+    image ep05_hosd3_eli12 = "elizabeth_dream_09b_2"
+    image ep05_hosd3_eli13 = "elizabeth_dream_10"
+    image ep05_hosd3_eli14 = "elizabeth_dream_10_2"
+    image ep05_hosd3_eli15 = "elizabeth_dream_11"
+    image ep05_hosd3_eli16 = "elizabeth_dream_12"
+    image ep05_hosd3_eli17 = "elizabeth_dream_13"
+    image ep05_hosd3_eli18 = "elizabeth_dream_14"
+    image ep05_hosd3_eli19 = "elizabeth_dream_15"
+    image ep05_hosd3_eli20 = "hospital_room_01"
+    image ep05_hosd3_eli21 = "hospital_room_02"
+    image ep05_hosd3_eli22 = "hospital_room_03"
+    image ep05_hosd3_eli23 = "hospital_room_04"
+    image ep05_hosd3_eli24 = Movie(play="images/ep5/ep5_final-anim6_a.webm", loop=True)
+    image ep05_hosd3_eli25 = Movie(play="images/ep5/ep5_final-anim6_b.webm", loop=True)
+    image ep05_hosd3_eli26 = Movie(play="images/ep5/ep5_final-anim6_c.webm", loop=True)
+    image ep05_hosd3_eli27 = Movie(play="images/ep5/ep5_final-anim6_d.webm", loop=True)
+    image ep05_hosd3_eli28 = Movie(play="images/ep5/ep5_final-anim7.webm", loop=True)
+
+    image ep05_hosd3_mic01 = "michael_confront_01"
+    image ep05_hosd3_mic02 = "michael_confront_02"
+    image ep05_hosd3_mic03 = "michael_confront_03"
+    image ep05_hosd3_mic04 = "michael_confront_04"
+    image ep05_hosd3_mic05 = "michael_confront_05"
+    image ep05_hosd3_mic06 = "michael_confront_06"
+    image ep05_hosd3_mic07 = "michael_confront_07"
+    image ep05_hosd3_mic08 = "michael_confront_08"
+    image ep05_hosd3_mic09 = "michael_confront_09"
+    image ep05_hosd3_mic10 = "michael_confront_10"
+    image ep05_hosd3_mic11 = "michael_confront_11"
+    image ep05_hosd3_mic12 = "michael_confront_12"
+    image ep05_hosd3_mic13 = "michael_confront_13"
+    image ep05_hosd3_mic14 = "michael_confront_14"
+    image ep05_hosd3_mic15 = "michael_confront_15"
+    image ep05_hosd3_mic16 = "michael_confront_16"
+    image ep05_hosd3_mic17 = "michael_confront_17"
+    image ep05_hosd3_mic18 = "michael_confront_18"
+    image ep05_hosd3_mic19 = "michael_confront_19"
+    image ep05_hosd3_mic20 = "michael_confront_20"
+    image ep05_hosd3_mic21 = "michael_confront_21"
+
+    image ep05_end01 = "act1ending_01"
+    image ep05_end02 = "act1ending_02"
+    image ep05_end03 = "act1ending_03"
+    image ep05_end04 = "act1ending_04"
+    image ep05_end05 = "act1ending_05"
+    image ep05_end06 = "act1ending_06"
+    image ep05_end07 = "act1ending_07"
+    image ep05_end08 = "act1ending_08"
+    image ep05_end09 = "act1ending_09"
+    image ep05_end10 = "act1ending_10"
+    image ep05_end11 = "act1ending_11"
+    image ep05_end12 = "act1ending_12"
+    image ep05_end13 = "act1ending_13"
+    image ep05_end14 = "act1ending_14"
+    image ep05_end15 = "act1ending_15"
+    image ep05_end16 = "act1ending_16"
+    image ep05_end17 = "act1ending_17"
+    image ep05_end18 = "act1ending_18"
+    image ep05_end19 = "act1ending_19"
+    image ep05_end20 = "act1ending_20"
+    image ep05_end21 = "act1ending_21"
+    image ep05_end22 = "act1ending_22"
+    image ep05_end23 = "act1ending_23"
+    image ep05_end24 = "act1ending_24"
+    image ep05_end25 = "act1ending_25"
+    image ep05_end26 = "act1ending_26"
+
+    image loc_hospmichael_night = "loc_hosp_night"
+    image loc_murderroom_night = "loc_mrdroom_night"
+    image loc_templeasak_night = "loc_temple_night"

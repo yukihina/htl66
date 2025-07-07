@@ -167,6 +167,7 @@ init -999 python:
         characters["yaw"] = create_character("Yakuza Wakagashira", "#8bf5f0", "#98bdbb")
         characters["hir"] = create_character("Hiroshi", "#FFA500", "#FFF2E6")
         characters["ed"] = create_character("Echo Dot", "#00A4E4", "#B3E5FC")
+        characters["surg"] = create_character("The Surgeon", "#58aeda", "#7fa5b5")
 
         return characters
 

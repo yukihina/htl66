@@ -125,9 +125,24 @@ init:
     # AMBER INTERACTIONS
     default ep05_ambignore = False # Does Amber ignore MC because she's mad?
     default ep05_ambersus_eli = False #Does Amber in the past suspects on Elizabeth and MC relatioship?
+    default ep05_amber_route = 0 # 1 = Romantic and gentle / 2 = Rough and passionate / 3 = Reject her
 
     # ISABELLA INTERACTIONS
     default ep05_isacosplay = 0 # Negative (-4) = Corruption Achievement / Positive = Love Achievement (+4)
+
+    # MADISON INTERACTIONS
+    default ep05_confrontation_peaceful = False #Did MC confronted Madison peacefully?
+    default ep05_threat_direct = False #Did MC threatened Madison directly?
+    default ep05_stance_surrender = False #Did MC surrendered to Madison?
+
+    # NANAMI INTERACTIONS
+    default ep05_mc_blame_madison = False #Did MC blame Madison because she said Nanami should strip to boys when drunk
+    default ep05_mc_takes_responsibility = False #Did MC take responsibility on drunk night @ episode 4
+    default ep05_nanami_sex_education = False #Did MC gave sex ed to Nanami?
+    default ep05_madison_is_bad = False #Did MC said Madison is bad influence?
+
+    # PAZ INTERACTION
+    default ep05_paz_choice = 0 # 0 = No choice, 1 = help her, 2 = reject her, 3 = accept her
 
     # SCENE TRACKING
     default look_down_seen = False  # Track if player has seen lower view
@@ -139,6 +154,10 @@ init:
     default ep05_bath_path = None #Elizabeth path shower scene
     default ep05_integrity_choice = None
     default ep05_mnvoy = None #Nanami voyeur path
+    default ep05_finish_inside = False #Did MC finish inside Madison?
+    default ep05_guilt_points = 0
+    default ep05_curiosity_points = 0
+    default ep05_evasive_points = 0
 
     # ACHIEVEMENTS
     default ep05_ach_isaintro = False # Achievement for Isabella part 1
