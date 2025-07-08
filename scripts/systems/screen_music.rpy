@@ -399,7 +399,8 @@ init python:
                 ("Undress the Night", madison_sexy_theme)
             ],
             "paz": [
-                ("Golden Tide", paz_peace_theme)
+                ("Golden Tide", paz_happy_theme),
+                ("Ember Glow", paz_theme)
             ],
             "common": [
                 ("Diamond Pulse", photos_theme),

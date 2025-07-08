@@ -181,6 +181,180 @@ init python:
             ])
         },
 
+        "ep05_hosnan_m1": {
+            "madison": create_wt_text([
+                {"option_num": 1, "char_name": "Madison", "points": -1, "type": "Love"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Love"}
+            ])
+        },
+
+        "ep05_hosnan_m2": {
+            "nanami": create_wt_text([
+                {"option_num": 1, "char_name": "Nanami", "points": 6, "type": "Love"},
+                {"option_num": 2, "char_name": "Nanami", "points": -6, "type": "Love"}
+            ])
+        },
+
+        "ep05_hosnan_m3": {
+            "nanami": create_wt_text([
+                {"option_num": 1, "char_name": "Nanami", "points": -2, "type": "Corruption"},
+                {"option_num": 2, "char_name": "Nanami", "points": 2, "type": "Corruption"}
+            ])
+        },
+
+        "ep05_hosnan_m4": {
+            "madison": create_wt_text([
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love"},
+                {"option_num": 2, "char_name": "Madison", "points": -2, "type": "Love"}
+            ])
+        },
+
+        "ep05_hosnan_m5": {
+            "nanami": create_wt_text([
+                {"option_num": 1, "char_name": "Nanami", "points": -6, "type": "Love",  "extra_text": "You will get a strike!"},
+                {"option_num": 2, "char_name": "Nanami", "points": -3, "type": "Love"},
+                {"option_num": 3, "char_name": "Nanami", "points": 3, "type": "Love"}
+            ])
+        },
+
+        "ep05_hosmad_m1": {
+            "madison": create_wt_text([
+                {"option_num": 1, "char_name": "Madison", "points": 1, "type": "Love"},
+                {"option_num": 2, "char_name": "Madison", "points": -2, "type": "Love",  "extra_text": "You will skip sex scenes!"}
+            ])
+        },
+
+        "ep05_hosmad_m2": {
+            "madison": create_wt_text([
+                {"option_num": 1, "char_name": "Madison", "points": -2, "type": "Love"}
+            ])
+        },
+
+        "ep05_hosmad_m3": {
+            "madison": create_wt_text([
+                {"option_num": 1, "char_name": "Madison", "points": 4, "type": "Corruption"},
+                {"option_num": 2, "char_name": "Madison", "points": 2, "type": "Corruption"}
+            ])
+        },
+
+        "ep05_hosmad_m4": {
+            "madison": create_wt_text([
+                {"option_num": 1, "char_name": "Madison", "points": 5, "type": "Love"},
+                {"option_num": 2, "char_name": "Madison", "points": -1, "type": "Love",  "extra_text": "You will get a strike!"}
+            ])
+        },
+
+        "ep05_hospaz_m1": {
+            "paz": create_wt_text([
+                {
+                    "option_num": 1,
+                    "char_name": "Paz",
+                    "points": 2,
+                    "type": "Love",
+                    "additional_effects": [
+                        {"points": 4, "type": "Corruption"}
+                    ]
+                },
+                {"option_num": 2, "char_name": "Paz", "points": -2, "type": "Corruption"},
+                {"option_num": 3, "char_name": "Paz", "points": 2, "type": "Love"}
+            ])
+        },
+
+        "ep05_hosamb_m1": {
+            "amber": create_wt_text([
+                {"option_num": 1, "char_name": "Amber", "points": 2, "type": "Love"},
+                {"option_num": 2, "char_name": "Amber", "points": -2, "type": "Love"}
+            ])
+        },
+
+        "ep05_hosamb_m2": {
+            "amber": create_wt_text([
+                {"option_num": 1, "char_name": "Amber", "points": 6, "type": "Love"},
+                {
+                    "option_num": 2,
+                    "char_name": "Amber",
+                    "points": 2,
+                    "type": "Love",
+                    "additional_effects": [
+                        {"points": 4, "type": "Corruption"}
+                    ]
+                },
+                {"option_num": 3, "char_name": "Amber", "points": -6, "type": "Love",  "extra_text": "You will get a strike and skip sex scenes!"}
+            ])
+        },
+
+        "ep05_elid_m1": {
+            "elizabeth": create_wt_text([
+                {"option_num": 1, "char_name": "Elizabeth", "points": 4, "type": "Love"},
+                {"option_num": 2, "char_name": "Elizabeth", "points": 2, "type": "Love"},
+                {"option_num": 3, "char_name": "Elizabeth", "extra_text": "It won't change any score"}
+            ])
+        },
+
+        "ep05_elid_m2": {
+            "elizabeth": create_wt_text([
+                {"option_num": 1, "char_name": "Elizabeth", "extra_text": "It won't change any score"},
+                {"option_num": 2, "char_name": "Elizabeth", "points": 1, "type": "Corruption"},
+                {"option_num": 3, "char_name": "Elizabeth", "points": -1, "type": "Corruption"}
+            ])
+        },
+
+        "ep05_elid_m3": {
+            "elizabeth": create_wt_text([
+                {"option_num": 1, "char_name": "Elizabeth", "points": 2, "type": "Love"},
+                {"option_num": 2, "char_name": "Elizabeth", "points": 1, "type": "Love"},
+                {"option_num": 3, "char_name": "Elizabeth", "extra_text": "It won't change any score"}
+            ])
+        },
+
+        "ep05_elid_m4": {
+            "elizabeth": create_wt_text([
+                {"option_num": 1, "char_name": "Elizabeth", "points": -1, "type": "Corruption"},
+                {"option_num": 2, "char_name": "Elizabeth", "extra_text": "It won't change any score"},
+                {"option_num": 3, "char_name": "Elizabeth", "points": -2, "type": "Corruption"}
+            ])
+        },
+
+        "ep05_elid_m5": {
+            "elizabeth": create_wt_text([
+                {"option_num": 1, "char_name": "Elizabeth", "points": -1, "type": "Corruption"},
+                {"option_num": 2, "char_name": "Elizabeth", "points": 1, "type": "Corruption"},
+                {"option_num": 3, "char_name": "Elizabeth", "points": -2, "type": "Corruption"}
+            ])
+        },
+
+        "ep05_mcmic_m1": {
+            "mc": create_wt_text([
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+5 Integrity to Darkness"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "It won't change any score"},
+                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+5 Integrity to Light"}
+            ])
+        },
+
+        "ep05_mcmic_m2": {
+            "mc": create_wt_text([
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+8 Integrity to Darkness"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "It won't change any score"},
+                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+8 Integrity to Light"}
+            ])
+        },
+
+        "ep05_mcmic_m3": {
+            "mc": create_wt_text([
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+10 Integrity to Darkness"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "It won't change any score"},
+                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+10 Integrity to Light"}
+            ])
+        },
+
+        "ep05_mcmic_m4": {
+            "mc": create_wt_text([
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+12 Integrity to Darkness"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "It won't change any score"},
+                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+8 Integrity to Light"}
+            ])
+        },
+
 #------end of wt data
     }
 

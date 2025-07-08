@@ -79,7 +79,9 @@ init -6 python:
         "antonella_game_theme": "any-questions", #any questions
         "antonella_sexy_theme": "a-game-of-skin", #a game of skin
         "antonella_past_happy_theme": "race-of-hearts", #race of hearts
+        "antonella_horror_theme": "queen-of-carrion", #Queen of Carrion
         "redkitsune_theme": "kitsune-s-theme-red",#kitsune theme - red
+        "antonella_singing_act1": "sakura-chiru-yoru",#桜散る夜 (Sakura Chiru Yoru)
 
         # Amber themes
         "amber_2nd_theme": "a-day-without-you",#A Day Without You
@@ -133,7 +135,8 @@ init -6 python:
         "nanami_innocence_theme": "hakanai-negai",#Hakanai Negai  - 儚い願い
 
         # Paz themes
-        "paz_peace_theme": "golden-tide",#Golden Tide
+        "paz_happy_theme": "golden-tide",#Golden Tide
+        "paz_theme": "ember-glow",#Ember Glow
 
         # MC themes
         "mc_theme": "modoranu-toki",#戻らぬ時 (Modoranu Toki)
@@ -142,6 +145,9 @@ init -6 python:
         "mc_suspense_theme": "owaranai-rensa",#終わらない連鎖 (Owaranai Rensa)
         "mc_action_theme": "ky-ran-no-koku",#狂乱の刻 (Kyōran no Koku)
         "mc_action_theme2": "ikareru-jihibiki",#怒れる地響き (Ikareru Jihibiki)
+
+        # Michael themes
+        "mic_theme": "the-serpents-elegy",#The Serpent's Elegy
 
         # Takeo themes
 

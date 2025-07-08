@@ -743,7 +743,7 @@ label ep02_the_talk:
     pa_s "[renpy.substitute(dialogues2['E02THETALK_d002'])]"
     mc_s "[renpy.substitute(dialogues2['E02THETALK_d003'])]"
     $ setChannelVolume(channel="music", subchannel=1, volume=0.7)
-    $ playAudio(paz_peace_theme, "music", 1, True, 2.5, 0)
+    $ playAudio(paz_theme, "music", 1, True, 2.5, 0)
     show ep02_partners02
     pa_s "[renpy.substitute(dialogues2['E02THETALK_d004'])]"
     mc_s "[renpy.substitute(dialogues2['E02THETALK_d005'])]"

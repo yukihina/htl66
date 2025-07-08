@@ -1733,7 +1733,7 @@ label ep05_pazvc:
     hide ep05_smspz03
     $ stopAudio("sfx", 5, 0.5)
     $ setChannelVolume("music", 1, 0.4, 0)
-    $ playAudio(paz_peace_theme, "music", 1, True, 4, 0)
+    $ playAudio(paz_theme, "music", 1, True, 4, 0)
     show ep05_callpz01 at scale_down, videocall_open
     pa_s "[renpy.substitute(dialogues5['E05PZVC_d001'])]"
     pa_s "[renpy.substitute(dialogues5['E05PZVC_d002'])]"

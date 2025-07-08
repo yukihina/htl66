@@ -228,3 +228,34 @@ init:
         yalign 0.6
         xanchor center
         yanchor center
+
+    # Enhanced styles for Act I ending sequence with cinematic feel
+    style the_end_style:
+        size 160
+        font "fonts/quicksand.ttf"
+        color "#FFFFFF"
+        outlines [(8, "#1d1d1d", 2, 2), (4, "#2a4d3a", 0, 0)]
+        xalign 0.85
+        yalign 0.65
+        text_align 0.5
+        kerning 6
+        
+    style of_style:
+        size 30
+        font "fonts/omnes.otf"
+        color "#B8E6C1"
+        outlines [(3, "#1d1d1d", 1, 1), (1, "#1a3d2a", 0, 0)]
+        xalign 0.85
+        yalign 0.75
+        text_align 0.5
+        kerning 3
+        
+    style act_one_style:
+        size 112
+        font "fonts/omnes.otf"
+        color "#FFFFFF"
+        outlines [(6, "#1d1d1d", 2, 2), (3, "#2a4d3a", 0, 0)]
+        xalign 0.85
+        yalign 0.92
+        text_align 0.5
+        kerning 12

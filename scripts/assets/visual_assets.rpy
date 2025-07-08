@@ -500,5 +500,21 @@ image nl_jp = "gui/new_logo_qori02.webp"
 image nl_qo = "gui/new_logo_qori04.webp"
 image nl_ga = "gui/new_logo_qori05.webp"
 
+image sakura_movie = Movie(play="images/common/sakura.webm", mask="images/common/sakura_alpha.webm", loop=True)
+
+# Background for Act I ending
+image act1_ending_bg = "act1_end"
+
+# Text elements for Act I ending sequence
+image the_end_text = Text("THE END", style="the_end_style")
+image of_text = Text("of", style="of_style") 
+image act_one_text = Text("ACT I", style="act_one_style")
+image thank_you_text = Text("Thank you for playing", style="thank_you_style")
+image save_reminder_text = Text("(You should save here)", style="save_reminder_style")
+
+screen forced_pause():
+        modal True
+        key "dismiss" action Return()
+
 screen mcpov_dying:
         add "vignette" xpos 0 ypos 0 at pov_die
