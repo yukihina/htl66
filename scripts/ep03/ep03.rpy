@@ -353,6 +353,7 @@ label ep03_madtalk:
             mc_s "[renpy.substitute(dialogues3['E03MADISONTALK_d071'])]"
             mad "[renpy.substitute(dialogues3['E03MADISONTALK_d072'])]"
             mc_s "[renpy.substitute(dialogues3['E03MADISONTALK_d073'])]"
+            $ unlock_memory("m_ep03_tv")
     mc_t "[renpy.substitute(dialogues3['E03MADISONTALK_d074'])]"
     $ stopAllSubchannels(channel="sfx", fadeout=1)
     $ stopAllSubchannels(channel="amb", fadeout=1.5)
@@ -884,6 +885,7 @@ label ep03_reunion_left_stop:
             mc_s "[renpy.substitute(dialogues3['E03REULEFT_d029'])]"
             amb "[renpy.substitute(dialogues3['E03REULEFT_d030'])]"
             mc_s "[renpy.substitute(dialogues3['E03REULEFT_d031'])]"
+            $ unlock_memory("m_ep03_talk")
             show ep03_ambertalk68 with vpunch
             amb "[renpy.substitute(dialogues3['E03REULEFT_d032'])]"
             amb "[renpy.substitute(dialogues3['E03REULEFT_d033'])]"
@@ -1148,6 +1150,7 @@ label ep03_afterpool:
     mc_s "[renpy.substitute(dialogues3['E03RESCUE_d069'])]"
     amb "[renpy.substitute(dialogues3['E03RESCUE_d070'])]"
     mc_s "[renpy.substitute(dialogues3['E03RESCUE_d071'])]"
+    $ unlock_memory("m_ep03_night")
     $ stopAllSubchannels(channel="amb", fadeout=1.5)
     $ stopAllSubchannels(channel="music", fadeout=2)
     jump ep03_amberclothes
@@ -1227,6 +1230,7 @@ label ep03_amberclothes:
             mad "[renpy.substitute(dialogues3['E03AMBERCLOTH_d042'])]"
             mc_s "[renpy.substitute(dialogues3['E03AMBERCLOTH_d043'])]"
             mad "[renpy.substitute(dialogues3['E03AMBERCLOTH_d044'])]"
+            $ unlock_memory("m_ep03_green")
         "Resist the temptation to ogle Madison":
             hide screen walkthrough_screen
             mc_t "[renpy.substitute(dialogues3['E03AMBERCLOTH_d045'])]"

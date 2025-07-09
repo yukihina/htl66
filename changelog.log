@@ -16,6 +16,7 @@ v0.26 (Episode 5)
   • Achievements screen divided by Acts
   • Character screen redesigned
   • Erased all past BGM music for copyright reasons
+  • Transitions now exclude notifications layer
   • Reorganized most core scripts
 
 ! FIXED:

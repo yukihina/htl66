@@ -46,6 +46,7 @@ label ep02_lovehotel:
     aoi "[renpy.substitute(dialogues2['E02LOVEHOTEL_d006'])]"
     show ep02_hotel02
     mc_s "[renpy.substitute(dialogues2['E02LOVEHOTEL_d007'])]"
+    $ unlock_memory("m_ep02_friend")
     $ stopAudio(channel="amb", subchannel=2, fadeout=10)
     show ep02_hotel03
     aoi "[renpy.substitute(dialogues2['E02LOVEHOTEL_d008'])]"
@@ -481,6 +482,7 @@ label ep02_tobita_sinchi_aoicomes:
     mc_s "[renpy.substitute(dialogues2['E02TOBITACOMES_d042'])]"
     show ep02_whore22 at dizzyness with hpunch
     aoi "[renpy.substitute(dialogues2['E02TOBITACOMES_d043'])]"
+    $ unlock_memory("m_ep02_reunion")
     show ep02_whore23 at dizzyness
     aya "[renpy.substitute(dialogues2['E02TOBITACOMES_d044'])]"
     show ep02_whore24 at dizzyness
@@ -669,6 +671,7 @@ label ep02_the_day_after:
     mc_t "[renpy.substitute(dialogues2['E02DAYAFTER_d009'])]"
     show ep02_nxtbooze08
     mc_t "[renpy.substitute(dialogues2['E02DAYAFTER_d010'])]"
+    $ unlock_memory("m_ep02_hangover")
     show ep02_nxtbooze09
     mc_t "[renpy.substitute(dialogues2['E02DAYAFTER_d011'])]"
     show ep02_nxtbooze10
@@ -731,6 +734,7 @@ label ep02_arle_intro:
     rin "[renpy.substitute(dialogues2['E02ARLEINTRO_d028'])]"
     arl "[renpy.substitute(dialogues2['E02ARLEINTRO_d029'])]"
     rin "[renpy.substitute(dialogues2['E02ARLEINTRO_d030'])]"
+    $ unlock_memory("m_ep02_friendship")
     $ stopAllSubchannels(channel="amb", fadeout=1.5)
     $ stopAllSubchannels(channel="music", fadeout=1.5)
     jump ep02_the_talk
@@ -1269,6 +1273,7 @@ label ep02_arle_mc_sex:
     arl "[renpy.substitute(dialogues2['E02ARLEMCSEX_d089'])]"
     arl "[renpy.substitute(dialogues2['E02ARLEMCSEX_d090'])]"
     arl "[renpy.substitute(dialogues2['E02ARLEMCSEX_d091'])]"
+    $ unlock_memory("m_ep02_hotel")
     $ stopAllSubchannels(channel="amb", fadeout=1.5)
     jump ep02_grandma
 
@@ -1432,6 +1437,7 @@ label ep02_arle_hell:
     yaw "[renpy.substitute(dialogues2['E02ARLEHELL_d077'])]"
     arl_t "[renpy.substitute(dialogues2['E02ARLEHELL_d078'])]"
     arl "[renpy.substitute(dialogues2['E02ARLEHELL_d079'])]"
+    $ unlock_memory("m_ep02_revelation")
     show ep02_escort09
     yas "[renpy.substitute(dialogues2['E02ARLEHELL_d080'])]"
     yas "[renpy.substitute(dialogues2['E02ARLEHELL_d081'])]"
@@ -1929,6 +1935,7 @@ label ep02_arlette_mc_story:
     arl "[renpy.substitute(dialogues2['E02ARLEMCSTORY_d075'])]"
     mc_s "[renpy.substitute(dialogues2['E02ARLEMCSTORY_d076'])]"
     arl "[renpy.substitute(dialogues2['E02ARLEMCSTORY_d077'])]"
+    $ unlock_memory("m_ep02_kitchen")
     $ stopAllSubchannels(channel="amb", fadeout=2.5)
     scene eigengrau with dissolve
     $ playAudio(arlette_nostalgia_theme, "music", 1, True, 2.5, 0)

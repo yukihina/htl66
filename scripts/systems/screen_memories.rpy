@@ -53,18 +53,18 @@ init python:
         "m_ep01_laundry",
         "m_ep01_confession",
         # EP02 Memories
-        "m_ep02_opening",
-        "m_ep02_morning",
-        "m_ep02_encounter",
-        "m_ep02_discovery",
-        "m_ep02_tension",
+        "m_ep02_friend",
+        "m_ep02_reunion",
+        "m_ep02_hangover",
+        "m_ep02_friendship",
+        "m_ep02_hotel",
         "m_ep02_revelation",
-        "m_ep02_climax",
+        "m_ep02_kitchen",
         # EP03 Memories
-        "m_ep03_beginning",
-        "m_ep03_development",
-        "m_ep03_confrontation",
-        "m_ep03_resolution",
+        "m_ep03_talk",
+        "m_ep03_night",
+        "m_ep03_green",
+        "m_ep03_tv",
         # Add new memory IDs here following the same pattern
     ]
     

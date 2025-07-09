@@ -13,7 +13,7 @@
 ## The _() surrounding the string marks it as eligible for translation.
 
 define config.name = _("Hard to Love")
-define config.layers = ['master', 'background', 'texture', 'middle', 'forward', 'transient', 'screens', 'overlay', 'states']
+define config.layers = ['master', 'background', 'texture', 'middle', 'forward', 'transient', 'screens', 'overlay', 'states', 'notifications']
 
 ## Determines if the title given above is shown on the main menu screen. Set
 ## this to False to hide the title.
