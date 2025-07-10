@@ -22,7 +22,7 @@ label ep05_elisuicide:
     mc_t "[renpy.substitute(dialogues5['E05_ELSUI_d002'])]"
 
 
-    $ setChannelVolume("music", 1, 0.5, 0)
+    $ setChannelVolume("music", 1, 0.3, 0)
     $ playAudio(nanami_theme, "music", 1, True, 4, 0)
 
     show ep05_hosd1_nan02
@@ -134,7 +134,7 @@ label ep05_elisuicide:
                 $ rm.update("nanami", "trust", -6)
                 $ check_levels("nanami", "trust", -6)
         
-        $ setChannelVolume("music", 2, 0.5, 0)
+        $ setChannelVolume("music", 2, 0.3, 0)
         $ playAudio(nanami_clumsy_theme, "music", 2, True, 4, 0)
 
         show ep05_hosd1_nan08 with vpunch
@@ -204,7 +204,7 @@ label ep05_elisuicide:
             $ rm.update("nanami", "cor", 2)
             $ check_levels("nanami", "cor", 2)
 
-            $ setChannelVolume("music", 3, 0.5, 0)
+            $ setChannelVolume("music", 3, 0.3, 0)
             $ playAudio(nanami_theme, "music", 3, True, 4, 0)
     
     show ep05_hosd1_nan10 at ken_burns_corner_to_corner3
@@ -257,7 +257,7 @@ label ep05_elisuicide:
     nana "[renpy.substitute(dialogues5['E05_ELSUI_d102'])]"
     mc_s "[renpy.substitute(dialogues5['E05_ELSUI_d103'])]"
     
-    $ setChannelVolume("music", 5, 0.5, 0)
+    $ setChannelVolume("music", 5, 0.3, 0)
     $ playAudio(nanami_love_theme, "music", 5, True, 4, 0)
 
     show ep05_hosd1_nan12 with hpunch
@@ -390,7 +390,7 @@ label ep05_hosmadison:
         mad "[renpy.substitute(dialogues5['E05_MADHO_d015'])]"
     mc_t "[renpy.substitute(dialogues5['E05_MADHO_d016'])]"
     
-    $ setChannelVolume("music", 1, 0.5, 0)
+    $ setChannelVolume("music", 1, 0.3, 0)
     $ playAudio(madison_bad_theme, "music", 1, True, 4, 0)
 
     $ setChannelVolume("sfx", 1, 0.7, 0)
@@ -517,7 +517,7 @@ label ep05_hosmadison:
         mad "[renpy.substitute(dialogues5['E05_MADHO_d059'])]"
         mc_t "[renpy.substitute(dialogues5['E05_MADHO_d060'])]"
     
-    $ setChannelVolume("music", 2, 0.5, 0)
+    $ setChannelVolume("music", 2, 0.3, 0)
     $ playAudio(madison_sexy_theme, "music", 2, True, 4, 0)
 
     show ep05_hosd1_mad10 at ken_burns_bottom_to_top with slowfade
@@ -874,7 +874,7 @@ label ep05_hospaz_vc:
     pause 1.0
 
     $ stopAudio ("sfx", 1, 1)
-    $ setChannelVolume("music", 1, 0.5, 0)
+    $ setChannelVolume("music", 1, 0.3, 0)
     $ playAudio(paz_theme, "music", 1, True, 4, 0)
 
     show ep05_hosd2_paz03 at scale_down, videocall_open
@@ -1149,13 +1149,15 @@ label ep05_hosamber:
     $ stopAudio("amb",3,2)
     $ setChannelVolume("amb", 4, 0.6, 0)
     $ playAudio(sfx_clinicrooftop, "amb", 4, True, 2, 0)
+    $ setChannelVolume("amb", 5, 0.2, 0)
+    $ playAudio(sfx_wind_pool, "amb", 5, True, 2, 0)
 
     show ep05_hosd3_amb02 with slowfade
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d004'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d005'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d006'])]"
 
-    $ setChannelVolume("music", 1, 0.5, 0)
+    $ setChannelVolume("music", 1, 0.3, 0)
     $ playAudio(amber_sad_theme, "music", 1, True, 4, 0)
 
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d007'])]"
@@ -1265,7 +1267,7 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d074'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d075'])]"
     
-    show ep05_hosd3_amb09 with normalfade
+    show ep05_hosd3_amb09 with slowfade
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d076'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d077'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d078'])]"
@@ -1274,6 +1276,12 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d081'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d082'])]"
     
+    $ setChannelVolume("music", 9, 0.3, 0)
+    $ playAudio(amber_2nd_theme, "music", 9, True, 2, 2)
+    pause 1
+    $ setChannelVolume("sfx", 3, 0.6, 0)
+    $ playAudio(sfx_carhit, "sfx", 3, False, 0, 0)
+
     show ep05_hosd3_amb10 at ken_burns_corner_to_corner2 with normalfade
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d083'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d084'])]"
@@ -1285,6 +1293,12 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d090'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d091'])]"
     
+    $ setChannelVolume("sfx", 1, 0.6, 0)
+    $ playAudio(sfx_punch, "sfx", 1, False, 0, 0)
+    pause 0.5
+    $ setChannelVolume("sfx", 2, 0.6, 0)
+    $ playAudio(sfx_bodyfall_carpet, "sfx", 2, False, 0, 0)
+
     show ep05_hosd3_amb11 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d092'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d093'])]"
@@ -1337,6 +1351,8 @@ label ep05_hosamber:
 
             mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d114'])]"
 
+            $ stopAllSubchannels("music", 2)
+
             show ep05_hosd3_amb14
             amb "[renpy.substitute(dialogues5['E05_AMBHO_d115'])]"
             amb "[renpy.substitute(dialogues5['E05_AMBHO_d116'])]"
@@ -1355,6 +1371,9 @@ label ep05_hosamber:
             $ rm.update("amber", "trust", -6)
             $ check_levels("amber", "trust", -6)
 
+            $ stopAllSubchannels("sfx", 2)
+            $ stopAllSubchannels("amb", 2)
+
             jump ep05_elidream
     
     show ep05_hosd3_amb15
@@ -1366,6 +1385,8 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d125'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d126'])]"
     
+    $ stopAllSubchannels("music", 2)
+
     scene eigengrau with slowfade
     show ep05_hosd3_amb16
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d127'])]"
@@ -1376,8 +1397,10 @@ label ep05_hosamber:
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d132'])]"
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d133'])]"
     
-    $ setChannelVolume("music", 2, 0.5, 0)
+    $ setChannelVolume("music", 2, 0.3, 0)
     $ playAudio(amber_sexy_theme2, "music", 2, True, 4, 0)
+    $ setChannelVolume("amb", 4, 0.3, 2.0)
+    $ setChannelVolume("amb", 5, 0.1, 2.0)
 
     show ep05_hosd3_amb17
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d134'])]"
@@ -1403,6 +1426,9 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d151'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d152'])]"
     
+    $ setChannelVolume("sfx", 1, 0.2, 1.0)
+    $ playAudio(sfx_carhit, "sfx", 1, False)
+
     show ep05_hosd3_amb20 with hpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d153'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d154'])]"
@@ -1456,9 +1482,10 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d190'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d191'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d192'])]"
-    mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d193'])]"
-    mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d194'])]"
     
+    $ setChannelVolume("sfx", 2, 0.1, 0)
+    $ playAudio(sfx_gasp_female, "sfx", 2, False)
+
     show ep05_hosd3_amb27
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d195'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d196'])]"
@@ -1474,6 +1501,9 @@ label ep05_hosamber:
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d204'])]"
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d205'])]"
     
+    $ setChannelVolume("sfx", 3, 0.1, 1.0)
+    $ playAudio(sfx_moan_generic, "sfx", 3, False)
+
     show ep05_hosd3_amb56 at focus_shift, ken_burns_left_to_right
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d206'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d207'])]"
@@ -1481,7 +1511,7 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d209'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d210'])]"
     
-    show ep05_hosd3_amb29
+    show ep05_hosd3_amb29 with hpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d211'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d212'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d213'])]"
@@ -1489,7 +1519,15 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d215'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d216'])]"
     
-    show ep05_hosd3_amb30 at slow_reveal
+    $ setChannelVolume("sfx", 5, 0.3, 0)
+    $ playAudio(sfx_bodyfall_carpet, "sfx", 5, False)
+    pause 0.5
+    $ setChannelVolume("sfx", 4, 1, 0)
+    $ playAudio(sfx_sexslide1, "sfx", 4, False)
+    $ setChannelVolume("sfx", 6, 1, 0)
+    $ playAudio(sfx_moan_breath2, "sfx", 6, False)
+
+    show ep05_hosd3_amb30 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d217'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d218'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d219'])]"
@@ -1505,7 +1543,7 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d227'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d228'])]"
     
-    show ep05_hosd3_amb32
+    show ep05_hosd3_amb32 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d229'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d230'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d231'])]"
@@ -1513,7 +1551,10 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d233'])]"
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d234'])]"
     
-    show ep05_hosd3_amb33
+    $ setChannelVolume("sfx", 7, 1, 0)
+    $ playAudio(sfx_moan_breath3, "sfx", 7, False)
+
+    show ep05_hosd3_amb33 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d235'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d236'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d237'])]"
@@ -1522,6 +1563,10 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d240'])]"
     
     scene eigengrau
+
+    $ setChannelVolume("sfx", 4, 1.0, 0)
+    $ playAudio(sfx_moan_breath, "sfx", 4, False)
+
     show ep05_hosd3_amb60 at focus_shift, ken_burns_corner_to_corner3
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d241'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d242'])]"
@@ -1530,13 +1575,13 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d245'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d246'])]"
     
-    show ep05_hosd3_amb34
+    show ep05_hosd3_amb34 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d247'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d248'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d249'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d250'])]"
     
-    show ep05_hosd3_amb35 at subtle_zoom_out
+    show ep05_hosd3_amb35 at subtle_zoom_out with hpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d253'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d254'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d255'])]"
@@ -1545,6 +1590,10 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d258'])]"
     
     scene eigengrau
+
+    $ setChannelVolume("sfx", 9, 0.4, 0)
+    $ playAudio(sfx_panting1, "sfx", 9, False)
+
     show ep05_hosd3_amb61 at focus_shift, ken_burns_left_to_right
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d259'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d260'])]"
@@ -1552,11 +1601,12 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d262'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d263'])]"
     
-    show ep05_hosd3_amb36
+    $ setChannelVolume("sfx", 1, 0.4, 0)
+    $ playAudio(sfx_bodyfall_carpet, "sfx", 1, False)
+    
+    show ep05_hosd3_amb36 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d264'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d202'])]"
-    amb "[renpy.substitute(dialogues5['E05_AMBHO_d266'])]"
-    mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d267'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d268'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d269'])]"
     
@@ -1568,15 +1618,18 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d274'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d275'])]"
     
-    show ep05_hosd3_amb38 at ken_burns_bottom_to_top
+    show ep05_hosd3_amb38 at ken_burns_bottom_to_top with hpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d276'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d277'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d278'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d279'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d280'])]"
-    mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d281'])]"
     
     scene eigengrau
+
+    $ setChannelVolume("sfx", 2, 0.2, 0)
+    $ playAudio(sfx_moan_generic, "sfx", 2, False)
+
     show ep05_hosd3_amb57 at focus_shift, ken_burns_right_to_left
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d306'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d307'])]"
@@ -1584,7 +1637,8 @@ label ep05_hosamber:
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d309'])]"
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d310'])]"
     
-    show ep05_hosd3_amb39
+    scene eigengrau
+    show ep05_hosd3_amb58 at focus_shift, ken_burns_top_to_bottom, vpunch_effect(time=0.2, offset=5, pause=0.8)
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d282'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d283'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d284'])]"
@@ -1592,8 +1646,8 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d286'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d287'])]"
     
-    scene eigengrau
-    show ep05_hosd3_amb58 at focus_shift, ken_burns_top_to_bottom
+    
+    show ep05_hosd3_amb39 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d288'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d289'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d290'])]"
@@ -1602,7 +1656,7 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d293'])]"
     
     scene eigengrau
-    show ep05_hosd3_amb59 at focus_shift, ken_burns_right_to_left
+    show ep05_hosd3_amb59 at focus_shift, ken_burns_right_to_left, vpunch_effect(time=0.2, offset=5, pause=0.7)
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d294'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d295'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d296'])]"
@@ -1610,7 +1664,7 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d298'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d299'])]"
     
-    scene eigengrau with slowfade
+    scene eigengrau
     show ep05_hosd3_amb40 with hpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d300'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d301'])]"
@@ -1619,6 +1673,9 @@ label ep05_hosamber:
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d304'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d262'])]"
     
+    $ setChannelVolume("sfx", 9, 0.4, 1.0)
+    $ playAudio(sfx_femheavybreath, "sfx", 9, False)
+
     show ep05_hosd3_amb42 with vpunch
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d311'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d312'])]"
@@ -1642,7 +1699,18 @@ label ep05_hosamber:
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d326'])]"
     mc_t "[renpy.substitute(dialogues5['E05_AMBHO_d327'])]"
     
+    menu:
+        "Cum inside Amber":
+            $ setChannelVolume("sfx", 2, 0.2, 0)
+            $ playAudio(sfx_moan_orgasm_generic, "sfx", 2, False)
+            
+            pause 0.8
+            pass
+
     show white zorder 1.0 at ejaculation_flash
+    $ setChannelVolume("sfx", 1, 0.4, 0)
+    $ playAudio(sfx_cum_bigload_fast, "sfx", 1, False)
+
     show ep05_hosd3_amb44 at vpunch with flash
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d328'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d329'])]"
@@ -1663,6 +1731,10 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d339'])]"
     
     $ stopAudio("music", 2, 2)
+    $ stopAllSubchannels("sfx", 2)
+    $ setChannelVolume("amb", 4, 0.6, 2)
+    $ setChannelVolume("amb", 5, 0.2, 2)
+
 
     scene eigengrau with slowfade
     show ep05_hosd3_amb46 at ken_burns_bottom_to_top
@@ -1712,8 +1784,11 @@ label ep05_hosamber:
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d375'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d376'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d377'])]"
+
+    $ setChannelVolume("sfx", 3, 0.1, 0)
+    $ playAudio(sfx_phone, "sfx", 3, False)
     
-    show ep05_hosd3_amb52 with normalfade
+    show ep05_hosd3_amb52 with slowfade
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d378'])]"
     mc_s "[renpy.substitute(dialogues5['E05_AMBHO_d379'])]"
     amb "[renpy.substitute(dialogues5['E05_AMBHO_d380'])]"
@@ -1723,7 +1798,7 @@ label ep05_hosamber:
 
     scene eigengrau with slowfade
 
-    $ setChannelVolume("music", 3, 0.5, 0)
+    $ setChannelVolume("music", 3, 0.3, 0)
     $ playAudio(amber_theme, "music", 3, True, 4, 0)
 
     show ep05_hosd3_amb53 at ken_burns_left_to_right
@@ -1761,23 +1836,36 @@ label ep05_elidream:
     pause 1.0
     show days
     pause 3
-    
+
+    $ setChannelVolume("amb", 1, 0.6, 0)
+    $ playAudio(sfx_clinicwalla, "amb", 1, True, 2, 0)
+    $ setChannelVolume("amb", 2, 0.15, 0)
+    $ playAudio(sfx_heart_monitor, "amb", 2, True, 2, 0)
+    $ setChannelVolume("amb", 3, 0.6, 0)
+    $ playAudio(sfx_clinicroom, "amb", 3, True, 2, 0)
+
     show ep05_hosd3_eli20 at ken_burns_right_to_left
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d001'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d002'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d003'])]"
     
+    $ stopAllSubchannels("amb", 2)
+
     scene eigengrau with bokeh
 
-    $ setChannelVolume("music", 1, 0.5, 0)
+    $ setChannelVolume("amb", 4, 0.6, 0)
+    $ playAudio(sfx_fashion, "amb", 4, True, 2, 0)
+    $ setChannelVolume("music", 1, 0.3, 0)
     $ playAudio(photos_theme, "music", 1, True, 4, 0)
 
     show ep05_hosd3_eli01 at focus_shift with clouds_inverse
-    "Producer" "You can't be here, kid! This is a professional set!"
+    "Producer" "[renpy.substitute(dialogues5['E05_ELIDR_d239'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d004'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d005'])]"
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d006'])]"
     
+    $ setChannelVolume("sfx", 1, 0.3, 0)
+    $ playAudio(sfx_cameras_photoshoot, "sfx", 1, False, 4, 4)
 
     show ep05_hosd3_eli02
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d007'])]"
@@ -1883,21 +1971,33 @@ label ep05_elidream:
             mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d035'])]"
     
     show ep05_hosd3_eli04
-    "Producer" "Fifteen minutes to showtime!"
-    "Producer" "Elizabeth, you look absolutely stunning tonight!"
-    "Producer" "The cameras are going to love you!"
+    "Producer" "[renpy.substitute(dialogues5['E05_ELIDR_d240'])]"
+    "Producer" "[renpy.substitute(dialogues5['E05_ELIDR_d241'])]"
+    "Producer" "[renpy.substitute(dialogues5['E05_ELIDR_d242'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d036'])]"
     
     $ stopAudio("music", 1, 2)
+    $ stopAllSubchannels("sfx", 2)
+    $ stopAllSubchannels("amb", 2)
 
     scene eigengrau with slowfade
+
+    $ setChannelVolume("amb", 3, 0.6, 0)
+    $ playAudio(sfx_hotel_lobby, "amb", 3, True, 2, 0)
+
     show ep05_hosd3_eli05 at focus_shift
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d037'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d038'])]"
     mc_s "[renpy.substitute(dialogues5['E05_ELIDR_d039'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d040'])]"
     
+    $ stopAudio("amb", 3, 2)
+
     scene eigengrau with slowfade
+
+    $ setChannelVolume("amb", 4, 0.6, 0)
+    $ playAudio(sfx_room_noise, "amb", 4, True, 2, 0)
+
     show ep05_hosd3_eli06 at ken_burns_left_to_right
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d041'])]"
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d042'])]"
@@ -1932,9 +2032,15 @@ label ep05_elidream:
             $ rm.update("elizabeth", "cor", -2)
             $ check_levels("elizabeth", "cor", -2)
     
-    $ setChannelVolume("music", 2, 0.5, 0)
+    $ setChannelVolume("music", 2, 0.3, 0)
     $ playAudio(elizabeth_sexy_theme, "music", 2, True, 4, 0)
     
+    scene eigengrau with slowfade
+
+    $ setChannelVolume("sfx", 1, 0.6, 0)
+    $ playAudio(sfx_door_open_creak, "sfx", 1, False, 0, 0)
+    $ setChannelVolume("amb", 4, 0.3, 1)
+
     show ep05_hosd3_eli07 at camera_zoom
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d050'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d051'])]"
@@ -1971,6 +2077,9 @@ label ep05_elidream:
         mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d070'])]"
         mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d071'])]"
     
+    $ setChannelVolume("sfx", 2, 0.8, 0)
+    $ playAudio(sfx_female_hmm2, "sfx", 2, False, 2, 0)
+
     show ep05_hosd3_eli28 #anim
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d072'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d073'])]"
@@ -2054,6 +2163,10 @@ label ep05_elidream:
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d107'])]"
     
     scene eigengrau
+
+    $ setChannelVolume("sfx", 3, 0.8, 0)
+    $ playAudio(sfx_inhale_fem2, "sfx", 3, False, 2, 0)
+
     show ep05_hosd3_eli25 #anim
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d108'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d109'])]"
@@ -2129,7 +2242,9 @@ label ep05_elidream:
         eli "[renpy.substitute(dialogues5['E05_ELIDR_d149'])]"
     
     $ stopAudio("music", 2, 2)
+    $ setChannelVolume("amb", 4, 0.6, 1)
     
+    scene eigengrau with slowfade
     show ep05_hosd3_eli13
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d150'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d151'])]"
@@ -2164,6 +2279,9 @@ label ep05_elidream:
         else:
             mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d168'])]"
             mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d169'])]"
+        
+        $ ep05_ach_final2 = True
+        
     else:
         eli "[renpy.substitute(dialogues5['E05_ELIDR_d161'])]"
         eli "[renpy.substitute(dialogues5['E05_ELIDR_d162'])]"
@@ -2212,10 +2330,14 @@ label ep05_elidream:
         mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d196'])]"
         mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d197'])]"
     
+    $ stopAllSubchannels("amb", 2)
+
     scene eigengrau with slowfade
 
-    $ setChannelVolume("music", 5, 0.5, 0)
+    $ setChannelVolume("music", 5, 0.3, 0)
     $ playAudio(elizabeth_theme, "music", 5, True, 4, 0)
+    $ setChannelVolume("amb", 6, 0.4, 0)
+    $ playAudio(sfx_nightclub, "amb", 6, True, 2, 0)
 
     show ep05_hosd3_eli17
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d198'])]"
@@ -2255,14 +2377,25 @@ label ep05_elidream:
             mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d218'])]"
         
         eli "[renpy.substitute(dialogues5['E05_ELIDR_d219'])]"
+
+        $ ep05_ach_final1 = True
     
     show ep05_hosd3_eli18 at focus_shift_sms
     
     $ stopAudio("music", 5, 2)
+    $ stopAllSubchannels("amb", 2)
 
     pause 1
 
     scene eigengrau with clouds
+
+    $ setChannelVolume("amb", 1, 0.6, 0)
+    $ playAudio(sfx_clinicwalla, "amb", 1, True, 2, 0)
+    $ setChannelVolume("amb", 2, 0.15, 0)
+    $ playAudio(sfx_heart_monitor, "amb", 2, True, 2, 0)
+    $ setChannelVolume("amb", 3, 0.6, 0)
+    $ playAudio(sfx_clinicroom, "amb", 3, True, 2, 0)
+
     show ep05_hosd3_eli21
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d220'])]"
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d221'])]"
@@ -2276,6 +2409,9 @@ label ep05_elidream:
     mc_s "[renpy.substitute(dialogues5['E05_ELIDR_d227'])]"
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d228'])]"
     
+    $ setChannelVolume("sfx", 1, 0.1, 0)
+    $ playAudio(sfx_phone, "sfx", 1, False, 1, 1)
+
     show ep05_hosd3_eli23
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d229'])]"
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d230'])]"
@@ -2288,6 +2424,8 @@ label ep05_elidream:
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d237'])]"
     mc_t "[renpy.substitute(dialogues5['E05_ELIDR_d238'])]"
     
+    $ stopAllAudio(2.0)
+
     jump ep05_hosfinal
 
 label ep05_hosfinal:
@@ -2296,6 +2434,9 @@ label ep05_hosfinal:
     $ renpy.free_memory()
     pause 1.0
 
+    $ setChannelVolume("amb", 1, 0.6, 0)
+    $ playAudio(sfx_clinicwalla, "amb", 1, True, 2, 0)
+    
     show ep05_hosd3_mic01
     mc_t "[renpy.substitute(dialogues5['E05_MICMC_d001'])]"
     mc_s "[renpy.substitute(dialogues5['E05_MICMC_d002'])]"
@@ -2304,10 +2445,10 @@ label ep05_hosfinal:
     mad "[renpy.substitute(dialogues5['E05_MICMC_d005'])]"
     mc_t "[renpy.substitute(dialogues5['E05_MICMC_d006'])]"
     
-    $ setChannelVolume("music", 1, 0.5, 0)
+    $ setChannelVolume("music", 1, 0.3, 0)
     $ playAudio(mic_theme, "music", 1, True, 4, 0)
     
-    show ep05_hosd3_mic02
+    show ep05_hosd3_mic02 with hpunch
     mad "[renpy.substitute(dialogues5['E05_MICMC_d007'])]"
     mc_s "[renpy.substitute(dialogues5['E05_MICMC_d008'])]"
     mic "[renpy.substitute(dialogues5['E05_MICMC_d009'])]"
@@ -2551,7 +2692,7 @@ label ep05_hosfinal:
     
     scene eigengrau with slowfade
 
-    $ setChannelVolume("music", 2, 0.5, 0)
+    $ setChannelVolume("music", 2, 0.3, 0)
     $ playAudio(mc_broken_theme, "music", 2, True, 4, 0)
 
     show ep05_hosd3_mic20 at ken_burns_left_to_right
@@ -2583,6 +2724,8 @@ label ep05_end:
     pause 4
     hide murderroom_location with dissolve
 
+    $ setChannelVolume("amb", 1, 0.5, 0)
+    $ playAudio(sfx_factory, "amb", 1, True, 2, 0)
     $ setChannelVolume("music", 1, 0.5, 0)
     $ playAudio(antonella_horror_theme, "music", 1, True, 4, 0)
 
@@ -2640,6 +2783,12 @@ label ep05_end:
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d013'])]"
     
     scene eigengrau with slowfade
+
+    $ setChannelVolume("sfx", 2, 1, 0)
+    $ playAudio(sfx_bodyfall_carpet, "sfx", 2, False, 0, 0)
+    $ setChannelVolume("sfx", 3, 0.5, 0)
+    $ playAudio(sfx_blood_splash, "sfx", 3, False, 0, 0)
+
     show ep05_end10 at ken_burns_corner_to_corner3
     surg "[renpy.substitute(dialogues5['E05_RNDM_d023'])]"
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d014'])]"
@@ -2658,7 +2807,12 @@ label ep05_end:
     surg "[renpy.substitute(dialogues5['E05_RNDM_d029'])]"
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d018'])]"
     
-    show ep05_end13 with normalfade
+    $ setChannelVolume("amb", 1, 0, 2)
+
+    show ep05_end13 with slowfade
+    $ setChannelVolume("sfx", 9, 1, 0)
+    $ playAudio(sfx_heartbeatslow, "sfx", 9, True, 0, 0)
+
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d019'])]"
     "Unknown Woman" "[renpy.substitute(dialogues5['E05_RNDM_d030'])]"
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d020'])]"
@@ -2669,8 +2823,14 @@ label ep05_end:
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d022'])]"
     "Unknown Woman" "[renpy.substitute(dialogues5['E05_RNDM_d032'])]"
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d023'])]"
+    $ stopAudio("sfx", 9, 0)
     
     scene eigengrau with slowfade
+
+    $ setChannelVolume("sfx", 4, 0.5, 0)
+    $ playAudio(sfx_knife_jab, "sfx", 4, False, 0, 0)
+    $ setChannelVolume("amb", 1, 0.5, 0)
+
     show ep05_end15
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d024'])]"
     surg "[renpy.substitute(dialogues5['E05_RNDM_d033'])]"
@@ -2679,11 +2839,15 @@ label ep05_end:
     anto "[renpy.substitute(dialogues5['E05_ENDAC_d026'])]"
     
     $ stopAudio("music", 1, 2)
+    $ stopAllSubchannels("sfx", 2)
+    $ stopAllSubchannels("amb", 2)
 
     scene eigengrau with slowfade
 
-    $ setChannelVolume("music", 2, 0.5, 0)
+    $ setChannelVolume("music", 2, 0.3, 0)
     $ playAudio(yakuza_theme, "music", 2, True, 4, 0)
+    $ setChannelVolume("amb", 2, 0.3, 0)
+    $ playAudio(sfx_eveningtraffic, "amb", 2, True, 2, 0)
 
     show ep05_end16 at ken_burns_left_to_right
     hir "[renpy.substitute(dialogues5['E05_RNDM_d035'])]"
@@ -2711,6 +2875,8 @@ label ep05_end:
     hir "[renpy.substitute(dialogues5['E05_RNDM_d043'])]"
     
     $ stopAudio("music", 2, 2)
+    $ stopAllSubchannels("sfx", 2)
+    $ stopAllSubchannels("amb", 2)
 
     scene eigengrau with slowfade
 
@@ -2719,8 +2885,10 @@ label ep05_end:
     pause 4
     hide asakusa_location with dissolve
 
-    $ setChannelVolume("music", 3, 0.5, 0)
+    $ setChannelVolume("music", 3, 0.6, 0)
     $ playAudio(antonella_singing_act1, "music", 3, True, 4, 0)
+    $ setChannelVolume("amb", 3, 0.3, 0)
+    $ playAudio(sfx_temple_outside, "amb", 3, True, 2, 0)
 
     show ep05_end20 at subtle_zoom_out
     anto_t "[renpy.substitute(dialogues5['E05_ENDAC_d035'])]"
@@ -2740,7 +2908,7 @@ label ep05_end:
     anto_t "[renpy.substitute(dialogues5['E05_ENDAC_d045'])]"
     anto_t "[renpy.substitute(dialogues5['E05_ENDAC_d046'])]"
     
-    show ep05_end23 with flash
+    show ep05_end23 at ken_burns_bottom_to_top with slowfade
     anto_t "[renpy.substitute(dialogues5['E05_ENDAC_d047'])]"
     anto_t "[renpy.substitute(dialogues5['E05_ENDAC_d048'])]"
     anto_t "[renpy.substitute(dialogues5['E05_ENDAC_d049'])]"
@@ -2767,6 +2935,9 @@ label ep05_end:
     hide screen stats_button
     hide screen walkthrough_icon
     
+    $ stopAllSubchannels("sfx", 2)
+    $ stopAllSubchannels("amb", 2)
+
     jump act1_ending
 
 label act1_ending:

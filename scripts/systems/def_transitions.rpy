@@ -167,6 +167,41 @@ init:
     define wet = create_layer_transition(ImageDissolve("images/wipes/wet.webp", 1.0, 8))
 
     ################################################################################
+    ## ATL-COMPATIBLE SIMPLE TRANSITIONS
+    ################################################################################
+    
+    # Simple versions of transitions for use in ATL contexts (image animations)
+    # ATL cannot use layer dictionary transitions, only simple transitions
+    
+    # Directional wipe simple transitions
+    define horicolor2_simple = ImageDissolve("images/wipes/18.webp", 4.0)
+    define vertcolor2_simple = ImageDissolve("images/wipes/17.webp", 4.0)
+    define horicolor_simple = ImageDissolve("images/wipes/18.webp", 2.0, ramplen=128)
+    define vertcolor_simple = ImageDissolve("images/wipes/17.webp", 2.0, ramplen=128)
+    
+    # Scene transition simple versions
+    define mangamove_simple = ImageDissolve("images/wipes/mangamove.webp", 1.0, ramplen=64)
+    define smoke_simple = ImageDissolve("images/wipes/smoke.webp", 1.0, reverse=True, ramplen=64)
+    define bubbles_simple = ImageDissolve("images/wipes/bokeh_nb.webp", 1.5, ramplen=256, reverse=True)
+    define watercolor_simple = ImageDissolve("images/wipes/watercolor.webp", 3, reverse=True, ramplen=256)
+    define cwside_simple = ImageDissolve("images/wipes/cw-side.webp", 1.0, 8)
+    
+    # Thought and focus simple transitions
+    define clouds_simple = ImageDissolve("images/wipes/bites.webp", 3.0, ramplen=128)
+    define clouds_inverse_simple = ImageDissolve("images/wipes/bites.webp", 2.0, ramplen=128, reverse=True)
+    
+    # Fade simple transitions
+    define normalfade_simple = Fade(0.5, 0, 0.5, color="#16161d")
+    define slowfade_simple = Fade(1.5, 0, 1, color="#16161d")
+    define flash_simple = Fade(.05, 0.0, .25, color="#F5F5FA")
+    define blink_simple = Fade(.35, 0.7, .5, color="#16161d")
+    
+    # Basic dissolve simple transitions
+    define dissolve_simple = Dissolve(0.5)
+    define dissolve_slow = Dissolve(1.0)
+    define dissolve_fast = Dissolve(0.25)
+
+    ################################################################################
     ## INTEGRATION NOTES
     ################################################################################
     
@@ -175,19 +210,30 @@ init:
     ## - This automatically excludes the 'notifications' layer from all transitions
     ## - Your existing code works exactly the same: scene bg with slowfade
     ## - Notifications will never disappear during any transition
+    ## - Added ATL-compatible simple transitions for image animations
     ##
     ## HOW IT WORKS:
     ## - create_layer_transition() converts simple transitions to layer dictionaries
     ## - Each transition applies to all layers EXCEPT 'notifications'
     ## - The notifications layer remains completely unaffected by scene transitions
+    ## - Simple transitions (*_simple) can be used in ATL contexts
     ##
     ## BENEFITS:
     ## - No need to change any existing script files
     ## - All transitions automatically preserve notifications
     ## - Clean separation of concerns
     ## - Future transitions automatically inherit notification immunity
+    ## - ATL animations work without errors
     ##
     ## USAGE (unchanged):
     ## scene new_background with slowfade    # Notifications stay visible!
     ## show character with normalfade        # Notifications stay visible!
     ## hide overlay with circlewipe          # Notifications stay visible!
+    ##
+    ## ATL USAGE (use simple versions):
+    ## image animated_bg:
+    ##     "bg1.jpg" with horicolor2_simple
+    ##     pause 2.0
+    ##     "bg2.jpg" with vertcolor2_simple
+    ##     pause 2.0
+    ##     repeat

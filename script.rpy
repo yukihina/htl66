@@ -36,22 +36,22 @@ init python:
 
 label splashscreen:
     scene black
-    show nl_bg with clouds_inverse
+    show nl_bg with clouds_inverse_simple
     $ renpy.pause(0.1, hard=True)
     $ setChannelVolume(channel="sfx", subchannel=5, volume=0.5)
     $ playAudio(sfx_logo_brush, "sfx", 5, False, fadein=0, fadeout=0)
     show nl_lo:
             yalign 0.5
-    with horicolor
+    with horicolor_simple
     $ setChannelVolume(channel="sfx", subchannel=8, volume=0.5)
     $ playAudio(sfx_logo, "sfx", 8, False, fadein=0, fadeout=0)
-    show nl_qo at bounce with smoke
-    show nl_ga at neon_flicker, concentrate, sway with smoke
-    show nl_jp at dizzyness with cwside
+    show nl_qo at bounce with bubbles_simple
+    show nl_ga at neon_flicker, concentrate, sway with bubbles_simple
+    show nl_jp at dizzyness with cwside_simple
     $ setChannelVolume(channel="sfx", subchannel=2, volume=0.5)
     $ playAudio(sfx_logo_jp, "sfx", 2, False, fadein=0, fadeout=0)
     $ renpy.pause(3, hard=True)
-    scene black with clouds
+    scene black with clouds_simple
     $ stopAllSubchannels(channel="sfx", fadeout=0.3)
     $ renpy.pause(0.3, hard=True)
     $ resetAllVolumes()

@@ -173,37 +173,37 @@ init python:
 
 # Dynamic main menu background that cycles through act-appropriate images
 image menubg:
-    "[chosen_images[0]]" with horicolor2
+    "[chosen_images[0]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[1]]" with vertcolor2
+    "[chosen_images[1]]" with vertcolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[2]]" with horicolor2
+    "[chosen_images[2]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[3]]" with vertcolor2
+    "[chosen_images[3]]" with vertcolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[4]]" with horicolor2
+    "[chosen_images[4]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[5]]" with vertcolor2
+    "[chosen_images[5]]" with vertcolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[6]]" with horicolor2
+    "[chosen_images[6]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[7]]" with vertcolor2
+    "[chosen_images[7]]" with vertcolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[8]]" with horicolor2
+    "[chosen_images[8]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[9]]" with vertcolor2
+    "[chosen_images[9]]" with vertcolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[10]]" with horicolor2
+    "[chosen_images[10]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[11]]" with vertcolor2
+    "[chosen_images[11]]" with vertcolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[12]]" with horicolor2
+    "[chosen_images[12]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[13]]" with vertcolor2
+    "[chosen_images[13]]" with vertcolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[14]]" with horicolor2
+    "[chosen_images[14]]" with horicolor2_simple
     pause get_mmbg_pause()
-    "[chosen_images[15]]" with vertcolor2
+    "[chosen_images[15]]" with vertcolor2_simple
     pause get_mmbg_pause()
     repeat
 
@@ -249,9 +249,9 @@ image igm_logo:
 
 # Background dimming effect for in-game menus
 image igm_dim:
-    "gui/bg_dim01.png" with mangamove
+    "gui/bg_dim01.png" with mangamove_simple
     pause get_dim_pause()
-    "gui/bg_dim02.png" with mangamove
+    "gui/bg_dim02.png" with mangamove_simple
     pause get_dim_pause()
     repeat
 
@@ -421,9 +421,9 @@ image help_talk:
 
 # Yukana character animation
 image yukana:
-    "gui/yuk_5.png" with horicolor2
+    "gui/yuk_5.png" with horicolor2_simple
     pause get_mmbg_pause()
-    "gui/yuk_6.png" with vertcolor2
+    "gui/yuk_6.png" with vertcolor2_simple
     pause get_mmbg_pause()
     repeat
 

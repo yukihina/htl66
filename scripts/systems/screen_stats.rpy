@@ -202,7 +202,8 @@ init python:
 ################################################################################
 
 screen stats_button():
-    zorder 200
+    layer "notifications"
+    zorder 999
     imagebutton:
         xpos 1806
         ypos 55
@@ -541,7 +542,8 @@ screen mc_stats():
 ################################################################################
 
 screen walkthrough_icon():
-    zorder 200
+    layer "notifications"
+    zorder 999
     if walkthrough_enabled:
         imagebutton:
             xpos 1806

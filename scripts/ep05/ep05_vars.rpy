@@ -164,3 +164,5 @@ init:
     default ep05_ach_ambvseli = False # Achievement for Amber vs Elizabeth
     default ep05_ach_novseli = False # Achievement for Elizabeth on the dark (no amber vs elizabeth)
     default ep05_ach_nanastrike = False #Achievement for Nanami strike achiev
+    default ep05_ach_final1 = False # Achievement for Elizabeth final
+    default ep05_ach_final2 = False # Achievement for Elizabeth final 2

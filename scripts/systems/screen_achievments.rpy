@@ -54,6 +54,8 @@ init -1:
     default persistent.ep05_ach2 = False
     default persistent.ep05_ach3 = False
     default persistent.ep05_ach4 = False
+    default persistent.ep05_ach5 = False
+    default persistent.ep05_ach6 = False
 
     ## Notification Variables - Track if notification was shown
     default persistent.ep01_ach1_notified = False
@@ -83,6 +85,8 @@ init -1:
     default persistent.ep05_ach2_notified = False
     default persistent.ep05_ach3_notified = False
     default persistent.ep05_ach4_notified = False
+    default persistent.ep05_ach5_notified = False
+    default persistent.ep05_ach6_notified = False
 
 init python:
     ############################################################################
@@ -296,7 +300,25 @@ init python:
             "thumb_on": "achievements/ach_ep05_nanamad_thumb_on.webp",
             "thumb_on_hover": "achievements/ach_ep05_nanamad_thumb_onh.webp",
             "thumb_off": "achievements/ach_ep05_nanamad_thumb_off.webp"
-        }
+        },
+        "ach_ep05_final1": {
+            "title": "Conflicted Desires",
+            "text": "The weight of forbidden attraction battles against your conscience. In the forest's embrace, temptation whispers what morality forbids.",
+            "persistent_var": "ep05_ach5",
+            "notified_var": "ep05_ach5_notified",
+            "thumb_on": "achievements/ach_ep05_final1_thumb_on.webp",
+            "thumb_on_hover": "achievements/ach_ep05_final1_thumb_onh.webp",
+            "thumb_off": "achievements/ach_ep05_final1_thumb_off.webp"
+        },
+        "ach_ep05_final2": {
+            "title": "Uninhibited Exploration",
+            "text": "Your curiosity knows no bounds, leading you to embrace desires without shame. In tranquil waters, true feelings surface naturally.",
+            "persistent_var": "ep05_ach6",
+            "notified_var": "ep05_ach6_notified",
+            "thumb_on": "achievements/ach_ep05_final2_thumb_on.webp",
+            "thumb_on_hover": "achievements/ach_ep05_final2_thumb_onh.webp",
+            "thumb_off": "achievements/ach_ep05_final2_thumb_off.webp"
+}
     }
 
     ############################################################################
@@ -455,6 +477,18 @@ init python:
             "ep05_ach4",
             "ep05_ach4_notified",
             "ach_ep05_nanamad"
+        ),
+        create_achievement_condition(
+            lambda: ep05_guilt_points >= 3 and ep05_ach_final1,
+            "ep05_ach5",
+            "ep05_ach5_notified",
+            "ach_ep05_final1"
+        ),
+        create_achievement_condition(
+            lambda: ep05_curiosity_points >= 3 and ep05_ach_final2,
+            "ep05_ach6",
+            "ep05_ach6_notified",
+            "ach_ep05_final2"
         )
     ]
 

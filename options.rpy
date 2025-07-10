@@ -199,6 +199,11 @@ init python:
     build.classify('**/thumbs.db', None)
     build.classify('game/cache/**', None)
     build.classify('game/scripts/deprecated/**', None)
+    build.classify('**.json', None)
+    build.classify('**.gitignore', None)
+    build.classify('**.gitattributes', None)
+    build.classify('.git/**', None)
+    build.classify('.vscode/**', None)
 
     # Exclude source .rpy files
     build.classify('**.rpy', None)
