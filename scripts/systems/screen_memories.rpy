@@ -75,7 +75,7 @@ init python:
             "name": "Meeting Antonella at library",
             "thumbnail_idle": "memories/m_ep01_library_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_library_thumb_hover.webp", 
-            "thumbnail_locked": "gui/thumb_locked.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep01_3rddream01",
                 "ep01_3rddream02",
@@ -89,7 +89,7 @@ init python:
             "name": "Goth woman in the store",
             "thumbnail_idle": "memories/m_ep01_clothes_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_clothes_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep01_clothing04",
                 "ep01_clothing05",
@@ -102,7 +102,7 @@ init python:
             "name": "Amber at home",
             "thumbnail_idle": "memories/m_ep01_home_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_home_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep01_home02",
                 "ep01_home04",
@@ -117,7 +117,7 @@ init python:
             "name": "Amber at the laundry",
             "thumbnail_idle": "memories/m_ep01_laundry_thumb_idle.webp", 
             "thumbnail_hover": "memories/m_ep01_laundry_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep01_amberfail02",
                 "ep01_amberfail03",
@@ -129,7 +129,7 @@ init python:
             "name": "Amber's confession",
             "thumbnail_idle": "memories/m_ep01_confession_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_confession_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep01_amberconfess02",
                 "ep01_amberconfess09",
@@ -137,11 +137,11 @@ init python:
             ]
         },
         # ===== EP02 MEMORIES =====
-        "m_ep02_opening": {
-            "name": "Episode 2 Opening",
-            "thumbnail_idle": "memories/m_ep02_opening_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep02_opening_thumb_hover.webp", 
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep02_friend": {
+            "name": "Reconnecting with a Friend",
+            "thumbnail_idle": "memories/m_ep02_friend_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep02_friend_thumb_hover.webp", 
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep02_booze09",
                 "ep02_booze11",
@@ -151,11 +151,11 @@ init python:
                 "ep02_booze16"
             ]
         },
-        "m_ep02_morning": {
-            "name": "Morning Sequence",
-            "thumbnail_idle": "memories/m_ep02_morning_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep02_morning_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep02_reunion": {
+            "name": "Unexpected Reunion",
+            "thumbnail_idle": "memories/m_ep02_reunion_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep02_reunion_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep02_whore09",
                 "ep02_whore10",
@@ -169,22 +169,22 @@ init python:
                 "ep02_whore22"
             ]
         },
-        "m_ep02_encounter": {
-            "name": "Unexpected Encounter",
-            "thumbnail_idle": "memories/m_ep02_encounter_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep02_encounter_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep02_hangover": {
+            "name": "Morning After Hangover",
+            "thumbnail_idle": "memories/m_ep02_hangover_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep02_hangover_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep02_nxtbooze06",
                 "ep02_nxtbooze07",
                 "ep02_nxtbooze08"
             ]
         },
-        "m_ep02_discovery": {
-            "name": "Important Discovery",
-            "thumbnail_idle": "memories/m_ep02_discovery_thumb_idle.webp", 
-            "thumbnail_hover": "memories/m_ep02_discovery_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep02_friendship": {
+            "name": "Testing Friendship Bonds",
+            "thumbnail_idle": "memories/m_ep02_friendship_thumb_idle.webp", 
+            "thumbnail_hover": "memories/m_ep02_friendship_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep02_friends03",
                 "ep02_friends04",
@@ -197,11 +197,11 @@ init python:
                 "ep02_friends11"
             ]
         },
-        "m_ep02_tension": {
-            "name": "Rising Tension",
-            "thumbnail_idle": "memories/m_ep02_tension_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep02_tension_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep02_hotel": {
+            "name": "Hotel Encounter",
+            "thumbnail_idle": "memories/m_ep02_hotel_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep02_hotel_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep02_arlehotel20",
                 "ep02_arlehotel21",
@@ -210,21 +210,21 @@ init python:
             ]
         },
         "m_ep02_revelation": {
-            "name": "Unexpected Revelation",
+            "name": "Shocking Revelation",
             "thumbnail_idle": "memories/m_ep02_revelation_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep02_revelation_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep02_escort01",
                 "ep02_escort05",
                 "ep02_escort08"
             ]
         },
-        "m_ep02_climax": {
-            "name": "Episode Climax",
-            "thumbnail_idle": "memories/m_ep02_climax_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep02_climax_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep02_kitchen": {
+            "name": "Kitchen Confrontation",
+            "thumbnail_idle": "memories/m_ep02_kitchen_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep02_kitchen_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep02_arledeath01",
                 "ep02_arledeath02",
@@ -234,11 +234,11 @@ init python:
             ]
         },
         # ===== EP03 MEMORIES =====
-        "m_ep03_beginning": {
-            "name": "Episode 3 Beginning",
-            "thumbnail_idle": "memories/m_ep03_beginning_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep03_beginning_thumb_hover.webp", 
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep03_talk": {
+            "name": "Important Talk",
+            "thumbnail_idle": "memories/m_ep03_talk_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep03_talk_thumb_hover.webp", 
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep03_ambertalk07",
                 "ep03_ambertalk08",
@@ -249,11 +249,11 @@ init python:
                 "ep03_ambertalk49"
             ]
         },
-        "m_ep03_development": {
-            "name": "Story Development",
-            "thumbnail_idle": "memories/m_ep03_development_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep03_development_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep03_night": {
+            "name": "Intimate Night",
+            "thumbnail_idle": "memories/m_ep03_night_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep03_night_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep03_ambernight18",
                 "ep03_ambernight19",
@@ -273,11 +273,11 @@ init python:
                 "ep03_afterpool16"
             ]
         },
-        "m_ep03_confrontation": {
-            "name": "Critical Confrontation",
-            "thumbnail_idle": "memories/m_ep03_confrontation_thumb_idle.webp",
-            "thumbnail_hover": "memories/m_ep03_confrontation_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep03_green": {
+            "name": "Green Moment",
+            "thumbnail_idle": "memories/m_ep03_green_thumb_idle.webp",
+            "thumbnail_hover": "memories/m_ep03_green_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep03_caught3",
                 "ep03_caught4",
@@ -286,11 +286,11 @@ init python:
                 "ep03_caught7"
             ]
         },
-        "m_ep03_resolution": {
-            "name": "Episode Resolution",
-            "thumbnail_idle": "memories/m_ep03_resolution_thumb_idle.webp", 
-            "thumbnail_hover": "memories/m_ep03_resolution_thumb_hover.webp",
-            "thumbnail_locked": "gui/thumb_locked.webp",
+        "m_ep03_tv": {
+            "name": "TV Room Discussion",
+            "thumbnail_idle": "memories/m_ep03_tv_thumb_idle.webp", 
+            "thumbnail_hover": "memories/m_ep03_tv_thumb_hover.webp",
+            "thumbnail_locked": "gui/thumb_locked.png",
             "images": [
                 "ep03_madtalk03",
                 "ep03_madtalk04",
