@@ -421,9 +421,9 @@ image help_talk:
 
 # Yukana character animation
 image yukana:
-    "gui/yuk_5.png" with horicolor2_simple
+    "gui/yuk_7.png" with horicolor2_simple
     pause get_mmbg_pause()
-    "gui/yuk_6.png" with vertcolor2_simple
+    "gui/yuk_8.png" with vertcolor2_simple
     pause get_mmbg_pause()
     repeat
 

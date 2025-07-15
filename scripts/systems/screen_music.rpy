@@ -1,19 +1,5 @@
 ## screen_music.rpy
-## Music Player System - Complete English Version with Multi-Bar Music Visualizer
-##
-## How to use:
-## To open the music player from anywhere in your game:
-## textbutton "Music Player" action ShowMenu("music_player")
-##
-## The music player uses a persistent state object to remember what's playing
-## All music is played on the "music1" channel to avoid conflicts
-##
-## Main Menu Music Handling:
-## When opened from the main menu, the music player will:
-## 1. Pause the main menu music (defined in config.main_menu_music)
-## 2. Allow you to play tracks without interference
-## 3. Stop any playing music player tracks when closed
-## 4. Resume the main menu music when you close the music player
+## Music Player System - Enhanced with Duration Display & Progress Bar
 
 ################################################################################
 ## INITIALIZATION
@@ -25,12 +11,86 @@ init -1 python:
         renpy.music.register_channel("music1", mixer="music", loop=True)
 
 # Define the dimensions of the container where the visualizer will be displayed
-# This is placed outside the python block, at the script level.
 define VIZ_CONTAINER_WIDTH = 553
 define VIZ_CONTAINER_HEIGHT = 439
 
+################################################################################
+##  MUSIC ROOM
+################################################################################
+
+python early:
+    class MusicPlayerProgressValue(BarValue):
+        """
+        A simplified progress bar value that works with the music player.
+        Allows seeking by clicking and shows current position.
+        """
+        def __init__(self, channel="music1", update_interval=0.1):
+            self.channel = channel
+            self.update_interval = update_interval
+            self.last_pos = 0.0
+            self.last_duration = 1.0
+            self.zero_count = 0
+
+        def get_adjustment(self):
+            pos = renpy.music.get_pos(self.channel)
+            duration = renpy.music.get_duration(self.channel)
+            
+            # Handle None values gracefully
+            if pos is None:
+                pos = 0.0
+                self.zero_count += 1
+            else:
+                self.last_pos = pos
+                self.zero_count = 0
+                
+            if duration is None or duration == 0:
+                duration = self.last_duration
+            else:
+                self.last_duration = duration
+                
+            # Use last known position if we're in a brief gap
+            if self.zero_count < 10 and pos == 0.0:
+                pos = min(self.last_pos, duration)
+
+            return ui.adjustment(
+                range=duration,
+                value=pos,
+                adjustable=True,
+                changed=self.seek_to_position
+            )
+
+        def seek_to_position(self, value):
+            """Seek to a specific position in the track"""
+            track = renpy.music.get_playing(self.channel)
+            if not track:
+                return
+                
+            # Strip any existing position info
+            clean_track = mp_strip_playback(track)
+            duration = renpy.music.get_duration(self.channel)
+            
+            if duration and value is not None:
+                # Clamp position to valid range
+                position = max(0, min(value, duration))
+                
+                # Create new track with position
+                positioned_track = "<from {} loop 0.0>{}".format(position, clean_track)
+                renpy.music.play(positioned_track, channel=self.channel, loop=True, 
+                               fadeout=0.1, fadein=0.1)
+
+        def periodic(self, st):
+            return self.update_interval
+
 init python:
-    # Music player state class
+
+    def mp_strip_playback(filename):
+        """Strip out any existing <> playback information from a filename."""
+        if filename and filename.startswith("<"):
+            return '>'.join(filename.split(">")[1:])
+        else:
+            return filename
+
+    # Music player state class (enhanced)
     class MusicPlayerState:
         def __init__(self):
             self.current_character = "common"
@@ -39,13 +99,55 @@ init python:
             self.current_volume = 1.0
             self.current_track_file = None
             self.main_menu_music_was_playing = False
+            # New attributes for duration display
+            self.saved_pos = "--:--"
+            self.saved_duration = "--:--"
+            self.last_zero = 0
+
+        def pos_dd(self, st, at, style="music_pos_text"):
+            """DynamicDisplayable function for current position."""
+            x = renpy.music.get_pos(channel="music1")
+            if x is None:
+                txt = "--:--"
+                self.last_zero += 1
+            else:
+                txt = "{:02}:{:02}".format(int(x/60), int(x%60))
+                self.saved_pos = txt
+                self.last_zero = 0
+
+            if self.last_zero < 10:  # Grace period
+                txt = self.saved_pos
+            
+            return Text(txt, style=style), 0.2
+
+        def duration_dd(self, st, at, style="music_duration_text"):
+            """DynamicDisplayable function for total duration."""
+            x = renpy.music.get_duration(channel="music1")
+            if not x:
+                txt = "--:--"
+            else:
+                txt = "{:02}:{:02}".format(int(x/60), int(x%60))
+                self.saved_duration = txt
+            
+            if self.last_zero < 10:
+                txt = self.saved_duration
+                
+            return Text(txt, style=style), None
+
+        def get_pos(self, style="music_pos_text"):
+            """Get current position as DynamicDisplayable."""
+            return DynamicDisplayable(self.pos_dd, style=style)
+
+        def get_duration(self, style="music_duration_text"):
+            """Get total duration as DynamicDisplayable."""
+            return DynamicDisplayable(self.duration_dd, style=style)
 
     # Create global instance
     if not hasattr(store, 'music_player_state'):
         music_player_state = MusicPlayerState()
 
     ############################################################################
-    ## DYNAMIC MULTI-BAR MUSIC VISUALIZER (CORRECTED)
+    ## DYNAMIC MULTI-BAR MUSIC VISUALIZER
     ############################################################################
 
     import math
@@ -175,7 +277,7 @@ init python:
 
     # Initialize the state of the new visualizer
     if not hasattr(store, 'dynamic_viz_state'):
-        dynamic_viz_state = DynamicVisualizerState(num_bars=25) # You can change the number of bars here
+        dynamic_viz_state = DynamicVisualizerState(num_bars=25)
 
     ############################################################################
     ## MAIN MENU MUSIC HANDLING
@@ -383,90 +485,7 @@ init python:
                 mp_play_track(track_file)
 
     ############################################################################
-    ## CHARACTER IMAGE SETS (COMMENTED OUT - RESTORE WHEN IMAGES ARE AVAILABLE)
-    ############################################################################
-
-    # def get_music_character_images(char_name):
-    #     """Get image sets for each character"""
-    #     image_sets = {
-    #         "amber": [
-    #             "images/music_gallery/amber_01.png",
-    #             "images/music_gallery/amber_02.png",
-    #             "images/music_gallery/amber_03.png",
-    #             "images/music_gallery/amber_04.png",
-    #             "images/music_gallery/amber_05.png",
-    #             "images/music_gallery/amber_06.png"
-    #         ],
-    #         "nanami": [
-    #             "images/music_gallery/nanami_01.png",
-    #             "images/music_gallery/nanami_02.png",
-    #             "images/music_gallery/nanami_03.png",
-    #             "images/music_gallery/nanami_04.png",
-    #             "images/music_gallery/nanami_05.png",
-    #             "images/music_gallery/nanami_06.png"
-    #         ],
-    #         "elizabeth": [
-    #             "images/music_gallery/elizabeth_01.png",
-    #             "images/music_gallery/elizabeth_02.png",
-    #             "images/music_gallery/elizabeth_03.png",
-    #             "images/music_gallery/elizabeth_04.png",
-    #             "images/music_gallery/elizabeth_05.png",
-    #             "images/music_gallery/elizabeth_06.png"
-    #         ],
-    #         "isabella": [
-    #             "images/music_gallery/isabella_01.png",
-    #             "images/music_gallery/isabella_02.png",
-    #             "images/music_gallery/isabella_03.png",
-    #             "images/music_gallery/isabella_04.png",
-    #             "images/music_gallery/isabella_05.png",
-    #             "images/music_gallery/isabella_06.png"
-    #         ],
-    #         "kanae": [
-    #             "images/music_gallery/kanae_01.png",
-    #             "images/music_gallery/kanae_02.png",
-    #             "images/music_gallery/kanae_03.png",
-    #             "images/music_gallery/kanae_04.png",
-    #             "images/music_gallery/kanae_05.png",
-    #             "images/music_gallery/kanae_06.png"
-    #         ],
-    #         "arlette": [
-    #             "images/music_gallery/arlette_01.png",
-    #             "images/music_gallery/arlette_02.png",
-    #             "images/music_gallery/arlette_03.png",
-    #             "images/music_gallery/arlette_04.png",
-    #             "images/music_gallery/arlette_05.png",
-    #             "images/music_gallery/arlette_06.png"
-    #         ],
-    #         "antonella": [
-    #             "images/music_gallery/antonella_01.png",
-    #             "images/music_gallery/antonella_02.png",
-    #             "images/music_gallery/antonella_03.png",
-    #             "images/music_gallery/antonella_04.png",
-    #             "images/music_gallery/antonella_05.png",
-    #             "images/music_gallery/antonella_06.png"
-    #         ],
-    #         "madison": [
-    #             "images/music_gallery/madison_01.png",
-    #             "images/music_gallery/madison_02.png",
-    #             "images/music_gallery/madison_03.png",
-    #             "images/music_gallery/madison_04.png",
-    #             "images/music_gallery/madison_05.png",
-    #             "images/music_gallery/madison_06.png"
-    #         ],
-    #         "paz": [
-    #             "images/music_gallery/paz_01.png",
-    #             "images/music_gallery/paz_02.png",
-    #             "images/music_gallery/paz_03.png",
-    #             "images/music_gallery/paz_04.png",
-    #             "images/music_gallery/paz_05.png",
-    #             "images/music_gallery/paz_06.png"
-    #         ]
-    #     }
-    #
-    #     return image_sets.get(char_name, [])
-
-    ############################################################################
-    ## TRACK LISTS (CORRECTED)
+    ## TRACK LISTS
     ############################################################################
 
     def get_character_tracks(character_name):
@@ -564,16 +583,8 @@ init python:
         }
         return tracks.get(character_name, [])
 
-    ############################################################################
-    ## SLIDESHOW HELPER (COMMENTED OUT - RESTORE WHEN IMAGES ARE AVAILABLE)
-    ############################################################################
-
-    # def get_music_slideshow_pause():
-    #     """Get random pause duration for slideshow"""
-    #     return renpy.random.choice([4.0, 5.0, 6.0, 7.0])
-
 ################################################################################
-## DYNAMIC MULTI-BAR VISUALIZER SCREEN (CORRECTED)
+## DYNAMIC MULTI-BAR VISUALIZER SCREEN
 ################################################################################
 
 screen dynamic_music_visualizer():
@@ -710,19 +721,27 @@ screen music_player():
             frame at igm_appear_fg:
                 background "gui/music_player_bg.png"
                 xsize 600
-                ysize 150
+                ysize 150  # Back to original size
 
                 vbox:
-                    spacing 10
+                    spacing 5  # Reduced from 8 to 5 for tighter spacing
                     xalign 0.5
                     yalign 0.5
 
                     ## Current track name
                     text track_name style "music_current_track" xalign 0.5
 
-                    ## Control buttons
+                    ## NEW: Duration display (pos / duration) - closer to title
                     hbox:
-                        spacing 30
+                        spacing 8
+                        xalign 0.5
+                        add music_player_state.get_pos(style="music_pos_text")
+                        text " / " style "music_duration_separator"
+                        add music_player_state.get_duration(style="music_duration_text")
+
+                    ## Control buttons (reduced size to 0.4)
+                    hbox:
+                        spacing 20  # Reduced spacing more
                         xalign 0.5
 
                         ## Previous button
@@ -732,7 +751,7 @@ screen music_player():
                             sensitive len(character_tracks) > 0
                             action [Function(dynamic_viz_state.reset_visualizer), Function(mp_prev_track)]
                             style "igm_button"
-                            at Transform(zoom=0.8)
+                            at Transform(zoom=0.5)
 
                         ## Play/Pause button
                         if is_playing:
@@ -742,7 +761,7 @@ screen music_player():
                                 sensitive track_file is not None
                                 action Function(mp_stop_music)
                                 style "igm_button"
-                                at Transform(zoom=0.8)
+                                at Transform(zoom=0.5)
                         else:
                             imagebutton:
                                 idle "gui/music_play_off.png"
@@ -750,7 +769,7 @@ screen music_player():
                                 sensitive track_file is not None
                                 action [Function(dynamic_viz_state.reset_visualizer), Function(mp_toggle_play)]
                                 style "igm_button"
-                                at Transform(zoom=0.8)
+                                at Transform(zoom=0.5)
 
                         ## Stop button
                         imagebutton:
@@ -759,7 +778,7 @@ screen music_player():
                             sensitive is_playing
                             action Function(mp_stop_music)
                             style "igm_button"
-                            at Transform(zoom=0.8)
+                            at Transform(zoom=0.5)
 
                         ## Next button
                         imagebutton:
@@ -768,7 +787,14 @@ screen music_player():
                             sensitive len(character_tracks) > 0
                             action [Function(dynamic_viz_state.reset_visualizer), Function(mp_next_track)]
                             style "igm_button"
-                            at Transform(zoom=0.8)
+                            at Transform(zoom=0.5)
+
+                    ## NEW: Progress bar (without label)
+                    bar:
+                        value MusicPlayerProgressValue("music1")
+                        xsize 500
+                        xalign 0.5
+                        style "music_progress_bar"
 
                     ## Volume control
                     hbox:
@@ -782,11 +808,11 @@ screen music_player():
                             xsize 300
                             style "music_volume_bar"
 
-            ## Track list
+            ## Track list (back to original size)
             frame at igm_appear_fg:
                 background None
                 xsize 600
-                ysize 320
+                ysize 320  # Back to original size
 
                 if character_tracks:
                     viewport:
@@ -836,16 +862,6 @@ screen music_player():
                     padding (0, 0, 0, 0)
 
                     use dynamic_music_visualizer
-
-            ## ORIGINAL CHARACTER SLIDESHOW CODE (FOR LATER RESTORATION):
-            # if current_character != "common":
-            #     add "music_slideshow_[current_character]" xalign 0.5 yalign 1.0 fit "contain"
-            #     if dynamic_viz_state:
-            #         use dynamic_music_visualizer
-            # else:
-            #     add "gui/music_common_bg.png" xalign 0.5 yalign 1.0
-            #     if dynamic_viz_state:
-            #         use dynamic_music_visualizer
 
     ## Dropdown menu
     if dropdown_open:
@@ -941,6 +957,34 @@ style music_current_track:
     color "#27dc95"
     outlines [(1, "#198c5f", 0, 0)]
 
+## NEW STYLES FOR DURATION DISPLAY
+style music_pos_text:
+    kerning 0
+    size 16
+    font "fonts/UbuntuTitling-Bold.ttf"
+    color "#34323d"
+    adjust_spacing False
+
+style music_duration_text:
+    kerning 0
+    size 16
+    font "fonts/UbuntuTitling-Bold.ttf"
+    color "#34323d"
+    adjust_spacing False
+
+style music_duration_separator:
+    kerning 0
+    size 16
+    font "fonts/UbuntuTitling-Bold.ttf"
+    color "#34323d"
+
+## NEW STYLE FOR PROGRESS BAR (Using orange bar)
+style music_progress_bar:
+    left_bar Frame("gui/orange_bar_on.png", gui.bar_borders, tile=gui.bar_tile)
+    right_bar Frame("gui/orange_bar_off.png", gui.bar_borders, tile=gui.bar_tile)
+    ysize 12
+    thumb None
+
 style music_track_text:
     kerning 0
     size 18
@@ -959,7 +1003,7 @@ style music_volume_text:
 style music_volume_bar:
     left_bar Frame("gui/bar_magenta_on.png", gui.bar_borders, tile=gui.bar_tile)
     right_bar Frame("gui/bar_magenta_off.png", gui.bar_borders, tile=gui.bar_tile)
-    ysize 20
+    ysize 18
 
 style music_no_tracks_text:
     kerning 0

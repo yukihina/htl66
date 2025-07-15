@@ -520,16 +520,24 @@ screen main_menu():
 
     vbox: ##PATREON
             xpos 1785
-            ypos 588
+            ypos 700
             imagebutton hover_offset (0, -5) idle "gui/patreon_off.png" hover "gui/patreon_on.png" style "mm_widget" action OpenURL("https://www.patreon.com/qori") focus_mask True
     vbox: ##SUBS
             xpos 1785
-            ypos 456
+            ypos 560
             imagebutton hover_offset (0, -5) idle "gui/subs_off.png" hover "gui/subs_on.png" style "mm_widget" action OpenURL("https://subscribestar.adult/qori") focus_mask True
-    # vbox: ##BOOST
-    #         xpos 1785
-    #         ypos 322
-    #         imagebutton hover_offset (0, -5) idle "gui/boost_off.png" hover "gui/boost_on.png" style "mm_widget" action OpenURL("https://boosty.to/qori") focus_mask True
+    vbox: ##BOOST
+            xpos 1785
+            ypos 420
+            imagebutton hover_offset (0, -5) idle "gui/boost_off.png" hover "gui/boost_on.png" style "mm_widget" action OpenURL("https://boosty.to/qori") focus_mask True
+    vbox: ##ITCH
+            xpos 1785
+            ypos 280
+            imagebutton hover_offset (0, -5) idle "gui/itch_off.png" hover "gui/itch_on.png" style "mm_widget" action OpenURL("https://qorigaming.itch.io/hard-to-love") focus_mask True
+    vbox: ##OPPAI
+            xpos 1785
+            ypos 140
+            imagebutton hover_offset (0, -5) idle "gui/oppai_off.png" hover "gui/oppai_on.png" style "mm_widget" action OpenURL("https://www.oppaiman.com/app/Hard_to_Love_0.26") focus_mask True
     vbox: ##DISCORD
             xpos -6
             ypos 700
@@ -1693,7 +1701,10 @@ screen gameicons_help():
                     xsize 360
                     xalign 0.5
                     yalign 0.5
-                    add "gui/phone_sms.png" at igm_appear_fg, phone_sms_icon xalign 0.5 yalign 0.5 zoom 0.6
+                    hbox:
+                        xalign 0.5 yalign 0.5
+                        spacing 10
+                        add "gui/phone_sms.png" at igm_appear_fg, phone_sms_icon xalign 0.5 yalign 0.5 zoom 0.6
                 hbox:
                     xsize 650
                     yalign 0.5
