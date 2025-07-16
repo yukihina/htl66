@@ -402,11 +402,17 @@ screen transition_immune_notifications():
                         ypos 5
                     spacing 5
                     
-                    ## Title
-                    text _(notif["title"]).upper() style "notification_title"
-                    
-                    ## Message
-                    text notif["message"] style "notification_text"
+                    ## Title - different styles for memory vs regular notifications
+                    if notif.get("type") == "memory":
+                        text _(notif["title"]).upper() style "memory_notification_title"
+                    else:
+                        text _(notif["title"]).upper() style "notification_title"
+
+                    ## Message - different styles for memory vs regular notifications  
+                    if notif.get("type") == "memory":
+                        text notif["message"] style "memory_notification_text"
+                    else:
+                        text notif["message"] style "notification_text"
     
     # Auto-clear timer
     timer notification_state.notification_duration action Function(clear_notifications)

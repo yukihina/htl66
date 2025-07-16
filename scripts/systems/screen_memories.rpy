@@ -1,25 +1,10 @@
-## screen_memories.rpy
-## Memories Gallery System - Complete English Version
+## screen_memories.rpy - COMPLETE INTEGRATION WITH NOTIFICATION POSITIONING
 ## 
-## How to use:
-## To open the memories gallery from anywhere in your game:
-## textbutton "Memories" action ShowMenu("memories_gallery")
-## 
-## The memories system provides:
-## 1. Organized memory collections by episodes/acts
-## 2. Progressive unlock system based on game progress
-## 3. Image viewing with sequential navigation
-## 4. Automatic state persistence across sessions
-## 5. ACT-based organization for easy navigation
-##
-## Memory Management:
-## Memories are automatically unlocked through game progression
-## Players can view unlocked memories in sequential order
-## Each memory contains multiple images that advance on click
-## State is preserved between sessions using persistent data
+## SOLUTION: Memory notifications now use the existing notification queue and positioning system
+## This prevents overlapping and ensures proper stacking behavior
 
 ################################################################################
-## INITIALIZATION
+## INITIALIZATION - FIXED
 ################################################################################
 
 init python:
@@ -35,13 +20,13 @@ init python:
     # Create global memories state instance
     if not hasattr(store, 'memories_state'):
         memories_state = MemoriesState()
-    
-    # Ensure persistent variables exist
-    if not hasattr(persistent, 'unlocked_memories'):
-        persistent.unlocked_memories = {}
-    
+
+# CRITICAL FIX: Use default statement for persistent data initialization
+default persistent.unlocked_memories = {}
+
+init python:
     ############################################################################
-    ## MEMORY DATA CONFIGURATION
+    ## MEMORY DATA CONFIGURATION - SHORTENED NAMES FOR NOTIFICATIONS
     ############################################################################
     
     # List of all memory IDs organized by release order
@@ -68,11 +53,11 @@ init python:
         # Add new memory IDs here following the same pattern
     ]
     
-    # Memory definitions with metadata and image sequences
+    # Memory definitions with SHORTENED NAMES for notification compatibility
     memories_dict = {
         # ===== EP01 MEMORIES =====
         "m_ep01_library": {
-            "name": "Meeting Antonella at library",
+            "name": "Library Meeting",  # Was: "Meeting Antonella at library"
             "thumbnail_idle": "memories/m_ep01_library_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_library_thumb_hover.webp", 
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -86,7 +71,7 @@ init python:
             ]
         },
         "m_ep01_clothes": {
-            "name": "Goth woman in the store",
+            "name": "Goth Girl",  # Was: "Goth woman in the store"
             "thumbnail_idle": "memories/m_ep01_clothes_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_clothes_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -99,7 +84,7 @@ init python:
             ]
         },
         "m_ep01_home": {
-            "name": "Amber at home",
+            "name": "Home Sweet Home",  # Was: "Amber at home"
             "thumbnail_idle": "memories/m_ep01_home_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_home_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -114,7 +99,7 @@ init python:
             ]
         },
         "m_ep01_laundry": {
-            "name": "Amber at the laundry",
+            "name": "Laundry Day",  # Was: "Amber at the laundry"
             "thumbnail_idle": "memories/m_ep01_laundry_thumb_idle.webp", 
             "thumbnail_hover": "memories/m_ep01_laundry_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -126,7 +111,7 @@ init python:
             ]
         },
         "m_ep01_confession": {
-            "name": "Amber's confession",
+            "name": "Heart to Heart",  # Was: "Amber's confession"
             "thumbnail_idle": "memories/m_ep01_confession_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep01_confession_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -138,7 +123,7 @@ init python:
         },
         # ===== EP02 MEMORIES =====
         "m_ep02_friend": {
-            "name": "Reconnecting with a Friend",
+            "name": "Old Friend",  # Was: "Reconnecting with a Friend"
             "thumbnail_idle": "memories/m_ep02_friend_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep02_friend_thumb_hover.webp", 
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -152,7 +137,7 @@ init python:
             ]
         },
         "m_ep02_reunion": {
-            "name": "Unexpected Reunion",
+            "name": "Surprise Reunion",  # Was: "Unexpected Reunion"
             "thumbnail_idle": "memories/m_ep02_reunion_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep02_reunion_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -170,7 +155,7 @@ init python:
             ]
         },
         "m_ep02_hangover": {
-            "name": "Morning After Hangover",
+            "name": "Morning After",  # Was: "Morning After Hangover"
             "thumbnail_idle": "memories/m_ep02_hangover_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep02_hangover_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -181,7 +166,7 @@ init python:
             ]
         },
         "m_ep02_friendship": {
-            "name": "Testing Friendship Bonds",
+            "name": "Friendship Test",  # Was: "Testing Friendship Bonds"
             "thumbnail_idle": "memories/m_ep02_friendship_thumb_idle.webp", 
             "thumbnail_hover": "memories/m_ep02_friendship_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -198,7 +183,7 @@ init python:
             ]
         },
         "m_ep02_hotel": {
-            "name": "Hotel Encounter",
+            "name": "Hotel Night",  # Was: "Hotel Encounter"
             "thumbnail_idle": "memories/m_ep02_hotel_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep02_hotel_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -210,7 +195,7 @@ init python:
             ]
         },
         "m_ep02_revelation": {
-            "name": "Shocking Revelation",
+            "name": "Big Secret",  # Was: "Shocking Revelation"
             "thumbnail_idle": "memories/m_ep02_revelation_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep02_revelation_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -221,7 +206,7 @@ init python:
             ]
         },
         "m_ep02_kitchen": {
-            "name": "Kitchen Confrontation",
+            "name": "Kitchen Drama",  # Was: "Kitchen Confrontation"
             "thumbnail_idle": "memories/m_ep02_kitchen_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep02_kitchen_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -235,7 +220,7 @@ init python:
         },
         # ===== EP03 MEMORIES =====
         "m_ep03_talk": {
-            "name": "Important Talk",
+            "name": "Deep Talk",  # Was: "Important Talk"
             "thumbnail_idle": "memories/m_ep03_talk_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep03_talk_thumb_hover.webp", 
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -250,7 +235,7 @@ init python:
             ]
         },
         "m_ep03_night": {
-            "name": "Intimate Night",
+            "name": "Special Night",  # Was: "Intimate Night"
             "thumbnail_idle": "memories/m_ep03_night_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep03_night_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -274,7 +259,7 @@ init python:
             ]
         },
         "m_ep03_green": {
-            "name": "Green Moment",
+            "name": "Green Scene",  # Was: "Green Moment"
             "thumbnail_idle": "memories/m_ep03_green_thumb_idle.webp",
             "thumbnail_hover": "memories/m_ep03_green_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -287,7 +272,7 @@ init python:
             ]
         },
         "m_ep03_tv": {
-            "name": "TV Room Discussion",
+            "name": "TV Room Chat",  # Was: "TV Room Discussion"
             "thumbnail_idle": "memories/m_ep03_tv_thumb_idle.webp", 
             "thumbnail_hover": "memories/m_ep03_tv_thumb_hover.webp",
             "thumbnail_locked": "gui/thumb_locked.png",
@@ -305,38 +290,43 @@ init python:
             ]
         }
     }
+    
     ############################################################################
-    ## MEMORY MANAGEMENT FUNCTIONS
+    ## MEMORY MANAGEMENT FUNCTIONS - COMPLETELY FIXED
     ############################################################################
     
     def unlock_memory(memory_id):
         """Unlock a specific memory and show notification"""
-        if not hasattr(persistent, 'unlocked_memories'):
+        # CRITICAL FIX: Ensure persistent.unlocked_memories is always a dict
+        if persistent.unlocked_memories is None:
             persistent.unlocked_memories = {}
         
         # Only unlock if not already unlocked to avoid spam
         if not persistent.unlocked_memories.get(memory_id, False):
             persistent.unlocked_memories[memory_id] = True
-            # Show unlock notification
+            # Show unlock notification using INTEGRATED positioning system
             show_memory_unlock_notification(memory_id)
     
     def is_memory_unlocked(memory_id):
         """Check if a specific memory is unlocked"""
-        if not hasattr(persistent, 'unlocked_memories'):
+        # CRITICAL FIX: Ensure persistent.unlocked_memories is always a dict
+        if persistent.unlocked_memories is None:
             persistent.unlocked_memories = {}
         return persistent.unlocked_memories.get(memory_id, False)
     
     def get_unlocked_memories_count():
         """Get total count of unlocked memories"""
-        if not hasattr(persistent, 'unlocked_memories'):
+        # CRITICAL FIX: Ensure persistent.unlocked_memories is always a dict
+        if persistent.unlocked_memories is None:
+            persistent.unlocked_memories = {}
             return 0
         return sum(1 for unlocked in persistent.unlocked_memories.values() if unlocked)
     
     def reset_all_memories():
         """Reset all memory unlock status (debug function)"""
-        if hasattr(persistent, 'unlocked_memories'):
-            persistent.unlocked_memories = {}
+        persistent.unlocked_memories = {}
         memories_state.current_image_index = {}
+        renpy.save_persistent()
     
     ############################################################################
     ## MEMORY VIEWING FUNCTIONS
@@ -456,13 +446,59 @@ init python:
             return memory["thumbnail_locked"]
     
     ############################################################################
-    ## NOTIFICATION SYSTEM
+    ## NOTIFICATION SYSTEM - FULLY INTEGRATED POSITIONING
     ############################################################################
     
     def show_memory_unlock_notification(memory_id):
-        """Show memory unlock notification"""
+        """Show memory unlock notification integrated with existing notification positioning"""
         if memory_id in memories_dict:
-            renpy.show_screen("memory_unlock_notification", memory_id=memory_id)
+            memory = memories_dict[memory_id]
+            
+            # Create notification in the EXACT same format as existing notifications
+            memory_notification = {
+                "title": memory["name"].upper(),
+                "message": "New memory unlocked!",
+                "icon": "memory",
+                "type": "memory"  # Special type for styling
+            }
+            
+            # Ensure active_notifications exists (it should from screen_notifications.rpy)
+            if 'active_notifications' not in globals():
+                globals()['active_notifications'] = []
+            
+            # Get notification counter if available
+            if hasattr(store, 'notification_state') and hasattr(notification_state, 'notification_counter'):
+                notification_state.notification_counter += 1
+                memory_notification["unique_id"] = notification_state.notification_counter
+            else:
+                # Fallback unique ID
+                memory_notification["unique_id"] = len(active_notifications) + 1
+            
+            # Add to the EXISTING active_notifications queue
+            active_notifications.append(memory_notification)
+            
+            # Enforce existing notification limits (should match screen_notifications.rpy)
+            max_notifications = 2
+            if hasattr(store, 'notification_state') and hasattr(notification_state, 'max_notifications'):
+                max_notifications = notification_state.max_notifications
+            
+            while len(active_notifications) > max_notifications:
+                active_notifications.pop(0)
+            
+            # Also add to notification_state if it exists
+            if hasattr(store, 'notification_state') and hasattr(notification_state, 'active_notifications'):
+                notification_state.active_notifications.append(memory_notification)
+                while len(notification_state.active_notifications) > notification_state.max_notifications:
+                    notification_state.active_notifications.pop(0)
+            
+            # Show using the EXISTING notification system (from screen_notifications.rpy)
+            layer_name = "notifications"
+            if hasattr(store, 'notification_state') and hasattr(notification_state, 'notification_layer'):
+                layer_name = notification_state.notification_layer
+            
+            # Use the existing screen from screen_notifications.rpy
+            renpy.show_screen("transition_immune_notifications", _layer=layer_name)
+            renpy.restart_interaction()
 
 ################################################################################
 ## MEMORIES GALLERY SCREEN
@@ -638,39 +674,19 @@ screen memory_viewer(memory_id):
             text _("Click to continue") size 20 color "#F7F7F7" outlines [(2, "#000000", 0, 0)]
 
 ################################################################################
-## MEMORY UNLOCK NOTIFICATION SCREEN
+## MEMORY SYSTEM STYLES - FOR USE IN EXISTING NOTIFICATION SCREEN
 ################################################################################
 
-screen memory_unlock_notification(memory_id):
-    zorder 100
-    
-    ## Get memory data for notification
-    $ memory = memories_dict.get(memory_id, {"name": "Unknown Memory"})
-    
-    frame:
-        at notification_appear
-        add "gui/message_bg.png" xpos 1380 ypos 625
-        add "gui/icon_memory.png" xpos 1408 ypos 654
-        
-        vbox:
-            xpos 1561 ypos 646
-            spacing 3
-            text "[memory['name'].upper()]" style "memory_notification_title"
-            text _("New memory unlocked!") style "memory_notification_text"
-    
-    ## Auto-hide notification after duration
-    timer memories_state.notification_duration action Hide("memory_unlock_notification")
-
-################################################################################
-## MEMORY SYSTEM STYLES
-################################################################################
-
-## Memory notification styles
+## Memory notification styles - IMPROVED KERNING
+## These will be used by the existing transition_immune_notifications screen
 style memory_notification_title:
     size 26
     font "fonts/UbuntuTitling-Bold.ttf"
     outlines [(1, "#198c5f", 0, 0)]
     color "#27dc95"
+    kerning -2  # Better letter spacing like other notifications
+    line_spacing 0
+    xalign 0.0
 
 style memory_notification_text:
     size 18
@@ -679,6 +695,7 @@ style memory_notification_text:
     xmaximum 280
     kerning -1
     yoffset -8
+    line_spacing 0
 
 ## Memory viewer styles
 style memory_advance_button:
@@ -721,7 +738,7 @@ transform hover_alpha:
     on idle:
         linear 0.2 alpha 0.8
 
-## Notification appearance animation
+## Notification appearance animation - CONSISTENT WITH NOTIFICATION SYSTEM
 transform notification_appear:
     alpha 0.0
     pause 1
@@ -735,103 +752,40 @@ transform notification_appear:
         ease 0.5 alpha 0.0
 
 ################################################################################
-## INTEGRATION INSTRUCTIONS
+## INTEGRATION NOTES
 ################################################################################
 
-## How to integrate this memories system in your game:
+## IMPORTANT: This memory system now uses the existing notification queue from screen_notifications.rpy
+## 
+## Memory notifications will:
+## ✅ Use the existing active_notifications array
+## ✅ Follow the same positioning logic (no overlapping)
+## ✅ Stack properly above/below other notifications 
+## ✅ Use the existing notification layer system
+## ✅ Have proper spacing and limits
 ##
-## 1. BASIC MEMORY UNLOCKING:
-##    $ unlock_memory("m_ep01_library")
-##    - Unlocks a specific memory and shows notification
-##    - Only unlocks if not already unlocked to avoid spam
+## You also need to modify your screen_notifications.rpy file to handle memory notification styling.
+## 
+## In the transition_immune_notifications screen, find this section:
 ##
-## 2. OPENING THE MEMORIES GALLERY:
-##    textbutton "Memories" action ShowMenu("memories_gallery")
-##    - Opens the memories gallery with ACT navigation
-##    - Players can browse unlocked memories by episodes/acts
+##                     ## Title
+##                     text _(notif["title"]).upper() style "notification_title"
+##                     
+##                     ## Message
+##                     text notif["message"] style "notification_text"
 ##
-## 3. ADDING NEW MEMORIES:
-##    a) Add memory ID to all_memories list:
-##       "m_ep02_new_memory"
-##    
-##    b) Add memory definition to memories_dict:
-##       "m_ep02_new_memory": {
-##           "name": "Memory Name",
-##           "thumbnail_idle": "memories/new_memory_thumb_idle.png",
-##           "thumbnail_hover": "memories/new_memory_thumb_hover.png", 
-##           "thumbnail_locked": "gui/thumb_locked.png",
-##           "images": ["image1", "image2", "image3"]
-##       }
+## And replace it with:
 ##
-## 4. CHECKING MEMORY STATUS:
-##    $ is_unlocked = is_memory_unlocked("m_ep01_library")
-##    $ total_unlocked = get_unlocked_memories_count()
-##    - Check unlock status and get statistics
+##                     ## Title - different styles for memory vs regular notifications
+##                     if notif.get("type") == "memory":
+##                         text _(notif["title"]).upper() style "memory_notification_title"
+##                     else:
+##                         text _(notif["title"]).upper() style "notification_title"
+##                     
+##                     ## Message - different styles for memory vs regular notifications  
+##                     if notif.get("type") == "memory":
+##                         text notif["message"] style "memory_notification_text"
+##                     else:
+##                         text notif["message"] style "notification_text"
 ##
-## 5. MEMORY VIEWING FEATURES:
-##    - Sequential image viewing with click-to-advance
-##    - Progress indicator showing current/total images
-##    - Automatic return to gallery when sequence ends
-##    - Persistent state across game sessions
-##
-## 6. Required assets:
-##    - Memory thumbnails: memories/[memory_id]_thumb_idle.png, _thumb_hover.png
-##    - Locked thumbnail: gui/thumb_locked.png
-##    - UI elements: gui/message_bg.png, gui/icon_memory.png, gui/rectangle.png
-##    - Memory images: Referenced in memories_dict["images"] arrays
-##    - Navigation assets: gui/btn_close_off.png, gui/mmtitle_extras_mg.png
-##
-## 7. Memory organization:
-##    - Memories are organized by ACT (episodes 1-5, 6-10, 11-15, 16-20)
-##    - Grid layout with 3 memories per row
-##    - Locked memories show placeholder thumbnail
-##    - Unlocked memories show hover effects and are clickable
-##
-## USAGE EXAMPLES:
-##
-## Example 1 - Unlock memory during story:
-## label important_scene:
-##     "This moment will be remembered forever."
-##     $ unlock_memory("m_ep01_confession")
-##     # Continue with story...
-##
-## Example 2 - Conditional memory unlocking:
-## label scene_end:
-##     if amber_route_active:
-##         $ unlock_memory("m_ep01_amber_scene")
-##     elif elizabeth_route_active:
-##         $ unlock_memory("m_ep01_elizabeth_scene")
-##
-## Example 3 - Check progress for achievements:
-## label check_completion:
-##     $ unlocked_count = get_unlocked_memories_count()
-##     if unlocked_count >= 10:
-##         "Achievement unlocked: Memory Collector!"
-##
-## Example 4 - Integration in extras menu:
-## screen extras():
-##     textbutton "Memories" action ShowMenu("memories_gallery")
-##     textbutton "Music Player" action ShowMenu("music_player")
-##
-## TROUBLESHOOTING:
-## - If memories don't unlock: Check that memory ID exists in memories_dict
-## - If thumbnails don't show: Verify image paths are correct
-## - If navigation fails: Ensure ACT organization logic matches your episodes
-## - If notifications don't appear: Check icon_memory.png exists
-## - If images don't display: Verify all image names in memories_dict are valid
-##
-## CUSTOMIZATION:
-## - Modify get_memories_by_act() to change episode organization
-## - Adjust notification_duration in MemoriesState for different timing
-## - Change grid layout by modifying organize_memories_in_rows() columns parameter
-## - Add new ACTs by extending the ACT button logic and organization function
-## - Customize thumbnails and locked states through memories_dict definitions
-##
-## ADVANCED FEATURES:
-## - Progress tracking with current/total image indicators
-## - Persistent unlock state across game sessions
-## - Notification system for new unlocks
-## - ACT-based organization for easy navigation
-## - Click-to-advance viewing with automatic progression
-## - Hover effects and visual feedback
-## - Modal viewing with proper screen management
+## This ensures memory notifications use the correct styling while maintaining proper positioning.
