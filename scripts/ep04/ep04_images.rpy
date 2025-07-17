@@ -127,150 +127,150 @@ init:
     image ep04_nan_clothes39 = "ep04_08_12"
 
     image ep04_nanmad01 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_01_a",
+        "ep04_nanpath == 1", "ep04_09_01_a",
         "True", "ep04_09_01_b"
     )
 
     image ep04_nanmad02 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_02_a",
+        "ep04_nanpath == 1", "ep04_09_02_a",
         "True", "ep04_09_02_b"
     )
 
     image ep04_nanmad03 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_03_a",
+        "ep04_nanpath == 1", "ep04_09_03_a",
         "True", "ep04_09_03_b"
     )
 
     image ep04_nanmad04 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_04_a",
+        "ep04_nanpath == 1", "ep04_09_04_a",
         "True", "ep04_09_04_b"
     )
 
     image ep04_nanmad05 = "ep04_09_05"
 
     image ep04_nanmad06 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_06_a",
+        "ep04_nanpath == 1", "ep04_09_06_a",
         "True", "ep04_09_06_b"
     )
 
     image ep04_nanmad07 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_07_a",
+        "ep04_nanpath == 1", "ep04_09_07_a",
         "True", "ep04_09_07_b"
     )
 
     image ep04_nanmad08 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_08_a",
+        "ep04_nanpath == 1", "ep04_09_08_a",
         "True", "ep04_09_08_b"
     )
 
     image ep04_nanmad09 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_09_a",
+        "ep04_nanpath == 1", "ep04_09_09_a",
         "True", "ep04_09_09_b"
     )
 
     image ep04_nanmad10 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_10_a",
+        "ep04_nanpath == 1", "ep04_09_10_a",
         "True", "ep04_09_10_b"
     )
 
     image ep04_nanmad11 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_11_a",
+        "ep04_nanpath == 1", "ep04_09_11_a",
         "True", "ep04_09_11_b"
     )
 
     image ep04_nanmad12 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_12_a",
+        "ep04_nanpath == 1", "ep04_09_12_a",
         "True", "ep04_09_12_b"
     )
 
     image ep04_nanmad13 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_13_a",
+        "ep04_nanpath == 1", "ep04_09_13_a",
         "True", "ep04_09_13_b"
     )
 
     image ep04_nanmad14 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_14_a",
+        "ep04_nanpath == 1", "ep04_09_14_a",
         "True", "ep04_09_14_b"
     )
 
     image ep04_nanmad15 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_15_a",
+        "ep04_nanpath == 1", "ep04_09_15_a",
         "True", "ep04_09_15_b"
     )
 
     image ep04_nanmad16 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_16_a",
+        "ep04_nanpath == 1", "ep04_09_16_a",
         "True", "ep04_09_16_b"
     )
 
     image ep04_nanmad17 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_17_a",
+        "ep04_nanpath == 1", "ep04_09_17_a",
         "True", "ep04_09_17_b"
     )
 
     image ep04_nanmad18 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_18_a",
+        "ep04_nanpath == 1", "ep04_09_18_a",
         "True", "ep04_09_18_b"
     )
 
     image ep04_nanmad19 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_19_a",
+        "ep04_nanpath == 1", "ep04_09_19_a",
         "True", "ep04_09_19_b"
     )
 
     image ep04_nanmad20 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_20_a",
+        "ep04_nanpath == 1", "ep04_09_20_a",
         "True", "ep04_09_20_b"
     )
 
     image ep04_nanmad21 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_21_a",
+        "ep04_nanpath == 1", "ep04_09_21_a",
         "True", "ep04_09_21_b"
     )
 
     image ep04_nanmad22 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_09_22_a",
+        "ep04_nanpath == 1", "ep04_09_22_a",
         "True", "ep04_09_22_b"
     )
 
     image ep04_nanmad23 = ConditionSwitch(
         "True", "ep04_09_23_b",
-        "ep04_nanaskimpy", "ep04_09_23_a"
+        "ep04_nanpath == 1", "ep04_09_23_a"
     )
 
 
     image ep04_madnan01 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_10_01_a",
+        "ep04_nanpath == 1", "ep04_10_01_a",
         "True", "ep04_10_01_b"
     )
 
     image ep04_madnan02 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_10_02_a",
+        "ep04_nanpath == 1", "ep04_10_02_a",
         "True", "ep04_10_02_b"
     )
 
     image ep04_madnan03 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_10_03_a",
+        "ep04_nanpath == 1", "ep04_10_03_a",
         "True", "ep04_10_03_b"
     )
 
     image ep04_madnan04 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_10_04_a",
+        "ep04_nanpath == 1", "ep04_10_04_a",
         "True", "ep04_10_04_b"
     )
 
     image ep04_madnan05 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_10_05_a",
+        "ep04_nanpath == 1", "ep04_10_05_a",
         "True", "ep04_10_05_b"
     )
 
     image ep04_madnan06 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_10_06_a",
+        "ep04_nanpath == 1", "ep04_10_06_a",
         "True", "ep04_10_06_b"
     )
 
     image ep04_madnan07 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_10_07_a",
+        "ep04_nanpath == 1", "ep04_10_07_a",
         "True", "ep04_10_07_b"
     )
 

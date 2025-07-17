@@ -191,8 +191,20 @@ init python:
         # Character meeting sequences
         "ep04_nanameetmenu": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "points": 2, "type": "Corruption", "extra_text": "This path leads to Isabella's solo scene and Nanami's"},
-                {"option_num": 2, "char_name": "Nanami", "points": 6, "type": "Love", "extra_text": "Open up the routes to all the girls for now"}
+                {
+                    "option_num": 1, 
+                    "char_name": "Nanami", 
+                    "points": 2, 
+                    "type": "Corruption", 
+                    "extra_text": "Branches to Elizabeth or Isabella"
+                },
+                {
+                    "option_num": 2, 
+                    "char_name": "Nanami", 
+                    "points": 6, 
+                    "type": "Love", 
+                    "extra_text": "Direct path to Isabella"
+                }
             ])
         },
 

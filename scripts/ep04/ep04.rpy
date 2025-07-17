@@ -302,7 +302,7 @@ label ep04_nanapool:
             mc_t "[renpy.substitute(dialogues4['E04POOL_d153'])]"
             mc_t "[renpy.substitute(dialogues4['E04POOL_d154'])]"
             mc_s "[renpy.substitute(dialogues4['E04POOL_d155'])]"
-            $ ep04_nanpath += 1
+            $ ep04_nanpath = 1
             $ setChannelVolume(channel="amb", subchannel=1, volume=0, fade_duration=1)
             $ setChannelVolume(channel="amb", subchannel=2, volume=0, fade_duration=1)
             jump ep04_nanpool
@@ -314,7 +314,7 @@ label ep04_nanapool:
             mc_s "[renpy.substitute(dialogues4['E04POOL_d159'])]"
             nana "[renpy.substitute(dialogues4['E04POOL_d160'])]"
             mc_s "[renpy.substitute(dialogues4['E04POOL_d161'])]"
-            $ ep04_nanpath += 2
+            $ ep04_nanpath = 2
             jump ep04_nantowel
 
 label ep04_nanpool:
@@ -7518,4 +7518,3 @@ label ep04_antonella_return:
         pause 2
         $ resetAllVolumes()
         jump ep05_title
-
