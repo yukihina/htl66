@@ -126,18 +126,18 @@ init python:
             "text": "In a pivotal decision, you chose to share your first time with Amber, creating an unforgettable memory.",
             "persistent_var": "ep01_ach4",
             "notified_var": "ep01_ach4_notified",
-            "thumb_on": "achievements/ach_ep01_amber_thumb_on.webp",
-            "thumb_on_hover": "achievements/ach_ep01_amber_thumb_onh.webp",
-            "thumb_off": "achievements/ach_ep01_amber_thumb_off.webp"
+            "thumb_on": "achievements/ach_ep01_amber1_thumb_on.webp",
+            "thumb_on_hover": "achievements/ach_ep01_amber1_thumb_onh.webp",
+            "thumb_off": "achievements/ach_ep01_amber1_thumb_off.webp"
         },
         "ach_ep01_antonella": {
             "title": "Timeless Bond",
             "text": "Antonella's special day didn't go unnoticed. Your thoughtfulness will be forever cherished.",
             "persistent_var": "ep01_ach5",
             "notified_var": "ep01_ach5_notified",
-            "thumb_on": "achievements/ach_ep01_antonella_thumb_on.webp",
-            "thumb_on_hover": "achievements/ach_ep01_antonella_thumb_onh.webp",
-            "thumb_off": "achievements/ach_ep01_antonella_thumb_off.webp"
+            "thumb_on": "achievements/ach_ep01_antonella1_thumb_on.webp",
+            "thumb_on_hover": "achievements/ach_ep01_antonella1_thumb_onh.webp",
+            "thumb_off": "achievements/ach_ep01_antonella1_thumb_off.webp"
         },
         "ach_ep02_paz": {
             "title": "Opening Old Doors",
@@ -270,9 +270,9 @@ init python:
             "text": "Isabella's Commander White costume takes a seductive turn under your influence.",
             "persistent_var": "ep05_ach1",
             "notified_var": "ep05_ach1_notified",
-            "thumb_on": "achievements/ach_ep05_isabella_thumb_on.webp",
-            "thumb_on_hover": "achievements/ach_ep05_isabella_thumb_onh.webp",
-            "thumb_off": "achievements/ach_ep05_isabella_thumb_off.webp"
+            "thumb_on": "achievements/ach_ep05_isabella1_thumb_on.webp",
+            "thumb_on_hover": "achievements/ach_ep05_isabella1_thumb_onh.webp",
+            "thumb_off": "achievements/ach_ep05_isabella1_thumb_off.webp"
         },
         "ach_ep05_isabella2": {
             "title": "Pure Cosplayer",
