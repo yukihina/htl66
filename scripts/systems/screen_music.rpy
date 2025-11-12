@@ -499,7 +499,7 @@ init python:
                 ("Shadow Waltz", amber_sexy_theme2),
                 ("Sin & Silence", amber_sexy_theme),
                 ("The Last Embrace", mc_amber_x_theme),
-                ("Veil of Joy", amber_happy_theme)
+                #("Veil of Joy", amber_happy_theme)
             ],
             "nanami": [
                 ("儚い願い (Hakanai Negai)", nanami_innocence_theme),
@@ -561,7 +561,7 @@ init python:
             ],
             "paz": [
                 ("Ember Glow", paz_theme),
-                ("Golden Tide", paz_happy_theme)
+                #("Golden Tide", paz_happy_theme)
             ],
             "common": [
                 ("Diamond Pulse", photos_theme),
@@ -571,7 +571,7 @@ init python:
                 ("The Serpent's Elegy", mic_theme),
                 ("Valse pour l'Enfer", hell_theme),
                 ("闇の刻 (Yami no Koku)", title_theme),
-                ("怒れる地響き (Ikareru Jihibiki)", mc_action_theme2),
+                #("怒れる地響き (Ikareru Jihibiki)", mc_action_theme2),
                 ("戻らぬ時 (Modoranu Toki)", mc_theme),
                 ("帰らぬ昨日 (Kaeranu Kinō)", mc_broken_theme),
                 ("終わらない連鎖 (Owaranai Rensa)", mc_suspense_theme),

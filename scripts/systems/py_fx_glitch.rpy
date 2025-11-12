@@ -1,4 +1,4 @@
- ################################
+################################
     ###### ---- GLITCH fx --- ######
     ################################
     #credits @ https://github.com/Gouvernathor/renpy-ChromaGlitch
@@ -43,28 +43,30 @@ init -1 python:
             minbandheight = self.minbandheight
             nslices = self.nslices
             if nslices is None:
+                # FIX: Ensure integer division and casting
                 nslices = min(int(cheight/minbandheight), randomobj.randrange(10, 21))
 
-            theights = sorted(randomobj.randrange(cheight+1) for k in range(nslices)) # y coordinates demarcating all the strips
+            # FIX: Cast cheight to int to avoid float error in Python 3.12
+            theights = sorted(randomobj.randrange(int(cheight)+1) for k in range(nslices)) # y coordinates demarcating all the strips
             offt = 0 # next strip's lateral offset
             fheight = 0 # sum of the size of all the strips added this far
-            while fheight<cheight:
+            while fheight < cheight:
                 # theight is the height of this particular strip
                 if theights:
                     theight = max(theights.pop(0)-fheight, minbandheight)
                 else:
-                    theight = cheight-theight
+                    theight = cheight-fheight  # FIX: was theight, should be fheight
 
-                slice_render = child_render.subsurface((0, fheight, cwidth, theight))
+                slice_render = child_render.subsurface((0, int(fheight), int(cwidth), int(theight)))
 
                 if offt and chroma:
                     for color_mask, chponder in (((False, False, True, True), 1.25), ((False, True, False, True), 1.), ((True, False, False, True), .75)):
-                        chroma_render = slice_render.subsurface((0, 0, cwidth, theight))
+                        chroma_render = slice_render.subsurface((0, 0, int(cwidth), int(theight)))
                         chroma_render.add_property("gl_color_mask", color_mask)
                         render.blit(chroma_render, (round(offt*chponder), round(fheight)))
 
                 else:
-                    render.blit(slice_render, (offt, round(fheight)))
+                    render.blit(slice_render, (int(offt), round(fheight)))
 
                 fheight += theight
                 if offt:
@@ -78,7 +80,6 @@ init -1 python:
             return [self.child]
 
     class animated_glitch(glitch):
-
 
         def __init__(self, *args, timeout_base=None, timeout_vanilla=None, **kwargs):
             super().__init__(*args, **kwargs)
@@ -132,7 +133,6 @@ init -1 python:
 
     class squares_glitch(renpy.Displayable):
 
-
         NotSet = object()
 
         def __init__(self, child, *args, randomkey=NotSet, **kwargs):
@@ -159,27 +159,34 @@ init -1 python:
             if not (cwidth and cheight):
                 return child
 
-            ncols = round(cwidth/squareside)
-            nrows = round(cheight/squareside)
-            square_width = absolute(cwidth/ncols)
-            square_height = absolute(cheight/nrows)
+            # FIX: Ensure integer calculations
+            ncols = max(1, round(cwidth/squareside))
+            nrows = max(1, round(cheight/squareside))
+            square_width = int(cwidth/ncols)
+            square_height = int(cheight/nrows)
 
             lizt = []
             for y in range(nrows):
                 for x in range(ncols):
                     lizt.append(Transform(child,
-                                            crop=(absolute(x*square_width), absolute(y*square_height), square_width, square_height),
+                                            crop=(int(x*square_width), int(y*square_height), square_width, square_height),
                                             subpixel=True,
                                             ))
 
             if permutes is None:
                 permutes = randomobj.randrange(10, 40)/100 # between 10% and 40%
             permutes = round(permutes*ncols*nrows)
-            permute_a = randomobj.sample(range(ncols*nrows), permutes)
-            permute_b = randomobj.sample(range(ncols*nrows), permutes)
+            
+            # FIX: Ensure we don't sample more than available
+            total_squares = ncols * nrows
+            permutes = min(permutes, total_squares)
+            
+            if total_squares > 0 and permutes > 0:
+                permute_a = randomobj.sample(range(total_squares), permutes)
+                permute_b = randomobj.sample(range(total_squares), permutes)
 
-            for a, b in zip(permute_a, permute_b):
-                lizt[a], lizt[b] = lizt[b], lizt[a]
+                for a, b in zip(permute_a, permute_b):
+                    lizt[a], lizt[b] = lizt[b], lizt[a]
 
             for k, el in enumerate(lizt):
                 if randomobj.random() < chroma:

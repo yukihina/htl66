@@ -601,14 +601,14 @@ init:
         "ep04_nanaskimpy", "ep04_23_11_a",
         "True", "ep04_23_11_b"
     )
-    image ep04_nanakitmorekiss11 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_23_12_a",
-        "True", "ep04_23_12_b"
-    )
-    image ep04_nanakitmorekiss12 = ConditionSwitch(
-        "ep04_nanaskimpy", "ep04_23_13_a",
-        "True", "ep04_23_13_b"
-    )
+    # image ep04_nanakitmorekiss11 = ConditionSwitch(
+    #     "ep04_nanaskimpy", "ep04_23_12_a",
+    #     "True", "ep04_23_12_b"
+    # )
+    # image ep04_nanakitmorekiss12 = ConditionSwitch(
+    #     "ep04_nanaskimpy", "ep04_23_13_a",
+    #     "True", "ep04_23_13_b"
+    # )
     image ep04_nanakitmorekiss13 = ConditionSwitch(
         "ep04_nanaskimpy", "ep04_23_16_a",
         "True", "ep04_23_16_b"
@@ -709,6 +709,7 @@ init:
     image ep04_nanamcroom19 = "ep04_25_19"
     image ep04_nanamcroom20 = "ep04_25_20"
     image ep04_nanamcroom21 = "ep04_25_21"
+    image ep04_nanamcroom21b = "ep04_25_22"
     image ep04_nanamcroom22 = "ep04_25_23"
     image ep04_nanamcroom23 = "ep04_25_24"
     image ep04_nanamcroom24 = "ep04_25_25"
@@ -796,88 +797,88 @@ init:
     image ep04_hallmeeting08 = "ep04_29_08"
     image ep04_hallmeeting09 = "ep04_29_09"
 
-    image ep04_nana_spread01 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_14_a",
-    "True", "ep04_23_14_b"
-    )
+    # image ep04_nana_spread01 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_14_a",
+    # "True", "ep04_23_14_b"
+    # )
 
-    image ep04_nana_spread02 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a1",
-    "True", "ep04_23_15_b1"
-    )
+    # image ep04_nana_spread02 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a1",
+    # "True", "ep04_23_15_b1"
+    # )
 
-    image ep04_nana_spread03 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a2",
-    "True", "ep04_23_15_b2"
-    )
+    # image ep04_nana_spread03 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a2",
+    # "True", "ep04_23_15_b2"
+    # )
 
-    image ep04_nana_spread04 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a3",
-    "True", "ep04_23_15_b3"
-    )
+    # image ep04_nana_spread04 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a3",
+    # "True", "ep04_23_15_b3"
+    # )
 
-    image ep04_nana_spread05 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a4",
-    "True", "ep04_23_15_b4"
-    )
+    # image ep04_nana_spread05 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a4",
+    # "True", "ep04_23_15_b4"
+    # )
 
-    image ep04_nana_spread06 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a5",
-    "True", "ep04_23_15_b5"
-    )
+    # image ep04_nana_spread06 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a5",
+    # "True", "ep04_23_15_b5"
+    # )
 
-    image ep04_nana_spread07 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a6",
-    "True", "ep04_23_15_b6"
-    )
+    # image ep04_nana_spread07 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a6",
+    # "True", "ep04_23_15_b6"
+    # )
 
-    image ep04_nana_spread08 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a7",
-    "True", "ep04_23_15_b7"
-    )
+    # image ep04_nana_spread08 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a7",
+    # "True", "ep04_23_15_b7"
+    # )
 
-    image ep04_nana_spread09 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a8",
-    "True", "ep04_23_15_b8"
-    )
+    # image ep04_nana_spread09 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a8",
+    # "True", "ep04_23_15_b8"
+    # )
 
-    image ep04_nana_spread10 = ConditionSwitch(
-    "ep04_nanaskimpy", "ep04_23_15_a9",
-    "True", "ep04_23_15_b9"
-    )
+    # image ep04_nana_spread10 = ConditionSwitch(
+    # "ep04_nanaskimpy", "ep04_23_15_a9",
+    # "True", "ep04_23_15_b9"
+    # )
 
-    image ep04_nana_pussy_play01 = "ep04_25_22_01"
-    image ep04_nana_pussy_play02 = "ep04_25_22_02"
-    image ep04_nana_pussy_play03 = "ep04_25_22_03"
-    image ep04_nana_pussy_play04 = "ep04_25_22_04"
-    image ep04_nana_pussy_play05 = "ep04_25_22_05"
+    # image ep04_nana_pussy_play01 = "ep04_25_22_01"
+    # image ep04_nana_pussy_play02 = "ep04_25_22_02"
+    # image ep04_nana_pussy_play03 = "ep04_25_22_03"
+    # image ep04_nana_pussy_play04 = "ep04_25_22_04"
+    # image ep04_nana_pussy_play05 = "ep04_25_22_05"
 
-    image ep04_nanakissbreast01 = "ep04_25_37_02"
-    image ep04_nanakissbreast02 = "ep04_25_37_04"
-    image ep04_nanakissbreast03 = "ep04_25_37_05"
-    image ep04_nanakissbreast04 = "ep04_25_37_07"
-    image ep04_nanakissbreast05 = "ep04_25_37_08"
+    # image ep04_nanakissbreast01 = "ep04_25_37_02"
+    # image ep04_nanakissbreast02 = "ep04_25_37_04"
+    # image ep04_nanakissbreast03 = "ep04_25_37_05"
+    # image ep04_nanakissbreast04 = "ep04_25_37_07"
+    # image ep04_nanakissbreast05 = "ep04_25_37_08"
 
-    image ep04_nana_pussy_show01 = "ep04_26_06_01"
-    image ep04_nana_pussy_show02 = "ep04_26_06_02"
-    image ep04_nana_pussy_show03 = "ep04_26_06_03"
-    image ep04_nana_pussy_show04 = "ep04_26_06_04"
-    image ep04_nana_pussy_show05 = "ep04_26_06_05"
+    # image ep04_nana_pussy_show01 = "ep04_26_06_01"
+    # image ep04_nana_pussy_show02 = "ep04_26_06_02"
+    # image ep04_nana_pussy_show03 = "ep04_26_06_03"
+    # image ep04_nana_pussy_show04 = "ep04_26_06_04"
+    # image ep04_nana_pussy_show05 = "ep04_26_06_05"
 
-    image ep04_nanadrunknude_xx = "ep04_26_06_06"
-    image ep04_nanadrunknude_x2 = "ep04_26_06_07"
+    # image ep04_nanadrunknude_xx = "ep04_26_06_06"
+    # image ep04_nanadrunknude_x2 = "ep04_26_06_07"
 
-    image ep04_nana_pussylick01 = "ep04_26_05_01"
-    image ep04_nana_pussylick02 = "ep04_26_05_02"
-    image ep04_nana_pussylick03 = "ep04_26_05_03"
-    image ep04_nana_pussylick04 = "ep04_26_05_04"
-    image ep04_nana_pussylick05 = "ep04_26_05_05"
+    # image ep04_nana_pussylick01 = "ep04_26_05_01"
+    # image ep04_nana_pussylick02 = "ep04_26_05_02"
+    # image ep04_nana_pussylick03 = "ep04_26_05_03"
+    # image ep04_nana_pussylick04 = "ep04_26_05_04"
+    # image ep04_nana_pussylick05 = "ep04_26_05_05"
 
-    image ep04_nana_pussylick2_01 = "ep04_26_04_01"
-    image ep04_nana_pussylick2_02 = "ep04_26_04_02"
-    image ep04_nana_pussylick2_03 = "ep04_26_04_03"
-    image ep04_nana_pussylick2_04 = "ep04_26_04_04"
-    image ep04_nana_pussylick2_05 = "ep04_26_04_05"
+    # image ep04_nana_pussylick2_01 = "ep04_26_04_01"
+    # image ep04_nana_pussylick2_02 = "ep04_26_04_02"
+    # image ep04_nana_pussylick2_03 = "ep04_26_04_03"
+    # image ep04_nana_pussylick2_04 = "ep04_26_04_04"
+    # image ep04_nana_pussylick2_05 = "ep04_26_04_05"
 
     image ep04_ambroom01 = "ep04_30_01"
     image ep04_ambroom02 = "ep04_30_02"
@@ -1356,3 +1357,14 @@ init:
     image ep04_antoshow11 = "ep04_49_11"
     image ep04_antoshow12 = "ep04_49_12"
     image ep04_antoshow13 = "ep04_49_13"
+
+    image ep04_anim_nana01 = Movie(play="images/ep4/ep04_an_nana1.webm", loop=True)
+    image ep04_anim_nana02 = Movie(play="images/ep4/ep04_an_nana2.webm", loop=True)
+    image ep04_anim_nana03 = Movie(play="images/ep4/ep04_an_nana3.webm", loop=True)
+    image ep04_anim_nana04 = Movie(play="images/ep4/ep04_an_nana4.webm", loop=True)
+    image ep04_anim_nana05 = Movie(play="images/ep4/ep04_an_nana5.webm", loop=True)
+    image ep04_anim_nana06 = Movie(play="images/ep4/ep04_an_nana6.webm", loop=True)
+    image ep04_anim_nana07 = Movie(play="images/ep4/ep04_an_nana7.webm", loop=True)
+    image ep04_anim_nana08 = Movie(play="images/ep4/ep04_an_nana8.webm", loop=True)
+    image ep04_anim_nana09 = Movie(play="images/ep4/ep04_an_nana9.webm", loop=True)
+    

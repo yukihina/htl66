@@ -1,3 +1,0 @@
-init -999 python:
-    renpy.persistent.patch_applied = True
-    patched = True

@@ -564,7 +564,7 @@ image noise_03 = "images/overlay/noise03.webp"
 
 # New logo elements for branding
 image nl_bg = "gui/new_logo_qori00.webp"
-image nl_lo = "gui/new_logo_qori01.webp"
+image nl_lo = Movie(play="gui/qori_logo.webm",loop=False, keep_last_frame=True)
 image nl_jp = "gui/new_logo_qori02.webp"
 image nl_qo = "gui/new_logo_qori04.webp"
 image nl_ga = "gui/new_logo_qori05.webp"

@@ -159,93 +159,140 @@ init python hide:
     ############################################################################
 
     from renpy.display.accelerator import RenderTransform
+    import math
 
-    def render(self, width, height, st, at):
+    def render_safe(self, width, height, st, at):
+        # FIX: Add safety checks to prevent infinite recursion
+        if hasattr(self, '_rendering') and self._rendering:
+            # Return basic render to break recursion
+            return renpy.Render(width or 100, height or 100)
+        
+        self._rendering = True
+        
+        try:
+            # Just a copy of the `renpy.display.Transform.render` function:
+            if st + self.st_offset <= self.st:
+                self.st_offset = self.st - st
+            if at + self.at_offset <= self.at:
+                self.at_offset = self.at - at
 
-        # Just a copy of the `renpy.display.Transform.render` function:
-        if st + self.st_offset <= self.st:
-            self.st_offset = self.st - st
-        if at + self.at_offset <= self.at:
-            self.at_offset = self.at - at
+            self.st = st = st + self.st_offset
+            self.at = at = at + self.at_offset
 
-        self.st = st = st + self.st_offset
-        self.at = at = at + self.at_offset
+            self.update_state()
 
-        self.update_state()
+            # FIX: Add error handling for RenderTransform
+            try:
+                rv = RenderTransform(self).render(width, height, st, at)
+            except Exception as e:
+                # Fallback render if RenderTransform fails
+                renpy.log.write("RenderTransform error: %s" % e)
+                rv = renpy.Render(width or 100, height or 100)
 
-        rv = RenderTransform(self).render(width, height, st, at)
-        # Copy end.
+            ####################################################################
+            # Gaussian
 
-        ########################################################################
-        # Gaussian
+            def gaussian_blur(rv, blur):
+                # FIX: Add safety checks
+                if blur <= 0:
+                    return rv
+                    
+                def apply(rv, shader, blur, direction):
+                    if not rv:
+                        return rv
+                        
+                    cr = rv
+                    size = cr.get_size()
+                    if not size or size[0] <= 0 or size[1] <= 0:
+                        return rv
 
-        def gaussian_blur(rv, blur):
+                    rv = renpy.Render(*size)
+                    rv.mesh = True
+                    rv.blit(cr, (0, 0))
+                    rv.add_shader("-renpy.texture")
 
-            def apply(rv, shader, blur, direction):
+                    rv.add_shader(shader)
+                    rv.add_uniform("u_blur", float(blur))
+                    rv.add_uniform("u_direction", direction)
+                    return rv
+
+                rv = apply(rv, "shader.gaussian", blur, direction=(1.0, 0.0))
+                rv = apply(rv, "shader.gaussian", blur, direction=(0.0, 1.0))
+
+                return rv
+
+            ####################################################################
+            # Noisy
+
+            def noisy_blur(rv, blur):
+                # FIX: Add safety checks
+                if blur <= 0:
+                    return rv
+                    
                 cr = rv
+                size = cr.get_size()
+                if not size or size[0] <= 0 or size[1] <= 0:
+                    return rv
 
-                rv = renpy.Render(*cr.get_size())
+                rv = renpy.Render(*size)
                 rv.mesh = True
                 rv.blit(cr, (0, 0))
                 rv.add_shader("-renpy.texture")
 
-                rv.add_shader(shader)
-                rv.add_uniform("u_blur", blur)
-                rv.add_uniform("u_direction", direction)
+                rv.add_shader("renpy.noisy_blur")
+                rv.add_uniform("u_blur", float(blur))
                 return rv
 
-            rv = apply(rv, "shader.gaussian", blur, direction=(1.0, 0.0))
-            rv = apply(rv, "shader.gaussian", blur, direction=(0.0, 1.0))
+            ####################################################################
+            # Default
 
-            return rv
+            def renpy_blur(rv, blur):
+                # FIX: Add safety checks
+                if blur <= 0:
+                    return rv
+                    
+                cr = rv
+                size = cr.get_size()
+                if not size or size[0] <= 0 or size[1] <= 0:
+                    return rv
 
-        ########################################################################
-        # Noisy
+                rv = renpy.Render(*size)
+                rv.mesh = True
+                rv.blit(cr, (0, 0))
+                rv.add_shader("-renpy.texture")
 
-        def noisy_blur(rv, blur):
-            cr = rv
+                rv.add_shader("_renpy.blur")
+                # FIX: Ensure positive values for logarithm
+                blur_value = max(blur * 1.25, 0.01)
+                rv.add_uniform("u_renpy_blur_log2", math.log(blur_value, 2))
+                return rv
 
-            rv = renpy.Render(*cr.get_size())
-            rv.mesh = True
-            rv.blit(cr, (0, 0))
-            rv.add_shader("-renpy.texture")
+            ####################################################################
+            # Apply Blur
 
-            rv.add_shader("renpy.noisy_blur")
-            rv.add_uniform("u_blur", blur)
-            return rv
+            blur = (self.state.blur or None)
+            graphics_blur = preferences.graphics_blur
 
-        ########################################################################
-        # Default
+            if blur is not None and blur > 0:
+                try:
+                    if graphics_blur == 2:
+                        rv = gaussian_blur(rv, blur)    # 17.0%         36.0%  <-- High GPU load
 
-        def renpy_blur(rv, blur):
-            cr = rv
+                    elif graphics_blur == 1:
+                        rv = noisy_blur(rv, blur)       # 13.0%         17.0%
 
-            rv = renpy.Render(*cr.get_size())
-            rv.mesh = True
-            rv.blit(cr, (0, 0))
-            rv.add_shader("-renpy.texture")
+                    elif graphics_blur == 0:
+                        rv = renpy_blur(rv, blur)       # 9.0%          9.0%
+                        
+                except Exception as e:
+                    # If blur fails, return original render
+                    renpy.log.write("Blur error: %s" % e)
+                    pass
 
-            rv.add_shader("_renpy.blur")
-            rv.add_uniform("u_renpy_blur_log2", math.log(blur * 1.25, 2))
-            return rv
-
-        ########################################################################
-        # Apply Blur
-
-        blur = (self.state.blur or None)
-        graphics_blur = preferences.graphics_blur
-
-        if blur is not None:
-
-            if graphics_blur == 2:
-                rv = gaussian_blur(rv, blur)    # 17.0%         36.0%  <-- High GPU load
-
-            elif graphics_blur == 1:
-                rv = noisy_blur(rv, blur)       # 13.0%         17.0%
-
-            elif graphics_blur == 0:
-                rv = renpy_blur(rv, blur)       # 9.0%          9.0%
+        finally:
+            self._rendering = False
 
         return rv
 
-    renpy.display.transform.Transform.render = render
+    # Apply the fixed render function
+    renpy.display.transform.Transform.render = render_safe

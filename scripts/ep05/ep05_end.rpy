@@ -2165,7 +2165,7 @@ label ep05_elidream:
     scene eigengrau
 
     $ setChannelVolume("sfx", 3, 0.8, 0)
-    $ playAudio(sfx_inhale_fem2, "sfx", 3, False, 2, 0)
+    $ playAudio(sfx_inhale_fem, "sfx", 3, False, 2, 0)
 
     show ep05_hosd3_eli25 #anim
     eli "[renpy.substitute(dialogues5['E05_ELIDR_d108'])]"

@@ -1,5 +1,5 @@
 label ep01_start:
-    scene black with watercolor
+    scene eigengrau with watercolor
     $ stopAllSubchannels(channel="music", fadeout=1)
     pause 0.5
     call showNoise(0.1, 0.15, transition=dissolve)

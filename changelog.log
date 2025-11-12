@@ -1,6 +1,42 @@
 =====================================================================
                              CHANGELOG
 =====================================================================
+v0.28 Episode 6 - 1st part
+---------------------------------------------------------------------
++ ADDED:
+  • 225 new renders
+  • 14 new animations
+  • 2 new achievements
+
+~ CHANGED:
+  • Some GUI elements updated
+  • Animated episode title backgrounds
+  • All achievements remade and re-rendered in 8K UHD (so I get rid of AI blending)
+
+! FIXED:
+  • 01 render from version 0.27
+
+* TECHNICAL:
+  • Updated to Renpy 8.4.2
+
+
+v0.27 AI removal and animation update
+---------------------------------------------------------------------
++ ADDED:
+  • 09 new animations on episode 4 (Nanami night scene)
+
+~ CHANGED:
+  • Re-rendered 211 renders on episode 4 (Nanami night scene)
+
+! FIXED:
+  • Sound bugs on v0.26
+  • Amber/MC bugged dialogues on episode 3
+
+* TECHNICAL:
+  • AVIF sharpening fixed on episode 5.
+  • Deleted unused files from previous versions.
+  • Webm using AV1 codec instead of VP9
+
 v0.26 (Episode 5)
 ---------------------------------------------------------------------
 + ADDED:

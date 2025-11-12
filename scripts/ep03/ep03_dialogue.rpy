@@ -315,7 +315,7 @@ define dialogues3 = {
 "E03AMBERSTAY_d010": "Easy, Amber. Look, if you want answers, you're not gonna like them, okay?",
 "E03AMBERSTAY_d011": "But, I was right here, right here the whole time. Right here for you. But you left me, and you hurt me, and you--",
 "E03AMBERSTAY_d012": "I even gave you my body, and you used me and said you loved me, and then you went with her, and--",
-"E03AMBERSTAY_d013": "I even gave you my body, and you said you loved me, and still you went with her, and--",
+"E03AMBERSTAY_d013": "I poured my heart out for you, and you said you loved me, and still you went with her, and--",
 "E03AMBERSTAY_d014": "Do you realize what you did to me? Do you realize how bad you made me feel? How worthless and used-",
 "E03AMBERSTAY_d015": "I didn't mean for that to happen, Amber. I didn't want to hurt you.",
 "E03AMBERSTAY_d016": "Fine then.",

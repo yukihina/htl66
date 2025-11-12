@@ -2258,10 +2258,14 @@ label ep04_nanameet:
         nana "[renpy.substitute(dialogues4['E04MCNANMEET_d063'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANMEET_d064'])]"
+    show ep04_nanakitchen12 at subtle_zoom_out with normalfade
     nana "[renpy.substitute(dialogues4['E04MCNANMEET_d065'])]"
     mc_s "[renpy.substitute(dialogues4['E04MCNANMEET_d066'])]"
     nana "[renpy.substitute(dialogues4['E04MCNANMEET_d067'])]"
-    show ep04_nanakitchen12 at subtle_zoom_out with normalfade
+    if ep04_nanaskimpy:
+        show ep04_anim_nana02
+    else:
+        show ep04_anim_nana01
     nana "[renpy.substitute(dialogues4['E04MCNANMEET_d068'])]"
     mc_s "[renpy.substitute(dialogues4['E04MCNANMEET_d069'])]"
     mc_t "[renpy.substitute(dialogues4['E04MCNANMEET_d070'])]"
@@ -2822,7 +2826,6 @@ label ep04_nana2ndkiss:
     else:
         mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d061'])]"
     $ playAudio(mc_nanami_theme, "music", 3, True, 2.0, 1.0)
-    show ep04_nanakitmorekiss11
     nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d062'])]"
     mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d063'])]"
     if ep04_nanadad:
@@ -2830,47 +2833,38 @@ label ep04_nana2ndkiss:
     else:
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d065'])]"
     mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d066'])]"
-    show ep04_nanakitmorekiss12
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d067'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d068'])]"
-    show ep04_nana_spread01 with hpunch
+    
+    if ep04_nanaskimpy:
+        show ep04_anim_nana03
+    else:
+        show ep04_anim_nana04
     mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d069'])]"
-    show ep04_nana_spread02
     mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d070'])]"
-    show ep04_nana_spread03
     nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d071'])]"
     nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d072'])]"
-    show ep04_nana_spread04
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d073'])]"
-        show ep04_nana_spread05
         mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d074'])]"
         mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d075'])]"
-        show ep04_nana_spread06
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d076'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d077'])]"
-        show ep04_nana_spread05
         mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d078'])]"
         mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d079'])]"
-        show ep04_nana_spread06
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d080'])]"
-    show ep04_nana_spread07
     mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d081'])]"
     mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d082'])]"
-    show ep04_nana_spread08
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d083'])]"
         mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d084'])]"
-        show ep04_nana_spread09
     else:
         nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d085'])]"
         mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d086'])]"
-        show ep04_nana_spread09
     nana "[renpy.substitute(dialogues4['E04MCNAN2KIS_d087'])]"
-    show ep04_nana_spread10
     mc_s "[renpy.substitute(dialogues4['E04MCNAN2KIS_d088'])]"
     $ setAllSubchannelsVolume("amb", 0, 1.0)
     $ stopAllSubchannels("music", 2.0)
@@ -3736,34 +3730,32 @@ label ep04_nanadrunkawake:
         mc_s "[renpy.substitute(dialogues4['E04MCNANDAAW_d106'])]"
     else:
         mc_s "[renpy.substitute(dialogues4['E04MCNANDAAW_d107'])]"
+    show ep04_nanamcroom21
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d108'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d109'])]"
-    show ep04_nana_pussy_play01
+    show ep04_nanamcroom21b
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d110'])]"
         mc_t "[renpy.substitute(dialogues4['E04MCNANDAAW_d111'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d112'])]"
         mc_t "[renpy.substitute(dialogues4['E04MCNANDAAW_d113'])]"
-    show ep04_nana_pussy_play02
+    show ep04_anim_nana05
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d114'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d115'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d116'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d117'])]"
-    show ep04_nana_pussy_play03
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d118'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d119'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d120'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d121'])]"
-    show ep04_nana_pussy_play04
     nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d122'])]"
-    show ep04_nana_pussy_play05
     nana "[renpy.substitute(dialogues4['E04MCNANDAAW_d123'])]"
     $ setChannelVolume("sfx", 3, 0.3, 0)
     $ playAudio(sfx_bed_sitdown, "sfx", 3, False, 0, 0)
@@ -3962,22 +3954,16 @@ label ep04_nanami_success_path:
         nana "[renpy.substitute(dialogues4['E04MCNANNSP_d028'])]"
     $ stopAudio("sfx", 5, 1)
     scene eigengrau with slowfade
-    show ep04_nanakissbreast01
+    show ep04_anim_nana06
     nana "[renpy.substitute(dialogues4['E04MCNANNSP_d029'])]"
-    show ep04_nanakissbreast02
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANNSP_d030'])]"
-        show ep04_nanakissbreast03
         mc_s "[renpy.substitute(dialogues4['E04MCNANNSP_d031'])]"
-        show ep04_nanakissbreast04
         nana "[renpy.substitute(dialogues4['E04MCNANNSP_d032'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANNSP_d033'])]"
-        show ep04_nanakissbreast03
         mc_s "[renpy.substitute(dialogues4['E04MCNANNSP_d034'])]"
-        show ep04_nanakissbreast04
         nana "[renpy.substitute(dialogues4['E04MCNANNSP_d035'])]"
-    show ep04_nanakissbreast05
     nana "[renpy.substitute(dialogues4['E04MCNANNSP_d036'])]"
     $ stopAllSubchannels("music", 2.0)
     scene eigengrau with normalfade
@@ -4150,7 +4136,7 @@ label ep04_nanalicking:
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d028'])]"
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d029'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d030'])]"
-    show ep04_nanadrunknude_xx with slowfade
+    show ep04_anim_nana08 with slowfade
     $ setChannelVolume("sfx", 3, 0.2, 0)
     $ playAudio(sfx_madbreathxxx, "sfx", 3, False, 0, 0)
     if ep04_nanadad:
@@ -4158,63 +4144,47 @@ label ep04_nanalicking:
     else:
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d032'])]"
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d033'])]"
-    show ep04_nanadrunknude_x2 with Dissolve (1)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d034'])]"
-    show ep04_nana_pussy_show01 with Dissolve (1)
     if ep04_nanadad:
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d035'])]"
     else:
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d036'])]"
-    show ep04_nana_pussy_show02 with Dissolve (1)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d037'])]"
-    show ep04_nana_pussy_show03 with Dissolve (1)
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d038'])]"
-        show ep04_nana_pussy_show04 with Dissolve (1)
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d039'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d040'])]"
-        show ep04_nana_pussy_show05 with Dissolve (1)
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d041'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d042'])]"
-        show ep04_nana_pussy_show04 with Dissolve (1)
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d043'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d044'])]"
-        show ep04_nana_pussy_show05 with Dissolve (1)
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d045'])]"
     $ stopAudio("sfx", 3, 1)
-    show ep04_nana_pussylick01 with Dissolve (0.5)
+    show ep04_anim_nana07
     $ setChannelVolume("sfx", 4, 0.2, 0)
     $ playAudio(sfx_madohxxx, "sfx", 4, False, 0, 0)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d046'])]"
-    show ep04_nana_pussylick02 with Dissolve (0.5)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d047'])]"
-    show ep04_nana_pussylick03 with Dissolve (0.5)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d048'])]"
-    show ep04_nana_pussylick04 with Dissolve (0.5)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d049'])]"
-    show ep04_nana_pussylick05 with Dissolve (0.5)
     if ep04_nanadad:
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d050'])]"
     else:
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d051'])]"
     $ stopAudio("sfx", 4, 0.5)
-    show ep04_nana_pussylick2_01 with Dissolve (0.5)
+    show ep04_anim_nana09
     $ setChannelVolume("sfx", 5, 1, 0)
     $ playAudio(sfx_moan_breath2, "sfx", 5, False, 0, 0)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d052'])]"
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d053'])]"
-    show ep04_nana_pussylick2_02 with Dissolve (0.5)
     if ep04_nanadad:
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d054'])]"
     else:
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d055'])]"
-    show ep04_nana_pussylick2_03 with Dissolve (0.5)
     mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d056'])]"
-    show ep04_nana_pussylick2_04 with Dissolve (0.5)
     nana "[renpy.substitute(dialogues4['E04MCNANLIC_d057'])]"
     mc_t "[renpy.substitute(dialogues4['E04MCNANLIC_d058'])]"
-    show ep04_nana_pussylick2_05 with Dissolve (0.5)
     if ep04_nanadad:
         mc_s "[renpy.substitute(dialogues4['E04MCNANLIC_d059'])]"
         nana "[renpy.substitute(dialogues4['E04MCNANLIC_d060'])]"

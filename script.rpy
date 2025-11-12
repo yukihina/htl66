@@ -41,7 +41,8 @@ label splashscreen:
     $ setChannelVolume(channel="sfx", subchannel=5, volume=0.5)
     $ playAudio(sfx_logo_brush, "sfx", 5, False, fadein=0, fadeout=0)
     show nl_lo:
-            yalign 0.5
+            yalign 0.30
+            xalign 0.5
     with horicolor_simple
     $ setChannelVolume(channel="sfx", subchannel=8, volume=0.5)
     $ playAudio(sfx_logo, "sfx", 8, False, fadein=0, fadeout=0)

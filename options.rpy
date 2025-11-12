@@ -23,7 +23,7 @@ define gui.show_name = False
 
 ## The version of the game.
 
-define config.version = "0.26"
+define config.version = "0.28"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -95,6 +95,10 @@ define config.end_game_transition = dissolve
 ## A variable to set the transition used when the game starts does not exist.
 ## Instead, use a with statement after showing the initial scene.
 
+define config.zoom_zaxis = False
+define config.gl_enable = True
+define config.gl_test_image = "white"
+define config.check_conflicting_properties = True
 
 ## Window management ###########################################################
 ##
