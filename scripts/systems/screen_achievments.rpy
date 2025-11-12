@@ -608,7 +608,8 @@ screen achievement_notification(achievement_key=None):
 screen achievement_screen(achievement_key):
     modal True
 
-    default zoom_level = 1.0
+    # Changed from 1.0 to 0.25 for 7680x4320 images (displays at 1920x1080 equivalent)
+    default zoom_level = 0.25
 
     viewport:
         at notification_appear
@@ -644,8 +645,9 @@ screen achievement_screen(achievement_key):
         style "igm_button"
         focus_mask None
 
-    key "mousedown_4" action SetScreenVariable("zoom_level", min(1.25, zoom_level + 0.05))
-    key "mousedown_5" action SetScreenVariable("zoom_level", max(1.0, zoom_level - 0.05))
+    # Changed max from 1.25 to 1.0 (full 7680x4320), min from 1.0 to 0.25 (1920x1080 equivalent)
+    key "mousedown_4" action SetScreenVariable("zoom_level", min(1.0, zoom_level + 0.05))
+    key "mousedown_5" action SetScreenVariable("zoom_level", max(0.25, zoom_level - 0.05))
 
 ## Main Achievements Grid Screen
 screen achievements():

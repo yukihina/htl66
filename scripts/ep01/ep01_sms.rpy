@@ -1,7 +1,6 @@
 default sawpic_ep01_sms5 = False
 default sawpic_ep01_sms4 = False
 default sawpic_ep01_sms6 = False
-
 transform sms_thumb_t:
     on show:
         subpixel True
@@ -12,42 +11,34 @@ transform sms_thumb_t:
     on idle:
         subpixel True
         ease 0.5 alpha 0.65
-
 image thumb_ep01_sms4:
     "sms/thumb_ep01_sms4.png" 
     yoffset -5
-
 image thumb_ep01_sms5:
     "sms/thumb_ep01_sms5.png" 
     yoffset -5 
-
 image thumb_ep01_sms6:
     "sms/thumb_ep01_sms6.png" 
     yoffset -5
-    
 image ep01_sms4 = Composite(
     (1080,1920),
     (0,0), AlphaMask("sms/ep01_sms4.avif", "gui/masksms_v.png"),
     (0,0), "gui/bordersms_v.png"
 )
-
 image ep01_sms5 = Composite(
     (1080,1920),
     (0,0), AlphaMask("sms/ep01_sms5.avif", "gui/masksms_v.png"),
     (0,0), "gui/bordersms_v.png"
 )
-
 image ep01_sms6 = Composite(
     (1920,1080),
     (0,0), AlphaMask("sms/ep01_sms6.avif", "gui/masksms_h.png"),
     (0,0), "gui/bordersms_h.png"
 )
-
 screen picview_ep01_sms4:
     add "black" at igm_appear_bg alpha 0.5
     add "vignette" at igm_appear_bg alpha 0.5
     modal True
-    
     viewport at igm_appear_fg2:
         xsize 1018
         ysize 1018
@@ -66,8 +57,6 @@ screen picview_ep01_sms4:
             action [Hide("picview_ep01_sms4"), SetVariable("sawpic_ep01_sms4", True)]
             style "igm_button"
             focus_mask None
-
-
 screen picview_ep01_sms5:
     add "black" at igm_appear_bg alpha 0.5
     add "vignette" at igm_appear_bg alpha 0.5
@@ -90,12 +79,10 @@ screen picview_ep01_sms5:
             action [Hide("picview_ep01_sms5"), SetVariable("sawpic_ep01_sms5", True)]
             style "igm_button"
             focus_mask None
-
 screen picview_ep01_sms6:
     add "black" at igm_appear_bg alpha 0.5
     add "vignette" at igm_appear_bg alpha 0.5
     modal True
-    
     viewport at igm_appear_fg2:
         xsize 1018
         ysize 1018
@@ -114,175 +101,209 @@ screen picview_ep01_sms6:
             action [Hide("picview_ep01_sms6"), SetVariable("sawpic_ep01_sms6", True)]
             style "igm_button"
             focus_mask None
-
 #-- PAZ SMS
+
+
+
+
 label ep01_sms01:
     nvl clear
     $ stopAudio(channel="sfx", subchannel=1, fadeout=1)
+
     show ep01_3rddream20 with slowfade
-    mc_t "[renpy.substitute(dialogues['E01S04_d077'])]"
+    mc_t "Oh, a new message... Who is it?"
+
     show ep01_3rddream21
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d001'])]"
+    paz_nvl "Hey, I'm really sorry about what I said the other day {outlinecolor=#ffffff00}😞{/outlinecolor}"
     if not smstip_seen:
         $ show_custom_notification("sms_tip")
         $ smstip_seen = True
-    else:
-        pass
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d002'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d003'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d004'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d005'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d006'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d007'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d008'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d009'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d010'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d011'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d012'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d013'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d014'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d015'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d016'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d017'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d018'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d019'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d020'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d021'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d022'])]"
+
+    paz_nvl "And my bad for not coming to see you at the hospital again..."
+    paz_nvl "I've just been swamped with stuff {outlinecolor=#ffffff00}😓{/outlinecolor}"
+    mc_nvl "No worries, it's all good {outlinecolor=#ffffff00}👌{/outlinecolor}"
+    paz_nvl "If there's any way I can make it up to you, just say the word! {outlinecolor=#ffffff00}🙌{/outlinecolor}"
+    paz_nvl "So, how're you holding up? Feeling any better?"
+    mc_nvl "Yeah, a lot better than yesterday..."
+    mc_nvl "The meds they gave me really helped with the pain."
+    paz_nvl "That's great to hear!"
+    paz_nvl "You know... after what happened to you, I've been going through some serious shit with the higher-ups..."
+    paz_nvl "You really left me in a tight spot, man {outlinecolor=#ffffff00}😅😅😅{/outlinecolor}"
+    mc_nvl "Yeah, I know. I'm sorry about that."
+    paz_nvl "I get it..."
+    paz_nvl "You had your reasons... {outlinecolor=#ffffff00}😓{/outlinecolor}"
+    paz_nvl "Anyway, we managed to bust some of the guys involved thanks to the info you gave us."
+    mc_nvl "Look, Paz... I'm feeling pretty out of it right now and still not okay..."
+    mc_nvl "So I might not be able to follow the whole story."
+    mc_nvl "Maybe we can catch up another time when I'm more with it?"
+    paz_nvl "Yeah, no worries at all! {outlinecolor=#ffffff00}😊😊{/outlinecolor}"
+    paz_nvl "But hey, if there's anything I can do for you, just holler."
+    mc_nvl "Thanks for having my back, Paz. I appreciate it."
+    paz_nvl "{a=show:picview_ep01_sms5}{image=thumb_ep01_sms5}{/a}"
     if not smstip2_seen:
         $ show_custom_notification("sms_tip2")
         $ smstip2_seen = True
-    else:
-        pass
-    if sawpic_ep01_sms5: #FORCE PICTURE SHOULD BE ALWAYS AFTER THE THUMBNAIL.
-        pass
-    else:
+    # FORCE PICTURE SHOULD BE ALWAYS AFTER THE THUMBNAIL.
+    if not sawpic_ep01_sms5:
         show screen picview_ep01_sms5
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d023'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d024'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d025'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS1_d026'])]"
+
+    paz_nvl "Here's a little something to cheer you up!! {outlinecolor=#ffffff00}❤{/outlinecolor}"
+    paz_nvl "Oh, fuck! Wrong pic!!! Just ignore that!! {outlinecolor=#ffffff00}🙈 🙈 🙈{/outlinecolor}"
+    mc_nvl "lol For real? {outlinecolor=#ffffff00}😂{/outlinecolor}"
+    mc_nvl "Damn, Paz... That... {outlinecolor=#ffffff00}😳{/outlinecolor}"
     #MENU
     $ show_walkthrough("ep01_sms01_wt1")
-    show screen menu_button ("Joke about it", "ep01_sms01_joke", "Get serious", "ep01_sms01_serious") #MENU SHOULD BE ALWAYS WITH A DIALOGUE AFTER.
-    paz_nvl "[renpy.substitute(dialogues['E01SMS1_d027'])]"    
+    # MENU SHOULD BE ALWAYS WITH A DIALOGUE AFTER.
+    show screen menu_button ("Joke about it", "ep01_sms01_joke", "Get serious", "ep01_sms01_serious")
+
+    paz_nvl "It's an old pic, don't even worry about it! {outlinecolor=#ffffff00}😬 😬{/outlinecolor}"    
+
+
+
 
 label ep01_sms01_joke:
     $ rm.update("paz", "trust", 2)
     $ check_levels("paz", "trust", 2)
+
     hide screen walkthrough_screen
-    mc_nvl "[renpy.substitute(dialogues['E01SMS2_d001'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS2_d002'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS2_d003'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS2_d004'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS2_d005'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS2_d006'])]"
-    if sawpic_ep01_sms4:
-        pass
-    else:
+
+    mc_nvl "So who're you sending these sexy pics to, huh? ^^"
+    paz_nvl "They weren't meant for anyone, alright?!"
+    mc_nvl "Seriously?"
+    paz_nvl "Yeah, just some vacation shots."
+    paz_nvl "My bad, I really meant to send you a different one."
+    paz_nvl "{a=show:picview_ep01_sms4}{image=thumb_ep01_sms4}"
+    if not sawpic_ep01_sms4:
         show screen picview_ep01_sms4
-    paz_nvl "[renpy.substitute(dialogues['E01SMS2_d007'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS2_d008'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS2_d009'])]"
+
+    paz_nvl "This one's way more PG... {outlinecolor=#ffffff00}😇{/outlinecolor}"
+    mc_nvl "Heh, come on. It was actually pretty nice to see lol"
+    paz_nvl "{outlinecolor=#ffffff00}😵‍💫{/outlinecolor}"
     #MENU
     $ show_walkthrough("ep01_sms01_wt2")
     show screen menu_button ("Say sorry", "ep01_sms01_sorry", "Flirt", "ep01_sms01_flirt")
-    paz_nvl "[renpy.substitute(dialogues['E01SMS2_d010'])]"
-    
+
+    paz_nvl "[mc_name]! You perv! {outlinecolor=#ffffff00}😒😒😒{/outlinecolor}"
+
+
+
+
 label ep01_sms01_flirt:
     $ rm.update("paz", "trust", 2)
     $ check_levels("paz", "trust", 2)
+
     hide screen walkthrough_screen
-    mc_nvl "[renpy.substitute(dialogues['E01SMS3_d001'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS3_d002'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d003'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d004'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS3_d005'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d006'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d007'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS3_d008'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d009'])]"
+
+    mc_nvl "hehe, guilty as charged."
+    mc_nvl "Well, at least it's helping my fever go down already {outlinecolor=#ffffff00}😉{/outlinecolor}"
+    paz_nvl "Dumbass... {outlinecolor=#ffffff00}😂😂{/outlinecolor}"
+    paz_nvl "Anyway, I gotta bounce{outlinecolor=#ffffff00}👋{/outlinecolor}"
+    mc_nvl "Yes, Ma'am!"
+    paz_nvl "Hahaha {outlinecolor=#ffffff00}🤣{/outlinecolor}"
+    paz_nvl "But for real... get better soon, ok? {outlinecolor=#ffffff00}😊{/outlinecolor}"
+    mc_nvl "Whoa, hey now..."
+    paz_nvl "{a=show:picview_ep01_sms6}{image=thumb_ep01_sms6}"
+
     $ rm.update("paz", "cor", 1)
     $ check_levels("paz", "cor", 1)
-    if sawpic_ep01_sms6:
-        pass
-    else:
+    if not sawpic_ep01_sms6:
         show screen picview_ep01_sms6
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d010'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d011'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS3_d012'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS3_d013'])]"
+
+    paz_nvl "Consider this a little present... {outlinecolor=#ffffff00}😉{/outlinecolor}"
+    paz_nvl "Oh! And... Take care of yourself, alright?"
+    mc_nvl "Don't worry, I'll do my best lol"
+    paz_nvl "{outlinecolor=#ffffff00}❤{/outlinecolor}"
+
     jump ep01_smslater
+
+
+
 
 label ep01_sms01_sorry:
     $ rm.update("paz", "trust", 1)
     $ check_levels("paz", "trust", 1)
+
     hide screen walkthrough_screen
-    mc_nvl "[renpy.substitute(dialogues['E01SMS4_d001'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS4_d002'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS4_d003'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS4_d004'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS4_d005'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS4_d006'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS4_d007'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS4_d008'])]"
+
+    mc_nvl "Sorry, I didn't mean it like that. My bad... {outlinecolor=#ffffff00}😔{/outlinecolor}"
+    paz_nvl "Mhm... {outlinecolor=#ffffff00}😒{/outlinecolor}"
+    paz_nvl "Please delete that picture now!"
+    mc_nvl "Sure thing. {outlinecolor=#ffffff00}👍{/outlinecolor}"
+    paz_nvl "Anyway, I gotta bounce{outlinecolor=#ffffff00}👋{/outlinecolor}"
+    paz_nvl "Get better soon, ok? {outlinecolor=#ffffff00}😊{/outlinecolor}"
+    mc_nvl "Yes, Ma'am!"
+    paz_nvl "{outlinecolor=#ffffff00}❤{/outlinecolor}"
+
     jump ep01_smslater
+
+
+
 
 label ep01_sms01_serious:
     $ rm.update("paz", "trust", 1)
     $ check_levels("paz", "trust", 1)
+
     hide screen walkthrough_screen
-    mc_nvl "[renpy.substitute(dialogues['E01SMS5_d001'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS5_d002'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS5_d003'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS5_d004'])]"
-    if sawpic_ep01_sms4:
-        pass
-    else:
+
+    mc_nvl "Hey, be careful with those kinds of pics..."
+    paz_nvl "Ugh, yeah, I know... {outlinecolor=#ffffff00}😞{/outlinecolor}"
+    paz_nvl "Anyways! What I meant to send was this one! {outlinecolor=#ffffff00}😊{/outlinecolor}"
+    paz_nvl "{a=show:picview_ep01_sms4}{image=thumb_ep01_sms4}"
+    if not sawpic_ep01_sms4:
         show screen picview_ep01_sms4
-    paz_nvl "[renpy.substitute(dialogues['E01SMS5_d005'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS5_d006'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS5_d007'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS5_d008'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS5_d009'])]"
-    paz_nvl "[renpy.substitute(dialogues['E01SMS5_d010'])]"
+
+    paz_nvl "I miss having you as my partner! {outlinecolor=#ffffff00}😞🙏{/outlinecolor}"
+    mc_nvl "Wow, I wasn't expecting that..."
+    paz_nvl "How about we grab a drink when I see you next? {outlinecolor=#ffffff00}🍻🍻{/outlinecolor}"
+    mc_nvl "Sounds like a plan! And hey... Thanks for looking out for me so far."
+    paz_nvl "No worries, that's what friends are for {outlinecolor=#ffffff00}😊{/outlinecolor}"
+    paz_nvl "I gotta run now. Let's catch up later! {outlinecolor=#ffffff00}👋{/outlinecolor}"
+
     jump ep01_smslater
 
+
 #-- ELIZABETH SMS
+
+
+
+
 label ep01_sms02:
     nvl clear
     $ stopAudio(channel="sfx", subchannel=1, fadeout=1)
+
     show ep01_pregame35 with slowfade
-    mc_t "[renpy.substitute(dialogues['E01SMS6_d001'])]"
-    mc_t "[renpy.substitute(dialogues['E01SMS6_d002'])]"
+    mc_t "Let's check who it's from."
+    mc_t "Oh..it's [mo_r]."
+
     show ep01_pregame36
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d003'])]"
+    eli_nvl "Hey sweetie, how's the trip going? You getting close to home yet?"
     if not smstip_seen:
         $ show_custom_notification("sms_tip")
         $ smstip_seen = True
-    else:
-        pass
-    mc_nvl "[renpy.substitute(dialogues['E01SMS6_d004'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS6_d005'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS6_d006'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d007'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d008'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d009'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS6_d010'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS6_d011'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d012'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d013'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS6_d014'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d015'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d016'])]"
-    eli_nvl "[renpy.substitute(dialogues['E01SMS6_d017'])]"
-    mc_nvl "[renpy.substitute(dialogues['E01SMS6_d018'])]"
+
+    mc_nvl "Yeah, we're hopping on some local transport now.."
+    mc_nvl "So I'd say we're about halfway there."
+    mc_nvl "{outlinecolor=#ffffff00}🤷‍♂️🤷‍♂️🤷‍♂️{/outlinecolor}"
+    eli_nvl "Ooh, you must be somewhere around Shizuoka by now, right?"
+    eli_nvl "That reminds me, did you grab some lunch, honey?"
+    eli_nvl "I can whip something up for you if you want {outlinecolor=#ffffff00}😊 😊{/outlinecolor}"
+    mc_nvl "Nah, it's cool. I'm not really feeling hungry yet."
+    mc_nvl "Still a bit groggy from the meds, you know?"
+    eli_nvl "Aww, well, just be careful, okay? {outlinecolor=#ffffff00}🙏🙏{/outlinecolor}"
+    eli_nvl "Once that medicine wears off, you'll be starving like a bear! {outlinecolor=#ffffff00}🐻{/outlinecolor}"
+    mc_nvl "Yeah, yeah, don't worry about it..."
+    eli_nvl "Alright, I'll let you catch some rest then. {outlinecolor=#ffffff00}😇{/outlinecolor}"
+    eli_nvl "I'm so excited to see you again, darling! It's been way too long! {outlinecolor=#ffffff00}🤗{/outlinecolor}"
+    eli_nvl "Text me later, 'kay sweetie? {outlinecolor=#ffffff00}😘{/outlinecolor}"
+    mc_nvl "Sure thing. Catch you later."
     pause 0.1
-    mc_t "[renpy.substitute(dialogues['E01S05_d159'])]"
-    mc_t "[renpy.substitute(dialogues['E01S05_d160'])]"
-    mc_t "[renpy.substitute(dialogues['E01S05_d161'])]"
+    mc_t "I..."
+    mc_t "I just wanna see HER again..."
+    mc_t ". . ."
+
     $ stopAllSubchannels(channel="amb", fadeout=1.5)
     jump ep01_pregame2
+
 
 #-- TOTAL POINTS AVAILABLE:
     #PAZ TRUST: +2 OR +1
