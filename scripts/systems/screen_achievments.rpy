@@ -90,9 +90,120 @@ init -1:
 
 init python:
     ############################################################################
+    ## ZOOM HELPER FUNCTIONS FOR ACHIEVEMENT SCREEN
+    ############################################################################
+
+    class ZoomAtMouse(Action):
+        """Action that zooms at mouse position"""
+        def __init__(self, screen_name, zoom_delta, min_zoom=0.25, max_zoom=1.0):
+            self.screen_name = screen_name
+            self.zoom_delta = zoom_delta
+            self.min_zoom = min_zoom
+            self.max_zoom = max_zoom
+
+        def __call__(self):
+            # Get current screen variables
+            screen = renpy.get_screen(self.screen_name)
+            if not screen:
+                return
+
+            zoom_level = screen.scope.get("zoom_level", 0.25)
+            xoffset_val = screen.scope.get("xoffset_val", 0.0)
+            yoffset_val = screen.scope.get("yoffset_val", 0.0)
+
+            # Calculate new zoom
+            old_zoom = zoom_level
+            new_zoom = max(self.min_zoom, min(self.max_zoom, old_zoom + self.zoom_delta))
+
+            if new_zoom != old_zoom:
+                # Get mouse position
+                mx, my = renpy.get_mouse_pos()
+
+                # Calculate the image point under the mouse
+                img_x = (mx - xoffset_val) / old_zoom
+                img_y = (my - yoffset_val) / old_zoom
+
+                # Calculate new offset to keep that point under the mouse
+                new_x = mx - (img_x * new_zoom)
+                new_y = my - (img_y * new_zoom)
+
+                # Apply constraints
+                new_x, new_y = constrain_offsets(new_x, new_y, new_zoom)
+
+                # Update screen variables
+                renpy.run(SetScreenVariable("zoom_level", new_zoom))
+                renpy.run(SetScreenVariable("xoffset_val", new_x))
+                renpy.run(SetScreenVariable("yoffset_val", new_y))
+
+            renpy.restart_interaction()
+
+    def constrain_offsets(x, y, zoom):
+        """Constrain offsets to prevent showing too much background"""
+        img_width = 7680 * zoom
+        img_height = 4320 * zoom
+        viewport_width = 1920
+        viewport_height = 1080
+
+        # If image is smaller than viewport, center it
+        if img_width <= viewport_width:
+            x = (viewport_width - img_width) / 2.0
+        else:
+            # Image is larger - constrain so it fills the viewport
+            # Maximum offset is 0 (left/top edge at viewport edge)
+            # Minimum offset is when right/bottom edge is at viewport edge
+            max_x = 0
+            min_x = viewport_width - img_width
+            x = max(min_x, min(max_x, x))
+
+        if img_height <= viewport_height:
+            y = (viewport_height - img_height) / 2.0
+        else:
+            max_y = 0
+            min_y = viewport_height - img_height
+            y = max(min_y, min(max_y, y))
+
+        return (x, y)
+
+    def start_drag_action(screen_name):
+        """Start dragging - capture current mouse and offset positions"""
+        mx, my = renpy.get_mouse_pos()
+        screen = renpy.get_screen(screen_name)
+        if screen:
+            xoffset = screen.scope.get("xoffset_val", 0.0)
+            yoffset = screen.scope.get("yoffset_val", 0.0)
+            renpy.run(SetScreenVariable("is_dragging", True))
+            renpy.run(SetScreenVariable("drag_start_x", mx))
+            renpy.run(SetScreenVariable("drag_start_y", my))
+            renpy.run(SetScreenVariable("drag_start_offset_x", xoffset))
+            renpy.run(SetScreenVariable("drag_start_offset_y", yoffset))
+        renpy.restart_interaction()
+
+    def update_drag_action(screen_name):
+        """Update position during drag"""
+        screen = renpy.get_screen(screen_name)
+        if screen:
+            mx, my = renpy.get_mouse_pos()
+            drag_start_x = screen.scope.get("drag_start_x", 0)
+            drag_start_y = screen.scope.get("drag_start_y", 0)
+            drag_start_offset_x = screen.scope.get("drag_start_offset_x", 0.0)
+            drag_start_offset_y = screen.scope.get("drag_start_offset_y", 0.0)
+            zoom_level = screen.scope.get("zoom_level", 0.25)
+
+            # Calculate new position
+            new_x = drag_start_offset_x + (mx - drag_start_x)
+            new_y = drag_start_offset_y + (my - drag_start_y)
+
+            # Apply constraints
+            new_x, new_y = constrain_offsets(new_x, new_y, zoom_level)
+
+            renpy.run(SetScreenVariable("xoffset_val", new_x))
+            renpy.run(SetScreenVariable("yoffset_val", new_y))
+        renpy.restart_interaction()
+
+    ############################################################################
     ## ACHIEVEMENT DATA DICTIONARY
     ############################################################################
-    
+
     achievement_data = {
         "ach_ep01_isabella": {
             "title": "Beginnings",
@@ -607,19 +718,50 @@ screen achievement_notification(achievement_key=None):
 ## Achievement Detail Screen
 screen achievement_screen(achievement_key):
     modal True
+    tag achievement_screen
 
     # Changed from 1.0 to 0.25 for 7680x4320 images (displays at 1920x1080 equivalent)
     default zoom_level = 0.25
+    default xoffset_val = 0.0
+    default yoffset_val = 0.0
+    default is_dragging = False
+    default drag_start_x = 0
+    default drag_start_y = 0
+    default drag_start_offset_x = 0.0
+    default drag_start_offset_y = 0.0
 
-    viewport:
+    # Image dimensions at base scale
+    $ img_width = 7680
+    $ img_height = 4320
+
+    # Container with the image
+    fixed:
         at notification_appear
         xsize 1920
         ysize 1080
-        xpos 0
-        ypos 0
-        draggable True
-        mousewheel True
-        add "achievements/[achievement_key].avif" zoom zoom_level
+
+        # The achievement image with zoom and offset applied
+        add "achievements/[achievement_key].avif":
+            zoom zoom_level
+            xpos int(xoffset_val)
+            ypos int(yoffset_val)
+            subpixel True
+
+        # Invisible button overlay for drag handling
+        button:
+            xsize 1920
+            ysize 1080
+            xpos 0
+            ypos 0
+            background None
+            action NullAction()
+
+    # Handle dragging
+    if not is_dragging:
+        key "mousedown_1" action Function(start_drag_action, "achievement_screen")
+    else:
+        timer 0.03 repeat True action Function(update_drag_action, "achievement_screen")
+        key "mouseup_1" action SetScreenVariable("is_dragging", False)
 
     frame:
         at notification_appear
@@ -645,9 +787,11 @@ screen achievement_screen(achievement_key):
         style "igm_button"
         focus_mask None
 
-    # Changed max from 1.25 to 1.0 (full 7680x4320), min from 1.0 to 0.25 (1920x1080 equivalent)
-    key "mousedown_4" action SetScreenVariable("zoom_level", min(1.0, zoom_level + 0.05))
-    key "mousedown_5" action SetScreenVariable("zoom_level", max(0.25, zoom_level - 0.05))
+    # Zoom in with mouse wheel up (scroll up)
+    key "mousedown_4" action ZoomAtMouse("achievement_screen", 0.05, 0.25, 1.0)
+
+    # Zoom out with mouse wheel down (scroll down)
+    key "mousedown_5" action ZoomAtMouse("achievement_screen", -0.05, 0.25, 1.0)
 
 ## Main Achievements Grid Screen
 screen achievements():
