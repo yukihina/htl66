@@ -9,7 +9,12 @@
 ##     call show_episode_title(1) # For episode 1
 ##     call show_episode_title(2) # For episode 2
 ##
-## 3.  FAIL-SAFE TRANSITION: On click, a "controller" screen is used that:
+## 3.  WEBM TO AVIF DISSOLVE: Each episode title:
+##     a. Plays a WebM video (ep#_title.webm) for 10 seconds
+##     b. After 10 seconds, dissolves to an AVIF image (ep#_title.avif) over 2 seconds
+##     c. The AVIF remains displayed until the user clicks
+##
+## 4.  FAIL-SAFE TRANSITION: On click, a "controller" screen is used that:
 ##     a. Immediately stops the video.
 ##     b. Fades a black layer from transparent to opaque.
 ##     c. Once the screen is black, it cleans up and jumps to the episode.
@@ -50,6 +55,11 @@ init python:
                 play="images/title/ep{}_title.webm".format(ep_num),
                 loop=False
             )
+        )
+        # Create AVIF image definitions for dissolve transition
+        renpy.image(
+            "ep{}_tbg_avif".format(ep_num),
+            "images/title/ep{}_title.avif".format(ep_num)
         )
 
 ################################################################################
@@ -93,12 +103,21 @@ label show_episode_title(episode_number):
 # ------------------------------------------------------------------------------
 # MAIN TITLE SCREEN
 # Displays the background video, text, and interactive logo.
+# After 10 seconds, dissolves from webm to AVIF.
 # ------------------------------------------------------------------------------
 screen episode_title_main(ep_num, ep_name, target_label):
     modal True
+    default show_avif = False  # Controls when to show AVIF
 
-    # Video Background - CORRECTED: Added xalign and yalign to center it.
+    # Video Background - plays for 10 seconds
     add "ep{}_tbg_video".format(ep_num) at episode_bg_transform xalign 0.5 yalign 0.5
+
+    # AVIF Background - appears with dissolve after 10 seconds
+    if show_avif:
+        add "ep{}_tbg_avif".format(ep_num) at dissolve_in_transform xalign 0.5 yalign 0.5
+
+    # Timer to trigger AVIF dissolve after 10 seconds
+    timer 10.0 action SetScreenVariable("show_avif", True)
 
     # Interactive Logo
     imagebutton:
@@ -205,6 +224,12 @@ init:
     transform fade_in(duration):
         alpha 0.0
         linear duration alpha 1.0
+
+    transform dissolve_in_transform:
+        subpixel True
+        zoom 0.5
+        alpha 0.0
+        linear 2.0 alpha 1.0
 
     transform episode_bg_transform:
         subpixel True
