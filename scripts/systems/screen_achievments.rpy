@@ -57,6 +57,9 @@ init -1:
     default persistent.ep05_ach5 = False
     default persistent.ep05_ach6 = False
 
+    default persistent.ep06_ach1 = False
+    default persistent.ep06_ach2 = False
+
     ## Notification Variables - Track if notification was shown
     default persistent.ep01_ach1_notified = False
     default persistent.ep01_ach2_notified = False
@@ -87,6 +90,9 @@ init -1:
     default persistent.ep05_ach4_notified = False
     default persistent.ep05_ach5_notified = False
     default persistent.ep05_ach6_notified = False
+
+    default persistent.ep06_ach1_notified = False
+    default persistent.ep06_ach2_notified = False
 
 init python:
     ############################################################################
@@ -429,6 +435,24 @@ init python:
             "thumb_on": "achievements/ach_ep05_final2_thumb_on.webp",
             "thumb_on_hover": "achievements/ach_ep05_final2_thumb_onh.webp",
             "thumb_off": "achievements/ach_ep05_final2_thumb_off.webp"
+},
+        "ach_ep06_amber1": {
+            "title": "Uninhibited Exploration",
+            "text": "Your curiosity knows no bounds, leading you to embrace desires without shame. In tranquil waters, true feelings surface naturally.",
+            "persistent_var": "ep06_ach1",
+            "notified_var": "ep06_ach1_notified",
+            "thumb_on": "achievements/ach_ep06_amber1_thumb_on.webp",
+            "thumb_on_hover": "achievements/ach_ep06_amber1_thumb_onh.webp",
+            "thumb_off": "achievements/ach_ep06_amber1_thumb_off.webp"
+},
+        "ach_ep06_amber2": {
+            "title": "Uninhibited Exploration",
+            "text": "Your curiosity knows no bounds, leading you to embrace desires without shame. In tranquil waters, true feelings surface naturally.",
+            "persistent_var": "ep06_ach2",
+            "notified_var": "ep06_ach2_notified",
+            "thumb_on": "achievements/ach_ep06_amber2_thumb_on.webp",
+            "thumb_on_hover": "achievements/ach_ep06_amber2_thumb_onh.webp",
+            "thumb_off": "achievements/ach_ep06_amber2_thumb_off.webp"
 }
     }
 
@@ -600,6 +624,18 @@ init python:
             "ep05_ach6",
             "ep05_ach6_notified",
             "ach_ep05_final2"
+        ),
+        create_achievement_condition(
+            lambda: ep05_ach_final2,
+            "ep06_ach1",
+            "ep06_ach1_notified",
+            "ach_ep06_amber1"
+        ),
+        create_achievement_condition(
+            lambda: ep05_ach_final2,
+            "ep06_ach2",
+            "ep06_ach2_notified",
+            "ach_ep06_amber2"
         )
     ]
 

@@ -21,6 +21,7 @@
 ## - WM class: Wardrobe Management for character outfits
 ## - Level-based progression system with notifications
 ## - Character knowledge and relationship status tracking
+## - Milestone Decision System: Episode 6+ path locking mechanism
 ##
 ## Critical Save Game Compatibility:
 ## - All initialization priorities are preserved exactly (-900, -890, etc.)
@@ -277,7 +278,7 @@ init python:
     def check_levels(char, attr, val):
         """
         Main function to check and notify level changes
-        
+
         Args:
             char (str): Character ID (e.g. "amber")
             attr (str): Attribute to check ("cor" for corruption or "trust")
@@ -285,13 +286,13 @@ init python:
         """
         # Get the new value after change
         new_value = rm.get(char, attr)
-        
+
         # Calculate what the value was before the change
         old_value = new_value - val
-        
+
         # Get character's display name (falls back to ID if not found)
         proper_name = char_proper_names.get(char, char)
-        
+
         # Set up appropriate notifications based on attribute type
         if attr == "cor":  # Corruption notifications
             level_dict = corruption_levels
@@ -307,11 +308,11 @@ init python:
             notification_level_down = "trust_level_down"  # Level lost
         else:
             return  # Exit if invalid attribute
-        
+
         # Calculate old and new levels
         old_level = get_level_for_value(old_value, level_dict)
         new_level = get_level_for_value(new_value, level_dict)
-        
+
         # Show appropriate notification based on value change
         if val > 0:  # Value increased
             if new_level > old_level:  # Gained a level
@@ -325,6 +326,107 @@ init python:
                 show_custom_notification(notification_decrease, char=proper_name)
         else:  # No change (val == 0)
             pass  # Do nothing
+
+    ############################################################################
+    ## MILESTONE DECISION SYSTEM - PATH LOCKING (Episode 6+)
+    ############################################################################
+
+    def lock_character_path(char, love_threshold=3, cor_threshold=3):
+        """
+        Checks milestone decision counters and locks a character's narrative path
+
+        This is the core function for the Milestone Decision Model. It should be
+        called at key story moments (typically end of Episode 6 or similar) to
+        determine and permanently lock a character's relationship path.
+
+        Args:
+            char (str): Character ID (e.g., "amber", "nanami")
+            love_threshold (int): Number of love choices needed to lock love path (default: 3)
+            cor_threshold (int): Number of corruption choices needed to lock corruption path (default: 3)
+
+        Returns:
+            str: The locked path ("love", "corruption", or "neutral")
+
+        Example usage:
+            $ locked_path = lock_character_path("amber")
+            # or with custom thresholds
+            $ locked_path = lock_character_path("nanami", love_threshold=4, cor_threshold=4)
+        """
+        # Get the persistent path variable for this character
+        path_var_name = f"{char}_path"
+
+        # Check if path is already locked
+        current_path = getattr(persistent, path_var_name, None)
+        if current_path is not None:
+            return current_path  # Already locked, return existing path
+
+        # Get the milestone choice counters for this character
+        love_choices = renpy.python.py_eval(f"{char}_love_choices")
+        cor_choices = renpy.python.py_eval(f"{char}_cor_choices")
+
+        # Determine which path to lock based on thresholds
+        locked_path = "neutral"  # Default to neutral
+
+        if love_choices >= love_threshold and cor_choices >= cor_threshold:
+            # Both thresholds met - choose based on which has more choices
+            if love_choices > cor_choices:
+                locked_path = "love"
+            elif cor_choices > love_choices:
+                locked_path = "corruption"
+            else:
+                # Tie - use trust vs corruption stats as tiebreaker
+                trust_val = rm.get(char, "trust")
+                cor_val = rm.get(char, "cor")
+                locked_path = "love" if trust_val >= cor_val else "corruption"
+        elif love_choices >= love_threshold:
+            locked_path = "love"
+        elif cor_choices >= cor_threshold:
+            locked_path = "corruption"
+        # else: remains "neutral"
+
+        # Lock the path by setting the persistent variable
+        setattr(persistent, path_var_name, locked_path)
+
+        return locked_path
+
+    def get_character_path(char):
+        """
+        Gets the current locked path for a character
+
+        Args:
+            char (str): Character ID
+
+        Returns:
+            str or None: The locked path ("love", "corruption", "neutral") or None if unlocked
+        """
+        path_var_name = f"{char}_path"
+        return getattr(persistent, path_var_name, None)
+
+    def is_path_locked(char):
+        """
+        Checks if a character's path has been locked
+
+        Args:
+            char (str): Character ID
+
+        Returns:
+            bool: True if path is locked, False if still unlocked
+        """
+        return get_character_path(char) is not None
+
+    def get_milestone_choices(char, choice_type):
+        """
+        Gets the current count of milestone choices for a character
+
+        Args:
+            char (str): Character ID
+            choice_type (str): Either "love" or "cor"
+
+        Returns:
+            int: Number of milestone choices made
+        """
+        counter_name = f"{char}_{choice_type}_choices"
+        return renpy.python.py_eval(counter_name)
 
 ################################################################################
 ## WARDROBE MANAGEMENT SYSTEM
@@ -539,11 +641,12 @@ init -890 python:
 ################################################################################
 
 ## How to integrate this core relationship system in your game:
-## 
+##
 ## 1. The system initializes automatically with proper save game compatibility
 ##    - RM, SexStats, and WM instances are created automatically
 ##    - All initialization priorities are preserved for save compatibility
 ##    - Character data structures remain identical to previous versions
+##    - Milestone Decision System counters and paths initialize with defaults
 ##
 ## 2. Basic relationship management:
 ##    $ rm.update("amber", "cor", 10)     # Increase Amber's corruption by 10
@@ -573,21 +676,107 @@ init -890 python:
 ##    $ check_levels("amber", "cor", 15)  # Check corruption level change
 ##    $ check_levels("nanami", "trust", 20)  # Check trust level change
 ##
+## 7. MILESTONE DECISION SYSTEM (Episode 6+):
+##    This two-phase system makes choices meaningful across the game:
+##
+##    PHASE 1 - Foundation (Episodes 1-5):
+##    - Points accumulate via rm.update()
+##    - Points determine Levels (0-5) via get_level_for_value()
+##    - Levels act as "keys" that unlock future choices
+##
+##    PHASE 2 - Consolidation (Episode 6+):
+##    - Levels gate special "Milestone Decisions" in menu choices
+##    - Making Milestone Decisions increments counters
+##    - Reaching threshold (default 3) locks the path permanently
+##
+##    STEP A: Gate choices with level requirements (in dialogue files)
+##    menu:
+##        "Neutral choice" # Always available
+##            jump .neutral
+##
+##        "I truly care about you." if get_level_for_value(rm.get("amber", "trust"), trust_levels) >= 2:
+##            # This is a LOVE Milestone Decision - requires Trust Level 2+
+##            $ amber_love_choices += 1
+##            $ rm.update("amber", "trust", 15)
+##            $ check_levels("amber", "trust", 15)
+##            jump .love_path
+##
+##        "You look better when flustered." if get_level_for_value(rm.get("amber", "cor"), corruption_levels) >= 2:
+##            # This is a CORRUPTION Milestone Decision - requires Corruption Level 2+
+##            $ amber_cor_choices += 1
+##            $ rm.update("amber", "cor", 15)
+##            $ check_levels("amber", "cor", 15)
+##            jump .corruption_path
+##
+##    STEP B: Lock the path at a dramatic story moment
+##    label lock_paths_ep06_end:
+##        # Lock Amber's path based on milestone choices
+##        $ amber_path = lock_character_path("amber", love_threshold=3, cor_threshold=3)
+##
+##        if persistent.amber_path == "love":
+##            "You've committed to a loving relationship with Amber."
+##        elif persistent.amber_path == "corruption":
+##            "You've chosen to corrupt Amber completely."
+##        else:
+##            "Your relationship with Amber remains undefined."
+##
+##    STEP C: Use locked paths in future episodes (7+)
+##    label amber_scene_ep07:
+##        if persistent.amber_path == "love":
+##            jump .love_route
+##        elif persistent.amber_path == "corruption":
+##            jump .corruption_route
+##        else:
+##            jump .neutral_route
+##
+##    # You can still use trust/cor for nuance WITHIN a locked path
+##    label .corruption_route:
+##        if rm.get("amber", "trust") >= 70:
+##            # High trust + corruption = willing submission
+##            amber "I've prepared everything for you, Master."
+##        else:
+##            # Low trust + corruption = reluctant submission
+##            amber "It's... ready." (She looks away nervously)
+##
+##    HELPER FUNCTIONS:
+##    $ lock_character_path(char, love_threshold=3, cor_threshold=3)
+##        # Locks path based on counters, returns "love"/"corruption"/"neutral"
+##
+##    $ get_character_path(char)
+##        # Returns current path or None if unlocked
+##
+##    $ is_path_locked(char)
+##        # Returns True if path is locked, False otherwise
+##
+##    $ get_milestone_choices(char, "love")  # or "cor"
+##        # Returns current count of milestone choices
+##
 ## Example usage in game script:
 ## label amber_scene:
 ##     # Update corruption and check for level changes
 ##     $ rm.update("amber", "cor", 15)
 ##     $ check_levels("amber", "cor", 15)
-##     
+##
 ##     # Check relationship status
 ##     if rm.get("amber", "rel"):
 ##         "Amber is now in a relationship with you."
-##     
+##
 ##     # Track sexual interaction
 ##     $ ss.add("amber", "blowjob")
-##     
+##
 ##     # Unlock new outfit
 ##     $ wm.unlock("amber", 2)
+##
+## Example: Dynamic outfit based on trust level
+## label amber_date:
+##     $ amber_trust_level = get_level_for_value(rm.get("amber", "trust"), trust_levels)
+##     if amber_trust_level >= 4:
+##         $ wm.set("amber", 3)  # Special intimate outfit
+##     elif amber_trust_level >= 2:
+##         $ wm.set("amber", 2)  # Casual friendly outfit
+##     else:
+##         $ wm.set("amber", 0)  # Default outfit
+##     show amber happy at center
 ##
 ## Character attribute reference:
 ## RM attributes:
@@ -609,11 +798,19 @@ init -890 python:
 ## - Level 3: 49-64, Level 4: 65-80, Level 5: 81-100
 ## - Automatic notifications when levels change
 ##
+## Milestone Decision System Variables:
+## - Milestone counters: {char}_love_choices, {char}_cor_choices (default 0)
+## - Persistent paths: persistent.{char}_path (default None)
+## - Path values: "love", "corruption", "neutral", or None (unlocked)
+## - All characters: amber, nanami, elizabeth, isabella, kanae, arlette, antonella, madison, paz
+##
 ## Save game compatibility:
 ## - All initialization priorities preserved (-900, -890)
 ## - All class structures maintained exactly
 ## - All variable names and data types unchanged
-## - Complete backward compatibility ensured
+## - New milestone counters use 'default' for backward compatibility
+## - Persistent path variables initialize as None for existing saves
+## - Complete backward compatibility ensured with all previous versions
 ##
 ## Character progression rates:
 ## - Amber: 1X love / 1.5X corruption

@@ -48,7 +48,7 @@ init python:
             Movie(
                 channel="ep_bg", # A single channel to easily control it
                 play="images/title/ep{}_title.webm".format(ep_num),
-                loop=True
+                loop=False
             )
         )
 
@@ -208,14 +208,7 @@ init:
 
     transform episode_bg_transform:
         subpixel True
-        zoom 1.25
-        block:
-            zoom 1.25
-            linear 60 zoom 1.0
-            pause 0.1
-            linear 60 zoom 1.25
-            pause 0.1
-            repeat
+        zoom 0.5
 
     transform heartbeat(start_zoom, end_zoom, duration):
         zoom start_zoom

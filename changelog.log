@@ -19,6 +19,7 @@ v0.28 Episode 6 - 1st part
 
 * TECHNICAL:
   • Updated to Renpy 8.4.2
+  • Changed webm codec to libaom-av1
 
 
 v0.27 AI removal and animation update

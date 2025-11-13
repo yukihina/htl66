@@ -6,9 +6,64 @@
     default persistent.walkthrough_all = False
     default persistent.walkthrough_li = set()
     default persistent.disclaimer = False
-    default htl_episodes = 5.3
+    default htl_episodes = 6.1
     default rm = RM()
     default ss = SexStats()
+
+    # Persistent path lock variables for Milestone Decision System
+    # Values: "love", "corruption", "neutral", or None (unlocked)
+    default persistent.amber_path = None
+    default persistent.nanami_path = None
+    default persistent.elizabeth_path = None
+    default persistent.isabella_path = None
+    default persistent.kanae_path = None
+    default persistent.arlette_path = None
+    default persistent.antonella_path = None
+    default persistent.madison_path = None
+    default persistent.paz_path = None
+
+
+################################################################################
+## MILESTONE DECISION SYSTEM - Episode 6+ Path Locking
+################################################################################
+## These counters track significant path-defining choices for each character
+## When a counter reaches a threshold (typically 3), the character's path locks
+
+# Amber milestone counters
+default amber_love_choices = 0
+default amber_cor_choices = 0
+
+# Nanami milestone counters
+default nanami_love_choices = 0
+default nanami_cor_choices = 0
+
+# Elizabeth milestone counters
+default elizabeth_love_choices = 0
+default elizabeth_cor_choices = 0
+
+# Isabella milestone counters
+default isabella_love_choices = 0
+default isabella_cor_choices = 0
+
+# Kanae milestone counters
+default kanae_love_choices = 0
+default kanae_cor_choices = 0
+
+# Arlette milestone counters
+default arlette_love_choices = 0
+default arlette_cor_choices = 0
+
+# Antonella milestone counters
+default antonella_love_choices = 0
+default antonella_cor_choices = 0
+
+# Madison milestone counters
+default madison_love_choices = 0
+default madison_cor_choices = 0
+
+# Paz milestone counters
+default paz_love_choices = 0
+default paz_cor_choices = 0
 
 
 init python:
@@ -25,14 +80,14 @@ init python:
                 for option in walkthrough_li:
                     if option in walkthrough_data.get(key, {}):
                         message += walkthrough_data[key][option] + " "
-            
+
             if message:
                 renpy.show_screen("walkthrough_screen", message=message)
 
     def update_htl_episodes():
         global htl_episodes
-        if not htl_episodes == 5.3:
-            htl_episodes = 5.3 
+        if not htl_episodes == 6.1:
+            htl_episodes = 6.1
 
 label splashscreen:
     scene black
