@@ -10,9 +10,10 @@
 ##     call show_episode_title(2) # For episode 2
 ##
 ## 3.  WEBM TO AVIF DISSOLVE: Each episode title:
-##     a. Plays a WebM video (ep#_title.webm) for 10 seconds
-##     b. After 10 seconds, dissolves to an AVIF image (ep#_title.avif) over 2 seconds
-##     c. The AVIF remains displayed until the user clicks
+##     a. Plays a WebM video (ep#_title.webm) visible for 8.5 seconds
+##     b. From second 8.5 to 10, the WebM fades out to black (alpha 0)
+##     c. At second 10, when WebM is black, AVIF image fades in over 2 seconds
+##     d. The AVIF remains displayed until the user clicks
 ##
 ## 4.  FAIL-SAFE TRANSITION: On click, a "controller" screen is used that:
 ##     a. Immediately stops the video.
@@ -103,7 +104,7 @@ label show_episode_title(episode_number):
 # ------------------------------------------------------------------------------
 # MAIN TITLE SCREEN
 # Displays the background video, text, and interactive logo.
-# After 10 seconds, dissolves from webm to AVIF.
+# WebM visible 0-8.5s, fades out 8.5-10s, AVIF fades in at 10s.
 # ------------------------------------------------------------------------------
 screen episode_title_main(ep_num, ep_name, target_label):
     modal True
@@ -234,6 +235,9 @@ init:
     transform episode_bg_transform:
         subpixel True
         zoom 0.5
+        alpha 1.0
+        pause 8.5  # Video visible for 8.5 seconds
+        linear 1.5 alpha 0.0  # Fade out from 8.5s to 10s
 
     transform heartbeat(start_zoom, end_zoom, duration):
         zoom start_zoom
