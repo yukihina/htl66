@@ -184,4 +184,17 @@ label after_load:
         except:
             pass
 
+    # Migrate old saves to new emotional lock system
+    python:
+        # Migrate RM class to include emotionally_locked field
+        if hasattr(store, 'rm'):
+            rm.migrate_old_saves()
+
+        # Check and apply emotional locks for characters with 3 strikes
+        for char in ["amber", "nanami", "elizabeth", "isabella", "kanae",
+                     "arlette", "antonella", "madison", "paz"]:
+            strikes = ss.get(char, "strike")
+            if strikes >= 3:
+                rm.check_emotional_lock(char)
+
     return

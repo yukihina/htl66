@@ -4,17 +4,17 @@ init:
     image ep06_ambermorn03 = "e6_amber_01c"
     image ep06_ambermorn04 = "e6_amber_02"
     image ep06_ambermorn05 = "e6_amber_02b"
-    image ep06_ambermorn06 = "e6_amber_03"
-    image ep06_ambermorn07 = "e6_amber_03a"
+    image ep06_ambermorn06 = "e6_amber_03a"
+    image ep06_ambermorn07 = "e6_amber_03"
     image ep06_ambermorn08 = "e6_amber_04"
     image ep06_ambermorn09 = "e6_amber_04b"
     image ep06_ambermorn10 = "e6_amber_04c"
     image ep06_ambermorn11 = "e6_amber_05"
     image ep06_ambermorn12 = "e6_amber_05a1"
     image ep06_ambermorn13 = "e6_amber_05a2"
-    image ep06_ambermorn14 = "e6_amber_05b1"
-    image ep06_ambermorn15 = "e6_amber_05b2"
-    image ep06_ambermorn16 = "e6_amber_05b"
+    image ep06_ambermorn14 = "e6_amber_05b"
+    image ep06_ambermorn15 = "e6_amber_05b1"
+    image ep06_ambermorn16 = "e6_amber_05b2"
     image ep06_ambermorn17 = "e6_amber_06"
     image ep06_ambermorn18 = "e6_amber_07"
     image ep06_ambermorn19 = "e6_amber_08"
@@ -81,53 +81,53 @@ init:
     image ep06_ambermorn80 = "e6_amber_41"
 
     image ep06_crimescene01 = "e6_crime_0"
-    image ep06_crimescene02 = "e6_crime_1"
-    image ep06_crimescene03 = "e6_crime_1a"
+    image ep06_crimescene02 = "e6_crime_1a"
+    image ep06_crimescene03 = "e6_crime_1"
     image ep06_crimescene04 = "e6_crime_1b"
     image ep06_crimescene05 = "e6_crime_2"
-    image ep06_crimescene06 = "e6_crime_2_fb_out"
+    image ep06_crimescene06 = "e6_crime_2_fb"
     image ep06_crimescene07 = "e6_crime_2a"
     image ep06_crimescene08 = "e6_crime_2b"
     image ep06_crimescene09 = "e6_crime_3"
     image ep06_crimescene10 = "e6_crime_3a"
     image ep06_crimescene11 = "e6_crime_3b"
     image ep06_crimescene12 = "e6_crime_4"
-    image ep06_crimescene13 = "e6_crime_4b1"
-    image ep06_crimescene14 = "e6_crime_4b2a"
-    image ep06_crimescene15 = "e6_crime_4b2b"
-    image ep06_crimescene16 = "e6_crime_4b2c"
-    image ep06_crimescene17 = "e6_crime_4b3"
-    image ep06_crimescene18 = "e6_crime_4b"
+    image ep06_crimescene13 = "e6_crime_4b"
+    image ep06_crimescene14 = "e6_crime_4b1"
+    image ep06_crimescene15 = "e6_crime_4b2a"
+    image ep06_crimescene16 = "e6_crime_4b2b"
+    image ep06_crimescene17 = "e6_crime_4b2c"
+    image ep06_crimescene18 = "e6_crime_4b3"
     image ep06_crimescene19 = "e6_crime_5"
     image ep06_crimescene20 = "e6_crime_5b"
 
     image ep06_execution01 = "e6_execution_01"
-    image ep06_execution02 = "e6_execution_01b"
-    image ep06_execution03 = "e6_execution_01b_fb1"
+    image ep06_execution02 = "e6_execution_01b_fb1"
+    image ep06_execution03 = "e6_execution_01b"
     image ep06_execution04 = "e6_execution_02"
     image ep06_execution05 = "e6_execution_02a"
     image ep06_execution06 = "e6_execution_02b"
     image ep06_execution07 = "e6_execution_02c"
     image ep06_execution08 = "e6_execution_02d"
     image ep06_execution09 = "e6_execution_03"
-    image ep06_execution10 = "e6_execution_03b"
-    image ep06_execution11 = "e6_execution_03c"
+    image ep06_execution10 = "e6_execution_03c"
+    image ep06_execution11 = "e6_execution_03b"
     image ep06_execution12 = "e6_execution_03d"
     image ep06_execution13 = "e6_execution_04"
     image ep06_execution14 = "e6_execution_05"
 
     image ep06_opening01 = "e6_opening_00"
-    image ep06_opening02 = "e6_opening_01"
+    image ep06_opening02 = "e6_opening_01b"
     image ep06_opening03 = "e6_opening_01_fb1"
     image ep06_opening04 = "e6_opening_01_fb2"
-    image ep06_opening05 = "e6_opening_01b"
+    image ep06_opening05 = "e6_opening_01"
     image ep06_opening06 = "e6_opening_02"
     image ep06_opening07 = "e6_opening_02_fb1"
     image ep06_opening08 = "e6_opening_03"
     image ep06_opening09 = "e6_opening_04"
-    image ep06_opening10 = "e6_opening_04_fb1"
-    image ep06_opening11 = "e6_opening_04b"
-    image ep06_opening12 = "e6_opening_05"
+    image ep06_opening10 = "e6_opening_04_b"
+    image ep06_opening11 = "e6_opening_05"
+    image ep06_opening12 = "e6_opening_04_fb1"
 
     image ep06_shadowdir01 = "e6_shadow_1"
     image ep06_shadowdir02 = "e6_shadow_2"
@@ -137,12 +137,14 @@ init:
     image ep06_shadowdir06 = "e6_shadow_3b"
     image ep06_shadowdir07 = "e6_shadow_3c"
     image ep06_shadowdir08 = "e6_shadow_4"
-    image ep06_shadowdir09 = "e6_shadow_04_fb1"
-    image ep06_shadowdir10 = "e6_shadow_04_fb2"
-    image ep06_shadowdir11 = "e6_shadow_5"
-    image ep06_shadowdir12 = "e6_shadow_5b"
-    image ep06_shadowdir13 = "e6_shadow_6"
-    image ep06_shadowdir14 = "e6_shadow_6a"
+    image ep06_shadowdir09:
+        "e6_shadow_04_fb1"
+        pause 1.0
+        "e6_shadow_04_fb2" with Dissolve(0.5)
+    image ep06_shadowdir10 = "e6_shadow_5"
+    image ep06_shadowdir11 = "e6_shadow_5b"
+    image ep06_shadowdir12 = "e6_shadow_6"
+    image ep06_shadowdir13 = "e6_shadow_6a"
 
     image ep06_madisoncamera01 = "e6_madisonintro_01"
     image ep06_madisoncamera02 = "e6_madisonintro_01b"
@@ -215,3 +217,18 @@ init:
     image ep06_madisoncamera69 = "e6_madisonintro_14"
     image ep06_madisoncamera70 = "e6_madisonintro_15"
     image ep06_madisoncamera71 = "e6_madisonintro_16"
+
+    image ep06_anim01 = Movie(play="images/ep6/e6_amb_anim1.webm", loop=True)
+    image ep06_anim02 = Movie(play="images/ep6/e6_amb_anim2.webm", loop=True)
+    image ep06_anim03 = Movie(play="images/ep6/e6_amb_anim3.webm", loop=True)
+    image ep06_anim04 = Movie(play="images/ep6/e6_amb_anim4.webm", loop=True)
+    image ep06_anim05 = Movie(play="images/ep6/e6_amb_anim5.webm", loop=True)
+    image ep06_anim06 = Movie(play="images/ep6/e6_amb_anim6.webm", loop=True)
+    image ep06_anim07 = Movie(play="images/ep6/e6_amb_anim7.webm", loop=True)
+    image ep06_anim08 = Movie(play="images/ep6/e6_amb_anim8.webm", loop=True)
+    image ep06_anim09 = Movie(play="images/ep6/e6_amb_anim9.webm", loop=True)
+    image ep06_anim10 = Movie(play="images/ep6/e6_amb_anim10.webm", loop=True)
+    image ep06_anim11 = Movie(play="images/ep6/e6_amb_anim11.webm", loop=True)
+    image ep06_anim12 = Movie(play="images/ep6/e6_amb_anim12.webm", loop=True)
+    image ep06_anim13 = Movie(play="images/ep6/e6_amb_anim13.webm", loop=True)
+    image ep06_anim14 = Movie(play="images/ep6/e6_amb_anim14.webm", loop=True)

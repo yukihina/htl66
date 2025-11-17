@@ -125,7 +125,12 @@ init python:
             "message": "She's out of your life for good. I'm sorry.",
             "icon": "strike"
         },
-        
+        "emotional_lock": {
+            "title": "Emotional Shutdown",
+            "message": "You feel nothing for her anymore. Trust: 0. Corruption: 0. This cannot be undone.",
+            "icon": "strike"
+        },
+
         # Corruption level notifications
         "corruption_level_up": {
             "title": "Corruption Level Up!",

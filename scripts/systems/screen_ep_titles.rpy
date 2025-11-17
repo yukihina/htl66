@@ -9,7 +9,14 @@
 ##     call show_episode_title(1) # For episode 1
 ##     call show_episode_title(2) # For episode 2
 ##
-## 3.  FAIL-SAFE TRANSITION: On click, a "controller" screen is used that:
+## 3.  WEBM TO AVIF DISSOLVE: Each episode title:
+##     a. From second 0 to 1, the WebM fades in from black
+##     b. WebM plays fully visible from second 1 to 8.5
+##     c. From second 8.5 to 10, the WebM fades out to black (alpha 0)
+##     d. At second 10, when WebM is black, AVIF image (1920x1080) fades in over 2 seconds
+##     e. The AVIF remains displayed until the user clicks
+##
+## 4.  FAIL-SAFE TRANSITION: On click, a "controller" screen is used that:
 ##     a. Immediately stops the video.
 ##     b. Fades a black layer from transparent to opaque.
 ##     c. Once the screen is black, it cleans up and jumps to the episode.
@@ -50,6 +57,11 @@ init python:
                 play="images/title/ep{}_title.webm".format(ep_num),
                 loop=False
             )
+        )
+        # Create AVIF image definitions for dissolve transition
+        renpy.image(
+            "ep{}_tbg_avif".format(ep_num),
+            "images/title/ep{}_title.avif".format(ep_num)
         )
 
 ################################################################################
@@ -93,12 +105,21 @@ label show_episode_title(episode_number):
 # ------------------------------------------------------------------------------
 # MAIN TITLE SCREEN
 # Displays the background video, text, and interactive logo.
+# WebM fades in 0-1s, visible 1-8.5s, fades out 8.5-10s, AVIF (1920x1080) fades in at 10s.
 # ------------------------------------------------------------------------------
 screen episode_title_main(ep_num, ep_name, target_label):
     modal True
+    default show_avif = False  # Controls when to show AVIF
 
-    # Video Background - CORRECTED: Added xalign and yalign to center it.
+    # Video Background - plays for 10 seconds
     add "ep{}_tbg_video".format(ep_num) at episode_bg_transform xalign 0.5 yalign 0.5
+
+    # AVIF Background - appears with dissolve after 10 seconds
+    if show_avif:
+        add "ep{}_tbg_avif".format(ep_num) at dissolve_in_transform xalign 0.5 yalign 0.5
+
+    # Timer to trigger AVIF dissolve after 10 seconds
+    timer 10.0 action SetScreenVariable("show_avif", True)
 
     # Interactive Logo
     imagebutton:
@@ -206,9 +227,18 @@ init:
         alpha 0.0
         linear duration alpha 1.0
 
+    transform dissolve_in_transform:
+        subpixel True
+        alpha 0.0
+        linear 2.0 alpha 1.0
+
     transform episode_bg_transform:
         subpixel True
         zoom 0.5
+        alpha 0.0  # Start from black
+        linear 1.0 alpha 1.0  # Fade in from 0s to 1s
+        pause 7.5  # Video visible from 1s to 8.5s (7.5 seconds)
+        linear 1.5 alpha 0.0  # Fade out from 8.5s to 10s
 
     transform heartbeat(start_zoom, end_zoom, duration):
         zoom start_zoom

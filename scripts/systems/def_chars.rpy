@@ -158,16 +158,18 @@ init -999 python:
             
         characters["aoi"] = create_character("Aoi", "#ad594c", "#B8F5E6")
         characters["aya"] = create_character("Aya", "#8B4B8C", "#B8F5B8")
+        characters["ed"] = create_character("Echo Dot", "#00A4E4", "#F5D4B8")
         characters["hid"] = create_character("Hideo", "#a2b1d0", "#F5D4B8")
+        characters["hir"] = create_character("Hiroshi", "#FFA500", "#B8D4F5")
         characters["kit"] = create_character("Kitsune", "#00A86B", "#F5B8D4")
         characters["rin"] = create_character("Rina", "#d18376", "#B8F5F0")
-        characters["shi"] = create_character("Shigeo", "#9966CC", "#E8F5B8")
-        characters["tak"] = create_character("Takeo", "#DC143C", "#B8F5E6")
-        characters["yas"] = create_character("Yakuza Shatei", "#837c5e", "#E6B8F5")
-        characters["yaw"] = create_character("Yakuza Wakagashira", "#8bf5f0", "#F5C2B8")
-        characters["hir"] = create_character("Hiroshi", "#FFA500", "#B8D4F5")
-        characters["ed"] = create_character("Echo Dot", "#00A4E4", "#F5D4B8")
         characters["surg"] = create_character("The Surgeon", "#4169E1", "#F5E6B8")
+        characters["tak"] = create_character("Takeo Sato", "#DC143C", "#B8F5E6")
+        characters["yaw"] = create_character("Yakuza Wakagashira", "#8bf5f0", "#F5C2B8")
+        characters["yas"] = create_character("Yakuza Shatei", "#837c5e", "#E6B8F5")
+        characters["yam"] = create_character("Koji Yamamoto", "#837c5e", "#E6B8F5")
+        characters["yam_t"] = create_thinking_character("Koji Yamamoto", "#837c5e", "#E6B8F5")
+        characters["wat"] = create_character("Kazuhiro Watanabe", "#9966CC", "#E8F5B8")
 
         return characters
 

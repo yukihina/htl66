@@ -7,7 +7,6 @@ label ep05_start:
     $ stopAllSubchannels(channel="music", fadeout=1)
     pause 0.5
     $ quick_menu = True
-    $ persistent.act2_play = True
     $ renpy.block_rollback()
     $ renpy.save_persistent()
     jump ep05_intro

@@ -63,19 +63,34 @@ init -900 python:
                     # These only track trust level
                     self.rels[char] = {"trust": 0}
                 else:  # Regular characters
-                    # Regular characters have: corruption, trust, pregnancy status, relationship status, and if MC knows them
-                    self.rels[char] = {"cor": 0, "trust": 0, "preg": False, "rel": False, "knows": False}
+                    # Regular characters have: corruption, trust, pregnancy status, relationship status, if MC knows them, and emotional lock
+                    self.rels[char] = {"cor": 0, "trust": 0, "preg": False, "rel": False, "knows": False, "emotionally_locked": False}
 
         def update(self, char, attr, val):
             """
             Updates a character's attribute by adding/subtracting a value
-            
+            Now includes emotional lock check for characters with 3 strikes
+
             Args:
                 char (str): Character ID (e.g., "amber", "mc")
                 attr (str): Attribute to update ("cor", "trust", "integrity", etc.)
                 val (int): Value to add/subtract
             """
             if char in self.rels:  # Check if character exists
+                # EMOTIONAL LOCK SYSTEM: Check if character has 3 strikes (only for regular characters)
+                if char not in ["mc", "takeo", "tmpd", "osaka"]:
+                    strikes = ss.get(char, "strike")
+
+                    # If character has 3 strikes, block any trust/corruption changes
+                    if strikes >= 3 and attr in ["cor", "trust"]:
+                        # Ensure emotionally_locked field exists (for old save compatibility)
+                        if "emotionally_locked" not in self.rels[char]:
+                            self.rels[char]["emotionally_locked"] = False
+
+                        # Set emotional lock and return without updating stats
+                        self.rels[char]["emotionally_locked"] = True
+                        return  # Block the update - stats frozen at 0
+
                 if attr in ["cor", "trust", "integrity"]:  # These attributes are numerical (0-100)
                     # Special case: can't update integrity if it's locked
                     if attr == "integrity" and self.rels[char].get("integrity_locked"):
@@ -122,13 +137,75 @@ init -900 python:
             """
             Sets whether MC has met this character
             Only applies to regular characters
-            
+
             Args:
                 char (str): Character ID
                 value (bool): Whether MC knows this character
             """
             if char in self.rels and char not in ["mc", "takeo", "tmpd", "osaka"]:
                 self.rels[char]["knows"] = value
+
+        def migrate_old_saves(self):
+            """
+            Migrates old save files to include the new emotionally_locked field
+            Automatically applies emotional lock to characters with 3 strikes
+            Called automatically from after_load label
+            """
+            for char in self.chars:
+                if char not in ["mc", "takeo", "tmpd", "osaka"]:
+                    # If the emotionally_locked field doesn't exist, add it
+                    if "emotionally_locked" not in self.rels[char]:
+                        self.rels[char]["emotionally_locked"] = False
+
+                        # Check if character already has 3 strikes in old save
+                        strikes = ss.get(char, "strike")
+                        if strikes >= 3:
+                            # Apply emotional lock retroactively
+                            self.rels[char]["cor"] = 0
+                            self.rels[char]["trust"] = 0
+                            self.rels[char]["emotionally_locked"] = True
+
+        def check_emotional_lock(self, char):
+            """
+            Checks if a character has reached 3 strikes and applies emotional lock
+            Resets corruption and trust to 0 when lock is applied
+
+            Args:
+                char (str): Character ID to check
+
+            Returns:
+                bool: True if lock was just applied (first time), False otherwise
+            """
+            if char in self.rels and char not in ["mc", "takeo", "tmpd", "osaka"]:
+                strikes = ss.get(char, "strike")
+
+                # Ensure emotionally_locked field exists (for old save compatibility)
+                if "emotionally_locked" not in self.rels[char]:
+                    self.rels[char]["emotionally_locked"] = False
+
+                # If character has 3 strikes and is not already locked, apply lock
+                if strikes >= 3 and not self.rels[char]["emotionally_locked"]:
+                    self.rels[char]["cor"] = 0
+                    self.rels[char]["trust"] = 0
+                    self.rels[char]["emotionally_locked"] = True
+                    return True  # Lock was just applied
+
+            return False  # No lock applied
+
+        def is_emotionally_locked(self, char):
+            """
+            Checks if a character is emotionally locked (has 3 strikes)
+
+            Args:
+                char (str): Character ID to check
+
+            Returns:
+                bool: True if character is emotionally locked, False otherwise
+            """
+            if char in self.rels and char not in ["mc", "takeo", "tmpd", "osaka"]:
+                # Use .get() for compatibility with old saves
+                return self.rels[char].get("emotionally_locked", False)
+            return False
 
     ############################################################################
     ## SEXSTATS CLASS - SEXUAL INTERACTION TRACKING
