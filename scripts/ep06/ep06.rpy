@@ -559,7 +559,6 @@ label ep06_mornwithamber:
             jump ep06_mornwithamber_neutral
 
 
-
 label ep06_mornwithamber_neutral:
     show ep06_ambermorn08
     amb "God... wait—"
@@ -623,6 +622,7 @@ label ep06_mornwithamber_neutral_sexmenu:
 
 
 label ep06_mornwithamber_neutral_blowj:
+    $ ss.add("amber", "blowjob")
     show ep06_ambermorn12
     mc_s "Open your mouth."
     amb "Mmm..."
@@ -644,6 +644,7 @@ label ep06_mornwithamber_neutral_blowj:
 
 
 label ep06_mornwithamber_neutralboobj:
+    $ ss.add("amber", "titjob")
     show ep06_ambermorn14
     amb "Shh..."
 
@@ -689,128 +690,778 @@ label ep06_mornwithamber_neutral_continue:
             $ check_levels("amber", "cor", 2)
 
     show ep06_ambermorn18
-    pause
+    $ ss.add("amber", "sex")
+    amb "Yes..."
+    mc_s "Like this?"
+    amb "Don't stop."
+
+    show ep06_anim06
+    amb "Fuck... fuck... fuck..."
+
+    show ep06_anim05
+    amb "Ah... ah... ah..."
+
     show ep06_ambermorn19
-    pause
+    amb "Inside... I want—"
+    mc_s "We don't have to—"
+    amb "I want to. Please."
+    mc_s "Tell me if—"
+    amb "I will. Now fuck me."
+
     show ep06_ambermorn20
-    pause
+    $ ss.add("amber", "creampie")
+    amb "Mmm..."
+    jump ep06_mornwithamber_postclimax
+
+
+label ep06_mornwithamber_postclimax:
     show ep06_ambermorn21
-    pause
-    show ep06_ambermorn22
-    pause
-    show ep06_ambermorn23
-    pause
+    if e6_amber_path == "corruption":
+        amb "You think I'm fucked up?"
+        mc_s "For wanting that?"
+        amb "For needing it."
+        amb "Every time... I worry you'll see me different."
+        mc_s "I see you exactly as you are."
+        amb "And that doesn't scare you?"
+        
+        menu:
+            "You don't scare me.":
+                mc_s "Nothing about you scares me."
+                $ rm.update("amber", "trust", 3)
+                $ check_levels("amber", "trust", 3)
+
+            "We fit perfectly.":
+                mc_s "We're both exactly what we need to be."
+                $ rm.update("amber", "trust", 1)
+                $ check_levels("amber", "trust", 1)
+                $ rm.update("amber", "cor", 2)
+                $ check_levels("amber", "cor", 2)
+
+            "Stop overthinking.":
+                mc_s "You think too much."
+                $ rm.update("amber", "trust", -1)
+                $ check_levels("amber", "trust", -1)
+        
+        jump ep06_mornwithamber_ending
+
+    elif e6_amber_path == "love":
+        amb "I'm scared."
+        mc_s "Of what?"
+        amb "Losing this."
+        mc_s "You won't."
+        amb "How do you know?"
+        mc_s "Because I choose you. Every day."
+        amb "Even when I'm..."
+        mc_s "Especially then."
+
+        menu:
+            "I mean it.":
+                mc_s "I know exactly what I'm saying."
+                $ rm.update("amber", "trust", 3)
+                $ check_levels("amber", "trust", 3)
+
+            "Test me.":
+                mc_s "Try me. Test it. I'm still here."
+                $ rm.update("amber", "trust", 2)
+                $ check_levels("amber", "trust", 2)
+
+            "Help me understand.":
+                mc_s "Then tell me. Help me understand."
+                $ rm.update("amber", "trust", 1)
+                $ check_levels("amber", "trust", 1)
+        
+        jump ep06_mornwithamber_ending
+
+    elif e6_amber_path == "neutral":
+        amb "You remember... when I cut and dyed my hair?" 
+        
+        show ep06_ambermorn22
+        mc_s "Yeah."
+        mc_t "I still remember she looked like a boy."
+        amb "You said I looked like a warrior."
+        mc_s "You did."
+
+        show ep06_ambermorn23
+        amb "No one else said that. I mean... everyone else just looked at me like I'd—like I'd ruined something."
+
+        menu:
+            "Perfect to me.":
+                mc_s "You've always been perfect to me."
+                $ rm.update("amber", "trust", 3)
+                $ check_levels("amber", "trust", 3)
+
+            "Warriors together.":
+                mc_s "We're both warriors now."
+                $ rm.update("amber", "trust", 1)
+                $ check_levels("amber", "trust", 1)
+                $ rm.update("amber", "cor", 2)
+                $ check_levels("amber", "cor", 2)
+
+            "Time to go.":
+                mc_s "We should get ready."
+                $ rm.update("amber", "trust", -1)
+                $ check_levels("amber", "trust", -1)
+        
+        jump ep06_mornwithamber_ending
+
+
+label ep06_mornwithamber_ending:
     show ep06_ambermorn24
-    pause
+    amb "This pussy owns you."
+    mc_s "Pretty sure that's not how ownership works."
+    amb "It is now. Any objections, Detective?"
+    mc_s "...No ma'am."
+    amb "That's what I thought."
+    mc_t "She always needs the last word. I'm not complaining."
+    jump ep06_madisonintro
+
+
+label ep06_mornwithamber_corruption:
     show ep06_ambermorn25
-    pause
+    amb "You want a show?"
+    mc_s "Every detail."
+    amb "Pervert."
+
     show ep06_ambermorn26
-    pause
+    amb "Started here..."
+    mc_s "Keep going."
+    amb "Thinking about your tongue."
+
     show ep06_ambermorn27
-    pause
+    amb "Then deeper..."
+    mc_s "Show me."
+    amb "Like this..."
+
     show ep06_ambermorn28
-    pause
+    mc_s "What were you imagining?"
+    amb "You... using me..."
+    mc_s "How?"
+    amb "However you want."
+    mc_t "Look at her. She fucking loves this."
+
     show ep06_ambermorn29
-    pause
+    amb "Fuck..."
+
     show ep06_ambermorn30
-    pause
+    amb "Please..."
+    mc_s "Please what?"
+    amb "Fuck me."
+
+
+label ep06_mornwithamber_corruption_sexmenu:
+    menu:
+        amb "What do you want from me?"
+        
+        "Use your mouth." if not e6_amber_cor_blowjob_seen:
+            mc_s "Use your mouth."
+            $ e6_amber_cor_blowjob_seen = True
+            jump ep06_mornwithamber_cor_blowjob
+        
+        "Your tits. Now." if not e6_amber_cor_boobjob_seen:
+            mc_s "Your tits. Now."
+            $ e6_amber_cor_boobjob_seen = True
+            jump ep06_mornwithamber_cor_boobjob
+        
+        "Turn around." if not e6_amber_cor_assjob_seen:
+            mc_s "Turn around."
+            $ e6_amber_cor_assjob_seen = True
+            jump ep06_mornwithamber_cor_assjob
+        
+        "On your knees." if not e6_amber_cor_footjob_seen:
+            mc_s "On your knees."
+            $ e6_amber_cor_footjob_seen = True
+            jump ep06_mornwithamber_cor_footjob
+        
+        "Spread your legs." if (e6_amber_cor_blowjob_seen and e6_amber_cor_boobjob_seen and 
+                                e6_amber_cor_assjob_seen and e6_amber_cor_footjob_seen):
+            mc_s "Spread your legs."
+            jump ep06_mornwithamber_cor_continue
+
+
+label ep06_mornwithamber_cor_blowjob:
     show ep06_ambermorn31
-    pause
+    mc_s "All the way."
+    amb "Mmph..."
+    mc_s "Take it."
+
+    show ep06_anim07
+    mc_s "Good girl."
+
     show ep06_ambermorn32
-    pause
+    mc_s "Look at you..."
+    amb "Mmph..."
+    mc_s "Fucking perfect."
+    jump ep06_mornwithamber_corruption_sexmenu
+
+
+label ep06_mornwithamber_cor_boobjob:
     show ep06_ambermorn33
-    pause
+    mc_s "Keep that tongue out."
+    amb "Mmm..."
+    mc_s "Just like that."
+
     show ep06_ambermorn34
-    pause
+    mc_s "Squeeze harder."
+    amb "Like this?"
+    mc_s "Perfect."
+    jump ep06_mornwithamber_corruption_sexmenu
+
+
+label ep06_mornwithamber_cor_assjob:
     show ep06_ambermorn35
-    pause
+    amb "You want this ass?"
+    mc_s "Keep moving."
+    amb "Someday?"
+    mc_s "Maybe."
+    mc_t "Not yet. But she wants it."
+    amb "I'd let you. If you wanted."
+
+    show ep06_anim08
+    mc_s "Slower."
+    amb "Mmm..."
+
     show ep06_ambermorn36
-    pause
+    amb "One day... will you?"
+    mc_s "Soon..."
+    jump ep06_mornwithamber_corruption_sexmenu
+
+
+label ep06_mornwithamber_cor_footjob:
     show ep06_ambermorn37
-    pause
+    mc_s "Keep going."
+    amb "You like this?"
+    mc_s "Don't stop."
     show ep06_ambermorn38
-    pause
+    amb "Should I stop?"
+    mc_s "No."
+    jump ep06_mornwithamber_corruption_sexmenu
+
+
+label ep06_mornwithamber_cor_continue:
     show ep06_ambermorn39
-    pause
+    amb "Please fuck me."
+    mc_s "Beg better."
+    amb "I need your cock. Please."
+
     show ep06_ambermorn40
-    pause
+    mc_s "This what you wanted?"
+    amb "Yes... yes..."
+    mc_s "Say it."
+    amb "Use me... fuck..."
+
     show ep06_ambermorn41
-    pause
+    mc_s "Look at you..."
+    amb "I'm yours..."
+    mc_s "Say it again."
+    amb "Yours. All yours."
+
     show ep06_ambermorn42
-    pause
+    mc_s "Too much?"
+    mc_t "Her pulse is racing. She's not stopping me."
+    amb "More..."
+
     show ep06_ambermorn43
-    pause
+    amb "Fuck... you're so strong..."
+    mc_s "Hold on."
+    amb "Don't stop..."
+
     show ep06_ambermorn44
-    pause
+    amb "Watch..."
+    mc_s "I am."
+    amb "You love this ass."
+
     show ep06_ambermorn45
-    pause
+    amb "Mmm... fuck..."
+
     show ep06_ambermorn46
-    pause
+    mc_s "You close?"
+    amb "So close..."
+    mc_t "Right there. Almost."
+    mc_s "Then cum for me."
+
     show ep06_ambermorn47
-    pause
+    amb "Inside... yes..."
+    mc_s "All of it."
+    mc_t "Mine. She's fucking mine."
+    menu:
+        "You're mine.":
+            mc_s "You're mine completely."
+            $ rm.update("amber", "cor", 3)
+            $ check_levels("amber", "cor", 3)
+        "Fucking perfect.":
+            mc_s "Fucking perfect."
+            $ rm.update("amber", "cor", 2)
+            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "trust", 1)
+            $ check_levels("amber", "trust", 1)
+        "Good girl.":
+            mc_s "Good girl."
+            $ rm.update("amber", "trust", 2)
+            $ check_levels("amber", "trust", 2)
+
     show ep06_ambermorn48
-    pause
+    amb "Mmm..."
+    mc_s "Dirty girl."
+    amb "Your dirty girl."
+
     show ep06_ambermorn49
-    pause
+    amb "Don't look at me like that."
+    mc_s "Like what?"
+    amb "Like I'm... like I'm not broken. Like you don't see all the fucked up—"
+    mc_s "I see you."
+    amb "That's what scares me."
+    jump ep06_mornwithamber_postclimax
+
+
+label ep06_mornwithamber_love:
     show ep06_ambermorn50
-    pause
+    amb "Say that again."
+    mc_s "You're the only good thing."
+    amb "I..."
+    amb "I don't know how to do this."
     show ep06_ambermorn51
-    pause
+    mc_s "Do what?"
+    amb "Let someone... I mean, when you look at me like that, it's like you're..."
+    mc_t "She's terrified?"
+    mc_s "Like I'm what?"
+    amb "Seeing all the parts I try to hide. And I don't... I can't..."
+    mc_s "Can't what?"
+    amb "I can't keep pretending I don't need this. Need you."
+
+
+label ep06_mornwithamber_love_sexmenu:
+    menu:
+        amb "What do you want?"
+        
+        "Let me show you." if not e6_amber_love_worship_seen:
+            mc_s "Let me show you how beautiful you are."
+            $ e6_amber_love_worship_seen = True
+            jump ep06_mornwithamber_love_worship
+        
+        "Let me taste you." if not e6_amber_love_oral_seen:
+            mc_s "Let me taste you first."
+            $ e6_amber_love_oral_seen = True
+            jump ep06_mornwithamber_love_oral
+        
+        "Let me touch you." if not e6_amber_love_assjob_seen:
+            mc_s "Let me love you with my hands first."
+            $ e6_amber_love_assjob_seen = True
+            jump ep06_mornwithamber_love_assjob
+        
+        "Let me hold you." if (e6_amber_love_worship_seen and e6_amber_love_oral_seen and 
+                              e6_amber_love_assjob_seen):
+            mc_s "Let me hold you close while we make love."
+            jump ep06_mornwithamber_love_hold
+
+
+label ep06_mornwithamber_love_worship:
     show ep06_ambermorn52
-    pause
+    mc_s "Every inch of you..."
+    amb "Don't..."
+    mc_s "Don't what?"
+    amb "Don't make me cry."
+
+    show ep06_anim09
+    amb "Fuck..."
+    mc_s "What?"
+    amb "You're making me feel things."
+
+    show ep06_anim10
+    amb "God... yes..."
+    mc_s "You're perfect."
+    amb "I'm not."
+    mc_s "To me you are."
+    mc_t "I'll show you. Every day."
+    jump ep06_mornwithamber_love_sexmenu
+
+
+label ep06_mornwithamber_love_oral:
     show ep06_ambermorn53
-    pause
+    mc_s "Relax..."
+    amb "I can't..."
+    mc_s "Why not?"
+    amb "Because you're... because this is..."
+    mc_t "Stop thinking..."
+    amb "Fuck..."
+
+    show ep06_anim11
+    amb "There... right there..."
+    mc_s "Mmm..."
+    amb "Don't stop... please don't stop..."
+    jump ep06_mornwithamber_love_sexmenu
+
+
+label ep06_mornwithamber_love_assjob:
     show ep06_ambermorn54
-    pause
+    amb "I want to pleasure you..."
+    mc_s "You don't have to—"
+    amb "I want to. Let me."
+
+    show ep06_anim12
+    mc_s "You're so beautiful..."
+    amb "You make me feel it."
+    jump ep06_mornwithamber_love_sexmenu
+
+
+label ep06_mornwithamber_love_hold:
     show ep06_ambermorn55
-    pause
+    amb "I love you."
+    mc_s "I know."
+    amb "Do you love me?"
+
     show ep06_ambermorn56
-    pause
+    mc_s "I love you too."
+    amb "Then show me."
+    mc_s "How?"
+    amb "Slowly."
+
     show ep06_ambermorn57
-    pause
+    amb "Oh god..."
+    mc_s "Look at me."
+    amb "I can't..."
+    mc_s "Why not?"
+    amb "Too much..."
+
     show ep06_ambermorn58
-    pause
+    mc_s "Open your eyes."
+    amb "I can't..."
+    mc_s "Please."
+    mc_t "Let me see you. Please."
+
     show ep06_ambermorn59
-    pause
+    amb "I see you too."
+    mc_s "What do you see?"
+    amb "Someone who..."
+    amb "Someone who stays."
+
+    show e06_anim13
+    amb "Mmm... fuck... mmm..."
+
     show ep06_ambermorn60
-    pause
+    amb "Faster... I need..."
+    mc_s "Tell me."
+    amb "I need you... deeper... harder..."
+    mc_s "Like this?"
+    amb "Yes... fuck yes..."
+
+    show e06_anim14
+    amb "Don't let go..."
+    mc_s "Never."
+    amb "Promise..."
+    mc_s "I promise."
+
     show ep06_ambermorn61
-    pause
+    amb "I'm... fuck... I'm..."
+    mc_s "I've got you."
+    amb "Don't... let... go..."
+    mc_s "I won't. I'm here."
+
+    menu:
+        "I love you.":
+            mc_s "I love you. Always."
+            $ rm.update("amber", "love", 3)
+            $ check_levels("amber", "love", 3)
+        "You're safe.":
+            mc_s "You're safe with me."
+            $ rm.update("amber", "love", 2)
+            $ check_levels("amber", "love", 2)
+        "I'm staying.":
+            mc_s "I'm not going anywhere."
+            $ rm.update("amber", "love", 1)
+            $ check_levels("amber", "love", 1)
+    
+    jump ep06_mornwithamber_postclimax
+
+
+label ep06_mornwithamber_rejection:
     show ep06_ambermorn62
-    pause
+    mc_s "Amber, I can't do this right now."
+    amb "What the fuck do you mean you can't?"
+
     show ep06_ambermorn63
-    pause
+    mc_s "The case from yesterday... my head isn't right. I need to focus."
+    mc_t "It's a lie. And she knows it."
+    amb "Bullshit. This is about something else."
+
     show ep06_ambermorn64
-    pause
+    amb "You're shutting me out. Just like everyone else does."
+    mc_s "It's not about shutting you out—"
+    amb "Don't fucking lie to me! I can see it in your eyes. You're already pulling away."
+
     show ep06_ambermorn65
-    pause
+    amb "You know what? Fuck it. You want to push me away? Fine."
+    mc_t "I'm losing her. Right now."
+
     show ep06_ambermorn66
-    pause
+    amb "You want to know why I need you to stay exactly as fucked up as you are?"
+    mc_s "Amber..."
+    mc_t "Here it comes."
+    amb "No, you're going to hear this. Since you're so fucking determined to become the perfect cop."
+
     show ep06_ambermorn67
-    pause
+    amb "When we were kids, before everything went to shit with this family..."
+    mc_t "She's going all the way back."
+
     show ep06_ambermorn68
-    pause
+    amb "You were the only one who actually saw me. Not Mom's perfect blonde doll she wanted to parade around. Just... me."
+    amb "When I cut and dyed my hair, destroyed her precious image, Dad called me a disappointment."
+    mc_s "I remember."
+
     show ep06_ambermorn69
-    pause
+    amb "Mom just... looked through me like I didn't exist. Like I'd..."
+    mc_t "God, she's breaking."
+    amb "Like I'd become invisible."
+
     show ep06_ambermorn70
-    pause
+    amb "But you? You said I looked like a warrior."
+    mc_s "Because you did. You do."
+    amb "You saw something worth protecting when everyone else saw a problem to fix."
+
     show ep06_ambermorn71
-    pause
+    amb "That's why I need you damaged. Because damaged people understand each other."
+
     show ep06_ambermorn72
-    pause
+    amb "But go ahead. Become the perfect detective. Let this fucking job fix you."
+    mc_s "It's not about fixing—"
+    amb "Whatever. Point is, don't let this fucking job change you. I need you exactly this damaged."
+
     show ep06_ambermorn73
-    pause
+    amb "Because once you're fixed, once you're the shining hero cop..."
+    mc_t "She's leaving. This is it."
+
     show ep06_ambermorn74
-    pause
+    amb "You'll look at me the same way they all do. Like I'm the problem that needs solving."
+    mc_s "That's not true."
+    amb "Isn't it? You're already starting to reject me."
+
     show ep06_ambermorn75
-    pause
+    amb "You know what the difference is between you and every other man in my life?"
+    mc_t "Don't say it. Please."
+
     show ep06_ambermorn76
-    pause
+    amb "You actually made me believe someone could want the real me. Not the fantasy, not the rebellion, not the shock value."
+    mc_s "I do want the real you."
+    amb "Sure you do. That's why you're pushing me away the moment things get ... Forget it!"
+
     show ep06_ambermorn77
-    pause
+    amb "Here's some free advice, Detective: I'm the only one who's ever seen the real you and didn't flinch."
+    mc_t "She's right. Fuck, she's right."
+
     show ep06_ambermorn78
-    pause
+    amb "So when you're lying in bed tonight, being the perfect cop with the clean conscience..."
+    mc_s "Amber, wait—"
+    amb "Remember that I'm the only one who loved you when you were broken. And I was the only one honest enough to stay broken with you."
+
     show ep06_ambermorn79
-    pause
+    mc_s ". . ."
+
     show ep06_ambermorn80
+    mc_s "Fuck."
+    mc_t "I lost her."
+    mc_s "This is the right choice."
+    mc_t "...Isn't it?"
+    jump ep06_madisonintro
+
+
+label ep06_madisonintro:
+    scene eigengrau
+    show ep06_madisoncamera01
+    mad "Oh!"
+    mad "You're actually awake."
+    mc_s "Work starts at eight."
+    mad "Right... Your detective job."
+    mc_t "Three months of silence. Now small talk."
+
+    show ep06_madisoncamera02
+    mad "I have a photoshoot. Near Sakuradamon station."
+    mc_s "That's not close to my office."
+    mad "Oh. I thought it was."
+    mc_s "Thirty-minute train ride."
+    mad "Still. Same direction, right?"
+    mc_t "She looked up the route."
+
+    show ep06_madisoncamera03
+    mad "Could we take the same train?"
+    mc_s "Why?"
+    mad "I want to play a game with you."
+    mc_s "A game..."
+    mad "On the train. Thirty minutes."
+
+    show ep06_madisoncamera04
+    mc_s "What kind of game?"
+    mad "The confession kind."
+    mc_s "Pass."
+    mad "Even if I make it worth your while?"
+
+    show ep06_madisoncamera05
+    if ep05_confrontation_peaceful:
+        mad "I have something you want deleted."
+        mc_t "The recording."
+        mc_s "What do you want for it?"
+        mad "Honesty. Six questions worth."
+        mc_s "And if I lie?"
+        mad "I keep it forever."
+
+        show ep06_madisoncamera06
+        mc_s "That's blackmail."
+        mad "That's negotiation."
+        mc_s "What makes you think I care if you keep it?"
+        mad "Because you haven't asked me to delete it in three months."
+
+        show ep06_madisoncamera09
+        mc_t "She's been waiting for me to beg."
+        mc_s "Fine."
+    else:
+        mad "I need to understand why you said no."
+        mc_s "Ask someone else."
+        mad "I can't ask in this house."
+        mc_s "Why not?"
+        mad "Because if Michael hears what I'm asking, he'll know."
+        mc_s "Know what?"
+        mad "That I'm questioning what he taught me."
+        mc_s "What did he teach you?"
+
+        show ep06_madisoncamera07
+        mad "That all men want the same thing. That I should use it."
+        mc_t "Michael taught her to weaponize sexuality."
+
+        show ep06_madisoncamera08
+        mc_s "And you believed him."
+        mad "Everyone proved him right. Except you."
+        mc_s "So this is about proving Father wrong."
+        mad "This is about finding out if he was."
+
+        show ep06_madisoncamera09
+        mc_t "She's testing whether Michael lied to her."
+        mc_s "Six questions. Then we're done."
+    
+    mad "Let's go."
+    jump ep06_madison_traingame
+
+label ep06_madison_traingame:
+    show ep06_madisoncamera10
+    mc_t "Not an accident. She positioned herself for this angle."
+    mad "Round one."
+    
+    show ep06_madisoncamera11
+    pause
+    show ep06_madisoncamera12
+    pause
+    show ep06_madisoncamera13
+    pause
+    show ep06_madisoncamera14
+    pause
+    show ep06_madisoncamera15
+    pause
+    show ep06_madisoncamera16
+    pause
+    show ep06_madisoncamera17
+    pause
+    show ep06_madisoncamera18
+    pause
+    show ep06_madisoncamera19
+    pause
+    show ep06_madisoncamera20
+    pause
+    show ep06_madisoncamera21
+    pause
+    show ep06_madisoncamera22
+    pause
+    show ep06_madisoncamera23
+    pause
+    show ep06_madisoncamera24
+    pause
+    show ep06_madisoncamera25
+    pause
+    show ep06_madisoncamera26
+    pause
+    show ep06_madisoncamera27
+    pause
+    show ep06_madisoncamera28
+    pause
+    show ep06_madisoncamera29
+    pause
+    show ep06_madisoncamera30
+    pause
+    show ep06_madisoncamera31
+    pause
+    show ep06_madisoncamera32
+    pause
+    show ep06_madisoncamera33
+    pause
+    show ep06_madisoncamera34
+    pause
+    show ep06_madisoncamera35
+    pause
+    show ep06_madisoncamera36
+    pause
+    show ep06_madisoncamera37
+    pause
+    show ep06_madisoncamera38
+    pause
+    show ep06_madisoncamera39
+    pause
+    show ep06_madisoncamera40
+    pause
+    show ep06_madisoncamera41
+    pause
+    show ep06_madisoncamera42
+    pause
+    show ep06_madisoncamera43
+    pause
+    show ep06_madisoncamera44
+    pause
+    show ep06_madisoncamera45
+    pause
+    show ep06_madisoncamera46
+    pause
+    show ep06_madisoncamera47
+    pause
+    show ep06_madisoncamera48
+    pause
+    show ep06_madisoncamera49
+    pause
+    show ep06_madisoncamera50
+    pause
+    show ep06_madisoncamera51
+    pause
+    show ep06_madisoncamera52
+    pause
+    show ep06_madisoncamera53
+    pause
+    show ep06_madisoncamera54
+    pause
+    show ep06_madisoncamera55
+    pause
+    show ep06_madisoncamera56
+    pause
+    show ep06_madisoncamera57
+    pause
+    show ep06_madisoncamera58
+    pause
+    show ep06_madisoncamera59
+    pause
+    show ep06_madisoncamera60
+    pause
+    show ep06_madisoncamera61
+    pause
+    show ep06_madisoncamera62
+    pause
+    show ep06_madisoncamera63
+    pause
+    show ep06_madisoncamera64
+    pause
+    show ep06_madisoncamera65
+    pause
+    show ep06_madisoncamera66
+    pause
+    show ep06_madisoncamera67
+    pause
+    show ep06_madisoncamera68
+    pause
+    show ep06_madisoncamera69
+    pause
+    show ep06_madisoncamera70
+    pause
+    show ep06_madisoncamera71
     pause
