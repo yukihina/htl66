@@ -626,13 +626,13 @@ init python:
             "ach_ep05_final2"
         ),
         create_achievement_condition(
-            lambda: ep05_ach_final2,
+            lambda: ep06_ach_amblove,
             "ep06_ach1",
             "ep06_ach1_notified",
             "ach_ep06_amber1"
         ),
         create_achievement_condition(
-            lambda: ep05_ach_final2,
+            lambda: ep06_ach_ambcor,
             "ep06_ach2",
             "ep06_ach2_notified",
             "ach_ep06_amber2"

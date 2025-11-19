@@ -13,9 +13,34 @@ init:
     default e6_amber_love_oral_seen = False
     default e6_amber_love_assjob_seen = False
 
+    # MADISON TRAIN GAME
+    default ep06_mc_lies_detected = 0
+    default ep06_mc_advantage_points = 0
+    default ep06_chosen_path = "none"  # "love", "corruption", "neutral"
+    
     # SCENE TRACKING
     default e6_gore = False
 
     # ACHIEVEMENTS
-    default ep05_ach_isaintro = False # Achievement for Isabella part 1
-    default ep05_ach_ambvseli = False # Achievement for Amber vs Elizabeth
+    default ep06_ach_amblove = False # Achievement for Amber love path
+    default ep06_ach_ambcor = False # Achievement for Amber corruption path
+
+init python:
+    def ep06_detect_lie(detection_chance):
+        """
+        Helper function for Madison train game lie detection.
+
+        Args:
+            detection_chance (int): Percentage chance of detection (0-100)
+                                   50 = Partial Truth
+                                   70 = Lie
+
+        Returns:
+            None - Only increments the lie counter, doesn't trigger game over.
+                   The lie count will affect Madison's attitude in later scenes.
+        """
+        import renpy.exports as renpy
+
+        # Roll for detection
+        if renpy.random.randint(1, 100) <= detection_chance:
+            store.ep06_mc_lies_detected += 1
