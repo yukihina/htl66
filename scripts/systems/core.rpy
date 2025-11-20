@@ -4,9 +4,27 @@
 
 init -900 python:
     ############################################################################
+    ## CHARACTER PROGRESSION RATES
+    ############################################################################
+    # These multipliers are applied automatically to all stat changes
+    # Different characters respond differently to player actions
+
+    char_progression_rates = {
+        "amber": {"trust": 1.0, "cor": 1.5},        # More easily corrupted
+        "antonella": {"trust": 0.25, "cor": 1.0},   # Very hard to gain trust
+        "arlette": {"trust": 1.5, "cor": 1.5},      # Responds strongly to both
+        "elizabeth": {"trust": 2.0, "cor": 1.0},    # Gains trust quickly
+        "isabella": {"trust": 1.0, "cor": 1.0},     # Balanced progression
+        "kanae": {"trust": 0.5, "cor": 0.5},        # Slow progression both ways
+        "madison": {"trust": 0.5, "cor": 2.0},      # Hard to trust, easily corrupted
+        "nanami": {"trust": 3.0, "cor": 1.0},       # Very trusting, hard to corrupt
+        "paz": {"trust": 1.0, "cor": 1.0}           # Balanced progression
+    }
+
+    ############################################################################
     ## RM CLASS - RELATIONSHIP MANAGEMENT CORE
     ############################################################################
-    
+
     class RM:
         """
         RM stands for Relationship Management - handles all character relationships and attributes
@@ -38,12 +56,14 @@ init -900 python:
         def update(self, char, attr, val):
             """
             Updates a character's attribute by adding/subtracting a value
-            Includes emotional lock check (3 strikes) and path lock system (milestone decisions)
+            Now includes:
+            - Emotional lock check for characters with 3 strikes
+            - Automatic progression rate multipliers
 
             Args:
                 char (str): Character ID (e.g., "amber", "mc")
                 attr (str): Attribute to update ("cor", "trust", "integrity", etc.)
-                val (int): Value to add/subtract
+                val (int or float): Base value to add/subtract (will be multiplied by character rate)
             """
             if char in self.rels:  # Check if character exists
                 # EMOTIONAL LOCK SYSTEM: Check if character has 3 strikes (only for regular characters)
@@ -60,24 +80,12 @@ init -900 python:
                         self.rels[char]["emotionally_locked"] = True
                         return  # Block the update - stats frozen at 0
 
-                # PATH LOCK SYSTEM: Auto-check and apply path locks for love interests
-                if char not in ["mc", "takeo", "tmpd", "osaka"] and attr in ["cor", "trust"]:
-                    # Auto-check if path should be locked (similar to strike auto-lock)
-                    locked_path = self.check_and_lock_path(char)
-
-                    if locked_path == "love":
-                        # Love path locked: block corruption, double trust
-                        if attr == "cor":
-                            return  # Block corruption gains
-                        elif attr == "trust":
-                            val = val * 2  # Double trust gains
-                    elif locked_path == "corruption":
-                        # Corruption path locked: block trust, double corruption
-                        if attr == "trust":
-                            return  # Block trust gains
-                        elif attr == "cor":
-                            val = val * 2  # Double corruption gains
-                    # If neutral or None (not locked yet), no blocking, no doubling
+                # AUTOMATIC PROGRESSION RATES: Apply character-specific multipliers
+                if char in char_progression_rates and attr in ["cor", "trust"]:
+                    # Get the rate for this character and attribute
+                    rate = char_progression_rates[char].get(attr, 1.0)
+                    # Multiply the base value by the rate and round to integer
+                    val = round(val * rate)
 
                 if attr in ["cor", "trust", "integrity"]:  # These attributes are numerical (0-100)
                     # Special case: can't update integrity if it's locked
@@ -153,6 +161,29 @@ init -900 python:
                             self.rels[char]["trust"] = 0
                             self.rels[char]["emotionally_locked"] = True
 
+        def migrate_to_ratio_system(self):
+            """
+            Migrates saves from pre-ratio system to new automatic ratio system
+            Divides existing stat values by character rates to convert to base values
+            Called automatically when loading old saves (save_system_version == 1)
+            """
+            for char in char_progression_rates:
+                if char in self.rels:
+                    # Divide existing values by their rates to get base values
+                    trust_rate = char_progression_rates[char].get("trust", 1.0)
+                    cor_rate = char_progression_rates[char].get("cor", 1.0)
+
+                    old_trust = self.rels[char]["trust"]
+                    old_cor = self.rels[char]["cor"]
+
+                    # Convert to base values (rounded)
+                    new_trust = round(old_trust / trust_rate) if trust_rate != 0 else old_trust
+                    new_cor = round(old_cor / cor_rate) if cor_rate != 0 else old_cor
+
+                    # Ensure values stay within bounds
+                    self.rels[char]["trust"] = max(0, min(100, new_trust))
+                    self.rels[char]["cor"] = max(0, min(100, new_cor))
+
         def check_emotional_lock(self, char):
             """
             Checks if a character has reached 3 strikes and applies emotional lock
@@ -194,66 +225,6 @@ init -900 python:
                 # Use .get() for compatibility with old saves
                 return self.rels[char].get("emotionally_locked", False)
             return False
-
-        def check_and_lock_path(self, char, love_threshold=3, cor_threshold=3):
-            """
-            Auto-checks milestone counters and locks path if threshold reached
-            Similar to emotional lock system - called automatically during rm.update()
-
-            Args:
-                char (str): Character ID
-                love_threshold (int): Milestone love choices needed to lock (default: 3)
-                cor_threshold (int): Milestone corruption choices needed to lock (default: 3)
-
-            Returns:
-                str or None: Current locked path ("love", "corruption", "neutral") or None if not locked yet
-            """
-            path_var_name = f"{char}_path"
-
-            # Check if already locked in persistent
-            current_path = getattr(persistent, path_var_name, None)
-            if current_path is not None:
-                return current_path  # Already locked, return existing path
-
-            # Get milestone choice counters
-            try:
-                love_choices = renpy.python.py_eval(f"{char}_love_choices")
-                cor_choices = renpy.python.py_eval(f"{char}_cor_choices")
-            except:
-                return None  # Counters don't exist yet
-
-            # Check if threshold reached for auto-lock
-            locked_path = None
-
-            if love_choices >= love_threshold and cor_choices >= cor_threshold:
-                # Both thresholds met - choose based on which has more choices
-                if love_choices > cor_choices:
-                    locked_path = "love"
-                elif cor_choices > love_choices:
-                    locked_path = "corruption"
-                else:
-                    # Tie - use trust vs corruption stats as tiebreaker
-                    trust_val = self.get(char, "trust")
-                    cor_val = self.get(char, "cor")
-                    locked_path = "love" if trust_val >= cor_val else "corruption"
-            elif love_choices >= love_threshold:
-                locked_path = "love"
-            elif cor_choices >= cor_threshold:
-                locked_path = "corruption"
-            # else: threshold not reached yet, return None
-
-            # If threshold reached, lock it permanently in persistent
-            if locked_path is not None:
-                setattr(persistent, path_var_name, locked_path)
-
-                # Show notification that path has been locked
-                # Similar to strike notifications
-                if locked_path == "love":
-                    show_custom_notification("path_lock_love", char=char_proper_names.get(char, char))
-                elif locked_path == "corruption":
-                    show_custom_notification("path_lock_corruption", char=char_proper_names.get(char, char))
-
-            return locked_path
 
     ############################################################################
     ## SEXSTATS CLASS - SEXUAL INTERACTION TRACKING
@@ -458,19 +429,11 @@ init python:
 
     def lock_character_path(char, love_threshold=3, cor_threshold=3):
         """
-        DEPRECATED: Path locking now happens automatically via rm.update()
+        Checks milestone decision counters and locks a character's narrative path
 
-        This function is kept for backwards compatibility, but is no longer needed.
-        Path locking now works like the strike system - it auto-locks when thresholds
-        are reached during any rm.update() call.
-
-        The auto-lock system:
-        - Checks milestone counters every time rm.update() is called
-        - Locks path when love_choices >= 3 OR cor_choices >= 3
-        - Once locked, blocks opposite stat and doubles locked stat
-        - Works automatically across episodes (ep06, ep07, ep08...)
-
-        You can still call this function to manually check/force a lock, but it's not required.
+        This is the core function for the Milestone Decision Model. It should be
+        called at key story moments (typically end of Episode 6 or similar) to
+        determine and permanently lock a character's relationship path.
 
         Args:
             char (str): Character ID (e.g., "amber", "nanami")
@@ -478,14 +441,49 @@ init python:
             cor_threshold (int): Number of corruption choices needed to lock corruption path (default: 3)
 
         Returns:
-            str: The locked path ("love", "corruption", "neutral", or None if not locked yet)
+            str: The locked path ("love", "corruption", or "neutral")
 
         Example usage:
-            $ locked_path = lock_character_path("amber")  # Check current path
-            $ locked_path = get_character_path("amber")   # Better: use this instead
+            $ locked_path = lock_character_path("amber")
+            # or with custom thresholds
+            $ locked_path = lock_character_path("nanami", love_threshold=4, cor_threshold=4)
         """
-        # Just call the auto-lock function that's already integrated in rm.update()
-        return rm.check_and_lock_path(char, love_threshold, cor_threshold)
+        # Get the persistent path variable for this character
+        path_var_name = f"{char}_path"
+
+        # Check if path is already locked
+        current_path = getattr(persistent, path_var_name, None)
+        if current_path is not None:
+            return current_path  # Already locked, return existing path
+
+        # Get the milestone choice counters for this character
+        love_choices = renpy.python.py_eval(f"{char}_love_choices")
+        cor_choices = renpy.python.py_eval(f"{char}_cor_choices")
+
+        # Determine which path to lock based on thresholds
+        locked_path = "neutral"  # Default to neutral
+
+        if love_choices >= love_threshold and cor_choices >= cor_threshold:
+            # Both thresholds met - choose based on which has more choices
+            if love_choices > cor_choices:
+                locked_path = "love"
+            elif cor_choices > love_choices:
+                locked_path = "corruption"
+            else:
+                # Tie - use trust vs corruption stats as tiebreaker
+                trust_val = rm.get(char, "trust")
+                cor_val = rm.get(char, "cor")
+                locked_path = "love" if trust_val >= cor_val else "corruption"
+        elif love_choices >= love_threshold:
+            locked_path = "love"
+        elif cor_choices >= cor_threshold:
+            locked_path = "corruption"
+        # else: remains "neutral"
+
+        # Lock the path by setting the persistent variable
+        setattr(persistent, path_var_name, locked_path)
+
+        return locked_path
 
     def get_character_path(char):
         """

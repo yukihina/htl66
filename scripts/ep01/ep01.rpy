@@ -201,8 +201,8 @@ label ep01_dream1:
     menu:
         mc_t "How should I respond?"
         "Honest":
-            $ rm.update("antonella", "trust", 1)
-            $ check_levels("antonella", "trust", 1)
+            $ rm.update("antonella", "trust", 4)
+            $ check_levels("antonella", "trust", 4)
 
             hide screen walkthrough_screen
 
@@ -214,8 +214,8 @@ label ep01_dream1:
             "Girl" "Or they never realize they are jerks. So maybe you are one, and you're just being polite."
             "Girl" "{fii}\"Why can't I shut up??? Why can't I just compliment him???\"{/fii}"
         "Joke about it":
-            $ rm.update("antonella", "trust", 2)
-            $ check_levels("antonella", "trust", 2)
+            $ rm.update("antonella", "trust", 8)
+            $ check_levels("antonella", "trust", 8)
 
             hide screen walkthrough_screen
 
@@ -378,16 +378,16 @@ label ep01_2nddream:
     menu:
         mc_t "What do I think of her?"
         "Odd but charming":
-            $ rm.update("antonella", "trust", 2)
-            $ check_levels("antonella", "trust", 2)
+            $ rm.update("antonella", "trust", 8)
+            $ check_levels("antonella", "trust", 8)
 
             hide screen walkthrough_screen
 
             mc_s "You're... a bit strange, but I guess that's just part of your charm."
             anto "Charm, huh? That's a new one."
         "Mysterious":
-            $ rm.update("antonella", "trust", 1)
-            $ check_levels("antonella", "trust", 1)
+            $ rm.update("antonella", "trust", 4)
+            $ check_levels("antonella", "trust", 4)
 
             hide screen walkthrough_screen
 
@@ -969,8 +969,8 @@ label ep01_pregame:
     $ show_walkthrough("ep01_pregame_menu")
     menu:
         "Hug tenderly":
-            $ rm.update("antonella", "trust", 1)
-            $ check_levels("antonella", "trust", 1)
+            $ rm.update("antonella", "trust", 4)
+            $ check_levels("antonella", "trust", 4)
             $ ep01_hug = True
             hide screen walkthrough_screen
             show ep01_pregame31 with hpunch
@@ -2149,8 +2149,8 @@ label q3_date:
 
             mc_t "Screw it, I'm gonna say hi to her."
 
-            $ rm.update("antonella", "trust", -1)
-            $ check_levels("antonella", "trust", -1)
+            $ rm.update("antonella", "trust", -4)
+            $ check_levels("antonella", "trust", -4)
             jump ep01_proleather
 
 
@@ -2597,8 +2597,8 @@ label ep01_chaseamb:
 
             show ep01_thepark29
             if ep01_losttrust:
-                $ rm.update("antonella", "trust", -5)
-                $ check_levels("antonella", "trust", -5)
+                $ rm.update("antonella", "trust", -20)
+                $ check_levels("antonella", "trust", -20)
                 anto "That's not trivial! Your feelings for me matter just as much as your feelings for Amber, right?"
                 mc_s "What do you want me to do, Antonella? Tell her I love you and ignore her reaction? That's not a good idea."
                 anto "Alright, alright! Anyway, I better go now. Bye-bye!"
@@ -3716,8 +3716,8 @@ label ep01_home:
         amb "Do you want me to continue or not?!"
         "Yes":
             hide screen walkthrough_screen
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ ep01_first = True
 
             mc_t "Think... think, what's the best solution to all this...?"

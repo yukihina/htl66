@@ -1398,8 +1398,8 @@ label ep02_arle_mc_sex:
             arl "I made you wait quite a while, didn't I? Did you fantasize about me like this often?"
         "I've jerked off thinking about you.":
             hide screen walkthrough_screen
-            $ rm.update("arlette", "cor", 2)
-            $ check_levels("arlette", "cor", 2)
+            $ rm.update("arlette", "cor", 1)
+            $ check_levels("arlette", "cor", 1)
 
             mc_s "You have no idea how many times I've gotten off thinking about you, Arlette."
             arl "Oh, you naughty boy. I guess I'll have to take responsibility for all that pent-up desire."
@@ -1441,8 +1441,8 @@ label ep02_arle_mc_sex:
         "Cum on her face":
             hide screen walkthrough_screen
             $ ep02_beachcum += 1
-            $ rm.update("arlette", "cor", 2)
-            $ check_levels("arlette", "cor", 2)
+            $ rm.update("arlette", "cor", 1)
+            $ check_levels("arlette", "cor", 1)
             pass
         "Cum on her tits":
             hide screen walkthrough_screen
@@ -1498,8 +1498,8 @@ label ep02_arle_mc_sex:
             mc_s "I won't stop you."
         "I wouldn't mind if you stayed in less":
             hide screen walkthrough_screen
-            $ rm.update("arlette", "cor", 2)
-            $ check_levels("arlette", "cor", 2)
+            $ rm.update("arlette", "cor", 1)
+            $ check_levels("arlette", "cor", 1)
 
             mc_s "I wouldn't mind if you stayed in even less clothing, or none at all."
             arl "Oh, [mc_name], tu es un vilain garçon. I like that about you."
@@ -1911,8 +1911,8 @@ label ep02_lovemaking:
         "Agree":
             hide screen walkthrough_screen
             $ ep02_anal = True
-            $ rm.update("arlette", "cor", 5)
-            $ check_levels("arlette", "cor", 5)
+            $ rm.update("arlette", "cor", 3)
+            $ check_levels("arlette", "cor", 3)
 
             show ep02_arlesex10
             mc_s "Well, shit, I mean... If that's what you want, I can definitely do that for you."
@@ -2003,8 +2003,8 @@ label ep02_lovemaking:
         menu:
             "Keep talking dirty":
                 hide screen walkthrough_screen
-                $ rm.update("arlette", "cor", 2)
-                $ check_levels("arlette", "cor", 2)
+                $ rm.update("arlette", "cor", 1)
+                $ check_levels("arlette", "cor", 1)
                 $ ep02_talkdirty = True
 
                 mc_s "What sort of a slut does something like that, huh?"
@@ -2027,8 +2027,8 @@ label ep02_lovemaking:
                 arl "Ooh, pardonne-moi! S'il vous plaît, pardonne-moi!"
             "Keep talking with love":
                 hide screen walkthrough_screen
-                $ rm.update("arlette", "trust", 2)
-                $ check_levels("arlette", "trust", 2)
+                $ rm.update("arlette", "trust", 1)
+                $ check_levels("arlette", "trust", 1)
                 pass
     show ep02_arlesex24
     if ep02_talkdirty:
@@ -2090,8 +2090,8 @@ label ep02_lovemaking:
         mc_t "Sh, should I...?"
         "Cum inside her":
             hide screen walkthrough_screen
-            $ rm.update("arlette", "cor", 2)
-            $ check_levels("arlette", "cor", 2)
+            $ rm.update("arlette", "cor", 1)
+            $ check_levels("arlette", "cor", 1)
 
             mc_s "I'm gonna... I'm gonna cum inside..."
             arl "Yes... Yes, cum inside!"
@@ -3140,8 +3140,8 @@ label ep02_arlette_breakup:
             arl "[mc_name]..."
         "I had to protect you.":
             hide screen walkthrough_screen
-            $ rm.update("arlette", "trust", 2)
-            $ check_levels("arlette", "trust", 2)
+            $ rm.update("arlette", "trust", 1)
+            $ check_levels("arlette", "trust", 1)
             $ rm.update("mc", "integrity", 1)
 
             mc_s "I did it to protect you, Arlette. That's all that matters to me."

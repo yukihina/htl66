@@ -70,8 +70,8 @@ label ep05_elisuicide:
                 nana "But she said if I liked someone, I should show them by letting them touch me..."
                 mc_s "Madison gives terrible advice. What happened wasn't your fault."
 
-                $ rm.update("madison", "trust", -1)
-                $ check_levels("madison", "trust", -1)
+                $ rm.update("madison", "trust", -2)
+                $ check_levels("madison", "trust", -2)
             "You didn't do anything wrong":
                 hide screen walkthrough_screen
                 $ ep05_mc_blame_madison = False
@@ -80,8 +80,8 @@ label ep05_elisuicide:
                 nana "But Madison said I was supposed to act like that around guys I liked..."
                 mc_s "Madison doesn't always give good advice about this stuff."
 
-                $ rm.update("madison", "trust", 1)
-                $ check_levels("madison", "trust", 1)
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
         show ep05_hosd1_nan06
         mc_t "Shit... Madison gave her that advice because she wanted Nanami to act that way with her, not with guys."
@@ -108,8 +108,8 @@ label ep05_elisuicide:
                 nana "I thought... older people were supposed to know better!"
                 mc_s "You're right to be mad. We both screwed up."
 
-                $ rm.update("nanami", "trust", 6)
-                $ check_levels("nanami", "trust", 6)
+                $ rm.update("nanami", "trust", 2)
+                $ check_levels("nanami", "trust", 2)
             "We were both confused":
                 hide screen walkthrough_screen
                 $ ep05_mc_takes_responsibility = False
@@ -119,8 +119,8 @@ label ep05_elisuicide:
                 nana "How am I supposed to know what's right if you guys don't even know?"
                 mc_s "Sometimes older people mess up too, Nanami. Big time."
 
-                $ rm.update("nanami", "trust", -6)
-                $ check_levels("nanami", "trust", -6)
+                $ rm.update("nanami", "trust", -2)
+                $ check_levels("nanami", "trust", -2)
         $ setChannelVolume("music", 2, 0.3, 0)
         $ playAudio(nanami_clumsy_theme, "music", 2, True, 4, 0)
 
@@ -213,8 +213,8 @@ label ep05_elisuicide:
             nana "But Madison says all close friends do this kind of stuff together."
             mc_s "Madison's wrong about that."
 
-            $ rm.update("madison", "trust", 2)
-            $ check_levels("madison", "trust", 2)
+            $ rm.update("madison", "trust", 4)
+            $ check_levels("madison", "trust", 4)
         "What Madison does isn't okay":
             hide screen walkthrough_screen
             $ ep05_madison_is_bad = True
@@ -225,8 +225,8 @@ label ep05_elisuicide:
             nana "But Madison says this is how all girlfriends bond."
             mc_s "Madison's manipulating you when she says stuff like that."
 
-            $ rm.update("madison", "trust", -2)
-            $ check_levels("madison", "trust", -2)
+            $ rm.update("madison", "trust", -4)
+            $ check_levels("madison", "trust", -4)
     $ stopAudio("music", 3, 2)
     nana "But you're my friend too, right? And you never make me do that stuff!"
     mc_s "Exactly. That's how healthy friendships work."
@@ -274,8 +274,8 @@ label ep05_elisuicide:
             nana "I'm s-sorry... I just wanted to feel safe for a sec."
             mc_s "I know, but this crosses a line. Please understand."
 
-            $ rm.update("nanami", "trust", -6)
-            $ check_levels("nanami", "trust", -6)
+            $ rm.update("nanami", "trust", -2)
+            $ check_levels("nanami", "trust", -2)
             $ ss.add("nanami", "strike")
             $ nanami_strikes = ss.get("nanami", "strike")
             if nanami_strikes == 1:
@@ -300,8 +300,8 @@ label ep05_elisuicide:
             nana "But you take care of me like one would! What's the difference?"
             mc_s "The difference is we need to keep things appropriate between us."
 
-            $ rm.update("nanami", "trust", -3)
-            $ check_levels("nanami", "trust", -3)
+            $ rm.update("nanami", "trust", -1)
+            $ check_levels("nanami", "trust", -1)
         "Just enjoy the moment":
             hide screen walkthrough_screen
 
@@ -317,8 +317,8 @@ label ep05_elisuicide:
             mc_t "I'm probably going to regret this decision..."
 
             $ stopAllSubchannels("music", 2)
-            $ rm.update("nanami", "trust", 3)
-            $ check_levels("nanami", "trust", 3)
+            $ rm.update("nanami", "trust", 1)
+            $ check_levels("nanami", "trust", 1)
     $ stopAllSubchannels("sfx", 2)
     jump ep05_hosmadison
 
@@ -378,8 +378,8 @@ label ep05_hosmadison:
             mad "Care? Is that what you call groping vulnerable girls?"
             mc_s "I was comforting her. There's a difference."
             mad "Is there? Because from where I'm standing, you're just another predator."
-            $ rm.update("madison", "trust", 1)
-            $ check_levels("madison", "trust", 1)
+            $ rm.update("madison", "trust", 2)
+            $ check_levels("madison", "trust", 2)
         "Put her in her place":
             hide screen walkthrough_screen
             $ ep05_confrontation_peaceful = False
@@ -388,8 +388,8 @@ label ep05_hosmadison:
             mad "At least I'm honest about what I want."
             mc_s "You're grooming her. Using her trust."
             mad "And what are you doing? Playing the hero while getting your rocks off?"
-            $ rm.update("madison", "trust", -2)
-            $ check_levels("madison", "trust", -2)
+            $ rm.update("madison", "trust", -4)
+            $ check_levels("madison", "trust", -4)
     $ setChannelVolume("sfx", 2, 0.7, 0)
     $ playAudio(sfx_punch, "sfx", 2, False, 0, 0)
 
@@ -423,8 +423,8 @@ label ep05_hosmadison:
                 mad "They won't believe you. I'm their perfect little angel."
                 mc_s "We'll see about that when I show them the evidence."
 
-                $ rm.update("madison", "trust", -2)
-                $ check_levels("madison", "trust", -2)
+                $ rm.update("madison", "trust", -4)
+                $ check_levels("madison", "trust", -4)
             "Hint at consequences":
                 hide screen walkthrough_screen
                 $ ep05_threat_direct = False
@@ -681,8 +681,8 @@ label ep05_hosmadison:
             mc_s "Holy shit... mmmmmph..."
             mc_t "What the fuck have I become?"
 
-            $ rm.update("madison", "cor", 4)
-            $ check_levels("madison", "cor", 4)
+            $ rm.update("madison", "cor", 2)
+            $ check_levels("madison", "cor", 2)
 
             show ep05_hosd1_mad37 at subtle_zoom_out
             mad "Mmmmmm... feel better now? I just saved her virtue with my sacrifice."
@@ -702,8 +702,8 @@ label ep05_hosmadison:
             mc_s "Holy shit... mmmmmph..."
             mc_t "What the fuck have I become?"
 
-            $ rm.update("madison", "cor", 2)
-            $ check_levels("madison", "cor", 2)
+            $ rm.update("madison", "cor", 1)
+            $ check_levels("madison", "cor", 1)
 
             show ep05_hosd1_mad39 at subtle_zoom_out
             mad "Clean yourself up. Your precious Nanami will be back soon."
@@ -736,8 +736,8 @@ label ep05_hosmadison:
             mad "I knew you'd see reason."
             mc_s "Just... don't hurt her."
             mad "Hurt her? I just sacrificed my body to protect her."
-            $ rm.update("madison", "trust", 5)
-            $ check_levels("madison", "trust", 5)
+            $ rm.update("madison", "trust", 10)
+            $ check_levels("madison", "trust", 10)
         "Challenge Madison":
             hide screen walkthrough_screen
             $ ep05_stance_surrender = False
@@ -746,8 +746,8 @@ label ep05_hosmadison:
             mad "After what just happened? You think you have any moral authority?"
             mc_s "I'll find a way to protect her."
             mad "From what? I'm the one protecting her virtue."
-            $ rm.update("madison", "trust", -1)
-            $ check_levels("madison", "trust", -1)
+            $ rm.update("madison", "trust", -2)
+            $ check_levels("madison", "trust", -2)
             $ ss.add("madison", "strike")
             $ madison_strikes = ss.get("madison", "strike")
             if madison_strikes == 1:
@@ -1258,8 +1258,8 @@ label ep05_hosamber:
             amb "Try me."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
-            $ rm.update("amber", "cor", 4)
-            $ check_levels("amber", "cor", 4)
+            $ rm.update("amber", "cor", 3)
+            $ check_levels("amber", "cor", 3)
         "Pull away":
             hide screen walkthrough_screen
             $ ep05_amber_route = 3
@@ -1766,8 +1766,8 @@ label ep05_elidream:
             eli "You're so sweet to say that, sweetheart."
             mc_t "She smiled like... really smiled. Like she's glad I'm here."
 
-            $ rm.update("elizabeth", "trust", 4)
-            $ check_levels("elizabeth", "trust", 4)
+            $ rm.update("elizabeth", "trust", 2)
+            $ check_levels("elizabeth", "trust", 2)
         "It's okay. Better than being home alone.":
             hide screen walkthrough_screen
             $ ep05_guilt_points += 1
@@ -1776,8 +1776,8 @@ label ep05_elidream:
             eli "At least someone appreciates my company."
             mc_t "She sounded kinda down... maybe I should've been more into it."
 
-            $ rm.update("elizabeth", "trust", 2)
-            $ check_levels("elizabeth", "trust", 2)
+            $ rm.update("elizabeth", "trust", 1)
+            $ check_levels("elizabeth", "trust", 1)
         "I don't mind waiting around.":
             hide screen walkthrough_screen
             $ ep05_evasive_points += 1
@@ -1827,8 +1827,8 @@ label ep05_elidream:
             eli "But I believe you mean it."
             mc_t "The way she's looking at me... it's kinda different than how she looks at [da_r]."
 
-            $ rm.update("elizabeth", "trust", 2)
-            $ check_levels("elizabeth", "trust", 2)
+            $ rm.update("elizabeth", "trust", 1)
+            $ check_levels("elizabeth", "trust", 1)
         "I try my best not to let you down.":
             hide screen walkthrough_screen
             $ ep05_guilt_points += 1

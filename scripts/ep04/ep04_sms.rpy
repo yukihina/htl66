@@ -1085,8 +1085,8 @@ label ep04_amb_sms01_photo:
 
 label ep04_amb_sms01_convince:
     hide screen walkthrough_screen
-    $ rm.update("nanami", "trust", 12)
-    $ check_levels("nanami", "trust", 12)
+    $ rm.update("nanami", "trust", 4)
+    $ check_levels("nanami", "trust", 4)
 
     mc_nvl "Come on, Amber"
     mc_nvl "I wouldn't ask if it wasn't important. You know that"
@@ -1210,8 +1210,8 @@ label ep04_amb_sms03_yes:
 
 label ep04_amb_sms03_yes_sexy_back:
     hide screen walkthrough_screen
-    $ rm.update("amber", "cor", 2)
-    $ check_levels("amber", "cor", 2)
+    $ rm.update("amber", "cor", 1)
+    $ check_levels("amber", "cor", 1)
 
     mc_nvl "Yeah!"
     amb_nvl "Check out how hot this is"
@@ -1275,8 +1275,8 @@ label ep04_amb_sms03_yes_cosp_back_no:
 
 label ep04_amb_sms03_yes_cosp_back:
     hide screen walkthrough_screen
-    $ rm.update("amber", "cor", 2)
-    $ check_levels("amber", "cor", 2)
+    $ rm.update("amber", "cor", 1)
+    $ check_levels("amber", "cor", 1)
 
     mc_nvl "Of course!!"
     amb_nvl "My butt's kinda on display 'cause the skirt's so short, but it's sexy as hell, don't you think?"
@@ -1360,8 +1360,8 @@ label ep04_amb_sms04_cont:
 
 label ep04_amb_sms04_cont_yes:
     hide screen walkthrough_screen
-    $ rm.update("amber", "cor", 5)
-    $ check_levels("amber", "cor", 5)
+    $ rm.update("amber", "cor", 3)
+    $ check_levels("amber", "cor", 3)
 
     mc_nvl "Alright..."
     mc_nvl "I'm intrigued by these rewards you mentioned..."
@@ -1439,8 +1439,8 @@ label ep04_amb_sms05_no:
 
 label ep04_amb_sms05_yes:
     hide screen walkthrough_screen
-    $ rm.update("amber", "cor", 5)
-    $ check_levels("amber", "cor", 5)
+    $ rm.update("amber", "cor", 3)
+    $ check_levels("amber", "cor", 3)
     $ setChannelVolume(channel="music", subchannel=2, volume=0.2)
     $ playAudio(mc_amber_x_theme, "music", 2, True, 5, 0)
 

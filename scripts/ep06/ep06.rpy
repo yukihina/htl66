@@ -500,13 +500,10 @@ label ep06_mornwithamber:
     mc_t "I should stop. I can't. God, I can't."
 
     menu:
-        "Show me." if amber_strikes == 0 and rm.get("amber", "cor") >= 10:
+        "Show me." if amber_strikes == 0 and rm.get("amber", "cor") >= 25:
             mc_s "Show me what you were doing."
 
             $ e6_amber_path = "corruption"
-            $ amber_cor_choices += 1
-            $ rm.update("amber", "cor", 10)
-            $ check_levels("amber", "cor", 10)
             jump ep06_mornwithamber_corruption
         
         "You're impossible.":
@@ -541,13 +538,10 @@ label ep06_mornwithamber:
     mc_t "She sees the worst parts and wants them."
 
     menu:
-        "You see me." if amber_strikes == 0 and rm.get("amber", "trust") >= 33:
+        "You see me." if amber_strikes == 0 and rm.get("amber", "trust") >= 40:
             mc_s "You've always seen me."
 
             $ e6_amber_path = "love"
-            $ amber_love_choices += 1
-            $ rm.update("amber", "trust", 15)
-            $ check_levels("amber", "trust", 15)
             jump ep06_mornwithamber_love
 
         "You like broken things?":
@@ -559,8 +553,8 @@ label ep06_mornwithamber:
         "Like the view?":
             mc_s "Like what you see?"
 
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
+            $ rm.update("amber", "cor", 2)
+            $ check_levels("amber", "cor", 2)
             $ e6_amber_path = "neutral"
             jump ep06_mornwithamber_neutral
 
@@ -586,13 +580,13 @@ label ep06_mornwithamber_neutral:
 
         "Fucking perfect.":
             mc_s "Your pussy's perfect."
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
+            $ rm.update("amber", "cor", 2)
+            $ check_levels("amber", "cor", 2)
 
         "Only you.":
             mc_s "No one else compares."
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
 
@@ -687,13 +681,13 @@ label ep06_mornwithamber_neutral_continue:
 
         "Take it all.":
             mc_s "Then take all of it."
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
+            $ rm.update("amber", "cor", 2)
+            $ check_levels("amber", "cor", 2)
 
         "Broken together.":
             mc_s "Maybe we're both exactly as fucked up as we need to be."
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
 
     show ep06_ambermorn18
     $ ss.add("amber", "sex")
@@ -740,8 +734,8 @@ label ep06_mornwithamber_postclimax:
                 mc_s "We're both exactly what we need to be."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
-                $ rm.update("amber", "cor", 2)
-                $ check_levels("amber", "cor", 2)
+                $ rm.update("amber", "cor", 1)
+                $ check_levels("amber", "cor", 1)
 
             "Stop overthinking.":
                 mc_s "You think too much."
@@ -800,8 +794,8 @@ label ep06_mornwithamber_postclimax:
                 mc_s "We're both warriors now."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
-                $ rm.update("amber", "cor", 2)
-                $ check_levels("amber", "cor", 2)
+                $ rm.update("amber", "cor", 1)
+                $ check_levels("amber", "cor", 1)
 
             "Time to go.":
                 mc_s "We should get ready."
@@ -992,12 +986,12 @@ label ep06_mornwithamber_cor_continue:
     menu:
         "You're mine.":
             mc_s "You're mine completely."
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
-        "Fucking perfect.":
-            mc_s "Fucking perfect."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
+        "Fucking perfect.":
+            mc_s "Fucking perfect."
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
         "Good girl.":
@@ -1165,16 +1159,16 @@ label ep06_mornwithamber_love_hold:
     menu:
         "I love you.":
             mc_s "I love you. Always."
-            $ rm.update("amber", "trust", 3)
-            $ check_levels("amber", "trust", 3)
+            $ rm.update("amber", "love", 3)
+            $ check_levels("amber", "love", 3)
         "You're safe.":
             mc_s "You're safe with me."
-            $ rm.update("amber", "trust", 2)
-            $ check_levels("amber", "trust", 2)
+            $ rm.update("amber", "love", 2)
+            $ check_levels("amber", "love", 2)
         "I'm staying.":
             mc_s "I'm not going anywhere."
-            $ rm.update("amber", "trust", 1)
-            $ check_levels("amber", "trust", 1)
+            $ rm.update("amber", "love", 1)
+            $ check_levels("amber", "love", 1)
     
     jump ep06_mornwithamber_postclimax
 
@@ -2194,9 +2188,6 @@ label ep06_madison_traingame:
                 mad "Hmmmm... Okay."
 
                 $ ep06_chosen_path = "love"
-                $ madison_love_choices += 1
-                $ rm.update("madison", "trust", 15)
-                $ check_levels("madison", "trust", 15)
 
             "Yes.":
                 mc_s "Yes. God help me, yes."
@@ -2215,9 +2206,6 @@ label ep06_madison_traingame:
                 mc_t "She wants an accomplice, not a savior."
 
                 $ ep06_chosen_path = "corruption"
-                $ madison_cor_choices += 1
-                $ rm.update("madison", "cor", 10)
-                $ check_levels("madison", "cor", 10)
 
             "No.":
                 mc_s "No."
@@ -2234,20 +2222,6 @@ label ep06_madison_traingame:
                 mc_t "A clean rejection. Final."
 
                 $ ep06_chosen_path = "neutral"
-
-                # Strike for rejecting after having sex in ep05
-                if ep05_confrontation_peaceful:
-                    $ ss.add("madison", "strike")
-                    $ madison_strikes = ss.get("madison", "strike")
-                    if madison_strikes == 1:
-                        $ show_custom_notification("strike1")
-                    elif madison_strikes == 2:
-                        $ show_custom_notification("strike2")
-                    elif madison_strikes >= 3:
-                        $ show_custom_notification("strike3")
-
-                $ rm.update("madison", "trust", -5)
-                $ check_levels("madison", "trust", -5)
 
     else:
         # FALSE PATH - Madison asks if MC would say yes now
@@ -2273,9 +2247,6 @@ label ep06_madison_traingame:
                 mad "Okay."
 
                 $ ep06_chosen_path = "love"
-                $ madison_love_choices += 1
-                $ rm.update("madison", "trust", 15)
-                $ check_levels("madison", "trust", 15)
 
             "Probably. Depends.":
                 mc_s "Probably. The taboo is... tempting."
@@ -2293,9 +2264,6 @@ label ep06_madison_traingame:
                 mc_t "She wants me to acknowledge the desire is mutual."
 
                 $ ep06_chosen_path = "corruption"
-                $ madison_cor_choices += 1
-                $ rm.update("madison", "cor", 10)
-                $ check_levels("madison", "cor", 10)
 
             "No.":
                 mc_s "No."
@@ -2312,11 +2280,6 @@ label ep06_madison_traingame:
                 mc_t "A clean rejection. Final."
 
                 $ ep06_chosen_path = "neutral"
-
-                # No strike for FALSE PATH rejection (you never had sex)
-                # Just minor trust penalty
-                $ rm.update("madison", "trust", -5)
-                $ check_levels("madison", "trust", -5)
 
     # ROUND 6 - Final MC Question
     show ep06_madisoncamera68
@@ -2658,17 +2621,6 @@ show ep06_madisoncamera71
 
         if ep06_chosen_path == "love":
             mc_t "She looks crushed. But she hides it quickly."
-
-            # Additional strike if you chose love path but then rejected her
-            # This is cruel - giving her hope then pulling away
-            $ ss.add("madison", "strike")
-            $ madison_strikes = ss.get("madison", "strike")
-            if madison_strikes == 1:
-                $ show_custom_notification("strike1")
-            elif madison_strikes == 2:
-                $ show_custom_notification("strike2")
-            elif madison_strikes >= 3:
-                $ show_custom_notification("strike3")
         else:
             mc_t "She doesn't look surprised. Just... resigned."
 

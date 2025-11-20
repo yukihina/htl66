@@ -639,8 +639,8 @@ label ep04_nanpool2:
         mc_t "What should I say?"
         "Accept her request":
             hide screen walkthrough_screen
-            $ rm.update("nanami", "trust", 12)
-            $ check_levels("nanami", "trust", 12)
+            $ rm.update("nanami", "trust", 4)
+            $ check_levels("nanami", "trust", 4)
             $ ep04_nanadad = True
 
             mc_s "I would be honored."
@@ -648,8 +648,8 @@ label ep04_nanpool2:
             mc_s "Sure. Why not?"
         "Deny her request":
             hide screen walkthrough_screen
-            $ rm.update("nanami", "trust", -5)
-            $ check_levels("nanami", "trust", -5)
+            $ rm.update("nanami", "trust", -2)
+            $ check_levels("nanami", "trust", -2)
 
             mc_s "I'm sorry, Nanami. But... I can't do that."
             nana "Oh... Okay... It's fine. I understand."
@@ -1277,8 +1277,8 @@ label ep04_nantowel2:
         mc_t "This is... unexpected. How do I handle this?"
         "Accept her request":
             hide screen walkthrough_screen
-            $ rm.update("nanami", "trust", 12)
-            $ check_levels("nanami", "trust", 12)
+            $ rm.update("nanami", "trust", 4)
+            $ check_levels("nanami", "trust", 4)
             $ ep04_nanadad = True
 
             mc_s "I would be honored."
@@ -1286,8 +1286,8 @@ label ep04_nantowel2:
             mc_s "Let's give it a shot. No harm in trying, right?"
         "Deny her request":
             hide screen walkthrough_screen
-            $ rm.update("nanami", "trust", -5)
-            $ check_levels("nanami", "trust", -5)
+            $ rm.update("nanami", "trust", -2)
+            $ check_levels("nanami", "trust", -2)
 
             mc_s "I appreciate the thought, Nanami, but that's not appropriate."
             nana "Of course, I understand. I shouldn't have asked. How embarrassing..."
@@ -1417,8 +1417,8 @@ label ep04_madcaught:
         "Defend Nanami":
             hide screen walkthrough_screen
             $ ep04_madpath += 1
-            $ rm.update("nanami", "trust", 12)
-            $ check_levels("nanami", "trust", 12)
+            $ rm.update("nanami", "trust", 4)
+            $ check_levels("nanami", "trust", 4)
 
             mc_s "I don't give a damn. You don't get to treat her like dirt."
 
@@ -1428,8 +1428,8 @@ label ep04_madcaught:
         "Make peace with Madison":
             hide screen walkthrough_screen
             $ ep04_madpath += 2
-            $ rm.update("madison", "trust", 5)
-            $ check_levels("madison", "trust", 5)
+            $ rm.update("madison", "trust", 10)
+            $ check_levels("madison", "trust", 10)
             jump ep04_madcaught_agree
 
 
@@ -2397,7 +2397,7 @@ label ep04_pazosaka:
 label ep04_mcnananight:
 ##episode 3 bug fix (delete on final version)
     if rm.get("elizabeth", "cor") > 2:
-        $ rm.update("amber", "cor", 2)
+        $ rm.update("amber", "cor", 1)
         $ show_custom_notification("bugfix")
     if rm.get("elizabeth", "trust") > 2:
         $ rm.update("amber", "trust", 2)
@@ -2420,7 +2420,7 @@ label ep04_mcnananight:
 
     show ep04_mcroom03
     mc_t "Fuck it... I need a drink to clear my head. I know it's not the best idea, but..."
-    if rm.get('nanami', 'trust') > 23:
+    if rm.get('nanami', 'trust') > 40:
         $ ep04_nanaskimpy = True
     else:
         $ ep04_nanaskimpy = False
@@ -2659,8 +2659,8 @@ label ep04_nanameet:
             mc_s "Maybe when you're a bit older. Right now, it's way past your bedtime."
             nana "I-I understand..."
             show ep04_nanakitask04
-            $ rm.update("nanami", "trust", 6)
-            $ check_levels("nanami", "trust", 6)
+            $ rm.update("nanami", "trust", 2)
+            $ check_levels("nanami", "trust", 2)
             if ep04_nanadad:
                 nana "D-[daddy_r]... would you fill me up, p-please?"
             else:
@@ -2869,8 +2869,8 @@ label ep04_nananostay:
     $ playAudio(nanami_secure_theme, "music", 1, True, 2, 0)
 
     show ep04_nanakitmorekiss00
-    $ rm.update("nanami", "trust", 1)
-    $ check_levels("nanami", "trust", 1)
+    $ rm.update("nanami", "trust", 0)
+    $ check_levels("nanami", "trust", 0)
     nana "O-oh... Okay... If y-you're sure."
     mc_s "It's for the best, honey. You need your rest."
     nana "I know it's silly, but..."
@@ -2925,8 +2925,8 @@ label ep04_nananostay:
 
 label ep04_nana_askkiss:
     show ep04_nanakitkiss01
-    $ rm.update("nanami", "trust", 3)
-    $ check_levels("nanami", "trust", 3)
+    $ rm.update("nanami", "trust", 1)
+    $ check_levels("nanami", "trust", 1)
     nana "Umm..."
     mc_s "Something wrong? I thought this would make you happy."
     nana "Y-yes, but... I..."
@@ -4035,8 +4035,8 @@ label ep04_nanadrunkawake:
         "Give her a peck":
             hide screen walkthrough_screen
             show ep04_nanamcroom12 at subtle_zoom_in with hpunch
-            $ rm.update("nanami", "trust", 3)
-            $ check_levels("nanami", "trust", 3)
+            $ rm.update("nanami", "trust", 1)
+            $ check_levels("nanami", "trust", 1)
             $ setChannelVolume(channel="sfx", subchannel=1, volume=0.7)
             $ playAudio(sfx_kiss_nana, "sfx", 1, False, 0, 0)
             if ep04_nanadad:
@@ -4048,8 +4048,8 @@ label ep04_nanadrunkawake:
         "French kiss her":
             hide screen walkthrough_screen
             show ep04_nanamcroom12 at subtle_zoom_in with hpunch
-            $ rm.update("nanami", "trust", 6)
-            $ check_levels("nanami", "trust", 6)
+            $ rm.update("nanami", "trust", 2)
+            $ check_levels("nanami", "trust", 2)
             $ setChannelVolume(channel="sfx", subchannel=2, volume=0.7)
             $ playAudio(sfx_kiss_op_isa, "sfx", 2, False, 0, 0)
 
@@ -4504,8 +4504,8 @@ label ep04_nanacarrybed:
     $ playAudio(nanami_love_theme, "music", 3, True, 2.0, 1.0)
 
     show ep04_nanasleep02 at ken_burns_right_to_left
-    $ rm.update("nanami", "trust", 3)
-    $ check_levels("nanami", "trust", 3)
+    $ rm.update("nanami", "trust", 1)
+    $ check_levels("nanami", "trust", 1)
 
     mc_t "Better stop now... Even if she's driving me crazy..."
     mc_t "God, seeing her naked like this... No!! Focus. She needs to sleep this off."
@@ -4896,8 +4896,8 @@ label ep04_nanaleave_bed:
     $ playAudio(nanami_love_theme, "music", 2, True, 2.0, 1.0)
 
     show ep04_nanadrunkleave03
-    $ rm.update("nanami", "trust", 3)
-    $ check_levels("nanami", "trust", 3)
+    $ rm.update("nanami", "trust", 1)
+    $ check_levels("nanami", "trust", 1)
     if ep04_nanadad:
         nana "...Sleep here with you, [daddy_r]?"
         mc_s "No, sweetie! You take the bed, I'll sleep on the couch."
@@ -4999,8 +4999,8 @@ label ep04_nanaleave_bed:
 
 label ep04_nanaleave_hall:
     show ep04_nanadrunkleave04
-    $ rm.update("nanami", "trust", -3)
-    $ check_levels("nanami", "trust", -3)
+    $ rm.update("nanami", "trust", -1)
+    $ check_levels("nanami", "trust", -1)
     if ep04_nanadad:
         nana "Don't worry about me, [daddy_r]! I'll be fine!"
     else:
@@ -5068,8 +5068,8 @@ label ep04_nanaleave_hall:
                 mc_s "It's too dangerous, right outside Madison's room."
 
             show ep04_hallmeeting03
-            $ rm.update("nanami", "trust", 3)
-            $ check_levels("nanami", "trust", 3)
+            $ rm.update("nanami", "trust", 1)
+            $ check_levels("nanami", "trust", 1)
             nana "Aww... well, thank you for everything, [daddy_r]. This was incredible."
             if ep04_nanadad:
                 mc_s "Sleep well, sweetie. Good night."
@@ -5101,8 +5101,8 @@ label ep04_nanaleave_hall:
             mc_t "That outfit is so damn sexy..."
             mc_t "I still feel like letting her leave was a bad idea... but it's probably for the best..."
 
-            $ rm.update("nanami", "trust", -6)
-            $ check_levels("nanami", "trust", -6)
+            $ rm.update("nanami", "trust", -2)
+            $ check_levels("nanami", "trust", -2)
             $ ep04_afternanami += 1
             scene eigengrau with normalfade
             $ setChannelVolume("sfx", 2, 0.6, 0)
@@ -5238,8 +5238,8 @@ label ep04_ambroom_intro:
             mc_s "You?"
 
             show ep04_ambroom07 at ken_burns_top_to_bottom with vpunch
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
             amb "Fucking finally! Someone give this boy a prize."
@@ -5265,8 +5265,8 @@ label ep04_ambroom_intro:
             $ playAudio(sfx_recstop, "sfx", 1, False, 0, 0)
 
             show ep04_ambroom06 with vpunch
-            $ rm.update("amber", "cor", -2)
-            $ check_levels("amber", "cor", -2)
+            $ rm.update("amber", "cor", -1)
+            $ check_levels("amber", "cor", -1)
             $ rm.update("amber", "trust", -2)
             $ check_levels("amber", "trust", -2)
             amb "UGH! Forget it. You're just an idiot!"
@@ -5590,8 +5590,8 @@ label ep04_amber_bj:
 
             show ep04_ambblow05 at subtle_zoom_in
             $ playAudio(amber_sexy_theme, "music", 3, True, 2.0, 1.0)
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
             amb "What the actual fuck?! A little warning next time?!"
@@ -5785,8 +5785,8 @@ label ep04_mad_mcroom:
         "Refuse":
             hide screen walkthrough_screen
             $ stopAudio("music", 2, 2)
-            $ rm.update("madison", "trust", -1)
-            $ check_levels("madison", "trust", -1)
+            $ rm.update("madison", "trust", -2)
+            $ check_levels("madison", "trust", -2)
 
             mc_s "Screw this. I don't care what you do."
 
@@ -5872,8 +5872,8 @@ label ep04_mad_massagebody:
     $ renpy.free_memory()
     pause 1.0
     show ep04_madmassage01
-    $ rm.update("madison", "trust", 1)
-    $ check_levels("madison", "trust", 1)
+    $ rm.update("madison", "trust", 2)
+    $ check_levels("madison", "trust", 2)
 
     mc_t "Seriously? Blackmailing me for a fucking massage? This girl's lost it..."
     mc_t "And she acts like this is perfectly normal..."
@@ -6010,8 +6010,8 @@ label ep04_mad_massagebody:
 
         "Refuse":
             hide screen walkthrough_screen
-            $ rm.update("madison", "trust", -1)
-            $ check_levels("madison", "trust", -1)
+            $ rm.update("madison", "trust", -2)
+            $ check_levels("madison", "trust", -2)
 
             mc_s "I'm sorry for what happened, but I won't let you blackmail me."
 
@@ -6107,8 +6107,8 @@ label ep04_mad_reward:
     $ playAudio(madison_theme, "music", 2, True, 2.0, 1.0)
 
     show ep04_madnopanties01
-    $ rm.update("madison", "trust", 1)
-    $ check_levels("madison", "trust", 1)
+    $ rm.update("madison", "trust", 2)
+    $ check_levels("madison", "trust", 2)
     mad "You're going to start by kissing my feet."
     mc_s ". . ."
     mad "Don't make me repeat myself, big [bro_r_low]. Kiss. My. Feet."
@@ -6255,8 +6255,8 @@ label ep04_mad_assjob_deny:
     $ playAudio(madison_bad_theme, "music", 2, True, 2.0, 1.0)
 
     show ep04_madisonleave03 with vpunch
-    $ rm.update("madison", "trust", -1)
-    $ check_levels("madison", "trust", -1)
+    $ rm.update("madison", "trust", -2)
+    $ check_levels("madison", "trust", -2)
     mad "Remember what I told you when we first met? I see everything. Being a cop won't protect you from what I can do."
     mad "Sure, you don't want to massage me anymore... fine."
     mad "But you still promised to help me. Making me feel bad though... that's not very nice to someone who cares about you..."
@@ -6312,8 +6312,8 @@ label ep04_mad_assjob:
     $ playAudio(madison_sexy_theme, "music", 1, True, 2.0, 1.0)
 
     show ep04_madmovingass01 at concentrate with hpunch
-    $ rm.update("madison", "trust", 1)
-    $ check_levels("madison", "trust", 1)
+    $ rm.update("madison", "trust", 2)
+    $ check_levels("madison", "trust", 2)
     mad "Come on, massage it!"
     mc_s "What are you-"
     mad "Just do it!"
@@ -6351,10 +6351,10 @@ label ep04_mad_assjob:
 
 
     show ep04_madi_asslick01
-    $ rm.update("madison", "trust", 1)
-    $ check_levels("madison", "trust", 1)
-    $ rm.update("madison", "cor", 2)
-    $ check_levels("madison", "cor", 2)
+    $ rm.update("madison", "trust", 2)
+    $ check_levels("madison", "trust", 2)
+    $ rm.update("madison", "cor", 1)
+    $ check_levels("madison", "cor", 1)
     mad "That's it, good boy. Show your little [si_full_r_low] some love."
     mc_s ". . ."
 
@@ -6408,8 +6408,8 @@ label ep04_mad_assjob:
     $ setChannelVolume("amb", 1, 0.3, 1.0)
 
     show ep04_madassj01 with circlewipe
-    $ rm.update("madison", "cor", 2)
-    $ check_levels("madison", "cor", 2)
+    $ rm.update("madison", "cor", 1)
+    $ check_levels("madison", "cor", 1)
     mad "Damn, no wonder you've got half the [fm_r_low] wrapped around your finger..."
     mc_s "Whatever."
     mad "Don't get any ideas. Just do what you're told. And make it quick."
@@ -6477,10 +6477,10 @@ label ep04_mad_assjob:
             mad "Did you just- Are you fucking serious?"
             mc_s "You offered."
             mad "You weren't supposed to actually do it!"
-            $ rm.update("madison", "trust", -2)
-            $ check_levels("madison", "trust", -2)
-            $ rm.update("madison", "cor", 2)
-            $ check_levels("madison", "cor", 2)
+            $ rm.update("madison", "trust", -4)
+            $ check_levels("madison", "trust", -4)
+            $ rm.update("madison", "cor", 1)
+            $ check_levels("madison", "cor", 1)
 
             show ep04_madassj04 at ken_burns_top_to_bottom with vpunch
             mc_s "Too late. That felt amazing."
@@ -6593,10 +6593,10 @@ label ep04_mad_assjob:
             mc_s "I..."
             mad "Watch carefully."
             show ep04_madassj17 with normalfade
-            $ rm.update("madison", "trust", 2)
-            $ check_levels("madison", "trust", 2)
-            $ rm.update("madison", "cor", 4)
-            $ check_levels("madison", "cor", 4)
+            $ rm.update("madison", "trust", 4)
+            $ check_levels("madison", "trust", 4)
+            $ rm.update("madison", "cor", 2)
+            $ check_levels("madison", "cor", 2)
 
             mc_t "Fuck, that's hot."
             mc_s "I... uh..."
@@ -6706,8 +6706,8 @@ label ep04_elimeet_intro:
             mc_s "Had a fun night out?"
 
             show ep04_elimeet05_y
-            $ rm.update("elizabeth", "trust", 2)
-            $ check_levels("elizabeth", "trust", 2)
+            $ rm.update("elizabeth", "trust", 1)
+            $ check_levels("elizabeth", "trust", 1)
             eli "Oh! My baby boy's still up!"
             eli "Mmm... come give [mommy_r] a hug..."
             mc_s "Whoa, easy there..."
@@ -6718,8 +6718,8 @@ label ep04_elimeet_intro:
             mc_s "You're drunk, aren't you?"
 
             show ep04_elimeet05_n
-            $ rm.update("elizabeth", "trust", -2)
-            $ check_levels("elizabeth", "trust", -2)
+            $ rm.update("elizabeth", "trust", -1)
+            $ check_levels("elizabeth", "trust", -1)
             eli "Oh... sweetheart..."
             eli "Just... just a few glasses of wine..."
             mc_s "[mo_r]..."
@@ -6796,8 +6796,8 @@ label ep04_elimeet_intro:
             mc_s "No, [mo_r]. You've had enough."
 
             show ep04_elimeet16
-            $ rm.update("elizabeth", "trust", 4)
-            $ check_levels("elizabeth", "trust", 4)
+            $ rm.update("elizabeth", "trust", 2)
+            $ check_levels("elizabeth", "trust", 2)
 
             mc_s "Talk to me. What's really going on?"
             eli "Nothing's 'going on'! Can't a [mo_full_r_low] have a drink?"
@@ -6824,8 +6824,8 @@ label ep04_elimeet_intro:
     show ep04_elimeet18
     $ rm.update("elizabeth", "cor", 2)
     $ check_levels("elizabeth", "cor", 2)
-    $ rm.update("elizabeth", "trust", -1)
-    $ check_levels("elizabeth", "trust", -1)
+    $ rm.update("elizabeth", "trust", 0)
+    $ check_levels("elizabeth", "trust", 0)
     eli "Such a good boy!"
     eli "Come sit with [mommy_r]..."
     eli "Just like old times..."
@@ -7075,8 +7075,8 @@ label ep04_elimeet_intro:
             $ ep04_elistay = True
 
             show ep04_elimeet60
-            $ rm.update("elizabeth", "trust", 4)
-            $ check_levels("elizabeth", "trust", 4)
+            $ rm.update("elizabeth", "trust", 2)
+            $ check_levels("elizabeth", "trust", 2)
             $ rm.update("elizabeth", "cor", 2)
             $ check_levels("elizabeth", "cor", 2)
             eli "Such a good boy..."
@@ -7094,8 +7094,8 @@ label ep04_elimeet_intro:
             $ ep04_elistay = True
 
             show ep04_elimeet59
-            $ rm.update("elizabeth", "trust", 2)
-            $ check_levels("elizabeth", "trust", 2)
+            $ rm.update("elizabeth", "trust", 1)
+            $ check_levels("elizabeth", "trust", 1)
             eli "Don't want to watch?"
             mc_s "Of course not..."
             eli "Just teasing, baby..."
@@ -7109,8 +7109,8 @@ label ep04_elimeet_intro:
             mc_s "Handle this yourself, [mo_r]. Hold the wall..."
 
             show ep04_elimeet61
-            $ rm.update("elizabeth", "trust", -4)
-            $ check_levels("elizabeth", "trust", -4)
+            $ rm.update("elizabeth", "trust", -2)
+            $ check_levels("elizabeth", "trust", -2)
             eli "If that's how you feel..."
             mc_s "Just... ease up on the drinking..."
             eli "If that's what you want..."
