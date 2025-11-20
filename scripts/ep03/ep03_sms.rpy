@@ -49,6 +49,11 @@ label ep03_sms01:
 
     isa_nvl "Did you miss me yet? {outlinecolor=#ffffff00}🥺{/outlinecolor}"
     mc_nvl "Yeah... A lot."
+
+    # Showing affection to Isabella
+    $ rm.update("isabella", "trust", 1)
+    $ check_levels("isabella", "trust", 1)
+
     isa_nvl "Ahhh!! That's so sweet!! {outlinecolor=#ffffff00}😍😍{/outlinecolor}"
     isa_nvl "I miss you too, [daddy_r]. I wish we could spend more time together. {outlinecolor=#ffffff00}👨‍👧💞{/outlinecolor}"
     isa_nvl "I'm with [gra_r] and [aun_r] Madison right now! {outlinecolor=#ffffff00}👵👧{/outlinecolor}"
@@ -90,5 +95,6 @@ label ep03_sms01:
 
 
 #-- TOTAL POINTS AVAILABLE:
-    
+    #ISABELLA TRUST: +1
+
 

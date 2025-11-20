@@ -1159,16 +1159,22 @@ label ep06_mornwithamber_love_hold:
     menu:
         "I love you.":
             mc_s "I love you. Always."
-            $ rm.update("amber", "love", 3)
-            $ check_levels("amber", "love", 3)
+            # Milestone decision - love path
+            $ amber_love_choices += 1
+            $ rm.update("amber", "trust", 10)
+            $ check_levels("amber", "trust", 10)
         "You're safe.":
             mc_s "You're safe with me."
-            $ rm.update("amber", "love", 2)
-            $ check_levels("amber", "love", 2)
+            # Milestone decision - love path (moderate)
+            $ amber_love_choices += 1
+            $ rm.update("amber", "trust", 7)
+            $ check_levels("amber", "trust", 7)
         "I'm staying.":
             mc_s "I'm not going anywhere."
-            $ rm.update("amber", "love", 1)
-            $ check_levels("amber", "love", 1)
+            # Milestone decision - love path (subtle)
+            $ amber_love_choices += 1
+            $ rm.update("amber", "trust", 5)
+            $ check_levels("amber", "trust", 5)
     
     jump ep06_mornwithamber_postclimax
 
