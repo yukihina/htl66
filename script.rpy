@@ -69,9 +69,9 @@ default paz_cor_choices = 0
 ################################################################################
 ## SAVE SYSTEM VERSION - For Migration Tracking
 ################################################################################
-## Version 1: Original system without automatic progression rates
+## Version 1: Original system without automatic progression rates (default for old saves)
 ## Version 2: New system with automatic character progression rate multipliers
-default save_system_version = 2
+default save_system_version = 1
 
 
 init python:
@@ -133,6 +133,7 @@ label get_player_name:
 
 label start:
     $ update_htl_episodes()
+    $ save_system_version = 2  # New games start with version 2 (automatic progression rates)
     stop music fadeout 0.5
     if not persistent.disclaimer:
         $ persistent.disclaimer = True
@@ -206,7 +207,8 @@ label after_load:
                 rm.check_emotional_lock(char)
 
     # Migrate old saves to new automatic progression rate system
-    if save_system_version == 1:
+    # Uses "!= 2" check to detect any save without the version 2 "seal"
+    if save_system_version != 2:
         scene black with dissolve
 
         centered "{b}Character Progression System Updated{/b}\n\nWe've implemented an automatic character progression rate system\nto make stat changes more consistent and balanced.\n\n{color=#ffcc00}Your save will be automatically migrated.{/color}\n\nNote: Due to technical limitations, the migration may not be 100%% perfect.\nFor the best experience, we recommend starting a new playthrough.\n\nPress any key to continue..."
@@ -215,7 +217,7 @@ label after_load:
 
         # Perform the migration
         $ rm.migrate_to_ratio_system()
-        $ save_system_version = 2
+        $ save_system_version = 2  # Apply version 2 "seal"
 
         centered "{b}Migration Complete{/b}\n\nYour character stats have been adjusted to the new system.\nFuture stat changes will use automatic progression rates.\n\nPress any key to continue..."
 
