@@ -504,8 +504,8 @@ label ep05_ambercof:
             amb "That's what I like to hear..."
             mc_s "You're going to get us in trouble..."
 
-            $ rm.update("amber", "cor", 4)
-            $ check_levels("amber", "cor", 4)
+            $ rm.update("amber", "cor", 3)
+            $ check_levels("amber", "cor", 3)
             pass
         "Reject her":
             hide screen walkthrough_screen
@@ -513,8 +513,8 @@ label ep05_ambercof:
             mc_t "We really shouldn't..."
             mc_s "We can't keep doing this, Amber."
             amb "Fine. Be boring."
-            $ rm.update("amber", "cor", -4)
-            $ check_levels("amber", "cor", -4)
+            $ rm.update("amber", "cor", -3)
+            $ check_levels("amber", "cor", -3)
             $ stopAllSubchannels("music", 2.0)
 
             show ep05_amberintro07
@@ -1265,16 +1265,16 @@ label ep05_elipast:
             mc_s "[mo_r], please. I'm trying to concentrate here."
             eli "Oh? Am I distracting you?"
             eli "I thought my brilliant [so_r_low] could handle a little... help."
-            $ rm.update("elizabeth", "trust", -2)
-            $ check_levels("elizabeth", "trust", -2)
+            $ rm.update("elizabeth", "trust", -1)
+            $ check_levels("elizabeth", "trust", -1)
         "Focus on studying":
             hide screen walkthrough_screen
 
             mc_s "Just... this test tomorrow..."
             eli "My poor darling. Math always was your weakness."
             eli "Good thing [mommy_r_low] knows just how to make it... click for you."
-            $ rm.update("elizabeth", "trust", 2)
-            $ check_levels("elizabeth", "trust", 2)
+            $ rm.update("elizabeth", "trust", 1)
+            $ check_levels("elizabeth", "trust", 1)
     $ setChannelVolume("sfx", 2, 0.3, 0)
     $ playAudio(sfx_bed_sitdown, "sfx", 2, False, 0, 0)
     $ setChannelVolume("music", 1, 0.4, 0)
@@ -1711,8 +1711,8 @@ label ep05_elishower:
             mc_t "I should get her out of there before she hurts herself."
 
             $ ep05_mcthinksex = False
-            $ rm.update("elizabeth", "trust", 2)
-            $ check_levels("elizabeth", "trust", 2)
+            $ rm.update("elizabeth", "trust", 1)
+            $ check_levels("elizabeth", "trust", 1)
         "Be suspicious":
             hide screen walkthrough_screen
 
@@ -1807,8 +1807,8 @@ label ep05_elishower:
             mc_s "That woman is still in there somewhere. The one who cared so much."
 
             $ ep05_mcthinksex = False
-            $ rm.update("elizabeth", "trust", 2)
-            $ check_levels("elizabeth", "trust", 2)
+            $ rm.update("elizabeth", "trust", 1)
+            $ check_levels("elizabeth", "trust", 1)
         "Vague recollection":
             hide screen walkthrough_screen
 
@@ -2676,8 +2676,8 @@ label ep05_intromn:
 
             show ep05_mnpaths15 with hpunch
             # Update variables
-            $ rm.update("nanami", "trust", -10)
-            $ check_levels("nanami", "trust", -10)
+            $ rm.update("nanami", "trust", -3)
+            $ check_levels("nanami", "trust", -3)
             $ ss.add("nanami", "strike")
             $ nanami_strikes = ss.get("nanami", "strike")
             if nanami_strikes == 1:
@@ -2743,8 +2743,8 @@ label ep05_intromn:
             $ stopAudio("music", 4, 2)
             mad "Who do you think you are?"
             # Update variables
-            $ rm.update("nanami", "trust", 10)
-            $ check_levels("nanami", "trust", 10)
+            $ rm.update("nanami", "trust", 3)
+            $ check_levels("nanami", "trust", 3)
 
             show ep05_mnpaths16
             mc_s "I saw what you did. The way you pressured her into this."

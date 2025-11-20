@@ -383,8 +383,8 @@ label ep03_madtalk:
         "Admit that Madison is attractive":
             hide screen walkthrough_screen
             $ ep03_madtalk = True
-            $ rm.update("madison", "trust", 5)
-            $ check_levels("madison", "trust", 5)
+            $ rm.update("madison", "trust", 10)
+            $ check_levels("madison", "trust", 10)
 
             mc_s "Yeah, you're beautiful, Madison. You take after [mo_r]."
             mad "So,  would you fuck me if I weren't your [si_full_r_low]?"
@@ -523,8 +523,8 @@ label ep03_reunion:
     menu:
         "Focus on Amber's breasts":
             hide screen walkthrough_screen
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ ep03_ambertits = True
 
             show ep03_ambertalk10 at zoom_in with dissolve
@@ -1410,8 +1410,8 @@ label ep03_amberclothes:
     menu:
         "Check out Madison's body":
             hide screen walkthrough_screen
-            $ rm.update("madison", "cor", 2)
-            $ check_levels("madison", "cor", 2)
+            $ rm.update("madison", "cor", 1)
+            $ check_levels("madison", "cor", 1)
             $ ep03_madcheck += 1
 
             mc_t "Fuck it. I can't help myself."
@@ -1445,8 +1445,8 @@ label ep03_amberclothes:
     menu:
         "Stare at Madison's ass as she leaves":
             hide screen walkthrough_screen
-            $ rm.update("madison", "cor", 5)
-            $ check_levels("madison", "cor", 5)
+            $ rm.update("madison", "cor", 3)
+            $ check_levels("madison", "cor", 3)
             $ ep03_madcheck += 2
 
             show ep03_caught7 at camera_zoom with dissolve
@@ -1492,8 +1492,8 @@ label ep03_amberclothes:
         "Forget about the sweater":
             hide screen walkthrough_screen
             $ ep03_ambclothes += 1
-            $ rm.update("amber", "cor", 5)
-            $ check_levels("amber", "cor", 5)
+            $ rm.update("amber", "cor", 3)
+            $ check_levels("amber", "cor", 3)
 
             mc_t "Okay... I don't see any sweater, so I guess I'll have to come back with her underwear instead."
             mc_t "I know I'm being an idiot, but sometimes I don't understand my own actions."
@@ -2029,8 +2029,8 @@ label ep03_morningwithamber_grope_sex:
     menu:
         "Insist on having sex":
             hide screen walkthrough_screen
-            $ rm.update("amber", "cor", -2)
-            $ check_levels("amber", "cor", -2)
+            $ rm.update("amber", "cor", -1)
+            $ check_levels("amber", "cor", -1)
             $ ep03_insistamber = True
 
             mc_s "Just let me put it in first, and--"
@@ -2045,8 +2045,8 @@ label ep03_morningwithamber_grope_sex:
 
         "Respect Amber's wishes":
             hide screen walkthrough_screen
-            $ rm.update("amber", "cor", 5)
-            $ check_levels("amber", "cor", 5)
+            $ rm.update("amber", "cor", 3)
+            $ check_levels("amber", "cor", 3)
 
             mc_s "Umm..."
             amb "Maybe we don't need a condom after all."
@@ -2477,6 +2477,7 @@ label ep03_morningwithamber_grope_sex_pj_cont:
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
             $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             pass
     $ playAudio(sfx_femexhale, "sfx", 1, False, 0, 0)
 

@@ -553,8 +553,8 @@ label ep06_mornwithamber:
         "Like the view?":
             mc_s "Like what you see?"
 
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
+            $ rm.update("amber", "cor", 2)
+            $ check_levels("amber", "cor", 2)
             $ e6_amber_path = "neutral"
             jump ep06_mornwithamber_neutral
 
@@ -580,13 +580,13 @@ label ep06_mornwithamber_neutral:
 
         "Fucking perfect.":
             mc_s "Your pussy's perfect."
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
+            $ rm.update("amber", "cor", 2)
+            $ check_levels("amber", "cor", 2)
 
         "Only you.":
             mc_s "No one else compares."
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
 
@@ -681,13 +681,13 @@ label ep06_mornwithamber_neutral_continue:
 
         "Take it all.":
             mc_s "Then take all of it."
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
+            $ rm.update("amber", "cor", 2)
+            $ check_levels("amber", "cor", 2)
 
         "Broken together.":
             mc_s "Maybe we're both exactly as fucked up as we need to be."
-            $ rm.update("amber", "cor", 2)
-            $ check_levels("amber", "cor", 2)
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
 
     show ep06_ambermorn18
     $ ss.add("amber", "sex")
@@ -734,8 +734,8 @@ label ep06_mornwithamber_postclimax:
                 mc_s "We're both exactly what we need to be."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
-                $ rm.update("amber", "cor", 2)
-                $ check_levels("amber", "cor", 2)
+                $ rm.update("amber", "cor", 1)
+                $ check_levels("amber", "cor", 1)
 
             "Stop overthinking.":
                 mc_s "You think too much."
@@ -794,8 +794,8 @@ label ep06_mornwithamber_postclimax:
                 mc_s "We're both warriors now."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
-                $ rm.update("amber", "cor", 2)
-                $ check_levels("amber", "cor", 2)
+                $ rm.update("amber", "cor", 1)
+                $ check_levels("amber", "cor", 1)
 
             "Time to go.":
                 mc_s "We should get ready."
@@ -986,12 +986,12 @@ label ep06_mornwithamber_cor_continue:
     menu:
         "You're mine.":
             mc_s "You're mine completely."
-            $ rm.update("amber", "cor", 3)
-            $ check_levels("amber", "cor", 3)
-        "Fucking perfect.":
-            mc_s "Fucking perfect."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
+        "Fucking perfect.":
+            mc_s "Fucking perfect."
+            $ rm.update("amber", "cor", 1)
+            $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
         "Good girl.":
