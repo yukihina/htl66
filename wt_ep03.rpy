@@ -65,7 +65,7 @@ init python:
         
         "ep03_maddieass_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 5, "type": "Corruption"}
+                {"option_num": 1, "char_name": "Madison", "points": 6, "type": "Corruption"}  # Madison cor: 3 × 2.0 = 6
             ])
         },
         
@@ -145,7 +145,7 @@ init python:
                     "points": 5,
                     "type": "Love",
                     "additional_effects": [
-                        {"points": 1, "type": "Corruption"}
+                        {"points": 2, "type": "Corruption"}  # Amber cor: 1 × 1.5 = 2
                     ]
                 }
             ])
@@ -160,7 +160,7 @@ init python:
                     "points": 5,
                     "type": "Love",
                     "additional_effects": [
-                        {"points": 1, "type": "Corruption"}
+                        {"points": 2, "type": "Corruption"}  # Amber cor: 1 × 1.5 = 2
                     ]
                 }
             ])

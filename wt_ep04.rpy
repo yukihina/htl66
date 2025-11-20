@@ -18,7 +18,7 @@ init python:
         "ep04_nana_m3": {
             "nanami": create_wt_text([
                 {"option_num": 1, "char_name": "Nanami", "points": 12, "type": "Love"},
-                {"option_num": 2, "char_name": "Nanami", "points": -5, "type": "Love"}
+                {"option_num": 2, "char_name": "Nanami", "points": -6, "type": "Love"}  # Nanami trust: -2 × 3.0 = -6
             ])
         },
 
@@ -211,7 +211,7 @@ init python:
         "ep04_nanamilkmenu": {
             "nanami": create_wt_text([
                 {"option_num": 1, "char_name": "Nanami", "points": 3, "type": "Love"},
-                {"option_num": 2, "char_name": "Nanami", "points": 1, "type": "Love"}
+                {"option_num": 2, "char_name": "Nanami", "points": 6, "type": "Love"}  # Nanami trust: 2 × 3.0 = 6
             ])
         },
 
@@ -381,7 +381,7 @@ init python:
 
         "ep04_madajmenu_2": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 3, "type": "Corruption"},
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Corruption"},  # Madison cor: 1 × 2.0 = 2
                 {"option_num": 2, "char_name": "Madison", "points": -1, "type": "Love"}
             ])
         },

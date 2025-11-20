@@ -11,8 +11,8 @@ init python:
 
         "ep05_ambsexmenu": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "points": 4, "type": "Corruption"},
-                {"option_num": 2, "char_name": "Amber", "points": -4, "type": "Corruption"}
+                {"option_num": 1, "char_name": "Amber", "points": 4, "type": "Corruption"},  # Amber cor: 3 × 1.5 = 4.5 → round() = 4
+                {"option_num": 2, "char_name": "Amber", "points": -4, "type": "Corruption"}  # Amber cor: -3 × 1.5 = -4.5 → round() = -4
             ])
         },
 

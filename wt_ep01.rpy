@@ -63,7 +63,7 @@ init python:
                 {
                     "option_num": 1,
                     "char_name": "Elizabeth",
-                    "points": 1,
+                    "points": 2,  # Elizabeth trust: 1 × 2.0 = 2
                     "type": "Love",
                     "additional_effects": [
                         {"points": 1, "type": "Corruption"}
@@ -75,7 +75,7 @@ init python:
         "ep01_elidress_menu2": {
             "elizabeth": create_wt_text([
                 {"option_num": 1, "char_name": "Elizabeth", "points": 1, "type": "Corruption"},
-                {"option_num": 2, "char_name": "Elizabeth", "points": 1, "type": "Love"}
+                {"option_num": 2, "char_name": "Elizabeth", "points": 2, "type": "Love"}  # Elizabeth trust: 1 × 2.0 = 2
             ])
         },
 
