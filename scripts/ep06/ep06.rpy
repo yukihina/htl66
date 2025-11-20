@@ -500,7 +500,7 @@ label ep06_mornwithamber:
     mc_t "I should stop. I can't. God, I can't."
 
     menu:
-        "Show me." if amber_strikes == 0 and rm.get("amber", "cor") >= 10:
+        "Show me." if amber_strikes == 0 and rm.get("amber", "cor") >= 25:
             mc_s "Show me what you were doing."
 
             $ e6_amber_path = "corruption"
@@ -538,7 +538,7 @@ label ep06_mornwithamber:
     mc_t "She sees the worst parts and wants them."
 
     menu:
-        "You see me." if amber_strikes == 0 and rm.get("amber", "trust") >= 33:
+        "You see me." if amber_strikes == 0 and rm.get("amber", "trust") >= 40:
             mc_s "You've always seen me."
 
             $ e6_amber_path = "love"
