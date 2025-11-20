@@ -178,6 +178,49 @@ $ show_custom_notification("emotional_lock")
 ```
 Shows: "Emotional Shutdown - Trust: 0. Corruption: 0."
 
+### Path Lock System Notifications
+
+**path_lock_love** - Love path locked:
+```renpy
+$ show_custom_notification("path_lock_love", char="Amber")
+```
+Shows: "Love Path Locked - Your relationship with Amber is now committed to the love path. Corruption gains blocked. Trust gains doubled."
+
+**path_lock_corruption** - Corruption path locked:
+```renpy
+$ show_custom_notification("path_lock_corruption", char="Madison")
+```
+Shows: "Corruption Path Locked - Your relationship with Madison is now committed to the corruption path. Trust gains blocked. Corruption gains doubled."
+
+**How Path Locks Work:**
+- Auto-triggered when milestone counters reach threshold (3 by default)
+- Happens automatically during `rm.update()` calls
+- Path stored permanently in `persistent.{char}_path`
+- After lock:
+  - Love locked: trust gains x2, corruption blocked
+  - Corruption locked: corruption gains x2, trust blocked
+
+**Example Flow:**
+```renpy
+# Episode 6 - First milestone decision
+$ amber_love_choices += 1  # Counter = 1
+$ rm.update("amber", "trust", 15)  # No lock yet
+
+# Episode 7 - Second milestone decision
+$ amber_love_choices += 1  # Counter = 2
+$ rm.update("amber", "trust", 15)  # No lock yet
+
+# Episode 8 - Third milestone decision
+$ amber_love_choices += 1  # Counter = 3
+$ rm.update("amber", "trust", 10)
+# Auto-locks! Shows "path_lock_love" notification
+# Actually adds 20 trust (10 x2 doubled)
+
+# After lock - all future updates affected
+$ rm.update("amber", "trust", 10)  # Adds 20 (doubled)
+$ rm.update("amber", "cor", 5)     # Adds 0 (blocked)
+```
+
 ---
 
 ## Using With Helper Functions

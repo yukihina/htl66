@@ -1,1110 +1,3429 @@
-# Core System Documentation
 
-**Version:** 1.0
-**Language:** English
-**Last Updated:** November 2024
 
----
 
-## Table of Contents
 
-1. [Introduction](#introduction)
-2. [System Overview](#system-overview)
-3. [Relationship Management (RM)](#relationship-management-rm)
-4. [Sexual Statistics (SexStats)](#sexual-statistics-sexstats)
-5. [Wardrobe Management (WM)](#wardrobe-management-wm)
-6. [Level System](#level-system)
-7. [Milestone Decision System](#milestone-decision-system)
-8. [Practical Examples](#practical-examples)
-9. [Character Reference](#character-reference)
-10. [Troubleshooting](#troubleshooting)
 
----
 
-## Introduction
+<!DOCTYPE html>
+<html
+  lang="en"
+  
+  data-color-mode="auto" data-light-theme="light" data-dark-theme="dark"
+  data-a11y-animated-images="system" data-a11y-link-underlines="true"
+  
+  >
 
-The **Core System** is the heart of the game's character progression and relationship tracking. It manages everything from how characters feel about you, what they're wearing, their corruption levels, and which story paths they'll follow.
+    <style>
+:root {
+  --fontStack-monospace: "Monaspace Neon", ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace !important;
+}
+</style>
 
-Think of it as the game's memory - it remembers every choice you make, every interaction you have, and uses that information to shape the story as you play.
 
-### What Does It Do?
 
-- **Tracks Relationships**: Remembers how much each character trusts you or how corrupted they've become
-- **Manages Statistics**: Keeps count of intimate moments and interactions
-- **Handles Outfits**: Controls which clothes characters wear and when they unlock new outfits
-- **Determines Story Paths**: Locks characters into specific storylines based on your choices
-- **Shows Progress**: Displays notifications when your relationship reaches new milestones
 
----
+  <head>
+    <meta charset="utf-8">
+  <script type="text/javascript" nonce="e3a0b3757c4546ff80e94c0eb3f" src="//local.adguard.org?ts=1763612568318&amp;type=content-script&amp;dmn=github.com&amp;url=https%3A%2F%2Fgithub.com%2Fyukihina%2Fhtl66%2Fblob%2Fclaude%2Fimplement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q%2FCORE_SYSTEM_DOCUMENTATION.md&amp;app=vivaldi.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><link rel="dns-prefetch" href="https://github.githubassets.com">
+  <link rel="dns-prefetch" href="https://avatars.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
+  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+  <link rel="preconnect" href="https://github.githubassets.com" crossorigin>
+  <link rel="preconnect" href="https://avatars.githubusercontent.com">
 
-## System Overview
+  
 
-The Core System consists of five main components:
 
-### 1. **RM (Relationship Management)**
-Controls character attributes like corruption, trust, integrity, and relationship status.
+  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/light-8e973f836952.css" /><link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/dark-4bce7af39e21.css" /><link data-color-theme="light_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_high_contrast-34b642d57214.css" /><link data-color-theme="light_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_colorblind-54be93e666a7.css" /><link data-color-theme="light_colorblind_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_colorblind_high_contrast-8ae7edf5489c.css" /><link data-color-theme="light_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_tritanopia-84d50df427c0.css" /><link data-color-theme="light_tritanopia_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/light_tritanopia_high_contrast-a80873375146.css" /><link data-color-theme="dark_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_high_contrast-ad512d3e2f3b.css" /><link data-color-theme="dark_colorblind" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_colorblind-d152d6cd6879.css" /><link data-color-theme="dark_colorblind_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_colorblind_high_contrast-fa4060c1a9da.css" /><link data-color-theme="dark_tritanopia" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_tritanopia-d7bad0fb00bb.css" /><link data-color-theme="dark_tritanopia_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_tritanopia_high_contrast-4a0107c0f60c.css" /><link data-color-theme="dark_dimmed" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_dimmed-045e6b6ac094.css" /><link data-color-theme="dark_dimmed_high_contrast" crossorigin="anonymous" media="all" rel="stylesheet" data-href="https://github.githubassets.com/assets/dark_dimmed_high_contrast-5de537db5e79.css" />
 
-### 2. **SexStats**
-Tracks intimate interactions and virginity status for all love interests.
+  <style type="text/css">
+    :root {
+      --tab-size-preference: 4;
+    }
 
-### 3. **WM (Wardrobe Manager)**
-Manages character outfits, unlocking, and switching between them.
+    pre, code {
+      tab-size: var(--tab-size-preference);
+    }
+  </style>
 
-### 4. **Level System**
-Converts numerical stats (0-100) into levels (0-5) and shows notifications.
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-primitives-15839d47b75d.css" />
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-efa08b71f947.css" />
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-6dcb16809e76.css" />
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/github-490b3f68bf33.css" />
+  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/repository-5d735668c600.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/code-9c9b8dc61e74.css" />
 
-### 5. **Milestone Decision System**
-Locks characters into story paths based on your cumulative choices.
+  
 
----
+  <script type="application/json" id="client-env">{"locale":"en","featureFlags":["a11y_status_checks_ruleset","actions_custom_images_public_preview_visibility","actions_custom_images_storage_billing_ui_visibility","actions_enable_snapshot_keyword","actions_image_version_event","alternate_user_config_repo","api_insights_show_missing_data_banner","attestations_filtering","attestations_sorting","billing_hard_budget_limits_for_licenses","client_version_header","codespaces_prebuild_region_target_update","contentful_lp_footnotes","copilot_agent_cli_public_preview","copilot_agent_task_list_v2","copilot_agent_tasks_btn_code_nav","copilot_agent_tasks_btn_code_view","copilot_agent_tasks_btn_code_view_lines","copilot_agent_tasks_btn_repo","copilot_api_agentic_issue_marshal_yaml","copilot_api_draft_issues_with_dependencies","copilot_api_github_draft_update_issue_skill","copilot_chat_agents_empty_state","copilot_chat_attach_multiple_images","copilot_chat_disable_model_picker_while_streaming","copilot_chat_file_redirect","copilot_chat_input_commands","copilot_chat_opening_thread_switch","copilot_chat_reduce_quota_checks","copilot_chat_search_bar_redirect","copilot_chat_selection_attachments","copilot_chat_vision_in_claude","copilot_chat_vision_preview_gate","copilot_coding_agent_task_response","copilot_custom_copilots","copilot_custom_copilots_feature_preview","copilot_duplicate_thread","copilot_extensions_hide_in_dotcom_chat","copilot_extensions_removal_on_marketplace","copilot_features_raycast_logo","copilot_file_block_ref_matching","copilot_free_to_paid_telem","copilot_ftp_hyperspace_upgrade_prompt","copilot_ftp_settings_upgrade","copilot_ftp_upgrade_to_pro_from_models","copilot_ftp_your_copilot_settings","copilot_immersive_generate_thread_name_async","copilot_immersive_issues_readonly_viewer","copilot_immersive_issues_show_relationships","copilot_immersive_structured_model_picker","copilot_immersive_task_hyperlinking","copilot_immersive_task_within_chat_thread","copilot_insights_public_preview","copilot_issue_list_show_more","copilot_org_policy_page_focus_mode","copilot_pipes_code_nodes","copilot_pipes_github_graphql_nodes","copilot_premium_request_quotas","copilot_security_alert_assignee_options","copilot_share_active_subthread","copilot_spaces_as_attachments","copilot_spaces_ga","copilot_spark_empty_state","copilot_spark_loading_webgl","copilot_spark_progressive_error_handling","copilot_spark_use_billing_headers","copilot_stable_conversation_view","copilot_swe_agent_progress_commands","copilot_swe_agent_use_subagents","copilot_workbench_agent_seed_tool","copilot_workbench_agent_user_edit_awareness","copilot_workbench_cache","copilot_workbench_preview_analytics","copilot_workbench_use_single_prompt","data_router_force_refetch_on_navigation","deployment_record_api","direct_to_salesforce","disable_dashboard_universe_2025_private_preview","dom_node_counts","dotcom_chat_client_side_skills","enterprise_ai_controls","failbot_report_error_react_apps_on_page","fetch_graphql_improved_error_serialization","fgpat_permissions_selector_redesign","ghost_pilot_confidence_truncation_25","ghost_pilot_confidence_truncation_40","github_models_scheduled_hydro_events","global_search_multi_orgs","global_sso_banner","global_sso_banner_dismiss_dialog","hyperspace_2025_logged_out_batch_1","hyperspace_nudges_universe25","hyperspace_nudges_universe25_post_event","initial_per_page_pagination_updates","inp_reduced_threshold","issue_fields_report_usage","issues_expanded_file_types","issues_lazy_load_comment_box_suggestions","issues_react_blur_item_picker_on_close","issues_react_bots_timeline_pagination","issues_react_include_bots_in_pickers","issues_react_prohibit_title_fallback","issues_react_remove_placeholders","issues_report_sidebar_interactions","issues_sticky_sidebar","issues_template_copilot_assignment","item_picker_label_tsq_migration","item_picker_project_tsq_migration","kb_convert_to_space","kb_semantic_api_migration","lifecycle_label_name_updates","link_contact_sales_swp_marketo","marketing_pages_search_explore_provider","mcp_registry_install","mcp_registry_oss_v0_1_api","memex_default_issue_create_repository","memex_grouped_by_edit_route","memex_mwl_filter_field_delimiter","memex_roadmap_drag_style","mission_control_use_body_html","new_traffic_page_banner","open_agent_session_in_vscode_insiders","open_agent_session_in_vscode_stable","pinned_issue_fields","pr_sfv_new_diff_fetch","primer_react_segmented_control_tooltip","projects_assignee_max_limit","react_fetch_graphql_ignore_expected_errors","record_sso_banner_metrics","repos_insights_remove_new_url","repository_suggester_elastic_search","ruleset_deletion_confirmation","sample_network_conn_type","scheduled_reminders_updated_limits","site_features_copilot_universe","site_homepage_collaborate_video","site_homepage_contentful","site_homepage_eyebrow_banner","site_homepage_universe_animations","site_msbuild_webgl_hero","spark_agent_max_output_tokens_error","spark_fix_rename","spark_force_push_after_checkout","spark_improve_image_upload","spark_kv_encocoded_keys","spark_show_data_access_on_publish","spark_sync_repository_after_iteration","viewscreen_sandbox","webp_support","workbench_store_readonly"],"login":"yukihina","copilotApiOverrideUrl":"https://api.individual.githubcopilot.com"}</script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/wp-runtime-148d4198d00e.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/913-ca2305638c53.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/6488-de87864e6818.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/environment-3bc3b3b3a6f6.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/11683-aa3d1ebe6648.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/43784-4652ae97a661.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/4712-809eac2badf7.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/81028-5b8c5e07a4fa.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/74911-6a311b93ee8e.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/91853-b5d2e5602241.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/78143-31968346cf4c.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/52430-c46e2de36eb2.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/github-elements-5b3e77949adb.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/element-registry-188a1950b315.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/28546-ee41c9313871.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/17688-a9e16fb5ed13.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/2869-a4ba8f17edb3.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/70191-5122bf27bf3e.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/7332-5ea4ccf72018.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/3200-a7d4487d8022.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/95964-56279d5d08b3.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/89708-cf8a683757b8.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/51519-dc0d4e14166a.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/7534-44b89d9287f7.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/96384-750ef5263abe.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/19718-676a65610616.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/behaviors-3b0493ae367b.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/48011-5b6f71a93de7.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/notifications-global-eb21f5b0029d.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/53996-5a7cf1bdd2cd.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/code-menu-26fed944c925.js" defer="defer"></script>
+  
+  <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/primer-react-1d943c070f89.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/react-lib-760965ba27bb.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/react-core-6bff7e7eaf4e.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/octicons-react-a215e6ee021a.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/58267-d3b3e418eb9c.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/48775-3cc79d2cd30e.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/42892-9fe102b0683f.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/23832-db66abd83e08.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/99418-9d4961969e0d.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/33915-05ba9b3edc31.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/35563-88b5576b2c6b.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/51220-ec5733320b36.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/32219-7472a62a38a8.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/83597-a037b23eee45.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/25407-6e094ff52623.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/81929-06b7f240be06.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/40771-fd733f45c051.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/66990-26254330a98f.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/29665-aafd67585c49.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/19976-d9a685a90a0d.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/81725-de9dc2dbc3e4.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/3774-beb5035d8d47.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/18406-6bc4085c106d.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/36584-798b01636f52.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/29806-d6f60b3ec9f4.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/react-code-view-dd173b9ab390.js" defer="defer"></script>
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react.1880ae4a0cc8c9bf298c.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/react-code-view.b17093118927c84cf318.module.css" />
 
-## Relationship Management (RM)
 
-The RM system tracks how characters relate to you and each other.
+  <title>htl66/CORE_SYSTEM_DOCUMENTATION.md at claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q · yukihina/htl66</title>
 
-### Character Types
 
-The system manages three types of characters:
 
-#### **Love Interests** (Regular Characters)
-- **Characters**: Amber, Nanami, Elizabeth, Isabella, Kanae, Arlette, Antonella, Madison, Paz
-- **Attributes**:
-  - `cor` (Corruption): How corrupted the character has become (0-100)
-  - `trust` (Trust): How much they trust you (0-100)
-  - `preg` (Pregnancy): Whether the character is pregnant (True/False)
-  - `rel` (Relationship): Whether you're in a relationship (True/False)
-  - `knows` (Knowledge): Whether you've met this character (True/False)
-  - `emotionally_locked` (Emotional Lock): Whether the character has shut you out (True/False)
+  <meta name="route-pattern" content="/:user_id/:repository/blob/*name(/*path)" data-turbo-transient>
+  <meta name="route-controller" content="blob" data-turbo-transient>
+  <meta name="route-action" content="show" data-turbo-transient>
+  <meta name="fetch-nonce" content="v2:7b4b6c4f-e988-7b4c-4bb6-ca41e8313670">
 
-#### **Main Character (MC)**
-- **Attributes**:
-  - `integrity`: Your moral compass (0-100)
-  - `integrity_locked`: Whether integrity can still change (True/False)
+    
+  <meta name="current-catalog-service-hash" content="f3abb0cc802f3d7b95fc8762b94bdcb13bf39634c40c357301c4aa1d67a256fb">
 
-#### **Organizations**
-- **Characters**: Takeo, TMPD, Osaka
-- **Attributes**:
-  - `trust`: How much the organization trusts you (0-100)
 
-### How to Use RM
+  <meta name="request-id" content="604D:31EEAF:296348:38554F:691EB505" data-turbo-transient="true" /><meta name="html-safe-nonce" content="c2444885d43406a168af90d7a3219b94d4a59785a15e51138777f94d0d2e8c66" data-turbo-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS95dWtpaGluYS9odGw2Ni90cmVlL2NsYXVkZS9pbXBsZW1lbnQtYXV0by1wcm9ncmVzc2lvbi1yYXRlcy0wMTRyVFVTa0J3a3NLcXFWQTQxUnhjNFEiLCJyZXF1ZXN0X2lkIjoiNjA0RDozMUVFQUY6Mjk2MzQ4OjM4NTU0Rjo2OTFFQjUwNSIsInZpc2l0b3JfaWQiOiI0NDg2MDEzODcyNjU1Njk4MzEwIiwicmVnaW9uX2VkZ2UiOiJpYWQiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-turbo-transient="true" /><meta name="visitor-hmac" content="1176fc991a0b1ee459ed6fe8038385d81fb08ddb414c7efde32e200bf24dad97" data-turbo-transient="true" />
 
-#### Updating Character Stats
 
-To change a character's stats, use the `update` function:
+    <meta name="hovercard-subject-tag" content="repository:991065825" data-turbo-transient>
 
-```renpy
-$ rm.update("amber", "cor", 10)      # Increase Amber's corruption by 10
-$ rm.update("nanami", "trust", 15)   # Increase Nanami's trust by 15
-$ rm.update("mc", "integrity", -5)   # Decrease MC's integrity by 5
-$ rm.update("takeo", "trust", 20)    # Increase Takeo's trust by 20
-```
 
-**Parameters:**
-- **Character ID**: The character's name (lowercase)
-- **Attribute**: What you want to change ("cor", "trust", "integrity")
-- **Value**: How much to add (positive) or subtract (negative)
+  <meta name="github-keyboard-shortcuts" content="repository,source-code,file-tree,copilot" data-turbo-transient="true" />
+  
 
-**Important Rules:**
-- Stats automatically stay between 0 and 100
-- MC's integrity locks when it reaches 0 or 100
-- You can't change a character's stats if they're emotionally locked
-- **Each call only updates ONE attribute** - to update multiple attributes, make multiple calls
+  <meta name="selected-link" value="repo_source" data-turbo-transient>
+  <link rel="assets" href="https://github.githubassets.com/">
 
-#### Updating Multiple Attributes
+    <meta name="google-site-verification" content="Apib7-x98H0j5cPqHWwSMm6dNU4GmODRoqxLiDzdx9I">
 
-To update both corruption and trust (or any combination), make **separate calls**:
+<meta name="octolytics-url" content="https://collector.github.com/github/collect" /><meta name="octolytics-actor-id" content="125949572" /><meta name="octolytics-actor-login" content="yukihina" /><meta name="octolytics-actor-hash" content="8ec6e5187f971250e7bf441830b795627b0ea7b1ed7b4fe60b3b129c346efb78" />
 
-```renpy
-# Update both corruption and trust with same value
-$ rm.update("amber", "cor", 5)
-$ rm.update("amber", "trust", 5)
+  <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-turbo-transient="true" />
 
-# Update both with different values
-$ rm.update("amber", "cor", 10)
-$ rm.update("amber", "trust", -5)
+  
+
+
+
+
+    <meta name="user-login" content="yukihina">
+
+  <link rel="sudo-modal" href="/sessions/sudo_modal">
+
+    <meta name="viewport" content="width=device-width">
+
+    
+
+      <meta name="description" content="Contribute to yukihina/htl66 development by creating an account on GitHub.">
+
+      <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
+
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+    <meta property="fb:app_id" content="1401488693436528">
+    <meta name="apple-itunes-app" content="app-id=1477376905, app-argument=https://github.com/yukihina/htl66/blob/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md" />
+
+      <meta name="twitter:image" content="https://opengraph.githubassets.com/243926f12749dadd5ddc55eab13764dc4ab411b1992d5a60039da7ef0c035534/yukihina/htl66" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="htl66/CORE_SYSTEM_DOCUMENTATION.md at claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q · yukihina/htl66" /><meta name="twitter:description" content="Contribute to yukihina/htl66 development by creating an account on GitHub." />
+  <meta property="og:image" content="https://opengraph.githubassets.com/243926f12749dadd5ddc55eab13764dc4ab411b1992d5a60039da7ef0c035534/yukihina/htl66" /><meta property="og:image:alt" content="Contribute to yukihina/htl66 development by creating an account on GitHub." /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="htl66/CORE_SYSTEM_DOCUMENTATION.md at claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q · yukihina/htl66" /><meta property="og:url" content="https://github.com/yukihina/htl66/blob/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md" /><meta property="og:description" content="Contribute to yukihina/htl66 development by creating an account on GitHub." />
+  
+
+
+      <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/125949572/ws?session=eyJ2IjoiVjMiLCJ1IjoxMjU5NDk1NzIsInMiOjE4NzI4ODMzNzQsImMiOjM1NDQxNjY5MTcsInQiOjE3NjM2MjAxMjV9--43d5d0acda6f907c7eb3755d2a68668d4db614cb8cac755ab8e38a610c357c38" data-refresh-url="/_alive" data-session-id="7f68057eb558221c99b6366e91daad0367af29b61cf27393b66e085b63e11ed1">
+      <link rel="shared-web-socket-src" href="/assets-cdn/worker/socket-worker-2a038060e454.js">
+
+
+      <meta name="hostname" content="github.com">
+
+
+      <meta name="keyboard-shortcuts-preference" content="all">
+      <meta name="hovercards-preference" content="true">
+      <meta name="announcement-preference-hovercard" content="true">
+
+        <meta name="expected-hostname" content="github.com">
+
+
+  <meta http-equiv="x-pjax-version" content="dd1c9334cfef3da7a26099a029581037c1a809fb5dae462915d95ef72df0c211" data-turbo-track="reload">
+  <meta http-equiv="x-pjax-csp-version" content="21a43568025709b66240454fc92d4f09335a96863f8ab1c46b4a07f6a5b67102" data-turbo-track="reload">
+  <meta http-equiv="x-pjax-css-version" content="aa39222f646973caef6f9a96a5bf67f2bee1360d5ee8981c0927a9efa873ddf7" data-turbo-track="reload">
+  <meta http-equiv="x-pjax-js-version" content="ef37c147982555efcafcb721b86cfc0341e36ed58e0b2b6b9bdd0447d34a1e60" data-turbo-track="reload">
+
+  <meta name="turbo-cache-control" content="no-preview" data-turbo-transient="">
+
+      <meta name="turbo-cache-control" content="no-cache" data-turbo-transient>
+
+    <meta data-hydrostats="publish">
+
+  <meta name="go-import" content="github.com/yukihina/htl66 git https://github.com/yukihina/htl66.git">
+
+  <meta name="octolytics-dimension-user_id" content="125949572" /><meta name="octolytics-dimension-user_login" content="yukihina" /><meta name="octolytics-dimension-repository_id" content="991065825" /><meta name="octolytics-dimension-repository_nwo" content="yukihina/htl66" /><meta name="octolytics-dimension-repository_public" content="true" /><meta name="octolytics-dimension-repository_is_fork" content="false" /><meta name="octolytics-dimension-repository_network_root_id" content="991065825" /><meta name="octolytics-dimension-repository_network_root_nwo" content="yukihina/htl66" />
+
+
+
+    
+
+    <meta name="turbo-body-classes" content="logged-in env-production page-responsive">
+  <meta name="disable-turbo" content="false">
+
+
+  <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+
+  <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+
+  <meta name="release" content="039a914add5ccd1652839bfb9464f207ceed2d74">
+  <meta name="ui-target" content="canary-1">
+
+  <link rel="mask-icon" href="https://github.githubassets.com/assets/pinned-octocat-093da3e6fa40.svg" color="#000000">
+  <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
+  <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg" data-base-href="https://github.githubassets.com/favicons/favicon">
+
+<meta name="theme-color" content="#1e2327">
+<meta name="color-scheme" content="light dark" />
+
+
+  <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials">
+
+  </head>
+
+  <body class="logged-in env-production page-responsive" style="word-wrap: break-word;" >
+    <div data-turbo-body class="logged-in env-production page-responsive" style="word-wrap: break-word;" >
+        <div id="__primerPortalRoot__" role="region" style="z-index: 1000; position: absolute; width: 100%;" data-turbo-permanent></div>
+      
+
+
+
+    <div class="position-relative header-wrapper js-header-wrapper ">
+      <a href="#start-of-content" data-skip-target-assigned="false" class="p-3 color-bg-accent-emphasis color-fg-on-emphasis show-on-focus js-skip-to-content">Skip to content</a>
+
+      <span data-view-component="true" class="progress-pjax-loader Progress position-fixed width-full">
+    <span style="width: 0%;" data-view-component="true" class="Progress-item progress-pjax-loader-bar left-0 top-0 color-bg-accent-emphasis"></span>
+</span>      
+      
+      <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react.1880ae4a0cc8c9bf298c.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/keyboard-shortcuts-dialog.29aaeaafa90f007c6f61.module.css" />
+
+<react-partial
+  partial-name="keyboard-shortcuts-dialog"
+  data-ssr="false"
+  data-attempted-ssr="false"
+  data-react-profiling="false"
+>
+  
+  <script type="application/json" data-target="react-partial.embeddedData">{"props":{"docsUrl":"https://docs.github.com/get-started/accessibility/keyboard-shortcuts"}}</script>
+  <div data-target="react-partial.reactRoot"></div>
+</react-partial>
+
+
+
+
+
+      
+
+          
+
+                  <header class="AppHeader" role="banner">
+      <h2 class="sr-only">Navigation Menu</h2>
+
+
+        
+
+        <div class="AppHeader-globalBar pb-2  js-global-bar">
+          <div class="AppHeader-globalBar-start responsive-context-region">
+            <div class="">
+                      <react-partial-anchor>
+        <button data-target="react-partial-anchor.anchor" aria-label="Open global navigation menu" show_tooltip="false" type="button" data-view-component="true" class="AppHeader-button Button--secondary Button--medium Button p-0 color-fg-muted">  <span class="Button-content">
+    <span class="Button-label"><svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-three-bars">
+    <path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
+</svg></span>
+  </span>
+</button>
+        <template data-target="react-partial-anchor.template">
+          <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react.1880ae4a0cc8c9bf298c.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/90759.a6b6b0e7cc0a5e5c6f13.module.css" />
+
+<react-partial
+  partial-name="global-nav-menu"
+  data-ssr="false"
+  data-attempted-ssr="false"
+  data-react-profiling="false"
+>
+  
+  <script type="application/json" data-target="react-partial.embeddedData">{"props":{"home":{"href":"/dashboard","hotkey":"g d"},"feed":{"show":false,"href":"/feed"},"issues":{"href":"/issues","hotkey":"g i"},"pulls":{"href":"/pulls","hotkey":"g p"},"contributedRepos":{"show":false,"href":null,"hotkey":null},"projects":{"href":"/projects"},"discussions":{"show":true,"href":"/discussions"},"codespaces":{"show":true,"href":"https://github.com/codespaces"},"copilot":{"show":true,"href":"/copilot"},"spark":{"show":false,"href":null},"marketplace":{"show":true,"href":"/marketplace"},"mcp":{"show":true,"href":"https://github.com/mcp"},"explore":{"show":true,"href":"/explore"},"richContent":{"show":true,"contentUrl":"/_side-panels/global.json","repositoriesSearchUrl":"/_side-panel-items/global/repositories.json","teamsSearchUrl":"/_side-panel-items/global/teams.json"}}}</script>
+  <div data-target="react-partial.reactRoot"></div>
+</react-partial>
+
+
+        </template>
+      </react-partial-anchor>
+
+            </div>
+
+            <a class="AppHeader-logo ml-1 "
+              href="https://github.com/"
+              data-hotkey="g d"
+              aria-label="Homepage "
+              data-turbo="false"
+              data-analytics-event="{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;}"
+            >
+              <svg height="32" aria-hidden="true" viewBox="0 0 24 24" version="1.1" width="32" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
+    <path d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436.55.096.756-.233.756-.522 0-.262-.013-1.128-.013-2.049-2.764.509-3.479-.674-3.699-1.292-.124-.317-.66-1.293-1.127-1.554-.385-.207-.936-.715-.014-.729.866-.014 1.485.797 1.691 1.128.99 1.663 2.571 1.196 3.204.907.096-.715.385-1.196.701-1.471-2.448-.275-5.005-1.224-5.005-5.432 0-1.196.426-2.186 1.128-2.956-.111-.275-.496-1.402.11-2.915 0 0 .921-.288 3.024 1.128a10.193 10.193 0 0 1 2.75-.371c.936 0 1.871.123 2.75.371 2.104-1.43 3.025-1.128 3.025-1.128.605 1.513.221 2.64.111 2.915.701.77 1.127 1.747 1.127 2.956 0 4.222-2.571 5.157-5.019 5.432.399.344.743 1.004.743 2.035 0 1.471-.014 2.654-.014 3.025 0 .289.206.632.756.522C19.851 20.979 23 16.854 23 12c0-6.077-4.922-11-11-11Z"></path>
+</svg>
+            </a>
+
+              <context-region-controller
+  class="AppHeader-context responsive-context-region"
+  data-max-items="5"
+  
+>
+  <div class="AppHeader-context-full">
+    <nav role="navigation" aria-label="GitHub Breadcrumb">
+      
+<context-region data-target="context-region-controller.contextRegion" role="list"  data-action="context-region-changed:context-region-controller#crumbsChanged">
+    <context-region-crumb
+      data-crumb-id="contextregion-usercrumb-yukihina"
+      data-targets="context-region.crumbs"
+      data-label="yukihina"
+      data-href="/yukihina"
+      data-pre-rendered
+      role="listitem"
+      
+    >
+      <a data-target="context-region-crumb.linkElement" data-analytics-event="{&quot;category&quot;:&quot;SiteHeaderComponent&quot;,&quot;action&quot;:&quot;context_region_crumb&quot;,&quot;label&quot;:&quot;yukihina&quot;,&quot;screen_size&quot;:&quot;full&quot;}" data-hovercard-type="user" data-hovercard-url="/users/yukihina/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/yukihina" id="contextregion-usercrumb-yukihina-link" data-view-component="true" class="AppHeader-context-item">
+        <span data-target="context-region-crumb.labelElement" class="AppHeader-context-item-label ">
+          yukihina
+        </span>
+
+</a>
+      <context-region-divider data-target="context-region-crumb.dividerElement" data-pre-rendered >
+  <span class="AppHeader-context-item-separator">
+    <span class="sr-only">/</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10.956 1.27994L6.06418 14.7201L5 14.7201L9.89181 1.27994L10.956 1.27994Z" fill="currentcolor" />
+    </svg>
+  </span>
+</context-region-divider>
+
+    </context-region-crumb>
+
+      <li data-target="context-region-controller.overflowMenuContainer context-region.overflowMenuContainer" role="listitem" hidden>
+        <action-menu data-target="context-region-controller.overflowActionMenu" data-select-variant="none" data-view-component="true">
+  <focus-group direction="vertical" mnemonics retain>
+    <button id="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-button" popovertarget="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-overlay" aria-controls="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-list" aria-haspopup="true" aria-labelledby="tooltip-c1252d84-e094-460f-b716-f105bf025a6b" type="button" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-kebab-horizontal Button-visual">
+    <path d="M8 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM1.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm13 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+</svg>
+</button><tool-tip id="tooltip-c1252d84-e094-460f-b716-f105bf025a6b" for="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-button" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Show more breadcrumb items</tool-tip>
+
+
+<anchored-position data-target="action-menu.overlay" id="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-overlay" anchor="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-button" align="start" side="outside-bottom" anchor-offset="normal" popover="auto" data-view-component="true">
+  <div data-view-component="true" class="Overlay Overlay--size-auto">
+    
+      <div data-view-component="true" class="Overlay-body Overlay-body--paddingNone">          <action-list>
+  <div data-view-component="true">
+    <ul aria-labelledby="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-button" id="action-menu-ebc918b0-5b44-4248-b799-fbd1847da384-list" role="menu" data-view-component="true" class="ActionListWrap--inset ActionListWrap">
+        <li hidden="hidden" data-crumb-id="contextregion-usercrumb-yukihina" data-targets="context-region.overflowCrumbs action-list.items" data-analytics-event="{&quot;category&quot;:&quot;SiteHeaderComponent&quot;,&quot;action&quot;:&quot;context_region_overflow_menu_crumb&quot;,&quot;label&quot;:&quot;global-navigation&quot;}" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-8b74ee48-9178-44c7-9a8c-b48a699c0888" href="/yukihina" role="menuitem" data-view-component="true" class="ActionListContent">
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          yukihina
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-crumb-id="contextregion-repositorycrumb-htl66" data-targets="context-region.overflowCrumbs action-list.items" data-analytics-event="{&quot;category&quot;:&quot;SiteHeaderComponent&quot;,&quot;action&quot;:&quot;context_region_overflow_menu_crumb&quot;,&quot;label&quot;:&quot;global-navigation&quot;}" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-e496b958-0f62-4978-b35a-8163b287e99c" href="/yukihina/htl66" role="menuitem" data-view-component="true" class="ActionListContent">
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          htl66
+</span>      
+</a>
+  
+</li>
+</ul>    
+</div></action-list>
+
+
+</div>
+      
+</div></anchored-position>  </focus-group>
+</action-menu>
+  <context-region-divider data-target="context-region-crumb.dividerElement" data-pre-rendered >
+  <span class="AppHeader-context-item-separator">
+    <span class="sr-only">/</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10.956 1.27994L6.06418 14.7201L5 14.7201L9.89181 1.27994L10.956 1.27994Z" fill="currentcolor" />
+    </svg>
+  </span>
+</context-region-divider>
+
+
+      </li>
+    <context-region-crumb
+      data-crumb-id="contextregion-repositorycrumb-htl66"
+      data-targets="context-region.crumbs"
+      data-label="htl66"
+      data-href="/yukihina/htl66"
+      data-pre-rendered
+      role="listitem"
+      
+    >
+      <a data-target="context-region-crumb.linkElement" data-analytics-event="{&quot;category&quot;:&quot;SiteHeaderComponent&quot;,&quot;action&quot;:&quot;context_region_crumb&quot;,&quot;label&quot;:&quot;htl66&quot;,&quot;screen_size&quot;:&quot;full&quot;}" href="/yukihina/htl66" id="contextregion-repositorycrumb-htl66-link" data-view-component="true" class="AppHeader-context-item">
+        <span data-target="context-region-crumb.labelElement" class="AppHeader-context-item-label ">
+          htl66
+        </span>
+
+</a>
+      <context-region-divider data-target="context-region-crumb.dividerElement" data-pre-rendered >
+  <span class="AppHeader-context-item-separator">
+    <span class="sr-only">/</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10.956 1.27994L6.06418 14.7201L5 14.7201L9.89181 1.27994L10.956 1.27994Z" fill="currentcolor" />
+    </svg>
+  </span>
+</context-region-divider>
+
+    </context-region-crumb>
+
+</context-region>
+
+    </nav>
+  </div>
+</context-region-controller>
+
+          </div>
+          <div class="AppHeader-globalBar-end">
+              <div class="AppHeader-search" >
+                  
+
+
+<qbsearch-input class="search-input" data-scope="repo:yukihina/htl66" data-custom-scopes-path="/search/custom_scopes" data-delete-custom-scopes-csrf="-7-z-w30JrVPmOgcze45Co-lgzhUKjN5PpL-jfOJd2x_GyD68C8mXpY9ol5CcHm0ju3aDPxqIMzNYxU5DweV1w" data-max-custom-scopes="10" data-header-redesign-enabled="true" data-initial-value="" data-blackbird-suggestions-path="/search/suggestions" data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations" data-current-repository="yukihina/htl66" data-current-org="" data-current-owner="yukihina" data-logged-in="true" data-copilot-chat-enabled="false" data-nl-search-enabled="false">
+  <div
+    class="search-input-container search-with-dialog position-relative d-flex flex-row flex-items-center height-auto color-bg-transparent border-0 color-fg-subtle mx-0"
+    data-action="click:qbsearch-input#searchInputContainerClicked"
+  >
+        
+              <button type="button" data-action="click:qbsearch-input#handleExpand" class="AppHeader-button AppHeader-search-whenNarrow" aria-label="Search or jump to…" aria-expanded="false" aria-haspopup="dialog">
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search">
+    <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
+</svg>
+            </button>
+
+
+<div class="AppHeader-search-whenRegular">
+  <div class="AppHeader-search-wrap AppHeader-search-wrap--hasTrailing">
+    <div class="AppHeader-search-control AppHeader-search-control-overflow">
+      <label
+        for="AppHeader-searchInput"
+        aria-label="Search or jump to…"
+        class="AppHeader-search-visual--leading"
+      >
+        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search">
+    <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
+</svg>
+      </label>
+
+                  <button
+              type="button"
+              data-target="qbsearch-input.inputButton"
+              data-action="click:qbsearch-input#handleExpand"
+              class="AppHeader-searchButton form-control text-left color-fg-subtle no-wrap"
+              data-hotkey="s,/"
+              data-analytics-event="{&quot;location&quot;:&quot;navbar&quot;,&quot;action&quot;:&quot;searchbar&quot;,&quot;context&quot;:&quot;global&quot;,&quot;tag&quot;:&quot;input&quot;,&quot;label&quot;:&quot;searchbar_input_global_navbar&quot;}"
+              aria-describedby="search-error-message-flash"
+            >
+              <div class="overflow-hidden">
+                <span id="qb-input-query" data-target="qbsearch-input.inputButtonText">
+                    Type <kbd class="AppHeader-search-kbd">/</kbd> to search
+                </span>
+              </div>
+            </button>
+
+    </div>
+
+
+  </div>
+</div>
+
+    <input type="hidden" name="type" class="js-site-search-type-field">
+
+    
+<div class="Overlay--hidden " data-modal-dialog-overlay>
+  <modal-dialog data-action="close:qbsearch-input#handleClose cancel:qbsearch-input#handleClose" data-target="qbsearch-input.searchSuggestionsDialog" role="dialog" id="search-suggestions-dialog" aria-modal="true" aria-labelledby="search-suggestions-dialog-header" data-view-component="true" class="Overlay Overlay--width-medium Overlay--height-auto">
+      <h1 id="search-suggestions-dialog-header" class="sr-only">Search code, repositories, users, issues, pull requests...</h1>
+    <div class="Overlay-body Overlay-body--paddingNone">
+      
+          <div data-view-component="true">        <div class="search-suggestions position-absolute width-full color-shadow-large border color-fg-default color-bg-default overflow-hidden d-flex flex-column query-builder-container"
+          style="border-radius: 12px;"
+          data-target="qbsearch-input.queryBuilderContainer"
+          hidden
+        >
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form id="query-builder-test-form" action="" accept-charset="UTF-8" method="get">
+  <query-builder data-target="qbsearch-input.queryBuilder" id="query-builder-query-builder-test" data-filter-key=":" data-view-component="true" class="QueryBuilder search-query-builder">
+    <div class="FormControl FormControl--fullWidth">
+      <label id="query-builder-test-label" for="query-builder-test" class="FormControl-label sr-only">
+        Search
+      </label>
+      <div
+        class="QueryBuilder-StyledInput width-fit "
+        data-target="query-builder.styledInput"
+      >
+          <span id="query-builder-test-leadingvisual-wrap" class="FormControl-input-leadingVisualWrap QueryBuilder-leadingVisualWrap">
+            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search FormControl-input-leadingVisual">
+    <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
+</svg>
+          </span>
+        <div data-target="query-builder.styledInputContainer" class="QueryBuilder-StyledInputContainer">
+          <div
+            aria-hidden="true"
+            class="QueryBuilder-StyledInputContent"
+            data-target="query-builder.styledInputContent"
+          ></div>
+          <div class="QueryBuilder-InputWrapper">
+            <div aria-hidden="true" class="QueryBuilder-Sizer" data-target="query-builder.sizer"></div>
+            <input id="query-builder-test" name="query-builder-test" value="" autocomplete="off" type="text" role="combobox" spellcheck="false" aria-expanded="false" aria-describedby="validation-21a9c473-d79b-491c-910d-298ab0b6782b" data-target="query-builder.input" data-action="
+          input:query-builder#inputChange
+          blur:query-builder#inputBlur
+          keydown:query-builder#inputKeydown
+          focus:query-builder#inputFocus
+        " data-view-component="true" class="FormControl-input QueryBuilder-Input FormControl-medium" />
+          </div>
+        </div>
+          <span class="sr-only" id="query-builder-test-clear">Clear</span>
+          <button role="button" id="query-builder-test-clear-button" aria-labelledby="query-builder-test-clear query-builder-test-label" data-target="query-builder.clearButton" data-action="
+                click:query-builder#clear
+                focus:query-builder#clearButtonFocus
+                blur:query-builder#clearButtonBlur
+              " variant="small" hidden="hidden" type="button" data-view-component="true" class="Button Button--iconOnly Button--invisible Button--medium mr-1 px-2 py-0 d-flex flex-items-center rounded-1 color-fg-muted">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x-circle-fill Button-visual">
+    <path d="M2.343 13.657A8 8 0 1 1 13.658 2.343 8 8 0 0 1 2.343 13.657ZM6.03 4.97a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042L6.94 8 4.97 9.97a.749.749 0 0 0 .326 1.275.749.749 0 0 0 .734-.215L8 9.06l1.97 1.97a.749.749 0 0 0 1.275-.326.749.749 0 0 0-.215-.734L9.06 8l1.97-1.97a.749.749 0 0 0-.326-1.275.749.749 0 0 0-.734.215L8 6.94Z"></path>
+</svg>
+</button>
+
+      </div>
+      <template id="search-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-search">
+    <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
+</svg>
+</template>
+
+<template id="code-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-code">
+    <path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+</template>
+
+<template id="file-code-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-file-code">
+    <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+</svg>
+</template>
+
+<template id="history-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-history">
+    <path d="m.427 1.927 1.215 1.215a8.002 8.002 0 1 1-1.6 5.685.75.75 0 1 1 1.493-.154 6.5 6.5 0 1 0 1.18-4.458l1.358 1.358A.25.25 0 0 1 3.896 6H.25A.25.25 0 0 1 0 5.75V2.104a.25.25 0 0 1 .427-.177ZM7.75 4a.75.75 0 0 1 .75.75v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5A.75.75 0 0 1 7.75 4Z"></path>
+</svg>
+</template>
+
+<template id="repo-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo">
+    <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+</svg>
+</template>
+
+<template id="bookmark-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-bookmark">
+    <path d="M3 2.75C3 1.784 3.784 1 4.75 1h6.5c.966 0 1.75.784 1.75 1.75v11.5a.75.75 0 0 1-1.227.579L8 11.722l-3.773 3.107A.751.751 0 0 1 3 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.91l3.023-2.489a.75.75 0 0 1 .954 0l3.023 2.49V2.75a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+</template>
+
+<template id="plus-circle-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-plus-circle">
+    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7.25-3.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z"></path>
+</svg>
+</template>
+
+<template id="circle-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-dot-fill">
+    <path d="M8 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"></path>
+</svg>
+</template>
+
+<template id="trash-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-trash">
+    <path d="M11 1.75V3h2.25a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75ZM4.496 6.675l.66 6.6a.25.25 0 0 0 .249.225h5.19a.25.25 0 0 0 .249-.225l.66-6.6a.75.75 0 0 1 1.492.149l-.66 6.6A1.748 1.748 0 0 1 10.595 15h-5.19a1.75 1.75 0 0 1-1.741-1.575l-.66-6.6a.75.75 0 1 1 1.492-.15ZM6.5 1.75V3h3V1.75a.25.25 0 0 0-.25-.25h-2.5a.25.25 0 0 0-.25.25Z"></path>
+</svg>
+</template>
+
+<template id="team-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-people">
+    <path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z"></path>
+</svg>
+</template>
+
+<template id="project-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-project">
+    <path d="M1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0ZM1.5 1.75v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25ZM11.75 3a.75.75 0 0 1 .75.75v7.5a.75.75 0 0 1-1.5 0v-7.5a.75.75 0 0 1 .75-.75Zm-8.25.75a.75.75 0 0 1 1.5 0v5.5a.75.75 0 0 1-1.5 0ZM8 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 3Z"></path>
+</svg>
+</template>
+
+<template id="pencil-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-pencil">
+    <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"></path>
+</svg>
+</template>
+
+<template id="copilot-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copilot">
+    <path d="M7.998 15.035c-4.562 0-7.873-2.914-7.998-3.749V9.338c.085-.628.677-1.686 1.588-2.065.013-.07.024-.143.036-.218.029-.183.06-.384.126-.612-.201-.508-.254-1.084-.254-1.656 0-.87.128-1.769.693-2.484.579-.733 1.494-1.124 2.724-1.261 1.206-.134 2.262.034 2.944.765.05.053.096.108.139.165.044-.057.094-.112.143-.165.682-.731 1.738-.899 2.944-.765 1.23.137 2.145.528 2.724 1.261.566.715.693 1.614.693 2.484 0 .572-.053 1.148-.254 1.656.066.228.098.429.126.612.012.076.024.148.037.218.924.385 1.522 1.471 1.591 2.095v1.872c0 .766-3.351 3.795-8.002 3.795Zm0-1.485c2.28 0 4.584-1.11 5.002-1.433V7.862l-.023-.116c-.49.21-1.075.291-1.727.291-1.146 0-2.059-.327-2.71-.991A3.222 3.222 0 0 1 8 6.303a3.24 3.24 0 0 1-.544.743c-.65.664-1.563.991-2.71.991-.652 0-1.236-.081-1.727-.291l-.023.116v4.255c.419.323 2.722 1.433 5.002 1.433ZM6.762 2.83c-.193-.206-.637-.413-1.682-.297-1.019.113-1.479.404-1.713.7-.247.312-.369.789-.369 1.554 0 .793.129 1.171.308 1.371.162.181.519.379 1.442.379.853 0 1.339-.235 1.638-.54.315-.322.527-.827.617-1.553.117-.935-.037-1.395-.241-1.614Zm4.155-.297c-1.044-.116-1.488.091-1.681.297-.204.219-.359.679-.242 1.614.091.726.303 1.231.618 1.553.299.305.784.54 1.638.54.922 0 1.28-.198 1.442-.379.179-.2.308-.578.308-1.371 0-.765-.123-1.242-.37-1.554-.233-.296-.693-.587-1.713-.7Z"></path><path d="M6.25 9.037a.75.75 0 0 1 .75.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 .75-.75Zm4.25.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 1.5 0Z"></path>
+</svg>
+</template>
+
+<template id="copilot-error-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copilot-error">
+    <path d="M16 11.24c0 .112-.072.274-.21.467L13 9.688V7.862l-.023-.116c-.49.21-1.075.291-1.727.291-.198 0-.388-.009-.571-.029L6.833 5.226a4.01 4.01 0 0 0 .17-.782c.117-.935-.037-1.395-.241-1.614-.193-.206-.637-.413-1.682-.297-.683.076-1.115.231-1.395.415l-1.257-.91c.579-.564 1.413-.877 2.485-.996 1.206-.134 2.262.034 2.944.765.05.053.096.108.139.165.044-.057.094-.112.143-.165.682-.731 1.738-.899 2.944-.765 1.23.137 2.145.528 2.724 1.261.566.715.693 1.614.693 2.484 0 .572-.053 1.148-.254 1.656.066.228.098.429.126.612.012.076.024.148.037.218.924.385 1.522 1.471 1.591 2.095Zm-5.083-8.707c-1.044-.116-1.488.091-1.681.297-.204.219-.359.679-.242 1.614.091.726.303 1.231.618 1.553.299.305.784.54 1.638.54.922 0 1.28-.198 1.442-.379.179-.2.308-.578.308-1.371 0-.765-.123-1.242-.37-1.554-.233-.296-.693-.587-1.713-.7Zm2.511 11.074c-1.393.776-3.272 1.428-5.43 1.428-4.562 0-7.873-2.914-7.998-3.749V9.338c.085-.628.677-1.686 1.588-2.065.013-.07.024-.143.036-.218.029-.183.06-.384.126-.612-.18-.455-.241-.963-.252-1.475L.31 4.107A.747.747 0 0 1 0 3.509V3.49a.748.748 0 0 1 .625-.73c.156-.026.306.047.435.139l14.667 10.578a.592.592 0 0 1 .227.264.752.752 0 0 1 .046.249v.022a.75.75 0 0 1-1.19.596Zm-1.367-.991L5.635 7.964a5.128 5.128 0 0 1-.889.073c-.652 0-1.236-.081-1.727-.291l-.023.116v4.255c.419.323 2.722 1.433 5.002 1.433 1.539 0 3.089-.505 4.063-.934Z"></path>
+</svg>
+</template>
+
+<template id="workflow-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-workflow">
+    <path d="M0 1.75C0 .784.784 0 1.75 0h3.5C6.216 0 7 .784 7 1.75v3.5A1.75 1.75 0 0 1 5.25 7H4v4a1 1 0 0 0 1 1h4v-1.25C9 9.784 9.784 9 10.75 9h3.5c.966 0 1.75.784 1.75 1.75v3.5A1.75 1.75 0 0 1 14.25 16h-3.5A1.75 1.75 0 0 1 9 14.25v-.75H5A2.5 2.5 0 0 1 2.5 11V7h-.75A1.75 1.75 0 0 1 0 5.25Zm1.75-.25a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h3.5a.25.25 0 0 0 .25-.25v-3.5a.25.25 0 0 0-.25-.25Zm9 9a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h3.5a.25.25 0 0 0 .25-.25v-3.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+</template>
+
+<template id="book-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-book">
+    <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"></path>
+</svg>
+</template>
+
+<template id="code-review-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-code-review">
+    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 13H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25v-8.5C0 1.784.784 1 1.75 1ZM1.5 2.75v8.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Zm5.28 1.72a.75.75 0 0 1 0 1.06L5.31 7l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.75.75 0 0 1 1.06 0Zm2.44 0a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L10.69 7 9.22 5.53a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+</template>
+
+<template id="codespaces-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-codespaces">
+    <path d="M0 11.25c0-.966.784-1.75 1.75-1.75h12.5c.966 0 1.75.784 1.75 1.75v3A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25Zm2-9.5C2 .784 2.784 0 3.75 0h8.5C13.216 0 14 .784 14 1.75v5a1.75 1.75 0 0 1-1.75 1.75h-8.5A1.75 1.75 0 0 1 2 6.75Zm1.75-.25a.25.25 0 0 0-.25.25v5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-5a.25.25 0 0 0-.25-.25Zm-2 9.5a.25.25 0 0 0-.25.25v3c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-3a.25.25 0 0 0-.25-.25Z"></path><path d="M7 12.75a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Zm-4 0a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1-.75-.75Z"></path>
+</svg>
+</template>
+
+<template id="comment-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-comment">
+    <path d="M1 2.75C1 1.784 1.784 1 2.75 1h10.5c.966 0 1.75.784 1.75 1.75v7.5A1.75 1.75 0 0 1 13.25 12H9.06l-2.573 2.573A1.458 1.458 0 0 1 4 13.543V12H2.75A1.75 1.75 0 0 1 1 10.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h4.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+</template>
+
+<template id="comment-discussion-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-comment-discussion">
+    <path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z"></path>
+</svg>
+</template>
+
+<template id="organization-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-organization">
+    <path d="M1.75 16A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 0 0 .25-.25V8.285a.25.25 0 0 0-.111-.208l-1.055-.703a.749.749 0 1 1 .832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0 1 14.25 16h-3.5a.766.766 0 0 1-.197-.026c-.099.017-.2.026-.303.026h-3a.75.75 0 0 1-.75-.75V14h-1v1.25a.75.75 0 0 1-.75.75Zm-.25-1.75c0 .138.112.25.25.25H4v-1.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 .75.75v1.25h2.25a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25ZM3.75 6h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1 0-1.5ZM3 3.75A.75.75 0 0 1 3.75 3h.5a.75.75 0 0 1 0 1.5h-.5A.75.75 0 0 1 3 3.75Zm4 3A.75.75 0 0 1 7.75 6h.5a.75.75 0 0 1 0 1.5h-.5A.75.75 0 0 1 7 6.75ZM7.75 3h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1 0-1.5ZM3 9.75A.75.75 0 0 1 3.75 9h.5a.75.75 0 0 1 0 1.5h-.5A.75.75 0 0 1 3 9.75ZM7.75 9h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1 0-1.5Z"></path>
+</svg>
+</template>
+
+<template id="rocket-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
+    <path d="M14.064 0h.186C15.216 0 16 .784 16 1.75v.186a8.752 8.752 0 0 1-2.564 6.186l-.458.459c-.314.314-.641.616-.979.904v3.207c0 .608-.315 1.172-.833 1.49l-2.774 1.707a.749.749 0 0 1-1.11-.418l-.954-3.102a1.214 1.214 0 0 1-.145-.125L3.754 9.816a1.218 1.218 0 0 1-.124-.145L.528 8.717a.749.749 0 0 1-.418-1.11l1.71-2.774A1.748 1.748 0 0 1 3.31 4h3.204c.288-.338.59-.665.904-.979l.459-.458A8.749 8.749 0 0 1 14.064 0ZM8.938 3.623h-.002l-.458.458c-.76.76-1.437 1.598-2.02 2.5l-1.5 2.317 2.143 2.143 2.317-1.5c.902-.583 1.74-1.26 2.499-2.02l.459-.458a7.25 7.25 0 0 0 2.123-5.127V1.75a.25.25 0 0 0-.25-.25h-.186a7.249 7.249 0 0 0-5.125 2.123ZM3.56 14.56c-.732.732-2.334 1.045-3.005 1.148a.234.234 0 0 1-.201-.064.234.234 0 0 1-.064-.201c.103-.671.416-2.273 1.15-3.003a1.502 1.502 0 1 1 2.12 2.12Zm6.94-3.935c-.088.06-.177.118-.266.175l-2.35 1.521.548 1.783 1.949-1.2a.25.25 0 0 0 .119-.213ZM3.678 8.116 5.2 5.766c.058-.09.117-.178.176-.266H3.309a.25.25 0 0 0-.213.119l-1.2 1.95ZM12 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+</svg>
+</template>
+
+<template id="shield-check-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-shield-check">
+    <path d="m8.533.133 5.25 1.68A1.75 1.75 0 0 1 15 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.697 1.697 0 0 1-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 0 1 1.217-1.667l5.25-1.68a1.748 1.748 0 0 1 1.066 0Zm-.61 1.429.001.001-5.25 1.68a.251.251 0 0 0-.174.237V7c0 1.36.275 2.666 1.057 3.859.784 1.194 2.121 2.342 4.366 3.298a.196.196 0 0 0 .154 0c2.245-.957 3.582-2.103 4.366-3.297C13.225 9.666 13.5 8.358 13.5 7V3.48a.25.25 0 0 0-.174-.238l-5.25-1.68a.25.25 0 0 0-.153 0ZM11.28 6.28l-3.5 3.5a.75.75 0 0 1-1.06 0l-1.5-1.5a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l.97.97 2.97-2.97a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path>
+</svg>
+</template>
+
+<template id="heart-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-heart">
+    <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
+</svg>
+</template>
+
+<template id="server-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-server">
+    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v4c0 .372-.116.717-.314 1 .198.283.314.628.314 1v4a1.75 1.75 0 0 1-1.75 1.75H1.75A1.75 1.75 0 0 1 0 12.75v-4c0-.358.109-.707.314-1a1.739 1.739 0 0 1-.314-1v-4C0 1.784.784 1 1.75 1ZM1.5 2.75v4c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-4a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Zm.25 5.75a.25.25 0 0 0-.25.25v4c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-4a.25.25 0 0 0-.25-.25ZM7 4.75A.75.75 0 0 1 7.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 7 4.75ZM7.75 10h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM3 4.75A.75.75 0 0 1 3.75 4h.5a.75.75 0 0 1 0 1.5h-.5A.75.75 0 0 1 3 4.75ZM3.75 10h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1 0-1.5Z"></path>
+</svg>
+</template>
+
+<template id="globe-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-globe">
+    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM5.78 8.75a9.64 9.64 0 0 0 1.363 4.177c.255.426.542.832.857 1.215.245-.296.551-.705.857-1.215A9.64 9.64 0 0 0 10.22 8.75Zm4.44-1.5a9.64 9.64 0 0 0-1.363-4.177c-.307-.51-.612-.919-.857-1.215a9.927 9.927 0 0 0-.857 1.215A9.64 9.64 0 0 0 5.78 7.25Zm-5.944 1.5H1.543a6.507 6.507 0 0 0 4.666 5.5c-.123-.181-.24-.365-.352-.552-.715-1.192-1.437-2.874-1.581-4.948Zm-2.733-1.5h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.507 6.507 0 0 0-4.666 5.5Zm10.181 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.507 6.507 0 0 0 4.666-5.5Zm2.733-1.5a6.507 6.507 0 0 0-4.666-5.5c.123.181.24.365.353.552.714 1.192 1.436 2.874 1.58 4.948Z"></path>
+</svg>
+</template>
+
+<template id="issue-opened-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-issue-opened">
+    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path>
+</svg>
+</template>
+
+<template id="device-mobile-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-device-mobile">
+    <path d="M3.75 0h8.5C13.216 0 14 .784 14 1.75v12.5A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25V1.75C2 .784 2.784 0 3.75 0ZM3.5 1.75v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25ZM8 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
+</svg>
+</template>
+
+<template id="package-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-package">
+    <path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"></path>
+</svg>
+</template>
+
+<template id="credit-card-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-credit-card">
+    <path d="M10.75 9a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5h-1.5Z"></path><path d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25ZM14.5 6.5h-13v5.75c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25Zm0-2.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25V5h13Z"></path>
+</svg>
+</template>
+
+<template id="play-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-play">
+    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"></path>
+</svg>
+</template>
+
+<template id="gift-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-gift">
+    <path d="M2 2.75A2.75 2.75 0 0 1 4.75 0c.983 0 1.873.42 2.57 1.232.268.318.497.668.68 1.042.183-.375.411-.725.68-1.044C9.376.42 10.266 0 11.25 0a2.75 2.75 0 0 1 2.45 4h.55c.966 0 1.75.784 1.75 1.75v2c0 .698-.409 1.301-1 1.582v4.918A1.75 1.75 0 0 1 13.25 16H2.75A1.75 1.75 0 0 1 1 14.25V9.332C.409 9.05 0 8.448 0 7.75v-2C0 4.784.784 4 1.75 4h.55c-.192-.375-.3-.8-.3-1.25ZM7.25 9.5H2.5v4.75c0 .138.112.25.25.25h4.5Zm1.5 0v5h4.5a.25.25 0 0 0 .25-.25V9.5Zm0-4V8h5.5a.25.25 0 0 0 .25-.25v-2a.25.25 0 0 0-.25-.25Zm-7 0a.25.25 0 0 0-.25.25v2c0 .138.112.25.25.25h5.5V5.5h-5.5Zm3-4a1.25 1.25 0 0 0 0 2.5h2.309c-.233-.818-.542-1.401-.878-1.793-.43-.502-.915-.707-1.431-.707ZM8.941 4h2.309a1.25 1.25 0 0 0 0-2.5c-.516 0-1 .205-1.43.707-.337.392-.646.975-.879 1.793Z"></path>
+</svg>
+</template>
+
+<template id="code-square-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-code-square">
+    <path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25Zm7.47 3.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L10.69 8 9.22 6.53a.75.75 0 0 1 0-1.06ZM6.78 6.53 5.31 8l1.47 1.47a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path>
+</svg>
+</template>
+
+<template id="device-desktop-icon">
+  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-device-desktop">
+    <path d="M14.25 1c.966 0 1.75.784 1.75 1.75v7.5A1.75 1.75 0 0 1 14.25 12h-3.727c.099 1.041.52 1.872 1.292 2.757A.752.752 0 0 1 11.25 16h-6.5a.75.75 0 0 1-.565-1.243c.772-.885 1.192-1.716 1.292-2.757H1.75A1.75 1.75 0 0 1 0 10.25v-7.5C0 1.784.784 1 1.75 1ZM1.75 2.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM9.018 12H6.982a5.72 5.72 0 0 1-.765 2.5h3.566a5.72 5.72 0 0 1-.765-2.5Z"></path>
+</svg>
+</template>
+
+        <div class="position-relative">
+                <ul
+                  role="listbox"
+                  class="ActionListWrap QueryBuilder-ListWrap"
+                  aria-label="Suggestions"
+                  data-action="
+                    combobox-commit:query-builder#comboboxCommit
+                    mousedown:query-builder#resultsMousedown
+                  "
+                  data-target="query-builder.resultsList"
+                  data-persist-list=false
+                  id="query-builder-test-results"
+                  tabindex="-1"
+                ></ul>
+        </div>
+      <div class="FormControl-inlineValidation" id="validation-21a9c473-d79b-491c-910d-298ab0b6782b" hidden="hidden">
+        <span class="FormControl-inlineValidation--visual">
+          <svg aria-hidden="true" height="12" viewBox="0 0 12 12" version="1.1" width="12" data-view-component="true" class="octicon octicon-alert-fill">
+    <path d="M4.855.708c.5-.896 1.79-.896 2.29 0l4.675 8.351a1.312 1.312 0 0 1-1.146 1.954H1.33A1.313 1.313 0 0 1 .183 9.058ZM7 7V3H5v4Zm-1 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path>
+</svg>
+        </span>
+        <span></span>
+</div>    </div>
+    <div data-target="query-builder.screenReaderFeedback" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+</query-builder></form>
+          <div class="d-flex flex-row color-fg-muted px-3 text-small color-bg-default search-feedback-prompt">
+            <a target="_blank" href="https://docs.github.com/search-github/github-code-search/understanding-github-code-search-syntax" data-view-component="true" class="Link color-fg-accent text-normal ml-2">Search syntax tips</a>            <div class="d-flex flex-1"></div>
+              <button data-action="click:qbsearch-input#showFeedbackDialog" type="button" data-view-component="true" class="Button--link Button--medium Button color-fg-accent text-normal ml-2">  <span class="Button-content">
+    <span class="Button-label">Give feedback</span>
+  </span>
+</button>
+          </div>
+        </div>
+</div>
+
+    </div>
+</modal-dialog></div>
+  </div>
+  <div data-action="click:qbsearch-input#retract" class="dark-backdrop position-fixed" hidden data-target="qbsearch-input.darkBackdrop"></div>
+  <div class="color-fg-default">
+    
+<dialog-helper>
+  <dialog data-target="qbsearch-input.feedbackDialog" data-action="close:qbsearch-input#handleDialogClose cancel:qbsearch-input#handleDialogClose" id="feedback-dialog" aria-modal="true" aria-labelledby="feedback-dialog-title" aria-describedby="feedback-dialog-description" data-view-component="true" class="Overlay Overlay-whenNarrow Overlay--size-medium Overlay--motion-scaleFade Overlay--disableScroll">
+    <div data-view-component="true" class="Overlay-header">
+  <div class="Overlay-headerContentWrap">
+    <div class="Overlay-titleWrap">
+      <h1 class="Overlay-title " id="feedback-dialog-title">
+        Provide feedback
+      </h1>
+        
+    </div>
+    <div class="Overlay-actionWrap">
+      <button data-close-dialog-id="feedback-dialog" aria-label="Close" aria-label="Close" type="button" data-view-component="true" class="close-button Overlay-closeButton"><svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+</svg></button>
+    </div>
+  </div>
+  
+</div>
+      <scrollable-region data-labelled-by="feedback-dialog-title">
+        <div data-view-component="true" class="Overlay-body">        <!-- '"` --><!-- </textarea></xmp> --></option></form><form id="code-search-feedback-form" data-turbo="false" action="/search/feedback" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="5rz6dCtEEDbMHulXu1Ea69l8oarMKznSCtXZcg_LlZ2g2_yhx62lKwKvMfqDaL784PADzXDcOF0zyp4lO_BbLg" />
+          <p>We read every piece of feedback, and take your input very seriously.</p>
+          <textarea name="feedback" class="form-control width-full mb-2" style="height: 120px" id="feedback"></textarea>
+          <input name="include_email" id="include_email" aria-label="Include my email address so I can be contacted" class="form-control mr-2" type="checkbox">
+          <label for="include_email" style="font-weight: normal">Include my email address so I can be contacted</label>
+</form></div>
+      </scrollable-region>
+      <div data-view-component="true" class="Overlay-footer Overlay-footer--alignEnd">          <button data-close-dialog-id="feedback-dialog" type="button" data-view-component="true" class="btn">    Cancel
+</button>
+          <button form="code-search-feedback-form" data-action="click:qbsearch-input#submitFeedback" type="submit" data-view-component="true" class="btn-primary btn">    Submit feedback
+</button>
+</div>
+</dialog></dialog-helper>
+
+    <custom-scopes data-target="qbsearch-input.customScopesManager">
+    
+<dialog-helper>
+  <dialog data-target="custom-scopes.customScopesModalDialog" data-action="close:qbsearch-input#handleDialogClose cancel:qbsearch-input#handleDialogClose" id="custom-scopes-dialog" aria-modal="true" aria-labelledby="custom-scopes-dialog-title" aria-describedby="custom-scopes-dialog-description" data-view-component="true" class="Overlay Overlay-whenNarrow Overlay--size-medium Overlay--motion-scaleFade Overlay--disableScroll">
+    <div data-view-component="true" class="Overlay-header Overlay-header--divided">
+  <div class="Overlay-headerContentWrap">
+    <div class="Overlay-titleWrap">
+      <h1 class="Overlay-title " id="custom-scopes-dialog-title">
+        Saved searches
+      </h1>
+        <h2 id="custom-scopes-dialog-description" class="Overlay-description">Use saved searches to filter your results more quickly</h2>
+    </div>
+    <div class="Overlay-actionWrap">
+      <button data-close-dialog-id="custom-scopes-dialog" aria-label="Close" aria-label="Close" type="button" data-view-component="true" class="close-button Overlay-closeButton"><svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+</svg></button>
+    </div>
+  </div>
+  
+</div>
+      <scrollable-region data-labelled-by="custom-scopes-dialog-title">
+        <div data-view-component="true" class="Overlay-body">        <div data-target="custom-scopes.customScopesModalDialogFlash"></div>
+
+        <div hidden class="create-custom-scope-form" data-target="custom-scopes.createCustomScopeForm">
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form id="custom-scopes-dialog-form" data-turbo="false" action="/search/custom_scopes" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="ER2W3-Q_AX3WSHWSusxk4gRp_MMoqhBxLQDiL1ivZXr7ogwP32abHjz1niGp_u5WTco1kPkHbyI6NV3JU40Nog" />
+          <div data-target="custom-scopes.customScopesModalDialogFlash"></div>
+
+          <input type="hidden" id="custom_scope_id" name="custom_scope_id" data-target="custom-scopes.customScopesIdField">
+
+          <div class="form-group">
+            <label for="custom_scope_name">Name</label>
+            <auto-check src="/search/custom_scopes/check_name" required>
+              <input
+                type="text"
+                name="custom_scope_name"
+                id="custom_scope_name"
+                data-target="custom-scopes.customScopesNameField"
+                class="form-control"
+                autocomplete="off"
+                placeholder="github-ruby"
+                required
+                maxlength="50">
+              <input type="hidden" value="w1sE2G8KiTfsq4_WAGFy7una4ZDjoE1wXxYDhv69lVowJT6V4EyFumwEsJKvyYJ6UlHiJh9vIRkUkIkhL7KegQ" data-csrf="true" />
+            </auto-check>
+          </div>
+
+          <div class="form-group">
+            <label for="custom_scope_query">Query</label>
+            <input
+              type="text"
+              name="custom_scope_query"
+              id="custom_scope_query"
+              data-target="custom-scopes.customScopesQueryField"
+              class="form-control"
+              autocomplete="off"
+              placeholder="(repo:mona/a OR repo:mona/b) AND lang:python"
+              required
+              maxlength="500">
+          </div>
+
+          <p class="text-small color-fg-muted">
+            To see all available qualifiers, see our <a class="Link--inTextBlock" href="https://docs.github.com/search-github/github-code-search/understanding-github-code-search-syntax">documentation</a>.
+          </p>
+</form>        </div>
+
+        <div data-target="custom-scopes.manageCustomScopesForm">
+          <div data-target="custom-scopes.list"></div>
+        </div>
+
+</div>
+      </scrollable-region>
+      <div data-view-component="true" class="Overlay-footer Overlay-footer--alignEnd Overlay-footer--divided">          <button data-action="click:custom-scopes#customScopesCancel" type="button" data-view-component="true" class="btn">    Cancel
+</button>
+          <button form="custom-scopes-dialog-form" data-action="click:custom-scopes#customScopesSubmit" data-target="custom-scopes.customScopesSubmitButton" type="submit" data-view-component="true" class="btn-primary btn">    Create saved search
+</button>
+</div>
+</dialog></dialog-helper>
+    </custom-scopes>
+  </div>
+</qbsearch-input>  <input type="hidden" value="3ePwr3KVF8vcN6zfXemXJjJ-IAZt9nZcOIf1v7ryn3moD2M8CicOR3pLRJGMrR6-mHEVZHiMODuAeGYavEW7dw" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
+
+
+              </div>
+
+            
+              <div class="AppHeader-CopilotChat hide-sm hide-md">
+  <div class="d-flex">
+    <react-partial-anchor>
+        <a href="/copilot" data-target="react-partial-anchor.anchor" id="copilot-chat-header-button" aria-labelledby="tooltip-63a4acbe-2b26-4e6e-94b5-e90b2475bbb7" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium AppHeader-button AppHeader-buttonLeft cursor-wait">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copilot Button-visual">
+    <path d="M7.998 15.035c-4.562 0-7.873-2.914-7.998-3.749V9.338c.085-.628.677-1.686 1.588-2.065.013-.07.024-.143.036-.218.029-.183.06-.384.126-.612-.201-.508-.254-1.084-.254-1.656 0-.87.128-1.769.693-2.484.579-.733 1.494-1.124 2.724-1.261 1.206-.134 2.262.034 2.944.765.05.053.096.108.139.165.044-.057.094-.112.143-.165.682-.731 1.738-.899 2.944-.765 1.23.137 2.145.528 2.724 1.261.566.715.693 1.614.693 2.484 0 .572-.053 1.148-.254 1.656.066.228.098.429.126.612.012.076.024.148.037.218.924.385 1.522 1.471 1.591 2.095v1.872c0 .766-3.351 3.795-8.002 3.795Zm0-1.485c2.28 0 4.584-1.11 5.002-1.433V7.862l-.023-.116c-.49.21-1.075.291-1.727.291-1.146 0-2.059-.327-2.71-.991A3.222 3.222 0 0 1 8 6.303a3.24 3.24 0 0 1-.544.743c-.65.664-1.563.991-2.71.991-.652 0-1.236-.081-1.727-.291l-.023.116v4.255c.419.323 2.722 1.433 5.002 1.433ZM6.762 2.83c-.193-.206-.637-.413-1.682-.297-1.019.113-1.479.404-1.713.7-.247.312-.369.789-.369 1.554 0 .793.129 1.171.308 1.371.162.181.519.379 1.442.379.853 0 1.339-.235 1.638-.54.315-.322.527-.827.617-1.553.117-.935-.037-1.395-.241-1.614Zm4.155-.297c-1.044-.116-1.488.091-1.681.297-.204.219-.359.679-.242 1.614.091.726.303 1.231.618 1.553.299.305.784.54 1.638.54.922 0 1.28-.198 1.442-.379.179-.2.308-.578.308-1.371 0-.765-.123-1.242-.37-1.554-.233-.296-.693-.587-1.713-.7Z"></path><path d="M6.25 9.037a.75.75 0 0 1 .75.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 .75-.75Zm4.25.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 1.5 0Z"></path>
+</svg>
+</a><tool-tip id="tooltip-63a4acbe-2b26-4e6e-94b5-e90b2475bbb7" for="copilot-chat-header-button" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Chat with Copilot</tool-tip>
+
+      <template data-target="react-partial-anchor.template">
+        <script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/18312-17646a9d1ca3.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/40420-d22dc985a766.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/347-d8794b0e68a7.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/52049-aa86186cd7dd.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/37051-cb8690bd8a08.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/62318-1533a458c2ff.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/30997-43b688803191.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/3025-0e441b2f6975.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/11048-7bcc0c218a96.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/37294-84593db7c295.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/30721-5cbde854429a.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/2635-bb0b392d182e.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/81171-0132ed576c5f.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/10306-91ddc9fd9e15.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/4817-8a2689aded16.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/28902-06cf38827ce2.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/36982-2ff55885e9dc.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/92687-ecd4570b9154.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/34031-80252173b2e1.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/29405-7f915c510db8.js" defer="defer"></script>
+<script crossorigin="anonymous" type="application/javascript" src="https://github.githubassets.com/assets/copilot-chat-7269c872c82d.js" defer="defer"></script>
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react.1880ae4a0cc8c9bf298c.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/29405.8b7bba9eb72962481d6b.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/copilot-chat.588a40d6c4d417bb8182.module.css" />
+        <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/copilot-markdown-rendering-ddd978d4a7c0.css" />
+        <include-fragment src="/github-copilot/chat?skip_anchor=true" data-nonce="v2:7b4b6c4f-e988-7b4c-4bb6-ca41e8313670" data-view-component="true">
+  
+  <div data-show-on-forbidden-error hidden>
+    <div class="Box">
+  <div class="blankslate-container">
+    <div data-view-component="true" class="blankslate blankslate-spacious color-bg-default rounded-2">
+      
+
+      <h3 data-view-component="true" class="blankslate-heading">        Uh oh!
+</h3>
+      <p data-view-component="true">        <p class="color-fg-muted my-2 mb-2 ws-normal">There was an error while loading. <a class="Link--inTextBlock" data-turbo="false" href="" aria-label="Please reload this page">Please reload this page</a>.</p>
+</p>
+
+</div>  </div>
+</div>  </div>
+</include-fragment>
+      </template>
+    </react-partial-anchor>
+    <div class="position-relative">
+      
+        <react-partial-anchor>
+          <button id="global-copilot-menu-button" data-target="react-partial-anchor.anchor" aria-expanded="false" aria-labelledby="tooltip-59ab1905-9829-49b2-8836-8c2d71199c7f" type="button" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium AppHeader-button AppHeader-buttonRight">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-triangle-down Button-visual">
+    <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path>
+</svg>
+</button><tool-tip id="tooltip-59ab1905-9829-49b2-8836-8c2d71199c7f" for="global-copilot-menu-button" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Open Copilot…</tool-tip>
+
+          <template data-target="react-partial-anchor.template">
+            <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react.1880ae4a0cc8c9bf298c.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-copilot-menu.9d926f69ee309a45d0df.module.css" />
+
+<react-partial
+  partial-name="global-copilot-menu"
+  data-ssr="false"
+  data-attempted-ssr="false"
+  data-react-profiling="false"
+>
+  
+  <script type="application/json" data-target="react-partial.embeddedData">{"props":{"repository":{"id":991065825,"name":"htl66","ownerLogin":"yukihina"}}}</script>
+  <div data-target="react-partial.reactRoot"></div>
+</react-partial>
+
+
+          </template>
+        </react-partial-anchor>
+    </div>
+  </div>
+</div>
+
+
+            <div class="AppHeader-actions position-relative">
+                 <react-partial-anchor>
+      <button id="global-create-menu-anchor" aria-label="Create something new" data-target="react-partial-anchor.anchor" type="button" disabled="disabled" data-view-component="true" class="AppHeader-button AppHeader-button--dropdown global-create-button cursor-wait Button--secondary Button--medium Button width-auto color-fg-muted">  <span class="Button-content">
+      <span class="Button-visual Button-leadingVisual">
+        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-plus">
+    <path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path>
+</svg>
+      </span>
+    <span class="Button-label"><svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-triangle-down">
+    <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path>
+</svg></span>
+  </span>
+</button><tool-tip id="tooltip-18897bbe-b998-4978-8c37-e83c5d8963de" for="global-create-menu-anchor" popover="manual" data-direction="s" data-type="description" data-view-component="true" class="sr-only position-absolute">Create new…</tool-tip>
+
+      <template data-target="react-partial-anchor.template">
+        <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react.1880ae4a0cc8c9bf298c.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-create-menu.30736d4aa7b2b246dd6f.module.css" />
+
+<react-partial
+  partial-name="global-create-menu"
+  data-ssr="false"
+  data-attempted-ssr="false"
+  data-react-profiling="false"
+>
+  
+  <script type="application/json" data-target="react-partial.embeddedData">{"props":{"showCreateRepo":true,"showImportRepo":true,"showCodespaces":true,"showSpark":false,"showCodingAgent":false,"showGist":true,"showCreateOrg":true,"showCreateProject":false,"showCreateLegacyProject":false,"showCreateIssue":true,"createProjectUrl":"/yukihina?tab=projects","org":null,"owner":"yukihina","repo":"htl66"}}</script>
+  <div data-target="react-partial.reactRoot"></div>
+</react-partial>
+
+
+      </template>
+    </react-partial-anchor>
+
+
+                <a href="/issues" data-analytics-event="{&quot;category&quot;:&quot;Global navigation&quot;,&quot;action&quot;:&quot;ISSUES_HEADER&quot;,&quot;label&quot;:null}" id="icon-button-6e52bb6c-12cc-4be6-b39d-ab15a03c5ded" aria-labelledby="tooltip-21d35414-f284-46eb-97c2-aa9cf70031ef" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium AppHeader-button color-fg-muted">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-issue-opened Button-visual">
+    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path>
+</svg>
+</a><tool-tip id="tooltip-21d35414-f284-46eb-97c2-aa9cf70031ef" for="icon-button-6e52bb6c-12cc-4be6-b39d-ab15a03c5ded" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Your issues</tool-tip>
+
+                <a href="/pulls" data-analytics-event="{&quot;category&quot;:&quot;Global navigation&quot;,&quot;action&quot;:&quot;PULL_REQUESTS_HEADER&quot;,&quot;label&quot;:null}" id="icon-button-f54ff95e-9e6d-4cc0-b644-e255be177944" aria-labelledby="tooltip-116d6da2-3080-4980-b297-e5ee5e1d7a03" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium AppHeader-button color-fg-muted">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-pull-request Button-visual">
+    <path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path>
+</svg>
+</a><tool-tip id="tooltip-116d6da2-3080-4980-b297-e5ee5e1d7a03" for="icon-button-f54ff95e-9e6d-4cc0-b644-e255be177944" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Your pull requests</tool-tip>
+
+            </div>
+
+              <notification-indicator data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6MTI1OTQ5NTcyIiwidCI6MTc2MzYyMDEyNX0=--c13ab20858f090956734a440d28765f255060c71898999231ff70930914b11b8" data-indicator-mode="none" data-tooltip-global="You have unread notifications" data-tooltip-unavailable="Notifications are unavailable at the moment." data-tooltip-none="You have no unread notifications" data-header-redesign-enabled="true" data-fetch-indicator-src="/notifications/indicator" data-fetch-indicator-enabled="true" data-view-component="true" class="js-socket-channel">
+    <a id="AppHeader-notifications-button" href="/notifications" aria-labelledby="notification-indicator-tooltip" data-hotkey="g n" data-target="notification-indicator.link" data-analytics-event="{&quot;category&quot;:&quot;Global navigation&quot;,&quot;action&quot;:&quot;NOTIFICATIONS_HEADER&quot;,&quot;label&quot;:null}" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium AppHeader-button color-fg-muted">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-inbox Button-visual">
+    <path d="M2.8 2.06A1.75 1.75 0 0 1 4.41 1h7.18c.7 0 1.333.417 1.61 1.06l2.74 6.395c.04.093.06.194.06.295v4.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25v-4.5c0-.101.02-.202.06-.295Zm1.61.44a.25.25 0 0 0-.23.152L1.887 8H4.75a.75.75 0 0 1 .6.3L6.625 10h2.75l1.275-1.7a.75.75 0 0 1 .6-.3h2.863L11.82 2.652a.25.25 0 0 0-.23-.152Zm10.09 7h-2.875l-1.275 1.7a.75.75 0 0 1-.6.3h-3.5a.75.75 0 0 1-.6-.3L4.375 9.5H1.5v3.75c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25Z"></path>
+</svg>
+</a>
+
+    <tool-tip id="notification-indicator-tooltip" data-target="notification-indicator.tooltip" for="AppHeader-notifications-button" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Notifications</tool-tip>
+</notification-indicator>
+
+            <div class="AppHeader-user">
+              <deferred-side-panel data-url="/_side-panels/user?repository_id=991065825">
+  <include-fragment data-target="deferred-side-panel.fragment" data-nonce="v2:7b4b6c4f-e988-7b4c-4bb6-ca41e8313670" data-view-component="true">
+  
+    <react-partial-anchor
+  
+>
+  <button data-target="react-partial-anchor.anchor" data-login="yukihina" aria-label="Open user navigation menu" type="button" data-view-component="true" class="cursor-wait Button--invisible Button--medium Button Button--invisible-noVisuals color-bg-transparent p-0">  <span class="Button-content">
+    <span class="Button-label"><img src="https://avatars.githubusercontent.com/u/125949572?v=4" alt="" size="32" height="32" width="32" data-view-component="true" class="avatar circle" /></span>
+  </span>
+</button>
+  <template data-target="react-partial-anchor.template">
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react.1880ae4a0cc8c9bf298c.module.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-user-nav-drawer.90949a46e3c775d67262.module.css" />
+
+<react-partial
+  partial-name="global-user-nav-drawer"
+  data-ssr="false"
+  data-attempted-ssr="false"
+  data-react-profiling="false"
+>
+  
+  <script type="application/json" data-target="react-partial.embeddedData">{"props":{"owner":{"login":"yukihina","name":null,"avatarUrl":"https://avatars.githubusercontent.com/u/125949572?v=4"},"drawerId":"global-user-nav-drawer","lazyLoadItemDataFetchUrl":"/_side-panels/user.json","canAddAccount":true,"addAccountPath":"/login?add_account=1\u0026return_to=https%3A%2F%2Fgithub.com%2Fyukihina%2Fhtl66%2Fblob%2Fclaude%2Fimplement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q%2FCORE_SYSTEM_DOCUMENTATION.md","switchAccountPath":"/switch_account","loginAccountPath":"/login?add_account=1","projectsPath":"/yukihina?tab=projects","gistsUrl":"https://gist.github.com/mine","docsUrl":"https://docs.github.com","yourEnterpriseUrl":null,"enterpriseSettingsUrl":null,"supportUrl":"https://support.github.com","showAccountSwitcher":true,"showCopilot":true,"showEnterprises":true,"showEnterprise":false,"showGists":true,"showOrganizations":true,"showSponsors":true,"showUpgrade":true,"showFeaturesPreviews":true,"showEnterpriseSettings":false}}</script>
+  <div data-target="react-partial.reactRoot"></div>
+</react-partial>
+
+
+  </template>
+</react-partial-anchor>
+
+
+  <div data-show-on-forbidden-error hidden>
+    <div class="Box">
+  <div class="blankslate-container">
+    <div data-view-component="true" class="blankslate blankslate-spacious color-bg-default rounded-2">
+      
+
+      <h3 data-view-component="true" class="blankslate-heading">        Uh oh!
+</h3>
+      <p data-view-component="true">        <p class="color-fg-muted my-2 mb-2 ws-normal">There was an error while loading. <a class="Link--inTextBlock" data-turbo="false" href="" aria-label="Please reload this page">Please reload this page</a>.</p>
+</p>
+
+</div>  </div>
+</div>  </div>
+</include-fragment></deferred-side-panel>
+            </div>
+
+            <div class="position-absolute mt-2">
+                
+<site-header-logged-in-user-menu>
+
+</site-header-logged-in-user-menu>
+
+            </div>
+          </div>
+        </div>
+
+
+        
+            <div class="AppHeader-localBar" >
+              <nav data-pjax="#js-repo-pjax-container" aria-label="Repository" data-view-component="true" class="js-repo-nav js-sidenav-container-pjax js-responsive-underlinenav overflow-hidden UnderlineNav">
+
+  <ul data-view-component="true" class="UnderlineNav-body list-style-none">
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="code-tab" href="/yukihina/htl66/tree/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q" data-tab-item="i0code-tab" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages repo_deployments repo_attestations /yukihina/htl66/tree/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g c" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Code&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-code UnderlineNav-octicon d-none d-sm-inline">
+    <path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+        <span data-content="Code">Code</span>
+          <span id="code-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="issues-tab" href="/yukihina/htl66/issues" data-tab-item="i1issues-tab" data-selected-links="repo_issues repo_labels repo_milestones /yukihina/htl66/issues" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g i" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Issues&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-issue-opened UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path>
+</svg>
+        <span data-content="Issues">Issues</span>
+          <span id="issues-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="0" hidden="hidden" data-view-component="true" class="Counter">0</span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="pull-requests-tab" href="/yukihina/htl66/pulls" data-tab-item="i2pull-requests-tab" data-selected-links="repo_pulls checks /yukihina/htl66/pulls" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g p" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Pull requests&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-pull-request UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path>
+</svg>
+        <span data-content="Pull requests">Pull requests</span>
+          <span id="pull-requests-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="0" hidden="hidden" data-view-component="true" class="Counter">0</span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="actions-tab" href="/yukihina/htl66/actions" data-tab-item="i3actions-tab" data-selected-links="repo_actions /yukihina/htl66/actions" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g a" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Actions&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-play UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"></path>
+</svg>
+        <span data-content="Actions">Actions</span>
+          <span id="actions-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="projects-tab" href="/yukihina/htl66/projects" data-tab-item="i4projects-tab" data-selected-links="repo_projects new_repo_project repo_project /yukihina/htl66/projects" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g b" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Projects&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-table UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25ZM6.5 6.5v8h7.75a.25.25 0 0 0 .25-.25V6.5Zm8-1.5V1.75a.25.25 0 0 0-.25-.25H6.5V5Zm-13 1.5v7.75c0 .138.112.25.25.25H5v-8ZM5 5V1.5H1.75a.25.25 0 0 0-.25.25V5Z"></path>
+</svg>
+        <span data-content="Projects">Projects</span>
+          <span id="projects-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="0" hidden="hidden" data-view-component="true" class="Counter">0</span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="wiki-tab" href="/yukihina/htl66/wiki" data-tab-item="i5wiki-tab" data-selected-links="repo_wiki /yukihina/htl66/wiki" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g w" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Wiki&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-book UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"></path>
+</svg>
+        <span data-content="Wiki">Wiki</span>
+          <span id="wiki-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="security-tab" href="/yukihina/htl66/security" data-tab-item="i6security-tab" data-selected-links="security overview alerts policy token_scanning code_scanning /yukihina/htl66/security" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-hotkey="g s" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Security&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-shield UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M7.467.133a1.748 1.748 0 0 1 1.066 0l5.25 1.68A1.75 1.75 0 0 1 15 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.697 1.697 0 0 1-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 0 1 1.217-1.667Zm.61 1.429a.25.25 0 0 0-.153 0l-5.25 1.68a.25.25 0 0 0-.174.238V7c0 1.358.275 2.666 1.057 3.86.784 1.194 2.121 2.34 4.366 3.297a.196.196 0 0 0 .154 0c2.245-.956 3.582-2.104 4.366-3.298C13.225 9.666 13.5 8.36 13.5 7V3.48a.251.251 0 0 0-.174-.237l-5.25-1.68ZM8.75 4.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 1.5 0ZM9 10.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+</svg>
+        <span data-content="Security">Security</span>
+          <include-fragment src="/yukihina/htl66/security/overall-count" accept="text/fragment+html" data-nonce="v2:7b4b6c4f-e988-7b4c-4bb6-ca41e8313670" data-view-component="true">
+  
+  <div data-show-on-forbidden-error hidden>
+    <div class="Box">
+  <div class="blankslate-container">
+    <div data-view-component="true" class="blankslate blankslate-spacious color-bg-default rounded-2">
+      
+
+      <h3 data-view-component="true" class="blankslate-heading">        Uh oh!
+</h3>
+      <p data-view-component="true">        <p class="color-fg-muted my-2 mb-2 ws-normal">There was an error while loading. <a class="Link--inTextBlock" data-turbo="false" href="" aria-label="Please reload this page">Please reload this page</a>.</p>
+</p>
+
+</div>  </div>
+</div>  </div>
+</include-fragment>
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="insights-tab" href="/yukihina/htl66/pulse" data-tab-item="i7insights-tab" data-selected-links="repo_graphs repo_contributors dependency_graph dependabot_updates pulse people community /yukihina/htl66/pulse" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Insights&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-graph UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path>
+</svg>
+        <span data-content="Insights">Insights</span>
+          <span id="insights-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+      <li data-view-component="true" class="d-inline-flex">
+  <a id="settings-tab" href="/yukihina/htl66/settings" data-tab-item="i8settings-tab" data-selected-links="code_review_limits code_quality codespaces_repository_settings collaborators custom_tabs github_models_repo_settings hooks integration_installations interaction_limits issue_template_editor key_links_settings license_policy notifications repo_announcements repo_branch_settings repo_custom_properties repo_keys_settings repo_pages_settings repo_protected_tags_settings repo_rule_insights repo_rules_bypass_requests repo_rulesets repo_settings_copilot_coding_guidelines repo_settings_copilot_content_exclusion repo_settings_copilot_swe_agent repo_settings reported_content repository_actions_settings_add_new_runner repository_actions_settings_general repository_actions_settings_runner_details repository_actions_settings_runners repository_actions_settings repository_environments role_details secrets_settings_actions secrets_settings_codespaces secrets_settings_dependabot secrets security_analysis security_products /yukihina/htl66/settings" data-pjax="#repo-content-pjax-container" data-turbo-frame="repo-content-turbo-frame" data-analytics-event="{&quot;category&quot;:&quot;Underline navbar&quot;,&quot;action&quot;:&quot;Click tab&quot;,&quot;label&quot;:&quot;Settings&quot;,&quot;target&quot;:&quot;UNDERLINE_NAV.TAB&quot;}" data-view-component="true" class="UnderlineNav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+    
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-gear UnderlineNav-octicon d-none d-sm-inline">
+    <path d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z"></path>
+</svg>
+        <span data-content="Settings">Settings</span>
+          <span id="settings-repo-tab-count" data-pjax-replace="" data-turbo-replace="" title="Not available" data-view-component="true" class="Counter"></span>
+
+
+    
+</a></li>
+</ul>
+    <div style="visibility:hidden;" data-view-component="true" class="UnderlineNav-actions js-responsive-underlinenav-overflow position-absolute pr-3 pr-md-4 pr-lg-5 right-0">      <action-menu data-select-variant="none" data-view-component="true">
+  <focus-group direction="vertical" mnemonics retain>
+    <button id="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-button" popovertarget="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-overlay" aria-controls="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-list" aria-haspopup="true" aria-labelledby="tooltip-5f01696a-e907-411e-84cf-e298c2e0e440" type="button" data-view-component="true" class="Button Button--iconOnly Button--secondary Button--medium UnderlineNav-item">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-kebab-horizontal Button-visual">
+    <path d="M8 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM1.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm13 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+</svg>
+</button><tool-tip id="tooltip-5f01696a-e907-411e-84cf-e298c2e0e440" for="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-button" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Additional navigation options</tool-tip>
+
+
+<anchored-position data-target="action-menu.overlay" id="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-overlay" anchor="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-button" align="start" side="outside-bottom" anchor-offset="normal" popover="auto" data-view-component="true">
+  <div data-view-component="true" class="Overlay Overlay--size-auto">
+    
+      <div data-view-component="true" class="Overlay-body Overlay-body--paddingNone">          <action-list>
+  <div data-view-component="true">
+    <ul aria-labelledby="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-button" id="action-menu-eeeaa5b5-e8b6-4416-ad2b-3b9be541e746-list" role="menu" data-view-component="true" class="ActionListWrap--inset ActionListWrap">
+        <li hidden="hidden" data-menu-item="i0code-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-99ea7e49-3a3d-4ad7-9d7f-9210442d2600" href="/yukihina/htl66/tree/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-code">
+    <path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Code
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i1issues-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-5e0ea853-fb13-490d-8f60-61e166464c61" href="/yukihina/htl66/issues" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-issue-opened">
+    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Issues
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i2pull-requests-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-33175aaa-1a56-491b-9b16-46e974a26406" href="/yukihina/htl66/pulls" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-pull-request">
+    <path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Pull requests
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i3actions-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-fbd287f3-39b9-43d3-bfa1-d995c8b58d5b" href="/yukihina/htl66/actions" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-play">
+    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Actions
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i4projects-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-829821f0-d65c-4f26-9dc4-77d644637137" href="/yukihina/htl66/projects" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-table">
+    <path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25ZM6.5 6.5v8h7.75a.25.25 0 0 0 .25-.25V6.5Zm8-1.5V1.75a.25.25 0 0 0-.25-.25H6.5V5Zm-13 1.5v7.75c0 .138.112.25.25.25H5v-8ZM5 5V1.5H1.75a.25.25 0 0 0-.25.25V5Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Projects
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i5wiki-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-88b89f70-9e12-48f2-8555-c329d588bfda" href="/yukihina/htl66/wiki" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-book">
+    <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Wiki
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i6security-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-c2f287fe-952c-412f-a420-7f1703137bd5" href="/yukihina/htl66/security" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-shield">
+    <path d="M7.467.133a1.748 1.748 0 0 1 1.066 0l5.25 1.68A1.75 1.75 0 0 1 15 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.697 1.697 0 0 1-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 0 1 1.217-1.667Zm.61 1.429a.25.25 0 0 0-.153 0l-5.25 1.68a.25.25 0 0 0-.174.238V7c0 1.358.275 2.666 1.057 3.86.784 1.194 2.121 2.34 4.366 3.297a.196.196 0 0 0 .154 0c2.245-.956 3.582-2.104 4.366-3.298C13.225 9.666 13.5 8.36 13.5 7V3.48a.251.251 0 0 0-.174-.237l-5.25-1.68ZM8.75 4.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 1.5 0ZM9 10.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Security
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i7insights-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-af93950d-92aa-46f8-89d9-d9a397caef28" href="/yukihina/htl66/pulse" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-graph">
+    <path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Insights
+</span>      
+</a>
+  
+</li>
+        <li hidden="hidden" data-menu-item="i8settings-tab" data-targets="action-list.items" role="none" data-view-component="true" class="ActionListItem">
+    
+    
+    <a tabindex="-1" id="item-73dc8a20-540b-422f-bde0-105d850ff592" href="/yukihina/htl66/settings" role="menuitem" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+        <span class="ActionListItem-visual ActionListItem-visual--leading">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-gear">
+    <path d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z"></path>
+</svg>
+        </span>
+      
+        <span data-view-component="true" class="ActionListItem-label">
+          Settings
+</span>      
+</a>
+  
+</li>
+</ul>    
+</div></action-list>
+
+
+</div>
+      
+</div></anchored-position>  </focus-group>
+</action-menu></div>
+</nav>
+              
+            </div>
+    </header>
+
+
+      <div hidden="hidden" data-view-component="true" class="js-stale-session-flash stale-session-flash flash flash-warn flash-full">
+  
+        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+</svg>
+        <span class="js-stale-session-flash-signed-in" hidden>You signed in with another tab or window. <a class="Link--inTextBlock" href="">Reload</a> to refresh your session.</span>
+        <span class="js-stale-session-flash-signed-out" hidden>You signed out in another tab or window. <a class="Link--inTextBlock" href="">Reload</a> to refresh your session.</span>
+        <span class="js-stale-session-flash-switched" hidden>You switched accounts on another tab or window. <a class="Link--inTextBlock" href="">Reload</a> to refresh your session.</span>
+
+    <button id="icon-button-a846188c-dd6d-415b-9350-005061b20050" aria-labelledby="tooltip-3238300e-4d2c-4b29-97c4-28688976135b" type="button" data-view-component="true" class="Button Button--iconOnly Button--invisible Button--medium flash-close js-flash-close">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x Button-visual">
+    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+</button><tool-tip id="tooltip-3238300e-4d2c-4b29-97c4-28688976135b" for="icon-button-a846188c-dd6d-415b-9350-005061b20050" popover="manual" data-direction="s" data-type="label" data-view-component="true" class="sr-only position-absolute">Dismiss alert</tool-tip>
+
+
+  
+</div>
+        
+          
+    </div>
+
+  <div id="start-of-content" class="show-on-focus"></div>
+
+
+
+
+
+
+
+
+    <div id="js-flash-container" class="flash-container" data-turbo-replace>
+
+
+
+
+  <template class="js-flash-template">
+    
+<div class="flash flash-full   {{ className }}">
+  <div >
+    <button autofocus class="flash-close js-flash-close" type="button" aria-label="Dismiss this message">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+    </button>
+    <div aria-atomic="true" role="alert" class="js-flash-alert">
+      
+      <div>{{ message }}</div>
+
+    </div>
+  </div>
+</div>
+  </template>
+</div>
+
+
+    
+  <notification-shelf-watcher data-base-url="https://github.com/notifications/beta/shelf" data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6MTI1OTQ5NTcyIiwidCI6MTc2MzYyMDEyNX0=--c13ab20858f090956734a440d28765f255060c71898999231ff70930914b11b8" data-view-component="true" class="js-socket-channel"></notification-shelf-watcher>
+  <div hidden data-initial data-target="notification-shelf-watcher.placeholder"></div>
+
+
+
+
+
+
+  <div
+    class="application-main "
+    data-commit-hovercards-enabled
+    data-discussion-hovercards-enabled
+    data-issue-and-pr-hovercards-enabled
+    data-project-hovercards-enabled
+  >
+        <div itemscope itemtype="http://schema.org/SoftwareSourceCode" class="">
+    <main id="js-repo-pjax-container" >
+      
+      
+
+
+
+
+
+
+    
+  <div id="repository-container-header" data-turbo-replace hidden ></div>
+
+
+
+
+<turbo-frame id="repo-content-turbo-frame" target="_top" data-turbo-action="advance" class="">
+    <div id="repo-content-pjax-container" class="repository-content " >
+      <a href="https://github.dev/" class="d-none js-github-dev-shortcut" data-hotkey=".,Mod+Alt+.">Open in github.dev</a>
+  <a href="https://github.dev/" class="d-none js-github-dev-new-tab-shortcut" data-hotkey="Shift+.,Shift+&gt;,&gt;" target="_blank" rel="noopener noreferrer">Open in a new github.dev tab</a>
+    <a class="d-none" data-hotkey=",,Mod+Alt+," target="_blank" href="/codespaces/new/yukihina/htl66/tree/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q?resume=1">Open in codespace</a>
+
+
+
+
+    
+      
+    
+
+
+
+
+
+
+
+
+<react-app
+  app-name="react-code-view"
+  initial-path="/yukihina/htl66/blob/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md"
+    style="display: block; min-height: calc(100vh - 64px);"
+  data-attempted-ssr="true"
+  data-ssr="true"
+  data-lazy="false"
+  data-alternate="false"
+  data-data-router-enabled="false"
+  data-react-profiling="false"
+>
+  
+  <script type="application/json" data-target="react-app.embeddedData">{"payload":{"allShortcutsEnabled":true,"fileTree":{"":{"items":[{"name":".vscode","path":".vscode","contentType":"directory"},{"name":"3dcamera","path":"3dcamera","contentType":"directory"},{"name":"cache","path":"cache","contentType":"directory"},{"name":"fonts","path":"fonts","contentType":"directory"},{"name":"saves","path":"saves","contentType":"directory"},{"name":"scripts","path":"scripts","contentType":"directory"},{"name":"tl","path":"tl","contentType":"directory"},{"name":".gitattributes","path":".gitattributes","contentType":"file"},{"name":".gitignore","path":".gitignore","contentType":"file"},{"name":"ACHIEVEMENTS_SYSTEM_DOCUMENTATION.md","path":"ACHIEVEMENTS_SYSTEM_DOCUMENTATION.md","contentType":"file"},{"name":"AUDIO_SYSTEM_DOCUMENTATION.md","path":"AUDIO_SYSTEM_DOCUMENTATION.md","contentType":"file"},{"name":"CHARACTER_INFO_DOCUMENTATION.md","path":"CHARACTER_INFO_DOCUMENTATION.md","contentType":"file"},{"name":"CORE_SYSTEM_DOCUMENTATION.md","path":"CORE_SYSTEM_DOCUMENTATION.md","contentType":"file"},{"name":"NOTIFICATIONS_SYSTEM_DOCUMENTATION.md","path":"NOTIFICATIONS_SYSTEM_DOCUMENTATION.md","contentType":"file"},{"name":"PHONE_SYSTEM_DOCUMENTATION.md","path":"PHONE_SYSTEM_DOCUMENTATION.md","contentType":"file"},{"name":"README.txt","path":"README.txt","contentType":"file"},{"name":"STATS_SCREEN_DOCUMENTATION.md","path":"STATS_SCREEN_DOCUMENTATION.md","contentType":"file"},{"name":"changelog.log","path":"changelog.log","contentType":"file"},{"name":"gui.rpy","path":"gui.rpy","contentType":"file"},{"name":"options.rpy","path":"options.rpy","contentType":"file"},{"name":"patch.rpy","path":"patch.rpy","contentType":"file"},{"name":"qori_toolkit_config.ini","path":"qori_toolkit_config.ini","contentType":"file"},{"name":"screens.rpy","path":"screens.rpy","contentType":"file"},{"name":"script.rpy","path":"script.rpy","contentType":"file"},{"name":"work_sessions.json","path":"work_sessions.json","contentType":"file"},{"name":"wt_core.rpy","path":"wt_core.rpy","contentType":"file"},{"name":"wt_ep01.rpy","path":"wt_ep01.rpy","contentType":"file"},{"name":"wt_ep02.rpy","path":"wt_ep02.rpy","contentType":"file"},{"name":"wt_ep03.rpy","path":"wt_ep03.rpy","contentType":"file"},{"name":"wt_ep04.rpy","path":"wt_ep04.rpy","contentType":"file"},{"name":"wt_ep05.rpy","path":"wt_ep05.rpy","contentType":"file"}],"totalCount":31}},"fileTreeProcessingTime":6.25766,"foldersToFetch":[],"incompleteFileTree":false,"repo":{"id":991065825,"defaultBranch":"main","name":"htl66","ownerLogin":"yukihina","currentUserCanPush":true,"isFork":false,"isEmpty":false,"createdAt":"2025-05-26T23:38:36.000-05:00","ownerAvatar":"https://avatars.githubusercontent.com/u/125949572?v=4","public":true,"private":false,"isOrgOwned":false},"codeLineWrapEnabled":false,"symbolsExpanded":true,"treeExpanded":true,"refInfo":{"name":"claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q","listCacheKey":"v0:1763618853.0","canEdit":true,"refType":"branch","currentOid":"3b760886a9a95b8aa6486cd89f95e573c06dfda0","canEditOnDefaultBranch":false,"fileExistsOnDefault":true},"path":"CORE_SYSTEM_DOCUMENTATION.md","currentUser":{"id":125949572,"login":"yukihina","userEmail":"itabashi.yukana59@gmail.com"},"blob":{"rawLines":null,"stylingDirectives":null,"colorizedLines":null,"csv":null,"csvError":null,"copilotSWEAgentEnabled":false,"dependabotInfo":{"showConfigurationBanner":false,"configFilePath":null,"networkDependabotPath":"/yukihina/htl66/network/updates","dismissConfigurationNoticePath":"/settings/dismiss-notice/dependabot_configuration_notice","configurationNoticeDismissed":false},"displayName":"CORE_SYSTEM_DOCUMENTATION.md","displayUrl":"https://github.com/yukihina/htl66/blob/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md?raw=true","headerInfo":{"blobSize":"34.7 KB","deleteTooltip":"Delete this file","editTooltip":"Edit this file","ghDesktopPath":"x-github-client://openRepo/https://github.com/yukihina/htl66?branch=claude%2Fimplement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q\u0026filepath=CORE_SYSTEM_DOCUMENTATION.md","isGitLfs":false,"onBranch":true,"shortPath":"be17d15","siteNavLoginPath":"/login?return_to=https%3A%2F%2Fgithub.com%2Fyukihina%2Fhtl66%2Fblob%2Fclaude%2Fimplement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q%2FCORE_SYSTEM_DOCUMENTATION.md","isCSV":false,"isRichtext":true,"toc":[{"level":1,"text":"Core System Documentation","anchor":"core-system-documentation","htmlText":"Core System Documentation"},{"level":2,"text":"Table of Contents","anchor":"table-of-contents","htmlText":"Table of Contents"},{"level":2,"text":"Introduction","anchor":"introduction","htmlText":"Introduction"},{"level":3,"text":"What Does It Do?","anchor":"what-does-it-do","htmlText":"What Does It Do?"},{"level":2,"text":"System Overview","anchor":"system-overview","htmlText":"System Overview"},{"level":3,"text":"1. RM (Relationship Management)","anchor":"1-rm-relationship-management","htmlText":"1. RM (Relationship Management)"},{"level":3,"text":"2. SexStats","anchor":"2-sexstats","htmlText":"2. SexStats"},{"level":3,"text":"3. WM (Wardrobe Manager)","anchor":"3-wm-wardrobe-manager","htmlText":"3. WM (Wardrobe Manager)"},{"level":3,"text":"4. Level System","anchor":"4-level-system","htmlText":"4. Level System"},{"level":3,"text":"5. Milestone Decision System","anchor":"5-milestone-decision-system","htmlText":"5. Milestone Decision System"},{"level":2,"text":"Relationship Management (RM)","anchor":"relationship-management-rm","htmlText":"Relationship Management (RM)"},{"level":3,"text":"Character Types","anchor":"character-types","htmlText":"Character Types"},{"level":4,"text":"Love Interests (Regular Characters)","anchor":"love-interests-regular-characters","htmlText":"Love Interests (Regular Characters)"},{"level":4,"text":"Main Character (MC)","anchor":"main-character-mc","htmlText":"Main Character (MC)"},{"level":4,"text":"Organizations","anchor":"organizations","htmlText":"Organizations"},{"level":3,"text":"How to Use RM","anchor":"how-to-use-rm","htmlText":"How to Use RM"},{"level":4,"text":"Updating Character Stats","anchor":"updating-character-stats","htmlText":"Updating Character Stats"},{"level":4,"text":"Updating Multiple Attributes","anchor":"updating-multiple-attributes","htmlText":"Updating Multiple Attributes"},{"level":4,"text":"Getting Character Information","anchor":"getting-character-information","htmlText":"Getting Character Information"},{"level":4,"text":"Managing Relationships","anchor":"managing-relationships","htmlText":"Managing Relationships"},{"level":4,"text":"Tracking Character Knowledge","anchor":"tracking-character-knowledge","htmlText":"Tracking Character Knowledge"},{"level":3,"text":"The Emotional Lock System","anchor":"the-emotional-lock-system","htmlText":"The Emotional Lock System"},{"level":2,"text":"Sexual Statistics (SexStats)","anchor":"sexual-statistics-sexstats","htmlText":"Sexual Statistics (SexStats)"},{"level":3,"text":"Tracked Activities","anchor":"tracked-activities","htmlText":"Tracked Activities"},{"level":3,"text":"Starting Virginity Status","anchor":"starting-virginity-status","htmlText":"Starting Virginity Status"},{"level":3,"text":"How to Use SexStats","anchor":"how-to-use-sexstats","htmlText":"How to Use SexStats"},{"level":4,"text":"Incrementing Counters","anchor":"incrementing-counters","htmlText":"Incrementing Counters"},{"level":4,"text":"Changing Virginity Status","anchor":"changing-virginity-status","htmlText":"Changing Virginity Status"},{"level":4,"text":"Managing Strikes","anchor":"managing-strikes","htmlText":"Managing Strikes"},{"level":4,"text":"Checking Statistics","anchor":"checking-statistics","htmlText":"Checking Statistics"},{"level":2,"text":"Wardrobe Management (WM)","anchor":"wardrobe-management-wm","htmlText":"Wardrobe Management (WM)"},{"level":3,"text":"Available Outfits Per Character","anchor":"available-outfits-per-character","htmlText":"Available Outfits Per Character"},{"level":3,"text":"How to Use WM","anchor":"how-to-use-wm","htmlText":"How to Use WM"},{"level":4,"text":"Unlocking Outfits","anchor":"unlocking-outfits","htmlText":"Unlocking Outfits"},{"level":4,"text":"Checking If Outfit Is Unlocked","anchor":"checking-if-outfit-is-unlocked","htmlText":"Checking If Outfit Is Unlocked"},{"level":4,"text":"Changing Current Outfit","anchor":"changing-current-outfit","htmlText":"Changing Current Outfit"},{"level":4,"text":"Getting Current Outfit","anchor":"getting-current-outfit","htmlText":"Getting Current Outfit"},{"level":4,"text":"Cycling Through Outfits","anchor":"cycling-through-outfits","htmlText":"Cycling Through Outfits"},{"level":4,"text":"Getting All Unlocked Outfits","anchor":"getting-all-unlocked-outfits","htmlText":"Getting All Unlocked Outfits"},{"level":3,"text":"Practical Outfit Example","anchor":"practical-outfit-example","htmlText":"Practical Outfit Example"},{"level":2,"text":"Level System","anchor":"level-system","htmlText":"Level System"},{"level":3,"text":"Level Ranges","anchor":"level-ranges","htmlText":"Level Ranges"},{"level":3,"text":"Getting a Character's Level","anchor":"getting-a-characters-level","htmlText":"Getting a Character's Level"},{"level":3,"text":"Level Notifications","anchor":"level-notifications","htmlText":"Level Notifications"},{"level":3,"text":"Using Levels to Gate Content","anchor":"using-levels-to-gate-content","htmlText":"Using Levels to Gate Content"},{"level":2,"text":"Milestone Decision System","anchor":"milestone-decision-system","htmlText":"Milestone Decision System"},{"level":3,"text":"How It Works","anchor":"how-it-works","htmlText":"How It Works"},{"level":4,"text":"Phase 1: Foundation (Episodes 1-5)","anchor":"phase-1-foundation-episodes-1-5","htmlText":"Phase 1: Foundation (Episodes 1-5)"},{"level":4,"text":"Phase 2: Consolidation (Episode 6+)","anchor":"phase-2-consolidation-episode-6","htmlText":"Phase 2: Consolidation (Episode 6+)"},{"level":3,"text":"Locking Paths","anchor":"locking-paths","htmlText":"Locking Paths"},{"level":3,"text":"Path Determination Logic","anchor":"path-determination-logic","htmlText":"Path Determination Logic"},{"level":3,"text":"Using Locked Paths","anchor":"using-locked-paths","htmlText":"Using Locked Paths"},{"level":3,"text":"Helper Functions","anchor":"helper-functions","htmlText":"Helper Functions"},{"level":4,"text":"Check Current Path","anchor":"check-current-path","htmlText":"Check Current Path"},{"level":4,"text":"Check If Path Is Locked","anchor":"check-if-path-is-locked","htmlText":"Check If Path Is Locked"},{"level":4,"text":"Get Milestone Choice Count","anchor":"get-milestone-choice-count","htmlText":"Get Milestone Choice Count"},{"level":3,"text":"Combining Paths and Stats","anchor":"combining-paths-and-stats","htmlText":"Combining Paths and Stats"},{"level":2,"text":"Practical Examples","anchor":"practical-examples","htmlText":"Practical Examples"},{"level":3,"text":"Example 1: Basic Date Scene","anchor":"example-1-basic-date-scene","htmlText":"Example 1: Basic Date Scene"},{"level":3,"text":"Example 2: Corruption Scene","anchor":"example-2-corruption-scene","htmlText":"Example 2: Corruption Scene"},{"level":3,"text":"Example 3: Strike System","anchor":"example-3-strike-system","htmlText":"Example 3: Strike System"},{"level":3,"text":"Example 4: Dynamic Outfit Selection","anchor":"example-4-dynamic-outfit-selection","htmlText":"Example 4: Dynamic Outfit Selection"},{"level":3,"text":"Example 5: Milestone Decision Scene","anchor":"example-5-milestone-decision-scene","htmlText":"Example 5: Milestone Decision Scene"},{"level":3,"text":"Example 6: Path Locking at End of Episode 6","anchor":"example-6-path-locking-at-end-of-episode-6","htmlText":"Example 6: Path Locking at End of Episode 6"},{"level":3,"text":"Example 7: Using Locked Paths in Episode 7+","anchor":"example-7-using-locked-paths-in-episode-7","htmlText":"Example 7: Using Locked Paths in Episode 7+"},{"level":2,"text":"Character Reference","anchor":"character-reference","htmlText":"Character Reference"},{"level":3,"text":"All Characters","anchor":"all-characters","htmlText":"All Characters"},{"level":3,"text":"Automatic Character Progression Rates","anchor":"automatic-character-progression-rates","htmlText":"Automatic Character Progression Rates"},{"level":3,"text":"Standard Base Values Guide","anchor":"standard-base-values-guide","htmlText":"Standard Base Values Guide"},{"level":3,"text":"Sexual Statistics Reference","anchor":"sexual-statistics-reference","htmlText":"Sexual Statistics Reference"},{"level":3,"text":"Wardrobe Reference","anchor":"wardrobe-reference","htmlText":"Wardrobe Reference"},{"level":2,"text":"Troubleshooting","anchor":"troubleshooting","htmlText":"Troubleshooting"},{"level":3,"text":"Common Issues and Solutions","anchor":"common-issues-and-solutions","htmlText":"Common Issues and Solutions"},{"level":4,"text":"Issue: Stats Don't Update","anchor":"issue-stats-dont-update","htmlText":"Issue: Stats Don't Update"},{"level":4,"text":"Issue: Notifications Don't Appear","anchor":"issue-notifications-dont-appear","htmlText":"Issue: Notifications Don't Appear"},{"level":4,"text":"Issue: Can't Change Outfit","anchor":"issue-cant-change-outfit","htmlText":"Issue: Can't Change Outfit"},{"level":4,"text":"Issue: Character Is Emotionally Locked","anchor":"issue-character-is-emotionally-locked","htmlText":"Issue: Character Is Emotionally Locked"},{"level":4,"text":"Issue: Path Won't Lock","anchor":"issue-path-wont-lock","htmlText":"Issue: Path Won't Lock"},{"level":4,"text":"Issue: MC's Integrity Won't Change","anchor":"issue-mcs-integrity-wont-change","htmlText":"Issue: MC's Integrity Won't Change"},{"level":3,"text":"Best Practices","anchor":"best-practices","htmlText":"Best Practices"},{"level":4,"text":"1. Always Use check_levels()","anchor":"1-always-use-check_levels","htmlText":"1. Always Use check_levels()"},{"level":4,"text":"2. Check Before Unlocking Content","anchor":"2-check-before-unlocking-content","htmlText":"2. Check Before Unlocking Content"},{"level":4,"text":"3. Unlock Outfits Naturally","anchor":"3-unlock-outfits-naturally","htmlText":"3. Unlock Outfits Naturally"},{"level":4,"text":"4. Track Virginity Properly","anchor":"4-track-virginity-properly","htmlText":"4. Track Virginity Properly"},{"level":4,"text":"5. Use Milestone Decisions Strategically","anchor":"5-use-milestone-decisions-strategically","htmlText":"5. Use Milestone Decisions Strategically"},{"level":2,"text":"Summary","anchor":"summary","htmlText":"Summary"},{"level":3,"text":"Quick Reference","anchor":"quick-reference","htmlText":"Quick Reference"}],"lineInfo":{"truncatedLoc":"1188","truncatedSloc":"874"},"mode":"file"},"image":false,"isCodeownersFile":null,"isPlain":false,"isValidLegacyIssueTemplate":false,"issueTemplate":null,"discussionTemplate":null,"language":"Markdown","languageID":222,"large":false,"planSupportInfo":{"repoIsFork":null,"repoOwnedByCurrentUser":null,"requestFullPath":"/yukihina/htl66/blob/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md","showFreeOrgGatedFeatureMessage":null,"showPlanSupportBanner":null,"upgradeDataAttributes":null,"upgradePath":null},"publishBannersInfo":{"dismissActionNoticePath":"/settings/dismiss-notice/publish_action_from_dockerfile","releasePath":"/yukihina/htl66/releases/new?marketplace=true","showPublishActionBanner":false},"rawBlobUrl":"https://github.com/yukihina/htl66/raw/refs/heads/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md","renderImageOrRaw":false,"richText":"\u003carticle class=\"markdown-body entry-content container-lg\" itemprop=\"text\"\u003e\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch1 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCore System Documentation\u003c/h1\u003e\u003ca id=\"user-content-core-system-documentation\" class=\"anchor\" aria-label=\"Permalink: Core System Documentation\" href=\"#core-system-documentation\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eVersion:\u003c/strong\u003e 1.0\n\u003cstrong\u003eLanguage:\u003c/strong\u003e English\n\u003cstrong\u003eLast Updated:\u003c/strong\u003e November 2024\u003c/p\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eTable of Contents\u003c/h2\u003e\u003ca id=\"user-content-table-of-contents\" class=\"anchor\" aria-label=\"Permalink: Table of Contents\" href=\"#table-of-contents\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003col dir=\"auto\"\u003e\n\u003cli\u003e\u003ca href=\"#introduction\"\u003eIntroduction\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#system-overview\"\u003eSystem Overview\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#relationship-management-rm\"\u003eRelationship Management (RM)\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#sexual-statistics-sexstats\"\u003eSexual Statistics (SexStats)\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#wardrobe-management-wm\"\u003eWardrobe Management (WM)\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#level-system\"\u003eLevel System\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#milestone-decision-system\"\u003eMilestone Decision System\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#practical-examples\"\u003ePractical Examples\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#character-reference\"\u003eCharacter Reference\u003c/a\u003e\u003c/li\u003e\n\u003cli\u003e\u003ca href=\"#troubleshooting\"\u003eTroubleshooting\u003c/a\u003e\u003c/li\u003e\n\u003c/ol\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIntroduction\u003c/h2\u003e\u003ca id=\"user-content-introduction\" class=\"anchor\" aria-label=\"Permalink: Introduction\" href=\"#introduction\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe \u003cstrong\u003eCore System\u003c/strong\u003e is the heart of the game's character progression and relationship tracking. It manages everything from how characters feel about you, what they're wearing, their corruption levels, and which story paths they'll follow.\u003c/p\u003e\n\u003cp dir=\"auto\"\u003eThink of it as the game's memory - it remembers every choice you make, every interaction you have, and uses that information to shape the story as you play.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eWhat Does It Do?\u003c/h3\u003e\u003ca id=\"user-content-what-does-it-do\" class=\"anchor\" aria-label=\"Permalink: What Does It Do?\" href=\"#what-does-it-do\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eTracks Relationships\u003c/strong\u003e: Remembers how much each character trusts you or how corrupted they've become\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eManages Statistics\u003c/strong\u003e: Keeps count of intimate moments and interactions\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eHandles Outfits\u003c/strong\u003e: Controls which clothes characters wear and when they unlock new outfits\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eDetermines Story Paths\u003c/strong\u003e: Locks characters into specific storylines based on your choices\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eShows Progress\u003c/strong\u003e: Displays notifications when your relationship reaches new milestones\u003c/li\u003e\n\u003c/ul\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eSystem Overview\u003c/h2\u003e\u003ca id=\"user-content-system-overview\" class=\"anchor\" aria-label=\"Permalink: System Overview\" href=\"#system-overview\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe Core System consists of five main components:\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e1. \u003cstrong\u003eRM (Relationship Management)\u003c/strong\u003e\u003c/h3\u003e\u003ca id=\"user-content-1-rm-relationship-management\" class=\"anchor\" aria-label=\"Permalink: 1. RM (Relationship Management)\" href=\"#1-rm-relationship-management\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eControls character attributes like corruption, trust, integrity, and relationship status.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e2. \u003cstrong\u003eSexStats\u003c/strong\u003e\u003c/h3\u003e\u003ca id=\"user-content-2-sexstats\" class=\"anchor\" aria-label=\"Permalink: 2. SexStats\" href=\"#2-sexstats\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eTracks intimate interactions and virginity status for all love interests.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e3. \u003cstrong\u003eWM (Wardrobe Manager)\u003c/strong\u003e\u003c/h3\u003e\u003ca id=\"user-content-3-wm-wardrobe-manager\" class=\"anchor\" aria-label=\"Permalink: 3. WM (Wardrobe Manager)\" href=\"#3-wm-wardrobe-manager\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eManages character outfits, unlocking, and switching between them.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e4. \u003cstrong\u003eLevel System\u003c/strong\u003e\u003c/h3\u003e\u003ca id=\"user-content-4-level-system\" class=\"anchor\" aria-label=\"Permalink: 4. Level System\" href=\"#4-level-system\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eConverts numerical stats (0-100) into levels (0-5) and shows notifications.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e5. \u003cstrong\u003eMilestone Decision System\u003c/strong\u003e\u003c/h3\u003e\u003ca id=\"user-content-5-milestone-decision-system\" class=\"anchor\" aria-label=\"Permalink: 5. Milestone Decision System\" href=\"#5-milestone-decision-system\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eLocks characters into story paths based on your cumulative choices.\u003c/p\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eRelationship Management (RM)\u003c/h2\u003e\u003ca id=\"user-content-relationship-management-rm\" class=\"anchor\" aria-label=\"Permalink: Relationship Management (RM)\" href=\"#relationship-management-rm\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe RM system tracks how characters relate to you and each other.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCharacter Types\u003c/h3\u003e\u003ca id=\"user-content-character-types\" class=\"anchor\" aria-label=\"Permalink: Character Types\" href=\"#character-types\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe system manages three types of characters:\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e\u003cstrong\u003eLove Interests\u003c/strong\u003e (Regular Characters)\u003c/h4\u003e\u003ca id=\"user-content-love-interests-regular-characters\" class=\"anchor\" aria-label=\"Permalink: Love Interests (Regular Characters)\" href=\"#love-interests-regular-characters\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eCharacters\u003c/strong\u003e: Amber, Nanami, Elizabeth, Isabella, Kanae, Arlette, Antonella, Madison, Paz\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eAttributes\u003c/strong\u003e:\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003ccode\u003ecor\u003c/code\u003e (Corruption): How corrupted the character has become (0-100)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003etrust\u003c/code\u003e (Trust): How much they trust you (0-100)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003epreg\u003c/code\u003e (Pregnancy): Whether the character is pregnant (True/False)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003erel\u003c/code\u003e (Relationship): Whether you're in a relationship (True/False)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eknows\u003c/code\u003e (Knowledge): Whether you've met this character (True/False)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eemotionally_locked\u003c/code\u003e (Emotional Lock): Whether the character has shut you out (True/False)\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e\u003cstrong\u003eMain Character (MC)\u003c/strong\u003e\u003c/h4\u003e\u003ca id=\"user-content-main-character-mc\" class=\"anchor\" aria-label=\"Permalink: Main Character (MC)\" href=\"#main-character-mc\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eAttributes\u003c/strong\u003e:\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003ccode\u003eintegrity\u003c/code\u003e: Your moral compass (0-100)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eintegrity_locked\u003c/code\u003e: Whether integrity can still change (True/False)\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e\u003cstrong\u003eOrganizations\u003c/strong\u003e\u003c/h4\u003e\u003ca id=\"user-content-organizations\" class=\"anchor\" aria-label=\"Permalink: Organizations\" href=\"#organizations\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eCharacters\u003c/strong\u003e: Takeo, TMPD, Osaka\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eAttributes\u003c/strong\u003e:\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003ccode\u003etrust\u003c/code\u003e: How much the organization trusts you (0-100)\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eHow to Use RM\u003c/h3\u003e\u003ca id=\"user-content-how-to-use-rm\" class=\"anchor\" aria-label=\"Permalink: How to Use RM\" href=\"#how-to-use-rm\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eUpdating Character Stats\u003c/h4\u003e\u003ca id=\"user-content-updating-character-stats\" class=\"anchor\" aria-label=\"Permalink: Updating Character Stats\" href=\"#updating-character-stats\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eTo change a character's stats, use the \u003ccode\u003eupdate\u003c/code\u003e function with \u003cstrong\u003ebase values\u003c/strong\u003e:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Base values - system applies character rates automatically\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 3)       # Base 3 → 3 × 1.5 = 5 corruption (Amber's 1.5x cor rate)\n$ rm.update(\u0026quot;nanami\u0026quot;, \u0026quot;trust\u0026quot;, 2)    # Base 2 → 2 × 3.0 = 6 trust (Nanami's 3x trust rate)\n$ rm.update(\u0026quot;mc\u0026quot;, \u0026quot;integrity\u0026quot;, -2)   # Base -2 = -2 integrity (no rate for MC)\n$ rm.update(\u0026quot;takeo\u0026quot;, \u0026quot;trust\u0026quot;, 5)     # Base 5 = 5 trust (organizations have no rates)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base values - system applies character rates automatically\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)       \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 3 → 3 × 1.5 = 5 corruption (Amber's 1.5x cor rate)\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 2 → 2 × 3.0 = 6 trust (Nanami's 3x trust rate)\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emc\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eintegrity\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)   \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -2 = -2 integrity (no rate for MC)\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etakeo\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)     \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 5 = 5 trust (organizations have no rates)\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eParameters:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eCharacter ID\u003c/strong\u003e: The character's name (lowercase)\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eAttribute\u003c/strong\u003e: What you want to change (\"cor\", \"trust\", \"integrity\")\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eValue\u003c/strong\u003e: Base value to add (positive) or subtract (negative) - \u003cstrong\u003esystem automatically applies character rates\u003c/strong\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eImportant Rules:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e✅ \u003cstrong\u003eUse base values (1, 2, 3, 5, 10)\u003c/strong\u003e - the system multiplies by character rates automatically\u003c/li\u003e\n\u003cli\u003e✅ Stats automatically stay between 0 and 100\u003c/li\u003e\n\u003cli\u003e✅ MC's integrity locks when it reaches 0 or 100\u003c/li\u003e\n\u003cli\u003e✅ You can't change a character's stats if they're emotionally locked\u003c/li\u003e\n\u003cli\u003e✅ \u003cstrong\u003eEach call only updates ONE attribute\u003c/strong\u003e - to update multiple attributes, make multiple calls\u003c/li\u003e\n\u003cli\u003e✅ \u003cstrong\u003eValues are automatically rounded\u003c/strong\u003e to integers (no decimals)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eUpdating Multiple Attributes\u003c/h4\u003e\u003ca id=\"user-content-updating-multiple-attributes\" class=\"anchor\" aria-label=\"Permalink: Updating Multiple Attributes\" href=\"#updating-multiple-attributes\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eTo update both corruption and trust (or any combination), make \u003cstrong\u003eseparate calls\u003c/strong\u003e using \u003cstrong\u003ebase values\u003c/strong\u003e:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Update both corruption and trust with same base value\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 2)    # Base 2 → 2 × 1.5 = 3 corruption\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 2)  # Base 2 → 2 × 1.0 = 2 trust\n\n# Update both with different base values\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 3)    # Base 3 → 3 × 1.5 = 5 corruption\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, -2) # Base -2 → -2 × 1.0 = -2 trust\n\n# Common pattern: choice that increases one and decreases the other\nmenu:\n    \u0026quot;Be gentle with her\u0026quot;:\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 3)   # Base 3 → 3 × 1.0 = 3 trust\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, -1)    # Base -1 → -1 × 1.5 = -2 corruption\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 3)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, -1)\n\n    \u0026quot;Be forceful\u0026quot;:\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 3)     # Base 3 → 3 × 1.5 = 5 corruption\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, -2)  # Base -2 → -2 × 1.0 = -2 trust\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 3)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, -2)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Update both corruption and trust with same base value\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 2 → 2 × 1.5 = 3 corruption\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 2 → 2 × 1.0 = 2 trust\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Update both with different base values\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 3 → 3 × 1.5 = 5 corruption\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e) \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -2 → -2 × 1.0 = -2 trust\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Common pattern: choice that increases one and decreases the other\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eBe gentle with her\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)   \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 3 → 3 × 1.0 = 3 trust\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -1 → -1 × 1.5 = -2 corruption\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e)\n\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eBe forceful\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)     \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 3 → 3 × 1.5 = 5 corruption\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -2 → -2 × 1.0 = -2 trust\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eNote:\u003c/strong\u003e There is no syntax like \u003ccode\u003erm.update(\"amber\", \"cor\" and \"trust\", 2)\u003c/code\u003e. You must make individual calls for each attribute. Always use base values - the system handles rate multiplication automatically.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eGetting Character Information\u003c/h4\u003e\u003ca id=\"user-content-getting-character-information\" class=\"anchor\" aria-label=\"Permalink: Getting Character Information\" href=\"#getting-character-information\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eTo check a character's current stats:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ amber_corruption = rm.get(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;)\n$ nanami_trust = rm.get(\u0026quot;nanami\u0026quot;, \u0026quot;trust\u0026quot;)\n$ mc_integrity = rm.get(\u0026quot;mc\u0026quot;, \u0026quot;integrity\u0026quot;)\n$ in_relationship = rm.get(\u0026quot;isabella\u0026quot;, \u0026quot;rel\u0026quot;)\n$ is_pregnant = rm.get(\u0026quot;kanae\u0026quot;, \u0026quot;preg\u0026quot;)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_corruption \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e nanami_trust \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e mc_integrity \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emc\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eintegrity\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e in_relationship \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003erel\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e is_pregnant \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ekanae\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003epreg\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eManaging Relationships\u003c/h4\u003e\u003ca id=\"user-content-managing-relationships\" class=\"anchor\" aria-label=\"Permalink: Managing Relationships\" href=\"#managing-relationships\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eUpdate relationship status based on trust level:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ rm.update_rel(\u0026quot;amber\u0026quot;)  # If trust \u0026gt;= 70, sets rel to True\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update_rel(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e If trust \u0026gt;= 70, sets rel to True\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eRule:\u003c/strong\u003e A character becomes your girlfriend when trust reaches 70 or higher.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eTracking Character Knowledge\u003c/h4\u003e\u003ca id=\"user-content-tracking-character-knowledge\" class=\"anchor\" aria-label=\"Permalink: Tracking Character Knowledge\" href=\"#tracking-character-knowledge\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eMark whether you've met a character:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ rm.set_knows(\u0026quot;amber\u0026quot;, True)   # You've met Amber\n$ rm.set_knows(\u0026quot;paz\u0026quot;, False)    # You haven't met Paz yet\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.set_knows(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003eTrue\u003c/span\u003e)   \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e You've met Amber\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.set_knows(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003epaz\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003eFalse\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e You haven't met Paz yet\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eThe Emotional Lock System\u003c/h3\u003e\u003ca id=\"user-content-the-emotional-lock-system\" class=\"anchor\" aria-label=\"Permalink: The Emotional Lock System\" href=\"#the-emotional-lock-system\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eWhen a character receives \u003cstrong\u003e3 strikes\u003c/strong\u003e (tracked separately in SexStats), they become emotionally locked:\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eWhat Happens:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eTheir corruption and trust drop to 0\u003c/li\u003e\n\u003cli\u003eYou can't change their corruption or trust anymore\u003c/li\u003e\n\u003cli\u003eThe character has emotionally shut you out\u003c/li\u003e\n\u003cli\u003eThis represents a permanent consequence for poor choices\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eChecking Emotional Lock:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ is_locked = rm.is_emotionally_locked(\u0026quot;amber\u0026quot;)\nif is_locked:\n    \u0026quot;Amber won't talk to you anymore.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e is_locked \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.is_emotionally_locked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e is_locked:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber won't talk to you anymore.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eSexual Statistics (SexStats)\u003c/h2\u003e\u003ca id=\"user-content-sexual-statistics-sexstats\" class=\"anchor\" aria-label=\"Permalink: Sexual Statistics (SexStats)\" href=\"#sexual-statistics-sexstats\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe SexStats system tracks intimate interactions with all love interests.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eTracked Activities\u003c/h3\u003e\u003ca id=\"user-content-tracked-activities\" class=\"anchor\" aria-label=\"Permalink: Tracked Activities\" href=\"#tracked-activities\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eFor each love interest, the system tracks:\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003ccode\u003eanal\u003c/code\u003e - Anal sex encounters\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eassjob\u003c/code\u003e - Assjob encounters\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eblowjob\u003c/code\u003e - Oral sex encounters\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003ecreampie\u003c/code\u003e - Creampie finishes\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003epussyjob\u003c/code\u003e - Pussyjob encounters\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003esex\u003c/code\u003e - Vaginal sex encounters\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003etitjob\u003c/code\u003e - Titjob encounters\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003evirgin\u003c/code\u003e - Virginity status (True/False)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003estrike\u003c/code\u003e - Number of strikes (0-3)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eStarting Virginity Status\u003c/h3\u003e\u003ca id=\"user-content-starting-virginity-status\" class=\"anchor\" aria-label=\"Permalink: Starting Virginity Status\" href=\"#starting-virginity-status\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eVirgins at Start:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eNanami\u003c/li\u003e\n\u003cli\u003eIsabella\u003c/li\u003e\n\u003cli\u003eMadison\u003c/li\u003e\n\u003cli\u003ePaz\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eNon-Virgins at Start:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eAmber\u003c/li\u003e\n\u003cli\u003eElizabeth\u003c/li\u003e\n\u003cli\u003eKanae\u003c/li\u003e\n\u003cli\u003eArlette\u003c/li\u003e\n\u003cli\u003eAntonella\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eHow to Use SexStats\u003c/h3\u003e\u003ca id=\"user-content-how-to-use-sexstats\" class=\"anchor\" aria-label=\"Permalink: How to Use SexStats\" href=\"#how-to-use-sexstats\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIncrementing Counters\u003c/h4\u003e\u003ca id=\"user-content-incrementing-counters\" class=\"anchor\" aria-label=\"Permalink: Incrementing Counters\" href=\"#incrementing-counters\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eWhen an intimate scene occurs:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ ss.add(\u0026quot;amber\u0026quot;, \u0026quot;blowjob\u0026quot;)    # Add 1 to Amber's blowjob count\n$ ss.add(\u0026quot;nanami\u0026quot;, \u0026quot;sex\u0026quot;)       # Add 1 to Nanami's sex count\n$ ss.add(\u0026quot;isabella\u0026quot;, \u0026quot;creampie\u0026quot;) # Add 1 to Isabella's creampie count\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.add(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eblowjob\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Add 1 to Amber's blowjob count\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.add(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003esex\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)       \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Add 1 to Nanami's sex count\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.add(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecreampie\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e) \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Add 1 to Isabella's creampie count\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eChanging Virginity Status\u003c/h4\u003e\u003ca id=\"user-content-changing-virginity-status\" class=\"anchor\" aria-label=\"Permalink: Changing Virginity Status\" href=\"#changing-virginity-status\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eWhen a character loses their virginity:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ ss.set(\u0026quot;nanami\u0026quot;, \u0026quot;virgin\u0026quot;, False)  # Nanami is no longer a virgin\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003evirgin\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003eFalse\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Nanami is no longer a virgin\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eManaging Strikes\u003c/h4\u003e\u003ca id=\"user-content-managing-strikes\" class=\"anchor\" aria-label=\"Permalink: Managing Strikes\" href=\"#managing-strikes\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eAdd strikes for bad choices:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ current_strikes = ss.get(\u0026quot;amber\u0026quot;, \u0026quot;strike\u0026quot;)\n$ ss.set(\u0026quot;amber\u0026quot;, \u0026quot;strike\u0026quot;, current_strikes + 1)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e current_strikes \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estrike\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estrike\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, current_strikes \u003cspan class=\"pl-k\"\u003e+\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eImportant:\u003c/strong\u003e When a character reaches 3 strikes, they become emotionally locked automatically.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eChecking Statistics\u003c/h4\u003e\u003ca id=\"user-content-checking-statistics\" class=\"anchor\" aria-label=\"Permalink: Checking Statistics\" href=\"#checking-statistics\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eGet current statistics:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ bj_count = ss.get(\u0026quot;amber\u0026quot;, \u0026quot;blowjob\u0026quot;)\n$ is_virgin = ss.get(\u0026quot;nanami\u0026quot;, \u0026quot;virgin\u0026quot;)\n$ strike_count = ss.get(\u0026quot;isabella\u0026quot;, \u0026quot;strike\u0026quot;)\n\nif bj_count \u0026gt; 5:\n    \u0026quot;Amber has extensive experience now.\u0026quot;\n\nif is_virgin:\n    \u0026quot;Nanami has never had sex before.\u0026quot;\n\nif strike_count \u0026gt;= 2:\n    \u0026quot;Isabella is very upset with you. One more strike and she's done.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e bj_count \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eblowjob\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e is_virgin \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003evirgin\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e strike_count \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estrike\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e bj_count \u003cspan class=\"pl-k\"\u003e\u0026gt;\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber has extensive experience now.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e is_virgin:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eNanami has never had sex before.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e strike_count \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eIsabella is very upset with you. One more strike and she's done.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eWardrobe Management (WM)\u003c/h2\u003e\u003ca id=\"user-content-wardrobe-management-wm\" class=\"anchor\" aria-label=\"Permalink: Wardrobe Management (WM)\" href=\"#wardrobe-management-wm\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe WM system handles character outfits and clothing changes.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eAvailable Outfits Per Character\u003c/h3\u003e\u003ca id=\"user-content-available-outfits-per-character\" class=\"anchor\" aria-label=\"Permalink: Available Outfits Per Character\" href=\"#available-outfits-per-character\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eEach character has a different number of outfits:\u003c/p\u003e\n\u003cmarkdown-accessiblity-table\u003e\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eCharacter\u003c/th\u003e\n\u003cth\u003eMax Outfits\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003eAmber\u003c/td\u003e\n\u003ctd\u003e6\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eNanami\u003c/td\u003e\n\u003ctd\u003e9\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eElizabeth\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eIsabella\u003c/td\u003e\n\u003ctd\u003e7\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eKanae\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eArlette\u003c/td\u003e\n\u003ctd\u003e8\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eAntonella\u003c/td\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eMadison\u003c/td\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003ePaz\u003c/td\u003e\n\u003ctd\u003e6\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\u003c/markdown-accessiblity-table\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eNote:\u003c/strong\u003e Outfit IDs start at 0 (default outfit is always ID 0).\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eHow to Use WM\u003c/h3\u003e\u003ca id=\"user-content-how-to-use-wm\" class=\"anchor\" aria-label=\"Permalink: How to Use WM\" href=\"#how-to-use-wm\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eUnlocking Outfits\u003c/h4\u003e\u003ca id=\"user-content-unlocking-outfits\" class=\"anchor\" aria-label=\"Permalink: Unlocking Outfits\" href=\"#unlocking-outfits\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eTo unlock a new outfit:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ wm.unlock(\u0026quot;nanami\u0026quot;, 3)     # Unlock outfit 3 for Nanami\n$ wm.unlock(\u0026quot;amber\u0026quot;, 2)      # Unlock outfit 2 for Amber\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.unlock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)     \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Unlock outfit 3 for Nanami\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.unlock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)      \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Unlock outfit 2 for Amber\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eRules:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eOutfit 0 is always unlocked (default outfit)\u003c/li\u003e\n\u003cli\u003eYou can only unlock outfits that exist (within max range)\u003c/li\u003e\n\u003cli\u003eUnlocking an outfit doesn't automatically equip it\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eChecking If Outfit Is Unlocked\u003c/h4\u003e\u003ca id=\"user-content-checking-if-outfit-is-unlocked\" class=\"anchor\" aria-label=\"Permalink: Checking If Outfit Is Unlocked\" href=\"#checking-if-outfit-is-unlocked\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ is_unlocked = wm.is_unlocked(\u0026quot;nanami\u0026quot;, 3)\nif is_unlocked:\n    \u0026quot;Nanami's special outfit is available!\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e is_unlocked \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e wm.is_unlocked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e is_unlocked:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eNanami's special outfit is available!\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eChanging Current Outfit\u003c/h4\u003e\u003ca id=\"user-content-changing-current-outfit\" class=\"anchor\" aria-label=\"Permalink: Changing Current Outfit\" href=\"#changing-current-outfit\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eTo set which outfit a character wears:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ wm.set(\u0026quot;nanami\u0026quot;, 2)   # Set Nanami's outfit to ID 2\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)   \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Set Nanami's outfit to ID 2\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eRule:\u003c/strong\u003e You can only set outfits that have been unlocked.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eGetting Current Outfit\u003c/h4\u003e\u003ca id=\"user-content-getting-current-outfit\" class=\"anchor\" aria-label=\"Permalink: Getting Current Outfit\" href=\"#getting-current-outfit\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eCheck which outfit is currently equipped:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ current = wm.get_current(\u0026quot;nanami\u0026quot;)\n\u0026quot;Nanami is wearing outfit [current].\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e current \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e wm.get_current(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eNanami is wearing outfit \u003cspan class=\"pl-c1\"\u003e[current]\u003c/span\u003e.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCycling Through Outfits\u003c/h4\u003e\u003ca id=\"user-content-cycling-through-outfits\" class=\"anchor\" aria-label=\"Permalink: Cycling Through Outfits\" href=\"#cycling-through-outfits\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eMove to next or previous unlocked outfit:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ wm.next_outfit(\u0026quot;amber\u0026quot;)    # Switch to next unlocked outfit\n$ wm.prev_outfit(\u0026quot;amber\u0026quot;)    # Switch to previous unlocked outfit\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.next_outfit(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Switch to next unlocked outfit\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.prev_outfit(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Switch to previous unlocked outfit\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eBehavior:\u003c/strong\u003e Cycles through unlocked outfits in order (wraps around at the end).\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eGetting All Unlocked Outfits\u003c/h4\u003e\u003ca id=\"user-content-getting-all-unlocked-outfits\" class=\"anchor\" aria-label=\"Permalink: Getting All Unlocked Outfits\" href=\"#getting-all-unlocked-outfits\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eGet a list of all unlocked outfits:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ unlocked_list = wm.get_all_unlocked(\u0026quot;nanami\u0026quot;)\n# Returns: [0, 2, 3, 5] (example)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e unlocked_list \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e wm.get_all_unlocked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Returns: [0, 2, 3, 5] (example)\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003ePractical Outfit Example\u003c/h3\u003e\u003ca id=\"user-content-practical-outfit-example\" class=\"anchor\" aria-label=\"Permalink: Practical Outfit Example\" href=\"#practical-outfit-example\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label amber_date:\n    # Unlock special date outfit\n    $ wm.unlock(\u0026quot;amber\u0026quot;, 3)\n\n    # Set it as current\n    $ wm.set(\u0026quot;amber\u0026quot;, 3)\n\n    # Show Amber in the new outfit\n    show amber happy at center\n\n    amber \u0026quot;Do you like my new dress?\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eamber_date\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Unlock special date outfit\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.unlock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Set it as current\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Show Amber in the new outfit\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eshow\u003c/span\u003e amber happy \u003cspan class=\"pl-k\"\u003eat\u003c/span\u003e center\n\n    amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eDo you like my new dress?\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eLevel System\u003c/h2\u003e\u003ca id=\"user-content-level-system\" class=\"anchor\" aria-label=\"Permalink: Level System\" href=\"#level-system\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe Level System converts raw numerical stats (0-100) into levels (0-5) for easier understanding and gating content.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eLevel Ranges\u003c/h3\u003e\u003ca id=\"user-content-level-ranges\" class=\"anchor\" aria-label=\"Permalink: Level Ranges\" href=\"#level-ranges\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eBoth corruption and trust use the same level ranges:\u003c/p\u003e\n\u003cmarkdown-accessiblity-table\u003e\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eLevel\u003c/th\u003e\n\u003cth\u003eRange\u003c/th\u003e\n\u003cth\u003eDescription (Trust)\u003c/th\u003e\n\u003cth\u003eDescription (Corruption)\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e0\u003c/td\u003e\n\u003ctd\u003e0-16\u003c/td\u003e\n\u003ctd\u003eStranger/Hostile\u003c/td\u003e\n\u003ctd\u003ePure/Innocent\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e1\u003c/td\u003e\n\u003ctd\u003e17-32\u003c/td\u003e\n\u003ctd\u003eAcquaintance\u003c/td\u003e\n\u003ctd\u003eSlightly Corrupted\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e2\u003c/td\u003e\n\u003ctd\u003e33-48\u003c/td\u003e\n\u003ctd\u003eFriend\u003c/td\u003e\n\u003ctd\u003eModerately Corrupted\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e3\u003c/td\u003e\n\u003ctd\u003e49-64\u003c/td\u003e\n\u003ctd\u003eClose Friend\u003c/td\u003e\n\u003ctd\u003eNotably Corrupted\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e4\u003c/td\u003e\n\u003ctd\u003e65-80\u003c/td\u003e\n\u003ctd\u003eVery Close\u003c/td\u003e\n\u003ctd\u003eHighly Corrupted\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e5\u003c/td\u003e\n\u003ctd\u003e81-100\u003c/td\u003e\n\u003ctd\u003eIntimate/Best Friend\u003c/td\u003e\n\u003ctd\u003eFully Corrupted\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\u003c/markdown-accessiblity-table\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eGetting a Character's Level\u003c/h3\u003e\u003ca id=\"user-content-getting-a-characters-level\" class=\"anchor\" aria-label=\"Permalink: Getting a Character's Level\" href=\"#getting-a-characters-level\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eTo check what level a character's stat is at:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ amber_trust_level = get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;), trust_levels)\n$ nanami_cor_level = get_level_for_value(rm.get(\u0026quot;nanami\u0026quot;, \u0026quot;cor\u0026quot;), corruption_levels)\n\nif amber_trust_level \u0026gt;= 3:\n    \u0026quot;Amber trusts you deeply.\u0026quot;\n\nif nanami_cor_level \u0026gt;= 2:\n    \u0026quot;Nanami is becoming more open to your influence.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_trust_level \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), trust_levels)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e nanami_cor_level \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), corruption_levels)\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e amber_trust_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber trusts you deeply.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e nanami_cor_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eNanami is becoming more open to your influence.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eLevel Notifications\u003c/h3\u003e\u003ca id=\"user-content-level-notifications\" class=\"anchor\" aria-label=\"Permalink: Level Notifications\" href=\"#level-notifications\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe system automatically shows notifications when levels change:\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eTypes of Notifications:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eSmall Increase/Decrease\u003c/strong\u003e: When stats change but level stays the same\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eLevel Up\u003c/strong\u003e: When a character gains a level\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eLevel Down\u003c/strong\u003e: When a character loses a level\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003eTo trigger notifications after updating stats:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 15)\n$ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 15)  # Shows notification\n\n$ rm.update(\u0026quot;nanami\u0026quot;, \u0026quot;trust\u0026quot;, 20)\n$ check_levels(\u0026quot;nanami\u0026quot;, \u0026quot;trust\u0026quot;, 20)  # Shows notification\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Shows notification\u003c/span\u003e\n\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Shows notification\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eImportant:\u003c/strong\u003e Always call \u003ccode\u003echeck_levels()\u003c/code\u003e after \u003ccode\u003erm.update()\u003c/code\u003e to show proper notifications.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eUsing Levels to Gate Content\u003c/h3\u003e\u003ca id=\"user-content-using-levels-to-gate-content\" class=\"anchor\" aria-label=\"Permalink: Using Levels to Gate Content\" href=\"#using-levels-to-gate-content\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eYou can require specific levels to unlock dialogue choices:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"menu:\n    \u0026quot;Casual conversation\u0026quot;:\n        jump .casual\n\n    \u0026quot;Ask about her feelings\u0026quot; if get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;), trust_levels) \u0026gt;= 2:\n        # Only available if Amber's trust is Level 2 or higher\n        jump .feelings\n\n    \u0026quot;Make a bold move\u0026quot; if get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;), corruption_levels) \u0026gt;= 3:\n        # Only available if Amber's corruption is Level 3 or higher\n        jump .bold\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eCasual conversation\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .casual\n\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAsk about her feelings\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), trust_levels) \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Only available if Amber's trust is Level 2 or higher\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .feelings\n\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eMake a bold move\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), corruption_levels) \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Only available if Amber's corruption is Level 3 or higher\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .\u003cspan class=\"pl-e\"\u003ebold\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eMilestone Decision System\u003c/h2\u003e\u003ca id=\"user-content-milestone-decision-system\" class=\"anchor\" aria-label=\"Permalink: Milestone Decision System\" href=\"#milestone-decision-system\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe Milestone Decision System is a two-phase progression system that locks characters into specific story paths.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eHow It Works\u003c/h3\u003e\u003ca id=\"user-content-how-it-works\" class=\"anchor\" aria-label=\"Permalink: How It Works\" href=\"#how-it-works\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e\u003cstrong\u003ePhase 1: Foundation (Episodes 1-5)\u003c/strong\u003e\u003c/h4\u003e\u003ca id=\"user-content-phase-1-foundation-episodes-1-5\" class=\"anchor\" aria-label=\"Permalink: Phase 1: Foundation (Episodes 1-5)\" href=\"#phase-1-foundation-episodes-1-5\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eGoal:\u003c/strong\u003e Build up stats and levels\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eYou make choices that increase corruption or trust\u003c/li\u003e\n\u003cli\u003eStats accumulate (0-100)\u003c/li\u003e\n\u003cli\u003eStats determine levels (0-5)\u003c/li\u003e\n\u003cli\u003eLevels act as \"keys\" that unlock future choices\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"menu:\n    \u0026quot;Compliment her\u0026quot;:\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 10)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 10)\n\n    \u0026quot;Tease her\u0026quot;:\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 10)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 10)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eCompliment her\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)\n\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eTease her\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e\u003cstrong\u003ePhase 2: Consolidation (Episode 6+)\u003c/strong\u003e\u003c/h4\u003e\u003ca id=\"user-content-phase-2-consolidation-episode-6\" class=\"anchor\" aria-label=\"Permalink: Phase 2: Consolidation (Episode 6+)\" href=\"#phase-2-consolidation-episode-6\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eGoal:\u003c/strong\u003e Make milestone decisions that determine final paths\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eCertain special choices are \"Milestone Decisions\"\u003c/li\u003e\n\u003cli\u003eThese choices require specific levels to unlock\u003c/li\u003e\n\u003cli\u003eMaking these choices increments counters\u003c/li\u003e\n\u003cli\u003eReaching threshold (default 3) locks the path permanently\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"menu:\n    \u0026quot;Neutral choice\u0026quot;:\n        # Always available, doesn't count as milestone\n        jump .neutral\n\n    \u0026quot;I truly care about you.\u0026quot; if get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;), trust_levels) \u0026gt;= 2:\n        # LOVE Milestone Decision - requires Trust Level 2+\n        $ amber_love_choices += 1\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)\n        jump .love_path\n\n    \u0026quot;You look better when flustered.\u0026quot; if get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;), corruption_levels) \u0026gt;= 2:\n        # CORRUPTION Milestone Decision - requires Corruption Level 2+\n        $ amber_cor_choices += 1\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 15)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 15)\n        jump .corruption_path\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eNeutral choice\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Always available, doesn't count as milestone\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .neutral\n\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI truly care about you.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), trust_levels) \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e LOVE Milestone Decision - requires Trust Level 2+\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_love_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .love_path\n\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYou look better when flustered.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), corruption_levels) \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e CORRUPTION Milestone Decision - requires Corruption Level 2+\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_cor_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .corruption_path\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eLocking Paths\u003c/h3\u003e\u003ca id=\"user-content-locking-paths\" class=\"anchor\" aria-label=\"Permalink: Locking Paths\" href=\"#locking-paths\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eAt a dramatic story moment (usually end of Episode 6), lock the path:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label lock_paths_ep06_end:\n    # Lock Amber's path based on milestone choices\n    $ amber_path = lock_character_path(\u0026quot;amber\u0026quot;, love_threshold=3, cor_threshold=3)\n\n    if persistent.amber_path == \u0026quot;love\u0026quot;:\n        \u0026quot;You've committed to a loving relationship with Amber.\u0026quot;\n    elif persistent.amber_path == \u0026quot;corruption\u0026quot;:\n        \u0026quot;You've chosen to corrupt Amber completely.\u0026quot;\n    else:\n        \u0026quot;Your relationship with Amber remains undefined.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003elock_paths_ep06_end\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Lock Amber's path based on milestone choices\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_path \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e lock_character_path(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-smi\"\u003elove_threshold\u003c/span\u003e\u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e, \u003cspan class=\"pl-smi\"\u003ecor_threshold\u003c/span\u003e\u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)\n\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003elove\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYou've committed to a loving relationship with Amber.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eelif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecorruption\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYou've chosen to corrupt Amber completely.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYour relationship with Amber remains undefined.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eParameters:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003ccode\u003echar\u003c/code\u003e: Character ID\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003elove_threshold\u003c/code\u003e: Milestone love choices needed (default: 3)\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003ecor_threshold\u003c/code\u003e: Milestone corruption choices needed (default: 3)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eReturns:\u003c/strong\u003e \u003ccode\u003e\"love\"\u003c/code\u003e, \u003ccode\u003e\"corruption\"\u003c/code\u003e, or \u003ccode\u003e\"neutral\"\u003c/code\u003e\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003ePath Determination Logic\u003c/h3\u003e\u003ca id=\"user-content-path-determination-logic\" class=\"anchor\" aria-label=\"Permalink: Path Determination Logic\" href=\"#path-determination-logic\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe system determines paths as follows:\u003c/p\u003e\n\u003col dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eBoth thresholds met\u003c/strong\u003e: Choose the path with more milestone choices\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eIf tied: Use trust vs corruption stats as tiebreaker\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eOnly love threshold met\u003c/strong\u003e: Lock to \"love\"\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eOnly corruption threshold met\u003c/strong\u003e: Lock to \"corruption\"\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eNeither threshold met\u003c/strong\u003e: Lock to \"neutral\"\u003c/li\u003e\n\u003c/ol\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eUsing Locked Paths\u003c/h3\u003e\u003ca id=\"user-content-using-locked-paths\" class=\"anchor\" aria-label=\"Permalink: Using Locked Paths\" href=\"#using-locked-paths\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eIn episodes 7+, branch based on locked paths:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label amber_scene_ep07:\n    if persistent.amber_path == \u0026quot;love\u0026quot;:\n        jump .love_route\n    elif persistent.amber_path == \u0026quot;corruption\u0026quot;:\n        jump .corruption_route\n    else:\n        jump .neutral_route\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eamber_scene_ep07\u003c/span\u003e:\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003elove\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .love_route\n    \u003cspan class=\"pl-k\"\u003eelif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecorruption\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .corruption_route\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .neutral_route\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eHelper Functions\u003c/h3\u003e\u003ca id=\"user-content-helper-functions\" class=\"anchor\" aria-label=\"Permalink: Helper Functions\" href=\"#helper-functions\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCheck Current Path\u003c/h4\u003e\u003ca id=\"user-content-check-current-path\" class=\"anchor\" aria-label=\"Permalink: Check Current Path\" href=\"#check-current-path\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ current_path = get_character_path(\u0026quot;amber\u0026quot;)\n# Returns: \u0026quot;love\u0026quot;, \u0026quot;corruption\u0026quot;, \u0026quot;neutral\u0026quot;, or None (if not locked)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e current_path \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_character_path(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Returns: \"love\", \"corruption\", \"neutral\", or None (if not locked)\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCheck If Path Is Locked\u003c/h4\u003e\u003ca id=\"user-content-check-if-path-is-locked\" class=\"anchor\" aria-label=\"Permalink: Check If Path Is Locked\" href=\"#check-if-path-is-locked\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ locked = is_path_locked(\u0026quot;amber\u0026quot;)\n# Returns: True or False\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e locked \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e is_path_locked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Returns: True or False\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eGet Milestone Choice Count\u003c/h4\u003e\u003ca id=\"user-content-get-milestone-choice-count\" class=\"anchor\" aria-label=\"Permalink: Get Milestone Choice Count\" href=\"#get-milestone-choice-count\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ love_count = get_milestone_choices(\u0026quot;amber\u0026quot;, \u0026quot;love\u0026quot;)\n$ cor_count = get_milestone_choices(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e love_count \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_milestone_choices(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003elove\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e cor_count \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_milestone_choices(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCombining Paths and Stats\u003c/h3\u003e\u003ca id=\"user-content-combining-paths-and-stats\" class=\"anchor\" aria-label=\"Permalink: Combining Paths and Stats\" href=\"#combining-paths-and-stats\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eEven after locking paths, you can use stats for nuance:\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label amber_corruption_route:\n    if rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;) \u0026gt;= 70:\n        # High trust + corruption = willing submission\n        amber \u0026quot;I've prepared everything for you, Master.\u0026quot;\n    else:\n        # Low trust + corruption = reluctant submission\n        amber \u0026quot;It's... ready.\u0026quot;\n        \u0026quot;She looks away nervously.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eamber_corruption_route\u003c/span\u003e:\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e) \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e70\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e High trust + corruption = willing submission\u003c/span\u003e\n        amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI've prepared everything for you, Master.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Low trust + corruption = reluctant submission\u003c/span\u003e\n        amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eIt's... ready.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eShe looks away nervously.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003ePractical Examples\u003c/h2\u003e\u003ca id=\"user-content-practical-examples\" class=\"anchor\" aria-label=\"Permalink: Practical Examples\" href=\"#practical-examples\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eExample 1: Basic Date Scene\u003c/h3\u003e\u003ca id=\"user-content-example-1-basic-date-scene\" class=\"anchor\" aria-label=\"Permalink: Example 1: Basic Date Scene\" href=\"#example-1-basic-date-scene\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label amber_date_night:\n    # Check if we've met Amber\n    if not rm.get(\u0026quot;amber\u0026quot;, \u0026quot;knows\u0026quot;):\n        $ rm.set_knows(\u0026quot;amber\u0026quot;, True)\n        \u0026quot;You've just met Amber for the first time.\u0026quot;\n\n    # Increase trust from the date\n    $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)\n    $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)\n\n    # Unlock and set a nice dress\n    $ wm.unlock(\u0026quot;amber\u0026quot;, 2)\n    $ wm.set(\u0026quot;amber\u0026quot;, 2)\n\n    show amber happy at center\n\n    amber \u0026quot;This has been wonderful.\u0026quot;\n\n    # Update relationship status\n    $ rm.update_rel(\u0026quot;amber\u0026quot;)\n\n    if rm.get(\u0026quot;amber\u0026quot;, \u0026quot;rel\u0026quot;):\n        \u0026quot;Amber is now your girlfriend!\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eamber_date_night\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Check if we've met Amber\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e \u003cspan class=\"pl-k\"\u003enot\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eknows\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e):\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.set_knows(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003eTrue\u003c/span\u003e)\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYou've just met Amber for the first time.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Increase trust from the date\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Unlock and set a nice dress\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.unlock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)\n\n    \u003cspan class=\"pl-k\"\u003eshow\u003c/span\u003e amber happy \u003cspan class=\"pl-k\"\u003eat\u003c/span\u003e center\n\n    amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eThis has been wonderful.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Update relationship status\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update_rel(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003erel\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e):\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber is now your girlfriend!\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eExample 2: Corruption Scene\u003c/h3\u003e\u003ca id=\"user-content-example-2-corruption-scene\" class=\"anchor\" aria-label=\"Permalink: Example 2: Corruption Scene\" href=\"#example-2-corruption-scene\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label corrupt_isabella:\n    # Check corruption level first\n    $ isabella_cor = get_level_for_value(rm.get(\u0026quot;isabella\u0026quot;, \u0026quot;cor\u0026quot;), corruption_levels)\n\n    if isabella_cor \u0026lt; 2:\n        \u0026quot;Isabella isn't corrupted enough for this.\u0026quot;\n        return\n\n    # Scene proceeds\n    menu:\n        \u0026quot;Push her further\u0026quot;:\n            $ rm.update(\u0026quot;isabella\u0026quot;, \u0026quot;cor\u0026quot;, 20)\n            $ check_levels(\u0026quot;isabella\u0026quot;, \u0026quot;cor\u0026quot;, 20)\n\n            # Track the encounter\n            $ ss.add(\u0026quot;isabella\u0026quot;, \u0026quot;sex\u0026quot;)\n\n            # Check if she was a virgin\n            if ss.get(\u0026quot;isabella\u0026quot;, \u0026quot;virgin\u0026quot;):\n                $ ss.set(\u0026quot;isabella\u0026quot;, \u0026quot;virgin\u0026quot;, False)\n                \u0026quot;Isabella has given you her virginity.\u0026quot;\n\n        \u0026quot;Stop here\u0026quot;:\n            $ rm.update(\u0026quot;isabella\u0026quot;, \u0026quot;trust\u0026quot;, 10)\n            $ check_levels(\u0026quot;isabella\u0026quot;, \u0026quot;trust\u0026quot;, 10)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003ecorrupt_isabella\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Check corruption level first\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e isabella_cor \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), corruption_levels)\n\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e isabella_cor \u003cspan class=\"pl-k\"\u003e\u0026lt;\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eIsabella isn't corrupted enough for this.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003ereturn\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Scene proceeds\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ePush her further\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n\n            \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Track the encounter\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.add(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003esex\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n            \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Check if she was a virgin\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003evirgin\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e):\n                \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003evirgin\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003eFalse\u003c/span\u003e)\n                \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eIsabella has given you her virginity.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eStop here\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eExample 3: Strike System\u003c/h3\u003e\u003ca id=\"user-content-example-3-strike-system\" class=\"anchor\" aria-label=\"Permalink: Example 3: Strike System\" href=\"#example-3-strike-system\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label bad_choice_amber:\n    menu:\n        \u0026quot;Apologize\u0026quot;:\n            $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 5)\n            $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 5)\n\n        \u0026quot;Double down\u0026quot;:\n            # This is a bad choice - add a strike\n            $ current_strikes = ss.get(\u0026quot;amber\u0026quot;, \u0026quot;strike\u0026quot;)\n            $ ss.set(\u0026quot;amber\u0026quot;, \u0026quot;strike\u0026quot;, current_strikes + 1)\n\n            # Check if we hit 3 strikes\n            $ just_locked = rm.check_emotional_lock(\u0026quot;amber\u0026quot;)\n\n            if just_locked:\n                amber \u0026quot;I can't believe you... We're done. Don't talk to me again.\u0026quot;\n                \u0026quot;Amber has emotionally shut you out.\u0026quot;\n                \u0026quot;Her corruption and trust have been reset to 0.\u0026quot;\n                \u0026quot;You can no longer pursue a relationship with her.\u0026quot;\n            elif current_strikes + 1 \u0026gt;= 2:\n                amber \u0026quot;I'm getting really tired of this...\u0026quot;\n                \u0026quot;Warning: Amber has [current_strikes + 1] strike(s).\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003ebad_choice_amber\u003c/span\u003e:\n    \u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eApologize\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)\n\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eDouble down\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n            \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e This is a bad choice - add a strike\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e current_strikes \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estrike\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estrike\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, current_strikes \u003cspan class=\"pl-k\"\u003e+\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e)\n\n            \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Check if we hit 3 strikes\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e just_locked \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.check_emotional_lock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n            \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e just_locked:\n                amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI can't believe you... We're done. Don't talk to me again.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n                \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber has emotionally shut you out.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n                \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eHer corruption and trust have been reset to 0.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n                \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYou can no longer pursue a relationship with her.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003eelif\u003c/span\u003e current_strikes \u003cspan class=\"pl-k\"\u003e+\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n                amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI'm getting really tired of this...\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n                \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eWarning: Amber has \u003cspan class=\"pl-c1\"\u003e[current_strikes + 1]\u003c/span\u003e strike(s).\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eExample 4: Dynamic Outfit Selection\u003c/h3\u003e\u003ca id=\"user-content-example-4-dynamic-outfit-selection\" class=\"anchor\" aria-label=\"Permalink: Example 4: Dynamic Outfit Selection\" href=\"#example-4-dynamic-outfit-selection\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label amber_apartment:\n    # Set outfit based on trust level\n    $ trust_level = get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;), trust_levels)\n\n    if trust_level \u0026gt;= 4:\n        # Very close - wear intimate outfit\n        if wm.is_unlocked(\u0026quot;amber\u0026quot;, 4):\n            $ wm.set(\u0026quot;amber\u0026quot;, 4)\n    elif trust_level \u0026gt;= 2:\n        # Friends - wear casual outfit\n        if wm.is_unlocked(\u0026quot;amber\u0026quot;, 2):\n            $ wm.set(\u0026quot;amber\u0026quot;, 2)\n    else:\n        # Not close - default outfit\n        $ wm.set(\u0026quot;amber\u0026quot;, 0)\n\n    show amber at center\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eamber_apartment\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Set outfit based on trust level\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), trust_levels)\n\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e4\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Very close - wear intimate outfit\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e wm.is_unlocked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e4\u003c/span\u003e):\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e4\u003c/span\u003e)\n    \u003cspan class=\"pl-k\"\u003eelif\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Friends - wear casual outfit\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e wm.is_unlocked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e):\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Not close - default outfit\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e0\u003c/span\u003e)\n\n    \u003cspan class=\"pl-k\"\u003eshow\u003c/span\u003e amber \u003cspan class=\"pl-k\"\u003eat\u003c/span\u003e center\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eExample 5: Milestone Decision Scene\u003c/h3\u003e\u003ca id=\"user-content-example-5-milestone-decision-scene\" class=\"anchor\" aria-label=\"Permalink: Example 5: Milestone Decision Scene\" href=\"#example-5-milestone-decision-scene\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label amber_critical_choice_ep06:\n    # This is a key moment in Episode 6\n    $ trust_level = get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;), trust_levels)\n    $ cor_level = get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;), corruption_levels)\n\n    amber \u0026quot;What do you really want from me?\u0026quot;\n\n    menu:\n        \u0026quot;I want us to be together.\u0026quot;:\n            # This is always available but doesn't count as milestone\n            $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 5)\n            $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 5)\n            jump .neutral_response\n\n        \u0026quot;I care about you deeply.\u0026quot; if trust_level \u0026gt;= 2:\n            # LOVE MILESTONE - counts toward love path\n            $ amber_love_choices += 1\n            $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 20)\n            $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 20)\n\n            amber \u0026quot;I... I care about you too.\u0026quot;\n            jump .love_response\n\n        \u0026quot;I want to own you completely.\u0026quot; if cor_level \u0026gt;= 2:\n            # CORRUPTION MILESTONE - counts toward corruption path\n            $ amber_cor_choices += 1\n            $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 20)\n            $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 20)\n\n            amber \u0026quot;I... I understand.\u0026quot;\n            \u0026quot;She looks at you with a mix of fear and excitement.\u0026quot;\n            jump .corruption_response\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eamber_critical_choice_ep06\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e This is a key moment in Episode 6\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), trust_levels)\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e cor_level \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), corruption_levels)\n\n    amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eWhat do you really want from me?\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI want us to be together.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n            \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e This is always available but doesn't count as milestone\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .neutral_response\n\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI care about you deeply.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n            \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e LOVE MILESTONE - counts toward love path\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_love_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n\n            amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI... I care about you too.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .love_response\n\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI want to own you completely.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e cor_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n            \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e CORRUPTION MILESTONE - counts toward corruption path\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_cor_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n            \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n\n            amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI... I understand.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n            \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eShe looks at you with a mix of fear and excitement.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n            \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .corruption_response\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eExample 6: Path Locking at End of Episode 6\u003c/h3\u003e\u003ca id=\"user-content-example-6-path-locking-at-end-of-episode-6\" class=\"anchor\" aria-label=\"Permalink: Example 6: Path Locking at End of Episode 6\" href=\"#example-6-path-locking-at-end-of-episode-6\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label ep06_finale:\n    # Lock all character paths\n    $ amber_path = lock_character_path(\u0026quot;amber\u0026quot;)\n    $ nanami_path = lock_character_path(\u0026quot;nanami\u0026quot;)\n    $ isabella_path = lock_character_path(\u0026quot;isabella\u0026quot;)\n\n    # Show results to player\n    \u0026quot;Your choices have determined your relationships:\u0026quot;\n\n    if persistent.amber_path == \u0026quot;love\u0026quot;:\n        \u0026quot;Amber: Love Path - You've built a genuine relationship.\u0026quot;\n    elif persistent.amber_path == \u0026quot;corruption\u0026quot;:\n        \u0026quot;Amber: Corruption Path - You've dominated her completely.\u0026quot;\n    else:\n        \u0026quot;Amber: Neutral Path - Your relationship remains casual.\u0026quot;\n\n    # Continue for other characters...\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eep06_finale\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Lock all character paths\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_path \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e lock_character_path(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e nanami_path \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e lock_character_path(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e isabella_path \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e lock_character_path(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eisabella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Show results to player\u003c/span\u003e\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYour choices have determined your relationships:\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003elove\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber: Love Path - You've built a genuine relationship.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eelif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecorruption\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber: Corruption Path - You've dominated her completely.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber: Neutral Path - Your relationship remains casual.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Continue for other characters...\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eExample 7: Using Locked Paths in Episode 7+\u003c/h3\u003e\u003ca id=\"user-content-example-7-using-locked-paths-in-episode-7\" class=\"anchor\" aria-label=\"Permalink: Example 7: Using Locked Paths in Episode 7+\" href=\"#example-7-using-locked-paths-in-episode-7\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"label amber_bedroom_ep07:\n    # Branch based on locked path\n    if persistent.amber_path == \u0026quot;love\u0026quot;:\n        jump .love_scene\n    elif persistent.amber_path == \u0026quot;corruption\u0026quot;:\n        jump .corruption_scene\n    else:\n        jump .neutral_scene\n\nlabel .love_scene:\n    $ wm.set(\u0026quot;amber\u0026quot;, 3)  # Romantic outfit\n    show amber loving at center\n\n    amber \u0026quot;I've been waiting for you.\u0026quot;\n\n    # Use trust for additional nuance\n    if rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;) \u0026gt;= 85:\n        \u0026quot;She embraces you warmly.\u0026quot;\n    else:\n        \u0026quot;She smiles shyly.\u0026quot;\n\n    # Scene continues...\n\nlabel .corruption_scene:\n    $ wm.set(\u0026quot;amber\u0026quot;, 5)  # Submissive outfit\n    show amber submissive at center\n\n    amber \u0026quot;What are your orders, Master?\u0026quot;\n\n    # Use corruption for intensity\n    if rm.get(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;) \u0026gt;= 85:\n        \u0026quot;She kneels immediately.\u0026quot;\n    else:\n        \u0026quot;She hesitates briefly before kneeling.\u0026quot;\n\n    # Scene continues...\n\nlabel .neutral_scene:\n    $ wm.set(\u0026quot;amber\u0026quot;, 0)  # Default outfit\n    show amber neutral at center\n\n    amber \u0026quot;Oh, hey. What's up?\u0026quot;\n\n    # Casual interaction\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e \u003cspan class=\"pl-en\"\u003eamber_bedroom_ep07\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Branch based on locked path\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003elove\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .love_scene\n    \u003cspan class=\"pl-k\"\u003eelif\u003c/span\u003e persistent.amber_path \u003cspan class=\"pl-k\"\u003e==\u003c/span\u003e \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecorruption\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .corruption_scene\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .neutral_scene\n\n\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e .love_scene:\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Romantic outfit\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eshow\u003c/span\u003e amber loving \u003cspan class=\"pl-k\"\u003eat\u003c/span\u003e center\n\n    amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eI've been waiting for you.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Use trust for additional nuance\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e) \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e85\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eShe embraces you warmly.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eShe smiles shyly.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Scene continues...\u003c/span\u003e\n\n\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e .corruption_scene:\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Submissive outfit\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eshow\u003c/span\u003e amber submissive \u003cspan class=\"pl-k\"\u003eat\u003c/span\u003e center\n\n    amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eWhat are your orders, Master?\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Use corruption for intensity\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e) \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e85\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eShe kneels immediately.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n        \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eShe hesitates briefly before kneeling.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Scene continues...\u003c/span\u003e\n\n\u003cspan class=\"pl-k\"\u003elabel\u003c/span\u003e .neutral_scene:\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e0\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Default outfit\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003eshow\u003c/span\u003e amber neutral \u003cspan class=\"pl-k\"\u003eat\u003c/span\u003e center\n\n    amber \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eOh, hey. What's up?\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Casual interaction\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCharacter Reference\u003c/h2\u003e\u003ca id=\"user-content-character-reference\" class=\"anchor\" aria-label=\"Permalink: Character Reference\" href=\"#character-reference\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eAll Characters\u003c/h3\u003e\u003ca id=\"user-content-all-characters\" class=\"anchor\" aria-label=\"Permalink: All Characters\" href=\"#all-characters\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cmarkdown-accessiblity-table\u003e\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eCharacter\u003c/th\u003e\n\u003cth\u003eType\u003c/th\u003e\n\u003cth\u003eAvailable Attributes\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003eAmber\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eNanami\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eElizabeth\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eIsabella\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eKanae\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eArlette\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eAntonella\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eMadison\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003ePaz\u003c/td\u003e\n\u003ctd\u003eLove Interest\u003c/td\u003e\n\u003ctd\u003ecor, trust, preg, rel, knows, emotionally_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eMC\u003c/td\u003e\n\u003ctd\u003eMain Character\u003c/td\u003e\n\u003ctd\u003eintegrity, integrity_locked\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eTakeo\u003c/td\u003e\n\u003ctd\u003eOrganization\u003c/td\u003e\n\u003ctd\u003etrust\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eTMPD\u003c/td\u003e\n\u003ctd\u003eOrganization\u003c/td\u003e\n\u003ctd\u003etrust\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eOsaka\u003c/td\u003e\n\u003ctd\u003eOrganization\u003c/td\u003e\n\u003ctd\u003etrust\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\u003c/markdown-accessiblity-table\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eAutomatic Character Progression Rates\u003c/h3\u003e\u003ca id=\"user-content-automatic-character-progression-rates\" class=\"anchor\" aria-label=\"Permalink: Automatic Character Progression Rates\" href=\"#automatic-character-progression-rates\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eNEW SYSTEM (Version 2.0):\u003c/strong\u003e Character progression rates are now applied \u003cstrong\u003eautomatically\u003c/strong\u003e to all stat changes. You only need to think about \"base values\" - the system multiplies them by character-specific rates for you.\u003c/p\u003e\n\u003cp dir=\"auto\"\u003eDifferent characters respond differently to your actions:\u003c/p\u003e\n\u003cmarkdown-accessiblity-table\u003e\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eCharacter\u003c/th\u003e\n\u003cth\u003eTrust Rate\u003c/th\u003e\n\u003cth\u003eCorruption Rate\u003c/th\u003e\n\u003cth\u003eNotes\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003eAmber\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003e1.5x\u003c/td\u003e\n\u003ctd\u003eMore easily corrupted\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eAntonella\u003c/td\u003e\n\u003ctd\u003e0.25x\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003eVery hard to gain trust\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eArlette\u003c/td\u003e\n\u003ctd\u003e1.5x\u003c/td\u003e\n\u003ctd\u003e1.5x\u003c/td\u003e\n\u003ctd\u003eResponds strongly to both\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eElizabeth\u003c/td\u003e\n\u003ctd\u003e2x\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003eGains trust quickly\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eIsabella\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003eBalanced progression\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eKanae\u003c/td\u003e\n\u003ctd\u003e0.5x\u003c/td\u003e\n\u003ctd\u003e0.5x\u003c/td\u003e\n\u003ctd\u003eSlow progression both ways\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eMadison\u003c/td\u003e\n\u003ctd\u003e0.5x\u003c/td\u003e\n\u003ctd\u003e2x\u003c/td\u003e\n\u003ctd\u003eHard to trust, easily corrupted\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eNanami\u003c/td\u003e\n\u003ctd\u003e3x\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003eVery trusting, hard to corrupt\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003ePaz\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003e1x\u003c/td\u003e\n\u003ctd\u003eBalanced progression\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\u003c/markdown-accessiblity-table\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eHow It Works (Automatic):\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# You write base values:\n$ rm.update(\u0026quot;nanami\u0026quot;, \u0026quot;trust\u0026quot;, 3)    # Base value: 3\n$ rm.update(\u0026quot;madison\u0026quot;, \u0026quot;cor\u0026quot;, 5)     # Base value: 5\n$ rm.update(\u0026quot;antonella\u0026quot;, \u0026quot;trust\u0026quot;, 8) # Base value: 8\n\n# System automatically applies rates:\n# Nanami gets: 3 × 3.0 = 9 trust (3x rate)\n# Madison gets: 5 × 2.0 = 10 corruption (2x rate)\n# Antonella gets: 8 × 0.25 = 2 trust (0.25x rate)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e You write base values:\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base value: 3\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emadison\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)     \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base value: 5\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eantonella\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e8\u003c/span\u003e) \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base value: 8\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e System automatically applies rates:\u003c/span\u003e\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Nanami gets: 3 × 3.0 = 9 trust (3x rate)\u003c/span\u003e\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Madison gets: 5 × 2.0 = 10 corruption (2x rate)\u003c/span\u003e\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Antonella gets: 8 × 0.25 = 2 trust (0.25x rate)\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eKey Points:\u003c/strong\u003e\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e✅ \u003cstrong\u003eAlways use base values\u003c/strong\u003e - the system handles multiplication automatically\u003c/li\u003e\n\u003cli\u003e✅ \u003cstrong\u003eValues are rounded\u003c/strong\u003e - no decimal stats (e.g., 2.5 becomes 3)\u003c/li\u003e\n\u003cli\u003e✅ \u003cstrong\u003eWorks with negatives\u003c/strong\u003e - negative values are also multiplied by rates\u003c/li\u003e\n\u003cli\u003e✅ \u003cstrong\u003eNo special syntax needed\u003c/strong\u003e - just use \u003ccode\u003erm.update()\u003c/code\u003e as usual\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eStandard Base Values Guide\u003c/h3\u003e\u003ca id=\"user-content-standard-base-values-guide\" class=\"anchor\" aria-label=\"Permalink: Standard Base Values Guide\" href=\"#standard-base-values-guide\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eUse these \u003cstrong\u003ebase values\u003c/strong\u003e in your rm.update() calls. The system will automatically apply character-specific multipliers.\u003c/p\u003e\n\u003cmarkdown-accessiblity-table\u003e\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eDecision Type\u003c/th\u003e\n\u003cth\u003eTrust Base\u003c/th\u003e\n\u003cth\u003eCorruption Base\u003c/th\u003e\n\u003cth\u003eIntegrity Base\u003c/th\u003e\n\u003cth\u003eExample\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eCasual interaction\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003e±1\u003c/td\u003e\n\u003ctd\u003e±1\u003c/td\u003e\n\u003ctd\u003e±1\u003c/td\u003e\n\u003ctd\u003eSmall talk, minor choices\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003ePersonal moment\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003e±2\u003c/td\u003e\n\u003ctd\u003e±2\u003c/td\u003e\n\u003ctd\u003e±2\u003c/td\u003e\n\u003ctd\u003eSharing feelings, personal favor\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eImportant decision\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003e±3\u003c/td\u003e\n\u003ctd\u003e±3\u003c/td\u003e\n\u003ctd\u003e±3\u003c/td\u003e\n\u003ctd\u003eSignificant moral choice\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eCritical story moment\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003e±5\u003c/td\u003e\n\u003ctd\u003e±5\u003c/td\u003e\n\u003ctd\u003e±5\u003c/td\u003e\n\u003ctd\u003eMajor relationship turning point\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eMilestone decision\u003c/strong\u003e\u003c/td\u003e\n\u003ctd\u003e±10\u003c/td\u003e\n\u003ctd\u003e±10\u003c/td\u003e\n\u003ctd\u003eN/A\u003c/td\u003e\n\u003ctd\u003eEpisode 6+ path-defining choices\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\u003c/markdown-accessiblity-table\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExamples in Practice:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Casual: complimenting a character\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 1)  # Base 1 × 1.0 = 1 trust\n\n# Personal: comforting someone emotional\n$ rm.update(\u0026quot;nanami\u0026quot;, \u0026quot;trust\u0026quot;, 2)  # Base 2 × 3.0 = 6 trust\n\n# Important: choosing to protect someone\n$ rm.update(\u0026quot;elizabeth\u0026quot;, \u0026quot;trust\u0026quot;, 3)  # Base 3 × 2.0 = 6 trust\n\n# Critical: accepting intimate proposal\n$ rm.update(\u0026quot;madison\u0026quot;, \u0026quot;cor\u0026quot;, 5)  # Base 5 × 2.0 = 10 corruption\n$ rm.update(\u0026quot;mc\u0026quot;, \u0026quot;integrity\u0026quot;, -5)  # Base -5 = -5 integrity\n\n# Milestone (Episode 6+): path-defining choice\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 10)  # Base 10 × 1.0 = 10 trust\n$ amber_love_choices += 1\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Casual: complimenting a character\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 1 × 1.0 = 1 trust\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Personal: comforting someone emotional\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 2 × 3.0 = 6 trust\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Important: choosing to protect someone\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eelizabeth\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 3 × 2.0 = 6 trust\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Critical: accepting intimate proposal\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emadison\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 5 × 2.0 = 10 corruption\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emc\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eintegrity\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -5 = -5 integrity\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Milestone (Episode 6+): path-defining choice\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base 10 × 1.0 = 10 trust\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_love_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eNegative Values:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Rejecting someone\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, -2)  # Base -2 × 1.0 = -2 trust\n\n# Disappointing Nanami\n$ rm.update(\u0026quot;nanami\u0026quot;, \u0026quot;trust\u0026quot;, -3)  # Base -3 × 3.0 = -9 trust\n\n# Corruption reversal (rare)\n$ rm.update(\u0026quot;madison\u0026quot;, \u0026quot;cor\u0026quot;, -1)  # Base -1 × 2.0 = -2 corruption\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Rejecting someone\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -2 × 1.0 = -2 trust\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Disappointing Nanami\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -3 × 3.0 = -9 trust\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Corruption reversal (rare)\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emadison\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-k\"\u003e-\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Base -1 × 2.0 = -2 corruption\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eWhy These Values?\u003c/strong\u003e\u003c/p\u003e\n\u003cp dir=\"auto\"\u003eThese base values create balanced progression across all 20 episodes:\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eCasual (±1)\u003c/strong\u003e: Small, incremental changes\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003ePersonal (±2)\u003c/strong\u003e: Noticeable impact\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eImportant (±3)\u003c/strong\u003e: Significant relationship shift\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eCritical (±5)\u003c/strong\u003e: Major story moments\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eMilestone (±10)\u003c/strong\u003e: Path-defining decisions (ep6+)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003eWith character rates, these translate to meaningful but not extreme changes. For example:\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003eNanami gains 3-6 trust from personal moments (2 × 3.0)\u003c/li\u003e\n\u003cli\u003eMadison struggles to gain trust (2 × 0.5 = 1) but corrupts easily (2 × 2.0 = 4)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eSexual Statistics Reference\u003c/h3\u003e\u003ca id=\"user-content-sexual-statistics-reference\" class=\"anchor\" aria-label=\"Permalink: Sexual Statistics Reference\" href=\"#sexual-statistics-reference\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eAll love interests track these statistics:\u003c/p\u003e\n\u003cmarkdown-accessiblity-table\u003e\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eStatistic\u003c/th\u003e\n\u003cth\u003eType\u003c/th\u003e\n\u003cth\u003eDescription\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003eanal\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of anal sex encounters\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eassjob\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of assjob encounters\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eblowjob\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of oral sex encounters\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003ecreampie\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of creampie finishes\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003epussyjob\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of pussyjob encounters\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003esex\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of vaginal sex encounters\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003etitjob\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of titjob encounters\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003evirgin\u003c/td\u003e\n\u003ctd\u003eBoolean\u003c/td\u003e\n\u003ctd\u003eVirginity status (True/False)\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003estrike\u003c/td\u003e\n\u003ctd\u003eInteger\u003c/td\u003e\n\u003ctd\u003eNumber of strikes (0-3)\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\u003c/markdown-accessiblity-table\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eWardrobe Reference\u003c/h3\u003e\u003ca id=\"user-content-wardrobe-reference\" class=\"anchor\" aria-label=\"Permalink: Wardrobe Reference\" href=\"#wardrobe-reference\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cmarkdown-accessiblity-table\u003e\u003ctable\u003e\n\u003cthead\u003e\n\u003ctr\u003e\n\u003cth\u003eCharacter\u003c/th\u003e\n\u003cth\u003eAvailable Outfits\u003c/th\u003e\n\u003c/tr\u003e\n\u003c/thead\u003e\n\u003ctbody\u003e\n\u003ctr\u003e\n\u003ctd\u003eAmber\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3, 4, 5\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eNanami\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3, 4, 5, 6, 7, 8\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eElizabeth\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eIsabella\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3, 4, 5, 6\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eKanae\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3, 4\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eArlette\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3, 4, 5, 6, 7\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eAntonella\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003eMadison\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3, 4\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003ePaz\u003c/td\u003e\n\u003ctd\u003e0, 1, 2, 3, 4, 5\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/tbody\u003e\n\u003c/table\u003e\u003c/markdown-accessiblity-table\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eTroubleshooting\u003c/h2\u003e\u003ca id=\"user-content-troubleshooting\" class=\"anchor\" aria-label=\"Permalink: Troubleshooting\" href=\"#troubleshooting\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eCommon Issues and Solutions\u003c/h3\u003e\u003ca id=\"user-content-common-issues-and-solutions\" class=\"anchor\" aria-label=\"Permalink: Common Issues and Solutions\" href=\"#common-issues-and-solutions\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIssue: Stats Don't Update\u003c/h4\u003e\u003ca id=\"user-content-issue-stats-dont-update\" class=\"anchor\" aria-label=\"Permalink: Issue: Stats Don't Update\" href=\"#issue-stats-dont-update\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSymptoms:\u003c/strong\u003e You call \u003ccode\u003erm.update()\u003c/code\u003e but nothing changes\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSolutions:\u003c/strong\u003e\u003c/p\u003e\n\u003col dir=\"auto\"\u003e\n\u003cli\u003eCheck character name spelling (must be lowercase)\u003c/li\u003e\n\u003cli\u003eVerify attribute name is correct (\"cor\", \"trust\", \"integrity\")\u003c/li\u003e\n\u003cli\u003eMake sure character isn't emotionally locked\u003c/li\u003e\n\u003cli\u003eCheck if MC's integrity is locked\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Wrong\n$ rm.update(\u0026quot;Amber\u0026quot;, \u0026quot;corruption\u0026quot;, 10)  # Wrong: uppercase name, wrong attribute\n\n# Correct\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;, 10)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Wrong\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecorruption\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Wrong: uppercase name, wrong attribute\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Correct\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIssue: Notifications Don't Appear\u003c/h4\u003e\u003ca id=\"user-content-issue-notifications-dont-appear\" class=\"anchor\" aria-label=\"Permalink: Issue: Notifications Don't Appear\" href=\"#issue-notifications-dont-appear\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSymptoms:\u003c/strong\u003e Stats update but no notification shows\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSolution:\u003c/strong\u003e Always call \u003ccode\u003echeck_levels()\u003c/code\u003e after \u003ccode\u003erm.update()\u003c/code\u003e\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Wrong\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)  # No notification\n\n# Correct\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)\n$ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)  # Shows notification\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Wrong\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e No notification\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Correct\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Shows notification\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIssue: Can't Change Outfit\u003c/h4\u003e\u003ca id=\"user-content-issue-cant-change-outfit\" class=\"anchor\" aria-label=\"Permalink: Issue: Can't Change Outfit\" href=\"#issue-cant-change-outfit\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSymptoms:\u003c/strong\u003e \u003ccode\u003ewm.set()\u003c/code\u003e doesn't work\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSolutions:\u003c/strong\u003e\u003c/p\u003e\n\u003col dir=\"auto\"\u003e\n\u003cli\u003eMake sure outfit is unlocked first\u003c/li\u003e\n\u003cli\u003eCheck that outfit ID is valid for that character\u003c/li\u003e\n\u003cli\u003eVerify character name is correct\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Wrong\n$ wm.set(\u0026quot;amber\u0026quot;, 10)  # Amber only has 6 outfits (0-5)\n\n# Correct\n$ wm.unlock(\u0026quot;amber\u0026quot;, 3)  # Unlock first\n$ wm.set(\u0026quot;amber\u0026quot;, 3)     # Then set\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Wrong\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e10\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Amber only has 6 outfits (0-5)\u003c/span\u003e\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Correct\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.unlock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)  \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Unlock first\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)     \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Then set\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIssue: Character Is Emotionally Locked\u003c/h4\u003e\u003ca id=\"user-content-issue-character-is-emotionally-locked\" class=\"anchor\" aria-label=\"Permalink: Issue: Character Is Emotionally Locked\" href=\"#issue-character-is-emotionally-locked\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSymptoms:\u003c/strong\u003e Can't change corruption or trust for a character\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSolution:\u003c/strong\u003e Check if character has 3 strikes\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ is_locked = rm.is_emotionally_locked(\u0026quot;amber\u0026quot;)\n$ strikes = ss.get(\u0026quot;amber\u0026quot;, \u0026quot;strike\u0026quot;)\n\nif is_locked:\n    \u0026quot;Amber has [strikes] strikes and is emotionally locked.\u0026quot;\n    \u0026quot;Her stats can no longer change.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e is_locked \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.is_emotionally_locked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e strikes \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estrike\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e is_locked:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber has \u003cspan class=\"pl-c1\"\u003e[strikes]\u003c/span\u003e strikes and is emotionally locked.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eHer stats can no longer change.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIssue: Path Won't Lock\u003c/h4\u003e\u003ca id=\"user-content-issue-path-wont-lock\" class=\"anchor\" aria-label=\"Permalink: Issue: Path Won't Lock\" href=\"#issue-path-wont-lock\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSymptoms:\u003c/strong\u003e \u003ccode\u003elock_character_path()\u003c/code\u003e returns \"neutral\" when you expected \"love\" or \"corruption\"\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSolutions:\u003c/strong\u003e\u003c/p\u003e\n\u003col dir=\"auto\"\u003e\n\u003cli\u003eCheck milestone choice counters\u003c/li\u003e\n\u003cli\u003eVerify you incremented the correct counters in dialogue\u003c/li\u003e\n\u003cli\u003eMake sure thresholds aren't set too high\u003c/li\u003e\n\u003c/ol\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Check current progress\n$ love_count = get_milestone_choices(\u0026quot;amber\u0026quot;, \u0026quot;love\u0026quot;)\n$ cor_count = get_milestone_choices(\u0026quot;amber\u0026quot;, \u0026quot;cor\u0026quot;)\n\n\u0026quot;Amber has [love_count] love choices and [cor_count] corruption choices.\u0026quot;\n\u0026quot;Need 3 of either to lock path.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Check current progress\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e love_count \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_milestone_choices(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003elove\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e cor_count \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_milestone_choices(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003ecor\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber has \u003cspan class=\"pl-c1\"\u003e[love_count]\u003c/span\u003e love choices and \u003cspan class=\"pl-c1\"\u003e[cor_count]\u003c/span\u003e corruption choices.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eNeed 3 of either to lock path.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eIssue: MC's Integrity Won't Change\u003c/h4\u003e\u003ca id=\"user-content-issue-mcs-integrity-wont-change\" class=\"anchor\" aria-label=\"Permalink: Issue: MC's Integrity Won't Change\" href=\"#issue-mcs-integrity-wont-change\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSymptoms:\u003c/strong\u003e Integrity is stuck\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eSolution:\u003c/strong\u003e Check if integrity is locked (happens at 0 or 100)\u003c/p\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eExample:\u003c/strong\u003e\u003c/p\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"$ is_locked = rm.get(\u0026quot;mc\u0026quot;, \u0026quot;integrity_locked\u0026quot;)\n$ current_integrity = rm.get(\u0026quot;mc\u0026quot;, \u0026quot;integrity\u0026quot;)\n\nif is_locked:\n    \u0026quot;Your integrity is locked at [current_integrity].\u0026quot;\n    \u0026quot;This represents your final moral state.\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e is_locked \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emc\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eintegrity_locked\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e current_integrity \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003emc\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eintegrity\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e is_locked:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eYour integrity is locked at \u003cspan class=\"pl-c1\"\u003e[current_integrity]\u003c/span\u003e.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eThis represents your final moral state.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eBest Practices\u003c/h3\u003e\u003ca id=\"user-content-best-practices\" class=\"anchor\" aria-label=\"Permalink: Best Practices\" href=\"#best-practices\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e1. Always Use check_levels()\u003c/h4\u003e\u003ca id=\"user-content-1-always-use-check_levels\" class=\"anchor\" aria-label=\"Permalink: 1. Always Use check_levels()\" href=\"#1-always-use-check_levels\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Good practice\n$ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)\n$ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 15)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Good practice\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e15\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e2. Check Before Unlocking Content\u003c/h4\u003e\u003ca id=\"user-content-2-check-before-unlocking-content\" class=\"anchor\" aria-label=\"Permalink: 2. Check Before Unlocking Content\" href=\"#2-check-before-unlocking-content\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Check levels before showing content\n$ trust_level = get_level_for_value(rm.get(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;), trust_levels)\n\nif trust_level \u0026gt;= 3:\n    # Show intimate scene\n    jump .intimate_scene\nelse:\n    # Not ready yet\n    \u0026quot;Amber isn't comfortable with this yet.\u0026quot;\n    return\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Check levels before showing content\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), trust_levels)\n\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Show intimate scene\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003ejump\u003c/span\u003e .intimate_scene\n\u003cspan class=\"pl-k\"\u003eelse\u003c/span\u003e:\n    \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Not ready yet\u003c/span\u003e\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber isn't comfortable with this yet.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003ereturn\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e3. Unlock Outfits Naturally\u003c/h4\u003e\u003ca id=\"user-content-3-unlock-outfits-naturally\" class=\"anchor\" aria-label=\"Permalink: 3. Unlock Outfits Naturally\" href=\"#3-unlock-outfits-naturally\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Unlock outfits as rewards or story progression\nif rm.get(\u0026quot;amber\u0026quot;, \u0026quot;rel\u0026quot;):\n    $ wm.unlock(\u0026quot;amber\u0026quot;, 3)\n    \u0026quot;Amber has unlocked a special outfit for you!\u0026quot;\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Unlock outfits as rewards or story progression\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003erel\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e):\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.unlock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e3\u003c/span\u003e)\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eAmber has unlocked a special outfit for you!\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e4. Track Virginity Properly\u003c/h4\u003e\u003ca id=\"user-content-4-track-virginity-properly\" class=\"anchor\" aria-label=\"Permalink: 4. Track Virginity Properly\" href=\"#4-track-virginity-properly\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Always check and update virginity status\nif ss.get(\u0026quot;nanami\u0026quot;, \u0026quot;virgin\u0026quot;):\n    \u0026quot;This is Nanami's first time.\u0026quot;\n    $ ss.set(\u0026quot;nanami\u0026quot;, \u0026quot;virgin\u0026quot;, False)\n\n$ ss.add(\u0026quot;nanami\u0026quot;, \u0026quot;sex\u0026quot;)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Always check and update virginity status\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003evirgin\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e):\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eThis is Nanami's first time.\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e\n    \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003evirgin\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003eFalse\u003c/span\u003e)\n\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.add(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003enanami\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003esex\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch4 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003e5. Use Milestone Decisions Strategically\u003c/h4\u003e\u003ca id=\"user-content-5-use-milestone-decisions-strategically\" class=\"anchor\" aria-label=\"Permalink: 5. Use Milestone Decisions Strategically\" href=\"#5-use-milestone-decisions-strategically\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Reserve milestone decisions for important choices\n# Regular choices don't need to increment counters\nmenu:\n    \u0026quot;Chat casually\u0026quot;:\n        # Regular choice - no counter\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 5)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 5)\n\n    \u0026quot;Confess your feelings\u0026quot; if trust_level \u0026gt;= 2:\n        # Milestone decision - increment counter\n        $ amber_love_choices += 1\n        $ rm.update(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 20)\n        $ check_levels(\u0026quot;amber\u0026quot;, \u0026quot;trust\u0026quot;, 20)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Reserve milestone decisions for important choices\u003c/span\u003e\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Regular choices don't need to increment counters\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003emenu\u003c/span\u003e:\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eChat casually\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Regular choice - no counter\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e5\u003c/span\u003e)\n\n    \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eConfess your feelings\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e \u003cspan class=\"pl-k\"\u003eif\u003c/span\u003e trust_level \u003cspan class=\"pl-k\"\u003e\u0026gt;=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e2\u003c/span\u003e:\n        \u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Milestone decision - increment counter\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e amber_love_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\n        \u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eamber\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003etrust\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003e20\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch2 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eSummary\u003c/h2\u003e\u003ca id=\"user-content-summary\" class=\"anchor\" aria-label=\"Permalink: Summary\" href=\"#summary\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cp dir=\"auto\"\u003eThe Core System is designed to create a living, breathing relationship system that:\u003c/p\u003e\n\u003cul dir=\"auto\"\u003e\n\u003cli\u003e\u003cstrong\u003eRemembers\u003c/strong\u003e every choice you make\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eResponds\u003c/strong\u003e with realistic character progression\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eLocks\u003c/strong\u003e characters into meaningful paths\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eRewards\u003c/strong\u003e player investment with unlockable content\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003ePunishes\u003c/strong\u003e poor choices with consequences\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp dir=\"auto\"\u003eBy understanding these systems, you can create compelling, dynamic stories that respond to player choices in meaningful ways.\u003c/p\u003e\n\u003cdiv class=\"markdown-heading\" dir=\"auto\"\u003e\u003ch3 tabindex=\"-1\" class=\"heading-element\" dir=\"auto\"\u003eQuick Reference\u003c/h3\u003e\u003ca id=\"user-content-quick-reference\" class=\"anchor\" aria-label=\"Permalink: Quick Reference\" href=\"#quick-reference\"\u003e\u003csvg class=\"octicon octicon-link\" viewBox=\"0 0 16 16\" version=\"1.1\" width=\"16\" height=\"16\" aria-hidden=\"true\"\u003e\u003cpath d=\"m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z\"\u003e\u003c/path\u003e\u003c/svg\u003e\u003c/a\u003e\u003c/div\u003e\n\u003cdiv class=\"highlight highlight-source-renpy notranslate position-relative overflow-auto\" dir=\"auto\" data-snippet-clipboard-copy-content=\"# Relationship Management\n$ rm.update(\u0026quot;char\u0026quot;, \u0026quot;attr\u0026quot;, value)\n$ rm.get(\u0026quot;char\u0026quot;, \u0026quot;attr\u0026quot;)\n$ rm.update_rel(\u0026quot;char\u0026quot;)\n$ rm.set_knows(\u0026quot;char\u0026quot;, True/False)\n\n# Sexual Statistics\n$ ss.add(\u0026quot;char\u0026quot;, \u0026quot;stat\u0026quot;)\n$ ss.get(\u0026quot;char\u0026quot;, \u0026quot;stat\u0026quot;)\n$ ss.set(\u0026quot;char\u0026quot;, \u0026quot;stat\u0026quot;, value)\n\n# Wardrobe Management\n$ wm.unlock(\u0026quot;char\u0026quot;, outfit_id)\n$ wm.set(\u0026quot;char\u0026quot;, outfit_id)\n$ wm.get_current(\u0026quot;char\u0026quot;)\n$ wm.next_outfit(\u0026quot;char\u0026quot;)\n\n# Level System\n$ level = get_level_for_value(rm.get(\u0026quot;char\u0026quot;, \u0026quot;attr\u0026quot;), level_dict)\n$ check_levels(\u0026quot;char\u0026quot;, \u0026quot;attr\u0026quot;, value)\n\n# Milestone System\n$ char_love_choices += 1\n$ char_cor_choices += 1\n$ path = lock_character_path(\u0026quot;char\u0026quot;)\n$ path = get_character_path(\u0026quot;char\u0026quot;)\n$ locked = is_path_locked(\u0026quot;char\u0026quot;)\"\u003e\u003cpre\u003e\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Relationship Management\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eattr\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-e\"\u003evalue\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eattr\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.update_rel(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e rm.set_knows(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-c1\"\u003eTrue\u003c/span\u003e\u003cspan class=\"pl-k\"\u003e/\u003c/span\u003e\u003cspan class=\"pl-c1\"\u003eFalse\u003c/span\u003e)\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Sexual Statistics\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.add(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estat\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estat\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e ss.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003estat\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-e\"\u003evalue\u003c/span\u003e)\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Wardrobe Management\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.unlock(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, outfit_id)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.set(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, outfit_id)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.get_current(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e wm.next_outfit(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Level System\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e level \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_level_for_value(rm.get(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eattr\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e), level_dict)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e check_levels(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003eattr\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e, \u003cspan class=\"pl-e\"\u003evalue\u003c/span\u003e)\n\n\u003cspan class=\"pl-c\"\u003e\u003cspan class=\"pl-c\"\u003e#\u003c/span\u003e Milestone System\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e char_love_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e char_cor_choices \u003cspan class=\"pl-k\"\u003e+=\u003c/span\u003e \u003cspan class=\"pl-c1\"\u003e1\u003c/span\u003e\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e path \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e lock_character_path(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e path \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e get_character_path(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\n\u003cspan class=\"pl-k\"\u003e$\u003c/span\u003e locked \u003cspan class=\"pl-k\"\u003e=\u003c/span\u003e is_path_locked(\u003cspan class=\"pl-s\"\u003e\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003echar\u003cspan class=\"pl-pds\"\u003e\"\u003c/span\u003e\u003c/span\u003e)\u003c/pre\u003e\u003c/div\u003e\n\u003chr\u003e\n\u003cp dir=\"auto\"\u003e\u003cstrong\u003eEnd of Documentation\u003c/strong\u003e\u003c/p\u003e\n\u003c/article\u003e","renderedFileInfo":null,"shortPath":null,"symbolsEnabled":true,"tabSize":4,"topBannersInfo":{"overridingGlobalFundingFile":false,"globalPreferredFundingPath":null,"showInvalidCitationWarning":false,"citationHelpUrl":"https://docs.github.com/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/about-citation-files","actionsOnboardingTip":null},"truncated":false,"viewable":true,"workflowRedirectUrl":null,"symbols":{"timed_out":false,"not_analyzed":false,"symbols":[{"name":"Core System Documentation","kind":"section_1","ident_start":2,"ident_end":27,"extent_start":0,"extent_end":35541,"fully_qualified_name":"Core System Documentation","ident_utf16":{"start":{"line_number":0,"utf16_col":2},"end":{"line_number":0,"utf16_col":27}},"extent_utf16":{"start":{"line_number":0,"utf16_col":0},"end":{"line_number":1188,"utf16_col":0}}},{"name":"Table of Contents","kind":"section_2","ident_start":109,"ident_end":126,"extent_start":106,"extent_end":611,"fully_qualified_name":"Table of Contents","ident_utf16":{"start":{"line_number":8,"utf16_col":3},"end":{"line_number":8,"utf16_col":20}},"extent_utf16":{"start":{"line_number":8,"utf16_col":0},"end":{"line_number":23,"utf16_col":0}}},{"name":"Introduction","kind":"section_2","ident_start":614,"ident_end":626,"extent_start":611,"extent_end":1514,"fully_qualified_name":"Introduction","ident_utf16":{"start":{"line_number":23,"utf16_col":3},"end":{"line_number":23,"utf16_col":15}},"extent_utf16":{"start":{"line_number":23,"utf16_col":0},"end":{"line_number":39,"utf16_col":0}}},{"name":"What Does It Do?","kind":"section_3","ident_start":1030,"ident_end":1046,"extent_start":1026,"extent_end":1514,"fully_qualified_name":"What Does It Do?","ident_utf16":{"start":{"line_number":29,"utf16_col":4},"end":{"line_number":29,"utf16_col":20}},"extent_utf16":{"start":{"line_number":29,"utf16_col":0},"end":{"line_number":39,"utf16_col":0}}},{"name":"System Overview","kind":"section_2","ident_start":1517,"ident_end":1532,"extent_start":1514,"extent_end":2123,"fully_qualified_name":"System Overview","ident_utf16":{"start":{"line_number":39,"utf16_col":3},"end":{"line_number":39,"utf16_col":18}},"extent_utf16":{"start":{"line_number":39,"utf16_col":0},"end":{"line_number":60,"utf16_col":0}}},{"name":"1. **RM (Relationship Management)**","kind":"section_3","ident_start":1589,"ident_end":1624,"extent_start":1585,"extent_end":1716,"fully_qualified_name":"1. **RM (Relationship Management)**","ident_utf16":{"start":{"line_number":43,"utf16_col":4},"end":{"line_number":43,"utf16_col":39}},"extent_utf16":{"start":{"line_number":43,"utf16_col":0},"end":{"line_number":46,"utf16_col":0}}},{"name":"2. **SexStats**","kind":"section_3","ident_start":1720,"ident_end":1735,"extent_start":1716,"extent_end":1811,"fully_qualified_name":"2. **SexStats**","ident_utf16":{"start":{"line_number":46,"utf16_col":4},"end":{"line_number":46,"utf16_col":19}},"extent_utf16":{"start":{"line_number":46,"utf16_col":0},"end":{"line_number":49,"utf16_col":0}}},{"name":"3. **WM (Wardrobe Manager)**","kind":"section_3","ident_start":1815,"ident_end":1843,"extent_start":1811,"extent_end":1911,"fully_qualified_name":"3. **WM (Wardrobe Manager)**","ident_utf16":{"start":{"line_number":49,"utf16_col":4},"end":{"line_number":49,"utf16_col":32}},"extent_utf16":{"start":{"line_number":49,"utf16_col":0},"end":{"line_number":52,"utf16_col":0}}},{"name":"4. **Level System**","kind":"section_3","ident_start":1915,"ident_end":1934,"extent_start":1911,"extent_end":2012,"fully_qualified_name":"4. **Level System**","ident_utf16":{"start":{"line_number":52,"utf16_col":4},"end":{"line_number":52,"utf16_col":23}},"extent_utf16":{"start":{"line_number":52,"utf16_col":0},"end":{"line_number":55,"utf16_col":0}}},{"name":"5. **Milestone Decision System**","kind":"section_3","ident_start":2016,"ident_end":2048,"extent_start":2012,"extent_end":2123,"fully_qualified_name":"5. **Milestone Decision System**","ident_utf16":{"start":{"line_number":55,"utf16_col":4},"end":{"line_number":55,"utf16_col":36}},"extent_utf16":{"start":{"line_number":55,"utf16_col":0},"end":{"line_number":60,"utf16_col":0}}},{"name":"Relationship Management (RM)","kind":"section_2","ident_start":2126,"ident_end":2154,"extent_start":2123,"extent_end":7056,"fully_qualified_name":"Relationship Management (RM)","ident_utf16":{"start":{"line_number":60,"utf16_col":3},"end":{"line_number":60,"utf16_col":31}},"extent_utf16":{"start":{"line_number":60,"utf16_col":0},"end":{"line_number":196,"utf16_col":0}}},{"name":"Character Types","kind":"section_3","ident_start":2227,"ident_end":2242,"extent_start":2223,"extent_end":3184,"fully_qualified_name":"Character Types","ident_utf16":{"start":{"line_number":64,"utf16_col":4},"end":{"line_number":64,"utf16_col":19}},"extent_utf16":{"start":{"line_number":64,"utf16_col":0},"end":{"line_number":88,"utf16_col":0}}},{"name":"**Love Interests** (Regular Characters)","kind":"section_4","ident_start":2296,"ident_end":2335,"extent_start":2291,"extent_end":2883,"fully_qualified_name":"**Love Interests** (Regular Characters)","ident_utf16":{"start":{"line_number":68,"utf16_col":5},"end":{"line_number":68,"utf16_col":44}},"extent_utf16":{"start":{"line_number":68,"utf16_col":0},"end":{"line_number":78,"utf16_col":0}}},{"name":"**Main Character (MC)**","kind":"section_4","ident_start":2888,"ident_end":2911,"extent_start":2883,"extent_end":3047,"fully_qualified_name":"**Main Character (MC)**","ident_utf16":{"start":{"line_number":78,"utf16_col":5},"end":{"line_number":78,"utf16_col":28}},"extent_utf16":{"start":{"line_number":78,"utf16_col":0},"end":{"line_number":83,"utf16_col":0}}},{"name":"**Organizations**","kind":"section_4","ident_start":3052,"ident_end":3069,"extent_start":3047,"extent_end":3184,"fully_qualified_name":"**Organizations**","ident_utf16":{"start":{"line_number":83,"utf16_col":5},"end":{"line_number":83,"utf16_col":22}},"extent_utf16":{"start":{"line_number":83,"utf16_col":0},"end":{"line_number":88,"utf16_col":0}}},{"name":"How to Use RM","kind":"section_3","ident_start":3188,"ident_end":3201,"extent_start":3184,"extent_end":6553,"fully_qualified_name":"How to Use RM","ident_utf16":{"start":{"line_number":88,"utf16_col":4},"end":{"line_number":88,"utf16_col":17}},"extent_utf16":{"start":{"line_number":88,"utf16_col":0},"end":{"line_number":176,"utf16_col":0}}},{"name":"Updating Character Stats","kind":"section_4","ident_start":3208,"ident_end":3232,"extent_start":3203,"extent_end":4468,"fully_qualified_name":"Updating Character Stats","ident_utf16":{"start":{"line_number":90,"utf16_col":5},"end":{"line_number":90,"utf16_col":29}},"extent_utf16":{"start":{"line_number":90,"utf16_col":0},"end":{"line_number":115,"utf16_col":0}}},{"name":"Updating Multiple Attributes","kind":"section_4","ident_start":4473,"ident_end":4501,"extent_start":4468,"extent_end":5818,"fully_qualified_name":"Updating Multiple Attributes","ident_utf16":{"start":{"line_number":115,"utf16_col":5},"end":{"line_number":115,"utf16_col":33}},"extent_utf16":{"start":{"line_number":115,"utf16_col":0},"end":{"line_number":145,"utf16_col":0}}},{"name":"Getting Character Information","kind":"section_4","ident_start":5823,"ident_end":5852,"extent_start":5818,"extent_end":6123,"fully_qualified_name":"Getting Character Information","ident_utf16":{"start":{"line_number":145,"utf16_col":5},"end":{"line_number":145,"utf16_col":34}},"extent_utf16":{"start":{"line_number":145,"utf16_col":0},"end":{"line_number":157,"utf16_col":0}}},{"name":"Managing Relationships","kind":"section_4","ident_start":6128,"ident_end":6150,"extent_start":6123,"extent_end":6357,"fully_qualified_name":"Managing Relationships","ident_utf16":{"start":{"line_number":157,"utf16_col":5},"end":{"line_number":157,"utf16_col":27}},"extent_utf16":{"start":{"line_number":157,"utf16_col":0},"end":{"line_number":167,"utf16_col":0}}},{"name":"Tracking Character Knowledge","kind":"section_4","ident_start":6362,"ident_end":6390,"extent_start":6357,"extent_end":6553,"fully_qualified_name":"Tracking Character Knowledge","ident_utf16":{"start":{"line_number":167,"utf16_col":5},"end":{"line_number":167,"utf16_col":33}},"extent_utf16":{"start":{"line_number":167,"utf16_col":0},"end":{"line_number":176,"utf16_col":0}}},{"name":"The Emotional Lock System","kind":"section_3","ident_start":6557,"ident_end":6582,"extent_start":6553,"extent_end":7056,"fully_qualified_name":"The Emotional Lock System","ident_utf16":{"start":{"line_number":176,"utf16_col":4},"end":{"line_number":176,"utf16_col":29}},"extent_utf16":{"start":{"line_number":176,"utf16_col":0},"end":{"line_number":196,"utf16_col":0}}},{"name":"Sexual Statistics (SexStats)","kind":"section_2","ident_start":7059,"ident_end":7087,"extent_start":7056,"extent_end":8824,"fully_qualified_name":"Sexual Statistics (SexStats)","ident_utf16":{"start":{"line_number":196,"utf16_col":3},"end":{"line_number":196,"utf16_col":31}},"extent_utf16":{"start":{"line_number":196,"utf16_col":0},"end":{"line_number":281,"utf16_col":0}}},{"name":"Tracked Activities","kind":"section_3","ident_start":7168,"ident_end":7186,"extent_start":7164,"extent_end":7541,"fully_qualified_name":"Tracked Activities","ident_utf16":{"start":{"line_number":200,"utf16_col":4},"end":{"line_number":200,"utf16_col":22}},"extent_utf16":{"start":{"line_number":200,"utf16_col":0},"end":{"line_number":214,"utf16_col":0}}},{"name":"Starting Virginity Status","kind":"section_3","ident_start":7545,"ident_end":7570,"extent_start":7541,"extent_end":7708,"fully_qualified_name":"Starting Virginity Status","ident_utf16":{"start":{"line_number":214,"utf16_col":4},"end":{"line_number":214,"utf16_col":29}},"extent_utf16":{"start":{"line_number":214,"utf16_col":0},"end":{"line_number":229,"utf16_col":0}}},{"name":"How to Use SexStats","kind":"section_3","ident_start":7712,"ident_end":7731,"extent_start":7708,"extent_end":8824,"fully_qualified_name":"How to Use SexStats","ident_utf16":{"start":{"line_number":229,"utf16_col":4},"end":{"line_number":229,"utf16_col":23}},"extent_utf16":{"start":{"line_number":229,"utf16_col":0},"end":{"line_number":281,"utf16_col":0}}},{"name":"Incrementing Counters","kind":"section_4","ident_start":7738,"ident_end":7759,"extent_start":7733,"extent_end":8004,"fully_qualified_name":"Incrementing Counters","ident_utf16":{"start":{"line_number":231,"utf16_col":5},"end":{"line_number":231,"utf16_col":26}},"extent_utf16":{"start":{"line_number":231,"utf16_col":0},"end":{"line_number":241,"utf16_col":0}}},{"name":"Changing Virginity Status","kind":"section_4","ident_start":8009,"ident_end":8034,"extent_start":8004,"extent_end":8159,"fully_qualified_name":"Changing Virginity Status","ident_utf16":{"start":{"line_number":241,"utf16_col":5},"end":{"line_number":241,"utf16_col":30}},"extent_utf16":{"start":{"line_number":241,"utf16_col":0},"end":{"line_number":249,"utf16_col":0}}},{"name":"Managing Strikes","kind":"section_4","ident_start":8164,"ident_end":8180,"extent_start":8159,"extent_end":8419,"fully_qualified_name":"Managing Strikes","ident_utf16":{"start":{"line_number":249,"utf16_col":5},"end":{"line_number":249,"utf16_col":21}},"extent_utf16":{"start":{"line_number":249,"utf16_col":0},"end":{"line_number":260,"utf16_col":0}}},{"name":"Checking Statistics","kind":"section_4","ident_start":8424,"ident_end":8443,"extent_start":8419,"extent_end":8824,"fully_qualified_name":"Checking Statistics","ident_utf16":{"start":{"line_number":260,"utf16_col":5},"end":{"line_number":260,"utf16_col":24}},"extent_utf16":{"start":{"line_number":260,"utf16_col":0},"end":{"line_number":281,"utf16_col":0}}},{"name":"Wardrobe Management (WM)","kind":"section_2","ident_start":8827,"ident_end":8851,"extent_start":8824,"extent_end":11014,"fully_qualified_name":"Wardrobe Management (WM)","ident_utf16":{"start":{"line_number":281,"utf16_col":3},"end":{"line_number":281,"utf16_col":27}},"extent_utf16":{"start":{"line_number":281,"utf16_col":0},"end":{"line_number":384,"utf16_col":0}}},{"name":"Available Outfits Per Character","kind":"section_3","ident_start":8920,"ident_end":8951,"extent_start":8916,"extent_end":9380,"fully_qualified_name":"Available Outfits Per Character","ident_utf16":{"start":{"line_number":285,"utf16_col":4},"end":{"line_number":285,"utf16_col":35}},"extent_utf16":{"start":{"line_number":285,"utf16_col":0},"end":{"line_number":303,"utf16_col":0}}},{"name":"How to Use WM","kind":"section_3","ident_start":9384,"ident_end":9397,"extent_start":9380,"extent_end":10730,"fully_qualified_name":"How to Use WM","ident_utf16":{"start":{"line_number":303,"utf16_col":4},"end":{"line_number":303,"utf16_col":17}},"extent_utf16":{"start":{"line_number":303,"utf16_col":0},"end":{"line_number":366,"utf16_col":0}}},{"name":"Unlocking Outfits","kind":"section_4","ident_start":9404,"ident_end":9421,"extent_start":9399,"extent_end":9749,"fully_qualified_name":"Unlocking Outfits","ident_utf16":{"start":{"line_number":305,"utf16_col":5},"end":{"line_number":305,"utf16_col":22}},"extent_utf16":{"start":{"line_number":305,"utf16_col":0},"end":{"line_number":319,"utf16_col":0}}},{"name":"Checking If Outfit Is Unlocked","kind":"section_4","ident_start":9754,"ident_end":9784,"extent_start":9749,"extent_end":9904,"fully_qualified_name":"Checking If Outfit Is Unlocked","ident_utf16":{"start":{"line_number":319,"utf16_col":5},"end":{"line_number":319,"utf16_col":35}},"extent_utf16":{"start":{"line_number":319,"utf16_col":0},"end":{"line_number":327,"utf16_col":0}}},{"name":"Changing Current Outfit","kind":"section_4","ident_start":9909,"ident_end":9932,"extent_start":9904,"extent_end":10103,"fully_qualified_name":"Changing Current Outfit","ident_utf16":{"start":{"line_number":327,"utf16_col":5},"end":{"line_number":327,"utf16_col":28}},"extent_utf16":{"start":{"line_number":327,"utf16_col":0},"end":{"line_number":337,"utf16_col":0}}},{"name":"Getting Current Outfit","kind":"section_4","ident_start":10108,"ident_end":10130,"extent_start":10103,"extent_end":10264,"fully_qualified_name":"Getting Current Outfit","ident_utf16":{"start":{"line_number":337,"utf16_col":5},"end":{"line_number":337,"utf16_col":27}},"extent_utf16":{"start":{"line_number":337,"utf16_col":0},"end":{"line_number":346,"utf16_col":0}}},{"name":"Cycling Through Outfits","kind":"section_4","ident_start":10269,"ident_end":10292,"extent_start":10264,"extent_end":10562,"fully_qualified_name":"Cycling Through Outfits","ident_utf16":{"start":{"line_number":346,"utf16_col":5},"end":{"line_number":346,"utf16_col":28}},"extent_utf16":{"start":{"line_number":346,"utf16_col":0},"end":{"line_number":357,"utf16_col":0}}},{"name":"Getting All Unlocked Outfits","kind":"section_4","ident_start":10567,"ident_end":10595,"extent_start":10562,"extent_end":10730,"fully_qualified_name":"Getting All Unlocked Outfits","ident_utf16":{"start":{"line_number":357,"utf16_col":5},"end":{"line_number":357,"utf16_col":33}},"extent_utf16":{"start":{"line_number":357,"utf16_col":0},"end":{"line_number":366,"utf16_col":0}}},{"name":"Practical Outfit Example","kind":"section_3","ident_start":10734,"ident_end":10758,"extent_start":10730,"extent_end":11014,"fully_qualified_name":"Practical Outfit Example","ident_utf16":{"start":{"line_number":366,"utf16_col":4},"end":{"line_number":366,"utf16_col":28}},"extent_utf16":{"start":{"line_number":366,"utf16_col":0},"end":{"line_number":384,"utf16_col":0}}},{"name":"Level System","kind":"section_2","ident_start":11017,"ident_end":11029,"extent_start":11014,"extent_end":13391,"fully_qualified_name":"Level System","ident_utf16":{"start":{"line_number":384,"utf16_col":3},"end":{"line_number":384,"utf16_col":15}},"extent_utf16":{"start":{"line_number":384,"utf16_col":0},"end":{"line_number":457,"utf16_col":0}}},{"name":"Level Ranges","kind":"section_3","ident_start":11153,"ident_end":11165,"extent_start":11149,"extent_end":11822,"fully_qualified_name":"Level Ranges","ident_utf16":{"start":{"line_number":388,"utf16_col":4},"end":{"line_number":388,"utf16_col":16}},"extent_utf16":{"start":{"line_number":388,"utf16_col":0},"end":{"line_number":401,"utf16_col":0}}},{"name":"Getting a Character's Level","kind":"section_3","ident_start":11826,"ident_end":11853,"extent_start":11822,"extent_end":12223,"fully_qualified_name":"Getting a Character's Level","ident_utf16":{"start":{"line_number":401,"utf16_col":4},"end":{"line_number":401,"utf16_col":31}},"extent_utf16":{"start":{"line_number":401,"utf16_col":0},"end":{"line_number":416,"utf16_col":0}}},{"name":"Level Notifications","kind":"section_3","ident_start":12227,"ident_end":12246,"extent_start":12223,"extent_end":12855,"fully_qualified_name":"Level Notifications","ident_utf16":{"start":{"line_number":416,"utf16_col":4},"end":{"line_number":416,"utf16_col":23}},"extent_utf16":{"start":{"line_number":416,"utf16_col":0},"end":{"line_number":437,"utf16_col":0}}},{"name":"Using Levels to Gate Content","kind":"section_3","ident_start":12859,"ident_end":12887,"extent_start":12855,"extent_end":13391,"fully_qualified_name":"Using Levels to Gate Content","ident_utf16":{"start":{"line_number":437,"utf16_col":4},"end":{"line_number":437,"utf16_col":32}},"extent_utf16":{"start":{"line_number":437,"utf16_col":0},"end":{"line_number":457,"utf16_col":0}}},{"name":"Milestone Decision System","kind":"section_2","ident_start":13394,"ident_end":13419,"extent_start":13391,"extent_end":17382,"fully_qualified_name":"Milestone Decision System","ident_utf16":{"start":{"line_number":457,"utf16_col":3},"end":{"line_number":457,"utf16_col":28}},"extent_utf16":{"start":{"line_number":457,"utf16_col":0},"end":{"line_number":600,"utf16_col":0}}},{"name":"How It Works","kind":"section_3","ident_start":13539,"ident_end":13551,"extent_start":13535,"extent_end":15120,"fully_qualified_name":"How It Works","ident_utf16":{"start":{"line_number":461,"utf16_col":4},"end":{"line_number":461,"utf16_col":16}},"extent_utf16":{"start":{"line_number":461,"utf16_col":0},"end":{"line_number":515,"utf16_col":0}}},{"name":"**Phase 1: Foundation (Episodes 1-5)**","kind":"section_4","ident_start":13558,"ident_end":13596,"extent_start":13553,"extent_end":14040,"fully_qualified_name":"**Phase 1: Foundation (Episodes 1-5)**","ident_utf16":{"start":{"line_number":463,"utf16_col":5},"end":{"line_number":463,"utf16_col":43}},"extent_utf16":{"start":{"line_number":463,"utf16_col":0},"end":{"line_number":484,"utf16_col":0}}},{"name":"**Phase 2: Consolidation (Episode 6+)**","kind":"section_4","ident_start":14045,"ident_end":14084,"extent_start":14040,"extent_end":15120,"fully_qualified_name":"**Phase 2: Consolidation (Episode 6+)**","ident_utf16":{"start":{"line_number":484,"utf16_col":5},"end":{"line_number":484,"utf16_col":44}},"extent_utf16":{"start":{"line_number":484,"utf16_col":0},"end":{"line_number":515,"utf16_col":0}}},{"name":"Locking Paths","kind":"section_3","ident_start":15124,"ident_end":15137,"extent_start":15120,"extent_end":15885,"fully_qualified_name":"Locking Paths","ident_utf16":{"start":{"line_number":515,"utf16_col":4},"end":{"line_number":515,"utf16_col":17}},"extent_utf16":{"start":{"line_number":515,"utf16_col":0},"end":{"line_number":539,"utf16_col":0}}},{"name":"Path Determination Logic","kind":"section_3","ident_start":15889,"ident_end":15913,"extent_start":15885,"extent_end":16241,"fully_qualified_name":"Path Determination Logic","ident_utf16":{"start":{"line_number":539,"utf16_col":4},"end":{"line_number":539,"utf16_col":28}},"extent_utf16":{"start":{"line_number":539,"utf16_col":0},"end":{"line_number":549,"utf16_col":0}}},{"name":"Using Locked Paths","kind":"section_3","ident_start":16245,"ident_end":16263,"extent_start":16241,"extent_end":16532,"fully_qualified_name":"Using Locked Paths","ident_utf16":{"start":{"line_number":549,"utf16_col":4},"end":{"line_number":549,"utf16_col":22}},"extent_utf16":{"start":{"line_number":549,"utf16_col":0},"end":{"line_number":563,"utf16_col":0}}},{"name":"Helper Functions","kind":"section_3","ident_start":16536,"ident_end":16552,"extent_start":16532,"extent_end":16960,"fully_qualified_name":"Helper Functions","ident_utf16":{"start":{"line_number":563,"utf16_col":4},"end":{"line_number":563,"utf16_col":20}},"extent_utf16":{"start":{"line_number":563,"utf16_col":0},"end":{"line_number":583,"utf16_col":0}}},{"name":"Check Current Path","kind":"section_4","ident_start":16559,"ident_end":16577,"extent_start":16554,"extent_end":16705,"fully_qualified_name":"Check Current Path","ident_utf16":{"start":{"line_number":565,"utf16_col":5},"end":{"line_number":565,"utf16_col":23}},"extent_utf16":{"start":{"line_number":565,"utf16_col":0},"end":{"line_number":571,"utf16_col":0}}},{"name":"Check If Path Is Locked","kind":"section_4","ident_start":16710,"ident_end":16733,"extent_start":16705,"extent_end":16808,"fully_qualified_name":"Check If Path Is Locked","ident_utf16":{"start":{"line_number":571,"utf16_col":5},"end":{"line_number":571,"utf16_col":28}},"extent_utf16":{"start":{"line_number":571,"utf16_col":0},"end":{"line_number":577,"utf16_col":0}}},{"name":"Get Milestone Choice Count","kind":"section_4","ident_start":16813,"ident_end":16839,"extent_start":16808,"extent_end":16960,"fully_qualified_name":"Get Milestone Choice Count","ident_utf16":{"start":{"line_number":577,"utf16_col":5},"end":{"line_number":577,"utf16_col":31}},"extent_utf16":{"start":{"line_number":577,"utf16_col":0},"end":{"line_number":583,"utf16_col":0}}},{"name":"Combining Paths and Stats","kind":"section_3","ident_start":16964,"ident_end":16989,"extent_start":16960,"extent_end":17382,"fully_qualified_name":"Combining Paths and Stats","ident_utf16":{"start":{"line_number":583,"utf16_col":4},"end":{"line_number":583,"utf16_col":29}},"extent_utf16":{"start":{"line_number":583,"utf16_col":0},"end":{"line_number":600,"utf16_col":0}}},{"name":"Practical Examples","kind":"section_2","ident_start":17385,"ident_end":17403,"extent_start":17382,"extent_end":23535,"fully_qualified_name":"Practical Examples","ident_utf16":{"start":{"line_number":600,"utf16_col":3},"end":{"line_number":600,"utf16_col":21}},"extent_utf16":{"start":{"line_number":600,"utf16_col":0},"end":{"line_number":819,"utf16_col":0}}},{"name":"Example 1: Basic Date Scene","kind":"section_3","ident_start":17409,"ident_end":17436,"extent_start":17405,"extent_end":18042,"fully_qualified_name":"Example 1: Basic Date Scene","ident_utf16":{"start":{"line_number":602,"utf16_col":4},"end":{"line_number":602,"utf16_col":31}},"extent_utf16":{"start":{"line_number":602,"utf16_col":0},"end":{"line_number":630,"utf16_col":0}}},{"name":"Example 2: Corruption Scene","kind":"section_3","ident_start":18046,"ident_end":18073,"extent_start":18042,"extent_end":18879,"fully_qualified_name":"Example 2: Corruption Scene","ident_utf16":{"start":{"line_number":630,"utf16_col":4},"end":{"line_number":630,"utf16_col":31}},"extent_utf16":{"start":{"line_number":630,"utf16_col":0},"end":{"line_number":660,"utf16_col":0}}},{"name":"Example 3: Strike System","kind":"section_3","ident_start":18883,"ident_end":18907,"extent_start":18879,"extent_end":19838,"fully_qualified_name":"Example 3: Strike System","ident_utf16":{"start":{"line_number":660,"utf16_col":4},"end":{"line_number":660,"utf16_col":28}},"extent_utf16":{"start":{"line_number":660,"utf16_col":0},"end":{"line_number":687,"utf16_col":0}}},{"name":"Example 4: Dynamic Outfit Selection","kind":"section_3","ident_start":19842,"ident_end":19877,"extent_start":19838,"extent_end":20416,"fully_qualified_name":"Example 4: Dynamic Outfit Selection","ident_utf16":{"start":{"line_number":687,"utf16_col":4},"end":{"line_number":687,"utf16_col":39}},"extent_utf16":{"start":{"line_number":687,"utf16_col":0},"end":{"line_number":709,"utf16_col":0}}},{"name":"Example 5: Milestone Decision Scene","kind":"section_3","ident_start":20420,"ident_end":20455,"extent_start":20416,"extent_end":21722,"fully_qualified_name":"Example 5: Milestone Decision Scene","ident_utf16":{"start":{"line_number":709,"utf16_col":4},"end":{"line_number":709,"utf16_col":39}},"extent_utf16":{"start":{"line_number":709,"utf16_col":0},"end":{"line_number":746,"utf16_col":0}}},{"name":"Example 6: Path Locking at End of Episode 6","kind":"section_3","ident_start":21726,"ident_end":21769,"extent_start":21722,"extent_end":22411,"fully_qualified_name":"Example 6: Path Locking at End of Episode 6","ident_utf16":{"start":{"line_number":746,"utf16_col":4},"end":{"line_number":746,"utf16_col":47}},"extent_utf16":{"start":{"line_number":746,"utf16_col":0},"end":{"line_number":768,"utf16_col":0}}},{"name":"Example 7: Using Locked Paths in Episode 7+","kind":"section_3","ident_start":22415,"ident_end":22458,"extent_start":22411,"extent_end":23535,"fully_qualified_name":"Example 7: Using Locked Paths in Episode 7+","ident_utf16":{"start":{"line_number":768,"utf16_col":4},"end":{"line_number":768,"utf16_col":47}},"extent_utf16":{"start":{"line_number":768,"utf16_col":0},"end":{"line_number":819,"utf16_col":0}}},{"name":"Character Reference","kind":"section_2","ident_start":23538,"ident_end":23557,"extent_start":23535,"extent_end":30320,"fully_qualified_name":"Character Reference","ident_utf16":{"start":{"line_number":819,"utf16_col":3},"end":{"line_number":819,"utf16_col":22}},"extent_utf16":{"start":{"line_number":819,"utf16_col":0},"end":{"line_number":967,"utf16_col":0}}},{"name":"All Characters","kind":"section_3","ident_start":23563,"ident_end":23577,"extent_start":23559,"extent_end":24778,"fully_qualified_name":"All Characters","ident_utf16":{"start":{"line_number":821,"utf16_col":4},"end":{"line_number":821,"utf16_col":18}},"extent_utf16":{"start":{"line_number":821,"utf16_col":0},"end":{"line_number":839,"utf16_col":0}}},{"name":"Automatic Character Progression Rates","kind":"section_3","ident_start":24782,"ident_end":24819,"extent_start":24778,"extent_end":26705,"fully_qualified_name":"Automatic Character Progression Rates","ident_utf16":{"start":{"line_number":839,"utf16_col":4},"end":{"line_number":839,"utf16_col":41}},"extent_utf16":{"start":{"line_number":839,"utf16_col":0},"end":{"line_number":876,"utf16_col":0}}},{"name":"Standard Base Values Guide","kind":"section_3","ident_start":26709,"ident_end":26735,"extent_start":26705,"extent_end":29193,"fully_qualified_name":"Standard Base Values Guide","ident_utf16":{"start":{"line_number":876,"utf16_col":4},"end":{"line_number":876,"utf16_col":30}},"extent_utf16":{"start":{"line_number":876,"utf16_col":0},"end":{"line_number":935,"utf16_col":0}}},{"name":"Sexual Statistics Reference","kind":"section_3","ident_start":29197,"ident_end":29224,"extent_start":29193,"extent_end":29900,"fully_qualified_name":"Sexual Statistics Reference","ident_utf16":{"start":{"line_number":935,"utf16_col":4},"end":{"line_number":935,"utf16_col":31}},"extent_utf16":{"start":{"line_number":935,"utf16_col":0},"end":{"line_number":951,"utf16_col":0}}},{"name":"Wardrobe Reference","kind":"section_3","ident_start":29904,"ident_end":29922,"extent_start":29900,"extent_end":30320,"fully_qualified_name":"Wardrobe Reference","ident_utf16":{"start":{"line_number":951,"utf16_col":4},"end":{"line_number":951,"utf16_col":22}},"extent_utf16":{"start":{"line_number":951,"utf16_col":0},"end":{"line_number":967,"utf16_col":0}}},{"name":"Troubleshooting","kind":"section_2","ident_start":30323,"ident_end":30338,"extent_start":30320,"extent_end":34339,"fully_qualified_name":"Troubleshooting","ident_utf16":{"start":{"line_number":967,"utf16_col":3},"end":{"line_number":967,"utf16_col":18}},"extent_utf16":{"start":{"line_number":967,"utf16_col":0},"end":{"line_number":1141,"utf16_col":0}}},{"name":"Common Issues and Solutions","kind":"section_3","ident_start":30344,"ident_end":30371,"extent_start":30340,"extent_end":32894,"fully_qualified_name":"Common Issues and Solutions","ident_utf16":{"start":{"line_number":969,"utf16_col":4},"end":{"line_number":969,"utf16_col":31}},"extent_utf16":{"start":{"line_number":969,"utf16_col":0},"end":{"line_number":1076,"utf16_col":0}}},{"name":"Issue: Stats Don't Update","kind":"section_4","ident_start":30378,"ident_end":30403,"extent_start":30373,"extent_end":30842,"fully_qualified_name":"Issue: Stats Don't Update","ident_utf16":{"start":{"line_number":971,"utf16_col":5},"end":{"line_number":971,"utf16_col":30}},"extent_utf16":{"start":{"line_number":971,"utf16_col":0},"end":{"line_number":990,"utf16_col":0}}},{"name":"Issue: Notifications Don't Appear","kind":"section_4","ident_start":30847,"ident_end":30880,"extent_start":30842,"extent_end":31192,"fully_qualified_name":"Issue: Notifications Don't Appear","ident_utf16":{"start":{"line_number":990,"utf16_col":5},"end":{"line_number":990,"utf16_col":38}},"extent_utf16":{"start":{"line_number":990,"utf16_col":0},"end":{"line_number":1006,"utf16_col":0}}},{"name":"Issue: Can't Change Outfit","kind":"section_4","ident_start":31197,"ident_end":31223,"extent_start":31192,"extent_end":31584,"fully_qualified_name":"Issue: Can't Change Outfit","ident_utf16":{"start":{"line_number":1006,"utf16_col":5},"end":{"line_number":1006,"utf16_col":31}},"extent_utf16":{"start":{"line_number":1006,"utf16_col":0},"end":{"line_number":1025,"utf16_col":0}}},{"name":"Issue: Character Is Emotionally Locked","kind":"section_4","ident_start":31589,"ident_end":31627,"extent_start":31584,"extent_end":31968,"fully_qualified_name":"Issue: Character Is Emotionally Locked","ident_utf16":{"start":{"line_number":1025,"utf16_col":5},"end":{"line_number":1025,"utf16_col":43}},"extent_utf16":{"start":{"line_number":1025,"utf16_col":0},"end":{"line_number":1041,"utf16_col":0}}},{"name":"Issue: Path Won't Lock","kind":"section_4","ident_start":31973,"ident_end":31995,"extent_start":31968,"extent_end":32515,"fully_qualified_name":"Issue: Path Won't Lock","ident_utf16":{"start":{"line_number":1041,"utf16_col":5},"end":{"line_number":1041,"utf16_col":27}},"extent_utf16":{"start":{"line_number":1041,"utf16_col":0},"end":{"line_number":1060,"utf16_col":0}}},{"name":"Issue: MC's Integrity Won't Change","kind":"section_4","ident_start":32520,"ident_end":32554,"extent_start":32515,"extent_end":32894,"fully_qualified_name":"Issue: MC's Integrity Won't Change","ident_utf16":{"start":{"line_number":1060,"utf16_col":5},"end":{"line_number":1060,"utf16_col":39}},"extent_utf16":{"start":{"line_number":1060,"utf16_col":0},"end":{"line_number":1076,"utf16_col":0}}},{"name":"Best Practices","kind":"section_3","ident_start":32898,"ident_end":32912,"extent_start":32894,"extent_end":34339,"fully_qualified_name":"Best Practices","ident_utf16":{"start":{"line_number":1076,"utf16_col":4},"end":{"line_number":1076,"utf16_col":18}},"extent_utf16":{"start":{"line_number":1076,"utf16_col":0},"end":{"line_number":1141,"utf16_col":0}}},{"name":"1. Always Use check_levels()","kind":"section_4","ident_start":32919,"ident_end":32947,"extent_start":32914,"extent_end":33050,"fully_qualified_name":"1. Always Use check_levels()","ident_utf16":{"start":{"line_number":1078,"utf16_col":5},"end":{"line_number":1078,"utf16_col":33}},"extent_utf16":{"start":{"line_number":1078,"utf16_col":0},"end":{"line_number":1086,"utf16_col":0}}},{"name":"2. Check Before Unlocking Content","kind":"section_4","ident_start":33055,"ident_end":33088,"extent_start":33050,"extent_end":33373,"fully_qualified_name":"2. Check Before Unlocking Content","ident_utf16":{"start":{"line_number":1086,"utf16_col":5},"end":{"line_number":1086,"utf16_col":38}},"extent_utf16":{"start":{"line_number":1086,"utf16_col":0},"end":{"line_number":1101,"utf16_col":0}}},{"name":"3. Unlock Outfits Naturally","kind":"section_4","ident_start":33378,"ident_end":33405,"extent_start":33373,"extent_end":33576,"fully_qualified_name":"3. Unlock Outfits Naturally","ident_utf16":{"start":{"line_number":1101,"utf16_col":5},"end":{"line_number":1101,"utf16_col":32}},"extent_utf16":{"start":{"line_number":1101,"utf16_col":0},"end":{"line_number":1110,"utf16_col":0}}},{"name":"4. Track Virginity Properly","kind":"section_4","ident_start":33581,"ident_end":33608,"extent_start":33576,"extent_end":33800,"fully_qualified_name":"4. Track Virginity Properly","ident_utf16":{"start":{"line_number":1110,"utf16_col":5},"end":{"line_number":1110,"utf16_col":32}},"extent_utf16":{"start":{"line_number":1110,"utf16_col":0},"end":{"line_number":1121,"utf16_col":0}}},{"name":"5. Use Milestone Decisions Strategically","kind":"section_4","ident_start":33805,"ident_end":33845,"extent_start":33800,"extent_end":34339,"fully_qualified_name":"5. Use Milestone Decisions Strategically","ident_utf16":{"start":{"line_number":1121,"utf16_col":5},"end":{"line_number":1121,"utf16_col":45}},"extent_utf16":{"start":{"line_number":1121,"utf16_col":0},"end":{"line_number":1141,"utf16_col":0}}},{"name":"Summary","kind":"section_2","ident_start":34342,"ident_end":34349,"extent_start":34339,"extent_end":35541,"fully_qualified_name":"Summary","ident_utf16":{"start":{"line_number":1141,"utf16_col":3},"end":{"line_number":1141,"utf16_col":10}},"extent_utf16":{"start":{"line_number":1141,"utf16_col":0},"end":{"line_number":1188,"utf16_col":0}}},{"name":"Quick Reference","kind":"section_3","ident_start":34805,"ident_end":34820,"extent_start":34801,"extent_end":35541,"fully_qualified_name":"Quick Reference","ident_utf16":{"start":{"line_number":1153,"utf16_col":4},"end":{"line_number":1153,"utf16_col":19}},"extent_utf16":{"start":{"line_number":1153,"utf16_col":0},"end":{"line_number":1188,"utf16_col":0}}}]}},"copilotInfo":{"documentationUrl":"https://docs.github.com/copilot/overview-of-github-copilot/about-github-copilot-for-individuals","notices":{"codeViewPopover":{"dismissed":false,"dismissPath":"/settings/dismiss-notice/code_view_copilot_popover"}},"userAccess":{"hasSubscriptionEnded":false,"orgHasCFBAccess":false,"userHasCFIAccess":false,"userHasOrgs":false,"userIsOrgAdmin":false,"userIsOrgMember":false,"business":null,"featureRequestInfo":null}},"copilotAccessAllowed":false,"copilotSpacesEnabled":false,"modelsAccessAllowed":false,"modelsRepoIntegrationEnabled":false,"isMarketplaceEnabled":true,"csrf_tokens":{"/yukihina/htl66/branches":{"post":"QFzjfXYwA4eIy5zFzMc9YRT6hJxZjyBQ2iMdfH6DZNf1tCAoYNgB4ftcpImD5MRNHSgFFlxQ3dM2z0Uw3Ikpqw"},"/repos/preferences":{"post":"VLtle3YTBNT6mcIHSgKkKvVnsOt5JmnOecTYb9Mee1MHKGh3D-GMTMIByNnuKX8NaVh5DAFNjvrjIyQItS9BMQ"}}},"title":"htl66/CORE_SYSTEM_DOCUMENTATION.md at claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q · yukihina/htl66","appPayload":{"helpUrl":"https://docs.github.com","findFileWorkerPath":"/assets-cdn/worker/find-file-worker-0cea8c6113ab.js","findInFileWorkerPath":"/assets-cdn/worker/find-in-file-worker-105a4a160ddd.js","githubDevUrl":"https://github.dev/","enabled_features":{"code_nav_ui_events":false,"react_blob_overlay":true,"accessible_code_button":true}}}</script>
+  <div data-target="react-app.reactRoot"><style data-styled="true" data-styled-version="5.3.11">.jmjlbk{width:100%;}/*!sc*/
+@media screen and (min-width:544px){.jmjlbk{width:100%;}}/*!sc*/
+@media screen and (min-width:768px){.jmjlbk{width:auto;}}/*!sc*/
+.cIRiaH{max-height:100%;height:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}/*!sc*/
+@media screen and (max-width:768px){.cIRiaH{display:none;}}/*!sc*/
+@media screen and (min-width:768px){.cIRiaH{max-height:100vh;height:100vh;}}/*!sc*/
+.fvNWEZ{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;margin-bottom:16px;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}/*!sc*/
+@media screen and (max-width:768px){.bCYVKR{display:none;}}/*!sc*/
+.cybVuK{margin-left:auto;margin-right:auto;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding-bottom:40px;max-width:100%;margin-top:0;}/*!sc*/
+.gSjuRy{display:inherit;}/*!sc*/
+.kfsEDb{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;font-size:16px;min-width:0;-webkit-flex-shrink:1;-ms-flex-negative:1;flex-shrink:1;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;max-width:100%;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}/*!sc*/
+.eLrlvS{max-width:100%;}/*!sc*/
+.fNzIif{max-width:100%;list-style:none;display:inline-block;}/*!sc*/
+.iRLfgU{display:inline-block;max-width:100%;}/*!sc*/
+.jyTWxL{margin-left:16px;margin-right:16px;}/*!sc*/
+.hGzGyY{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;}/*!sc*/
+.ekdrwn{width:100%;height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;min-width:0;margin-right:16px;}/*!sc*/
+.fpyUWF{height:40px;padding-left:4px;padding-bottom:16px;}/*!sc*/
+.iafbuG{top:0px;z-index:4;background:var(--bgColor-default,var(--color-canvas-default));position:-webkit-sticky;position:sticky;}/*!sc*/
+.iNRqcN{display:none;min-width:0;padding-top:8px;padding-bottom:8px;}/*!sc*/
+.igwLyx{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;font-size:14px;min-width:0;-webkit-flex-shrink:1;-ms-flex-negative:1;flex-shrink:1;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;max-width:100%;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}/*!sc*/
+.koZdcA{border-radius:6px 6px 0px 0px;}/*!sc*/
+.dIDnLY{border:1px solid;border-top:none;border-color:var(--borderColor-default,var(--color-border-default,#30363d));border-radius:0px 0px 6px 6px;min-width:273px;}/*!sc*/
+.iZiBDT{background-color:var(--bgColor-default,var(--color-canvas-default));border:0px;border-width:0;border-radius:0px 0px 6px 6px;padding:0;min-width:0;margin-top:46px;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}/*!sc*/
+.lhfNqO{border-bottom-left-radius:6px;border-bottom-right-radius:6px;padding:32px;min-width:0;}/*!sc*/
+.kuJVuq{padding-bottom:33px;}/*!sc*/
+.cxWhiL{padding-top:8px;padding-bottom:8px;padding-left:16px;padding-right:16px;}/*!sc*/
+.fHoMbg{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;}/*!sc*/
+.cnoVsg{font-size:14px;-webkit-order:1;-ms-flex-order:1;order:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;font-weight:600;}/*!sc*/
+.bjdPSr{font-size:12px;color:var(--fgColor-muted,var(--color-fg-muted,#848d97));padding-top:8px;}/*!sc*/
+.cIntug{margin-right:6px;}/*!sc*/
+.dILSWH{margin-left:-16px;margin-bottom:-8px;}/*!sc*/
+.knbnik{margin-bottom:-8px;overflow-y:auto;max-height:calc(100vh - 237px);padding-left:16px;padding-bottom:8px;padding-top:4px;}/*!sc*/
+.iRVXIo{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}/*!sc*/
+.kOALiS{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;position:relative;margin-right:8px;}/*!sc*/
+.kxkZhe{background-color:var(--color-prettylights-syntax-entity,#d2a8ff);opacity:0.1;position:absolute;border-radius:5px;-webkit-align-items:stretch;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;height:100%;}/*!sc*/
+.eLoRjE{color:var(--color-prettylights-syntax-entity,#d2a8ff);border-radius:5px;font-weight:600;font-size:smaller;padding-left:4px;padding-right:4px;padding-top:1px;padding-bottom:1px;}/*!sc*/
+.vdPNv{position:fixed;top:0;right:0;height:100%;width:15px;-webkit-transition:-webkit-transform 0.3s;-webkit-transition:transform 0.3s;transition:transform 0.3s;z-index:1;}/*!sc*/
+.vdPNv:hover{-webkit-transform:scaleX(1.5);-ms-transform:scaleX(1.5);transform:scaleX(1.5);}/*!sc*/
+data-styled.g1[id="Box-sc-62in7e-0"]{content:"jmjlbk,cIRiaH,fvNWEZ,bCYVKR,cybVuK,gSjuRy,kfsEDb,eLrlvS,fNzIif,iRLfgU,jyTWxL,hGzGyY,ekdrwn,fpyUWF,iafbuG,iNRqcN,igwLyx,koZdcA,dIDnLY,iZiBDT,lhfNqO,kuJVuq,cxWhiL,fHoMbg,cnoVsg,bjdPSr,cIntug,dILSWH,knbnik,iRVXIo,kOALiS,kxkZhe,eLoRjE,vdPNv,"}/*!sc*/
+.hfSsoj[data-size="medium"][data-no-visuals]{display:none;}/*!sc*/
+.eNrdFK[data-size="small"]{color:var(--fgColor-default,var(--color-fg-default,#e6edf3));display:none;}/*!sc*/
+@media screen and (min-width:544px){.eNrdFK[data-size="small"]{display:none;}}/*!sc*/
+@media screen and (min-width:768px){.eNrdFK[data-size="small"]{display:none;}}/*!sc*/
+@media screen and (min-width:1012px){.eNrdFK[data-size="small"]{display:none;}}/*!sc*/
+@media screen and (min-width:1280px){.eNrdFK[data-size="small"]{display:block;}}/*!sc*/
+data-styled.g16[id="Button__StyledButtonComponent-sc-vqy3e4-0"]{content:"hfSsoj,eNrdFK,"}/*!sc*/
+.dWfbpP{font-size:16px;margin-left:8px;}/*!sc*/
+.hJQQvf{font-weight:600;display:inline-block;max-width:100%;font-size:16px;}/*!sc*/
+.cGzJbh{font-weight:600;display:inline-block;max-width:100%;font-size:14px;}/*!sc*/
+data-styled.g24[id="Heading-sc-1vc165i-0"]{content:"dWfbpP,hJQQvf,cGzJbh,"}/*!sc*/
+.bWhDnA[data-size="medium"][data-no-visuals]{border-top-left-radius:0;border-bottom-left-radius:0;}/*!sc*/
+.gXjFlG[data-size="small"][data-no-visuals]{border-top-left-radius:0;border-bottom-left-radius:0;}/*!sc*/
+.gRAczH[data-size="small"][data-no-visuals]:hover:not([disabled]){-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.gRAczH[data-size="small"][data-no-visuals]:focus:not([disabled]){-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.gRAczH[data-size="small"][data-no-visuals]:active:not([disabled]){-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.fvatuQ[data-size="small"][data-no-visuals]{margin-right:8px;}/*!sc*/
+.bTccwu[data-size="medium"][data-no-visuals]{-webkit-order:3;-ms-flex-order:3;order:3;color:var(--fgColor-default,var(--color-fg-default,#e6edf3));margin-right:-8px;}/*!sc*/
+data-styled.g25[id="IconButton__StyledIconButton-sc-i53dt6-0"]{content:"bWhDnA,gXjFlG,gRAczH,fvatuQ,bTccwu,"}/*!sc*/
+.htWjsS{font-weight:600;}/*!sc*/
+data-styled.g27[id="Link__StyledLink-sc-1syctfj-0"]{content:"htWjsS,"}/*!sc*/
+.iwmTUC linkButtonSx:hover:not([disabled]){-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.iwmTUC linkButtonSx:focus:not([disabled]){-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+.iwmTUC linkButtonSx:active:not([disabled]){-webkit-text-decoration:none;text-decoration:none;}/*!sc*/
+data-styled.g28[id="LinkButton-sc-1v6zkmg-0"]{content:"iwmTUC,"}/*!sc*/
+.xsVwu{padding-left:4px;padding-right:4px;font-weight:400;color:var(--fgColor-muted,var(--color-fg-muted,#848d97));font-size:16px;}/*!sc*/
+.iHrMHQ{padding-left:4px;padding-right:4px;font-weight:400;color:var(--fgColor-muted,var(--color-fg-muted,#848d97));font-size:14px;}/*!sc*/
+data-styled.g38[id="Text__StyledText-sc-1klmep6-0"]{content:"xsVwu,iHrMHQ,"}/*!sc*/
+.bLATi{margin-top:8px;border-radius:6px;}/*!sc*/
+data-styled.g40[id="TextInput__StyledTextInput-sc-ttxlvl-0"]{content:"bLATi,"}/*!sc*/
+.bkmqFA{max-width:180px;display:block;}/*!sc*/
+data-styled.g43[id="Truncate-sc-x3i4it-0"]{content:"bkmqFA,"}/*!sc*/
+</style><meta name="github-code-view-meta-stats" id="github-code-view-meta-stats" data-hydrostats="publish"/> <!-- --> <!-- --> <button hidden="" data-testid="header-permalink-button" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden=""></button><div><div style="--spacing:var(--spacing-none)" class="prc-PageLayout-PageLayoutRoot-1zlEO"><div class="prc-PageLayout-PageLayoutWrapper-s2ao4" data-width="full"><div class="prc-PageLayout-PageLayoutContent-jzDMn"><div tabindex="0" class="Box-sc-62in7e-0 jmjlbk"><div class="prc-PageLayout-PaneWrapper-nGO0U ReposFileTreePane-module__Pane--D26Sw ReposFileTreePane-module__HidePaneWithTreeOverlay--CJn2n" style="--offset-header:0px;--spacing-row:var(--spacing-none);--spacing-column:var(--spacing-none)" data-is-hidden="false" data-position="start" data-sticky="true"><div class="prc-PageLayout-HorizontalDivider-CYLp5 prc-PageLayout-PaneHorizontalDivider-4exOb" data-variant-regular="none" data-variant-narrow="none" data-position="start" style="--spacing-divider:var(--spacing-none);--spacing:var(--spacing-none)"></div><div class="prc-PageLayout-Pane-Vl5LI" data-resizable="true" style="--spacing:var(--spacing-none);--pane-min-width:256px;--pane-max-width:calc(100vw - var(--pane-max-width-diff));--pane-width-size:var(--pane-width-large);--pane-width:320px"><div class="react-tree-pane-contents-3-panel"><div id="repos-file-tree" class="Box-sc-62in7e-0 cIRiaH"><div class="ReposFileTreePane-module__Box_1--ZT_4S"><div class="Box-sc-62in7e-0 fvNWEZ"><h2 class="use-tree-pane-module__Heading--iI_ad prc-Heading-Heading-6CmGO"><button type="button" aria-label="Expand file tree" data-testid="expand-file-tree-button-mobile" class="prc-Button-ButtonBase-c50BI ExpandFileTreeButton-module__Button_1--g8F6Q" data-loading="false" data-size="medium" data-variant="invisible" aria-describedby=":Rl6mplab:-loading-announcement"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="leadingVisual" class="prc-Button-Visual-2epfX prc-Button-VisualWrap-Db-eB"><svg aria-hidden="true" focusable="false" class="octicon octicon-arrow-left" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M7.78 12.53a.75.75 0 0 1-1.06 0L2.47 8.28a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L4.81 7h7.44a.75.75 0 0 1 0 1.5H4.81l2.97 2.97a.75.75 0 0 1 0 1.06Z"></path></svg></span><span data-component="text" class="prc-Button-Label-pTQ3x">Files</span></span></button><button data-component="IconButton" type="button" data-testid="collapse-file-tree-button" aria-expanded="true" aria-controls="repos-file-tree" class="prc-Button-ButtonBase-c50BI position-relative ExpandFileTreeButton-module__expandButton--oKI1R ExpandFileTreeButton-module__filesButtonBreakpoint--03FKA fgColor-muted prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="invisible" aria-describedby=":R756mplab:-loading-announcement" aria-labelledby=":R156mplab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-sidebar-expand" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="m4.177 7.823 2.396-2.396A.25.25 0 0 1 7 5.604v4.792a.25.25 0 0 1-.427.177L4.177 8.177a.25.25 0 0 1 0-.354Z"></path><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25H9.5v-13Zm12.5 13a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25H11v13Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="se" aria-hidden="true" id=":R156mplab:">Collapse file tree</span><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button></h2><h2 class="Heading-sc-1vc165i-0 dWfbpP">Files</h2></div><div class="ReposFileTreePane-module__Box_2--RgzGf"><div class="ReposFileTreePane-module__Box_3--XDLn8"><div class="ReposFileTreePane-module__FullWidthButtonGroup--avF6A prc-ButtonGroup-ButtonGroup-vcMeG"><div><a data-component="IconButton" type="button" class="prc-Button-ButtonBase-c50BI prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="default" aria-describedby=":R6m6mplab:-loading-announcement" aria-labelledby=":Rm6mplab:" href="/yukihina/htl66/blob/main/CORE_SYSTEM_DOCUMENTATION.md" data-discover="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-left" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06Z"></path></svg></a><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="s" aria-hidden="true" id=":Rm6mplab:">View file on default branch</span></div><div><button type="button" aria-haspopup="true" aria-expanded="false" tabindex="0" style="min-width:0" aria-label="claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q branch" data-testid="anchor-button" class="prc-Button-ButtonBase-c50BI react-repos-tree-pane-ref-selector width-full ref-selector-class RefSelectorAnchoredOverlay-module__RefSelectorOverlayBtn--D34zl" data-loading="false" data-size="medium" data-variant="default" aria-describedby="ref-picker-repos-header-ref-selector-loading-announcement" id="ref-picker-repos-header-ref-selector"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="text" class="prc-Button-Label-pTQ3x"><div class="RefSelectorAnchoredOverlay-module__RefSelectorOverlayContainer--mCbv8"><div class="RefSelectorAnchoredOverlay-module__RefSelectorOverlayHeader--D4cnZ"><svg aria-hidden="true" focusable="false" class="octicon octicon-git-branch" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M9.5 3.25a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Zm-6 0a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Zm8.25-.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"></path></svg></div><div class="ref-selector-button-text-container RefSelectorAnchoredOverlay-module__RefSelectorBtnTextContainer--yO402"><span class="RefSelectorAnchoredOverlay-module__RefSelectorText--bxVhQ"> <!-- -->claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q</span></div></div></span><span data-component="trailingVisual" class="prc-Button-Visual-2epfX prc-Button-VisualWrap-Db-eB"><svg aria-hidden="true" focusable="false" class="octicon octicon-triangle-down" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path></svg></span></span></button><button hidden="" data-testid="ref-selector-hotkey-button" data-hotkey-scope="read-only-cursor-text-area"></button></div></div></div><div class="ReposFileTreePane-module__Box_4--TLAAU"><a data-component="IconButton" type="button" class="prc-Button-ButtonBase-c50BI ReposFileTreePane-module__IconButton--fpuBk prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="default" aria-describedby=":R6q6mplab:-loading-announcement" aria-labelledby=":Rq6mplab:" href="/yukihina/htl66/new/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q" data-discover="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-plus" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path></svg></a><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="n" aria-hidden="true" id=":Rq6mplab:">Add file</span><button data-component="IconButton" type="button" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 bWhDnA SearchButton-module__IconButton--kxA3Q prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="default" aria-describedby=":Rra6mplab:-loading-announcement" aria-labelledby=":R3a6mplab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-search" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="nw" aria-hidden="true" id=":R3a6mplab:">Search this repository</span><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button></div></div></div><div class="Box-sc-62in7e-0 bCYVKR ReposFileTreePane-module__FileResultsList--YEf_n"><span class="TextInput__StyledTextInput-sc-ttxlvl-0 d-flex FileResultsList-module__FilesSearchBox--fSAh3 TextInput-wrapper prc-components-TextInputWrapper-i1ofR prc-components-TextInputBaseWrapper-ueK9q" data-leading-visual="true" data-trailing-visual="true" aria-busy="false"><span class="TextInput-icon" id=":R5amplab:" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-search" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path></svg></span><input type="text" aria-label="Go to file" role="combobox" aria-controls="file-results-list" aria-expanded="false" aria-haspopup="dialog" autoCorrect="off" spellcheck="false" placeholder="Go to file" aria-describedby=":R5amplab: :R5amplabH1:" data-component="input" class="prc-components-Input-Ic-y8" value=""/><span class="TextInput-icon" id=":R5amplabH1:" aria-hidden="true"><kbd>t</kbd></span></span></div><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden=""></button><div class="Box-sc-62in7e-0 bCYVKR ReposFileTreePane-module__Box_5--cckih"><div class="react-tree-show-tree-items"><div class="ReposFileTreeView-module__Box--bDodO" data-testid="repos-file-tree-container"><nav aria-label="File Tree Navigation"><span class="prc-src-InternalVisuallyHidden-nlR9R" role="status" aria-live="polite" aria-atomic="true"></span><ul role="tree" aria-label="Files" data-truncate-text="true" class="prc-TreeView-TreeViewRootUlStyles-eZtxW"><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id=".vscode-item" role="treeitem" aria-labelledby=":R3pimplab:" aria-describedby=":R3pimplabH1:" aria-level="1" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R3pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R3pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><div class="PRIVATE_TreeView-directory-icon prc-TreeView-TreeViewDirectoryIcon-PHbeP"><svg aria-hidden="true" focusable="false" class="octicon octicon-file-directory-fill" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path></svg></div></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>.vscode</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="3dcamera-item" role="treeitem" aria-labelledby=":R5pimplab:" aria-describedby=":R5pimplabH1:" aria-level="1" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R5pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R5pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><div class="PRIVATE_TreeView-directory-icon prc-TreeView-TreeViewDirectoryIcon-PHbeP"><svg aria-hidden="true" focusable="false" class="octicon octicon-file-directory-fill" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path></svg></div></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>3dcamera</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="cache-item" role="treeitem" aria-labelledby=":R7pimplab:" aria-describedby=":R7pimplabH1:" aria-level="1" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R7pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R7pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><div class="PRIVATE_TreeView-directory-icon prc-TreeView-TreeViewDirectoryIcon-PHbeP"><svg aria-hidden="true" focusable="false" class="octicon octicon-file-directory-fill" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path></svg></div></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>cache</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="fonts-item" role="treeitem" aria-labelledby=":R9pimplab:" aria-describedby=":R9pimplabH1:" aria-level="1" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R9pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R9pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><div class="PRIVATE_TreeView-directory-icon prc-TreeView-TreeViewDirectoryIcon-PHbeP"><svg aria-hidden="true" focusable="false" class="octicon octicon-file-directory-fill" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path></svg></div></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>fonts</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="saves-item" role="treeitem" aria-labelledby=":Rbpimplab:" aria-describedby=":RbpimplabH1:" aria-level="1" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":Rbpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RbpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><div class="PRIVATE_TreeView-directory-icon prc-TreeView-TreeViewDirectoryIcon-PHbeP"><svg aria-hidden="true" focusable="false" class="octicon octicon-file-directory-fill" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path></svg></div></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>saves</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="scripts-item" role="treeitem" aria-labelledby=":Rdpimplab:" aria-describedby=":RdpimplabH1:" aria-level="1" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":Rdpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RdpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><div class="PRIVATE_TreeView-directory-icon prc-TreeView-TreeViewDirectoryIcon-PHbeP"><svg aria-hidden="true" focusable="false" class="octicon octicon-file-directory-fill" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path></svg></div></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>scripts</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="tl-item" role="treeitem" aria-labelledby=":Rfpimplab:" aria-describedby=":RfpimplabH1:" aria-level="1" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":Rfpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RfpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><div class="PRIVATE_TreeView-directory-icon prc-TreeView-TreeViewDirectoryIcon-PHbeP"><svg aria-hidden="true" focusable="false" class="octicon octicon-file-directory-fill" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75Z"></path></svg></div></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>tl</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id=".gitattributes-item" role="treeitem" aria-labelledby=":Rhpimplab:" aria-describedby=":RhpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rhpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RhpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>.gitattributes</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id=".gitignore-item" role="treeitem" aria-labelledby=":Rjpimplab:" aria-describedby=":RjpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rjpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RjpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>.gitignore</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="ACHIEVEMENTS_SYSTEM_DOCUMENTATION.md-item" role="treeitem" aria-labelledby=":Rlpimplab:" aria-describedby=":RlpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rlpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RlpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>ACHIEVEMENTS_SYSTEM_DOCUMENTATION.md</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="AUDIO_SYSTEM_DOCUMENTATION.md-item" role="treeitem" aria-labelledby=":Rnpimplab:" aria-describedby=":RnpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rnpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RnpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>AUDIO_SYSTEM_DOCUMENTATION.md</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="CHARACTER_INFO_DOCUMENTATION.md-item" role="treeitem" aria-labelledby=":Rppimplab:" aria-describedby=":RppimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rppimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RppimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>CHARACTER_INFO_DOCUMENTATION.md</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="CORE_SYSTEM_DOCUMENTATION.md-item" role="treeitem" aria-labelledby=":Rrpimplab:" aria-describedby=":RrpimplabH1:" aria-level="1" aria-current="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rrpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RrpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>CORE_SYSTEM_DOCUMENTATION.md</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="NOTIFICATIONS_SYSTEM_DOCUMENTATION.md-item" role="treeitem" aria-labelledby=":Rtpimplab:" aria-describedby=":RtpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rtpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RtpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>NOTIFICATIONS_SYSTEM_DOCUMENTATION.md</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="PHONE_SYSTEM_DOCUMENTATION.md-item" role="treeitem" aria-labelledby=":Rvpimplab:" aria-describedby=":RvpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":Rvpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":RvpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>PHONE_SYSTEM_DOCUMENTATION.md</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="README.txt-item" role="treeitem" aria-labelledby=":R11pimplab:" aria-describedby=":R11pimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R11pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R11pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>README.txt</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="STATS_SCREEN_DOCUMENTATION.md-item" role="treeitem" aria-labelledby=":R13pimplab:" aria-describedby=":R13pimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R13pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R13pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>STATS_SCREEN_DOCUMENTATION.md</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="changelog.log-item" role="treeitem" aria-labelledby=":R15pimplab:" aria-describedby=":R15pimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R15pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R15pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>changelog.log</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="gui.rpy-item" role="treeitem" aria-labelledby=":R17pimplab:" aria-describedby=":R17pimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R17pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R17pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>gui.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="options.rpy-item" role="treeitem" aria-labelledby=":R19pimplab:" aria-describedby=":R19pimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R19pimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R19pimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>options.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="patch.rpy-item" role="treeitem" aria-labelledby=":R1bpimplab:" aria-describedby=":R1bpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1bpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1bpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>patch.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="qori_toolkit_config.ini-item" role="treeitem" aria-labelledby=":R1dpimplab:" aria-describedby=":R1dpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1dpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1dpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>qori_toolkit_config.ini</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="screens.rpy-item" role="treeitem" aria-labelledby=":R1fpimplab:" aria-describedby=":R1fpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1fpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1fpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>screens.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="script.rpy-item" role="treeitem" aria-labelledby=":R1hpimplab:" aria-describedby=":R1hpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1hpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1hpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>script.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="work_sessions.json-item" role="treeitem" aria-labelledby=":R1jpimplab:" aria-describedby=":R1jpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1jpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1jpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>work_sessions.json</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="wt_core.rpy-item" role="treeitem" aria-labelledby=":R1lpimplab:" aria-describedby=":R1lpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1lpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1lpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>wt_core.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="wt_ep01.rpy-item" role="treeitem" aria-labelledby=":R1npimplab:" aria-describedby=":R1npimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1npimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1npimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>wt_ep01.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="wt_ep02.rpy-item" role="treeitem" aria-labelledby=":R1ppimplab:" aria-describedby=":R1ppimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1ppimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1ppimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>wt_ep02.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="wt_ep03.rpy-item" role="treeitem" aria-labelledby=":R1rpimplab:" aria-describedby=":R1rpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1rpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1rpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>wt_ep03.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="wt_ep04.rpy-item" role="treeitem" aria-labelledby=":R1tpimplab:" aria-describedby=":R1tpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1tpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1tpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>wt_ep04.rpy</span></span></div></div></li><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="wt_ep05.rpy-item" role="treeitem" aria-labelledby=":R1vpimplab:" aria-describedby=":R1vpimplabH1:" aria-level="1" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1;content-visibility:auto;contain-intrinsic-size:auto 2rem"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div id=":R1vpimplab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><div class="PRIVATE_VisuallyHidden prc-TreeView-TreeViewVisuallyHidden-4-mPv" aria-hidden="true" id=":R1vpimplabH1:"></div><div class="PRIVATE_TreeView-item-visual prc-TreeView-TreeViewItemVisual-dRlGq" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-file" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path></svg></div><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><span>wt_ep05.rpy</span></span></div></div></li></ul></nav></div></div></div></div></div></div><div class="prc-PageLayout-VerticalDivider-4A4Qm prc-PageLayout-PaneVerticalDivider-1c9vy" data-variant-narrow="none" data-variant-regular="line" data-variant-wide="line" data-position="start" style="--spacing:var(--spacing-none)"><div class="prc-PageLayout-DraggableHandle-zPw82" data-dragging="false" role="slider" aria-label="Draggable pane splitter" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="Pane width 0 pixels" tabindex="0"></div></div></div></div><div class="prc-PageLayout-ContentWrapper-b-QRo CodeView-module__SplitPageLayout_Content--qxR1C" data-is-hidden-narrow="true"><div class="prc-PageLayout-Content--F7-I" data-width="full" style="--spacing:var(--spacing-none)"><div data-selector="repos-split-pane-content" tabindex="0" class="Box-sc-62in7e-0 cybVuK"><div class="Box-sc-62in7e-0 gSjuRy"><div class="container CodeViewHeader-module__Box--PofRM"><div class="px-3 pt-3 pb-0" id="StickyHeader"><div class="CodeViewHeader-module__Box_1--KpLzV"><div class="CodeViewHeader-module__Box_2--xzDOt"><div class="CodeViewHeader-module__Box_6--iStzT"><div class="Box-sc-62in7e-0 kfsEDb"><nav data-testid="breadcrumbs" aria-labelledby="repos-header-breadcrumb--wide-heading" id="repos-header-breadcrumb--wide" class="Box-sc-62in7e-0 eLrlvS"><h2 class="sr-only ScreenReaderHeading-module__userSelectNone--vlUbc prc-Heading-Heading-6CmGO" data-testid="screen-reader-heading" id="repos-header-breadcrumb--wide-heading">Breadcrumbs</h2><ol class="Box-sc-62in7e-0 fNzIif"><li class="Box-sc-62in7e-0 iRLfgU"><a class="Link__StyledLink-sc-1syctfj-0 htWjsS prc-Link-Link-85e08" data-testid="breadcrumbs-repo-link" href="/yukihina/htl66/tree/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q" data-discover="true">htl66</a></li></ol></nav><div data-testid="breadcrumbs-filename" class="Box-sc-62in7e-0 iRLfgU"><span class="Text__StyledText-sc-1klmep6-0 xsVwu prc-Text-Text-0ima0" aria-hidden="true">/</span><h1 tabindex="-1" id="file-name-id-wide" class="Heading-sc-1vc165i-0 hJQQvf">CORE_SYSTEM_DOCUMENTATION.md</h1></div><button data-component="IconButton" type="button" class="prc-Button-ButtonBase-c50BI ml-2 prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="small" data-variant="invisible" aria-describedby=":R3nb9lab:-loading-announcement" aria-labelledby=":R3b9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-copy" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg></button><span class="Box-sc-62in7e-0 CopyToClipboardButton-module__tooltip--HDUYz prc-TooltipV2-Tooltip-cYMVY" data-direction="nw" aria-label="Copy path" aria-hidden="true" id=":R3b9lab:">Copy path</span></div></div><div class="react-code-view-header-element--wide"><div class="CodeViewHeader-module__Box_7--FZfkg"><div class="d-flex gap-2"> <button type="button" class="prc-Button-ButtonBase-c50BI Button__StyledButtonComponent-sc-vqy3e4-0 hfSsoj NavigationMenu-module__Button--SJihq" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="default" aria-describedby=":R1ahj9lab:-loading-announcement"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="text" class="prc-Button-Label-pTQ3x">Blame</span></span></button><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><button data-component="IconButton" type="button" data-testid="more-file-actions-button-nav-menu-wide" aria-haspopup="true" aria-expanded="false" tabindex="0" class="prc-Button-ButtonBase-c50BI js-blob-dropdown-click NavigationMenu-module__IconButton--NqJ_L prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="default" aria-describedby=":Rihj9lab:-loading-announcement" aria-labelledby=":Rfihj9lab:" id=":Rihj9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-kebab-horizontal" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M8 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM1.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm13 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="nw" aria-hidden="true" id=":Rfihj9lab:">More file actions</span> </div></div></div><div class="react-code-view-header-element--narrow"><div class="CodeViewHeader-module__Box_7--FZfkg"><div class="d-flex gap-2"> <button type="button" class="prc-Button-ButtonBase-c50BI Button__StyledButtonComponent-sc-vqy3e4-0 hfSsoj NavigationMenu-module__Button--SJihq" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="default" aria-describedby=":R1ahr9lab:-loading-announcement"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="text" class="prc-Button-Label-pTQ3x">Blame</span></span></button><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><button data-component="IconButton" type="button" data-testid="more-file-actions-button-nav-menu-narrow" aria-haspopup="true" aria-expanded="false" tabindex="0" class="prc-Button-ButtonBase-c50BI js-blob-dropdown-click NavigationMenu-module__IconButton--NqJ_L prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="default" aria-describedby=":Rihr9lab:-loading-announcement" aria-labelledby=":Rfihr9lab:" id=":Rihr9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-kebab-horizontal" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M8 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM1.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm13 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="nw" aria-hidden="true" id=":Rfihr9lab:">More file actions</span> </div></div></div></div></div></div></div></div><div class="Box-sc-62in7e-0 jyTWxL react-code-view-bottom-padding"> <div class="BlobTopBanners-module__Box--g_bGk"></div> <!-- --> <!-- --> </div><div class="Box-sc-62in7e-0 jyTWxL"> <!-- --> <!-- --> <button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden=""></button><div class="d-flex flex-column border rounded-2 mb-3 pl-1"><div class="LatestCommit-module__Box--Fimpo"><h2 class="sr-only ScreenReaderHeading-module__userSelectNone--vlUbc prc-Heading-Heading-6CmGO" data-testid="screen-reader-heading">Latest commit</h2><div style="width:120px" class="Skeleton Skeleton--text" data-testid="loading"> </div><div class="d-flex flex-shrink-0 gap-2"><div data-testid="latest-commit-details" class="d-none d-sm-flex flex-items-center"></div><div class="d-flex gap-2"><h2 class="sr-only ScreenReaderHeading-module__userSelectNone--vlUbc prc-Heading-Heading-6CmGO" data-testid="screen-reader-heading">History</h2><a href="/yukihina/htl66/commits/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md" class="prc-Button-ButtonBase-c50BI d-none d-lg-flex LinkButton-module__code-view-link-button--thtqc flex-items-center fgColor-default" data-loading="false" data-size="small" data-variant="invisible" aria-describedby=":R2mlal9lab:-loading-announcement"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="leadingVisual" class="prc-Button-Visual-2epfX prc-Button-VisualWrap-Db-eB"><svg aria-hidden="true" focusable="false" class="octicon octicon-history" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="m.427 1.927 1.215 1.215a8.002 8.002 0 1 1-1.6 5.685.75.75 0 1 1 1.493-.154 6.5 6.5 0 1 0 1.18-4.458l1.358 1.358A.25.25 0 0 1 3.896 6H.25A.25.25 0 0 1 0 5.75V2.104a.25.25 0 0 1 .427-.177ZM7.75 4a.75.75 0 0 1 .75.75v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5A.75.75 0 0 1 7.75 4Z"></path></svg></span><span data-component="text" class="prc-Button-Label-pTQ3x"><span class="fgColor-default">History</span></span></span></a><div class="d-sm-none"></div><div class="d-flex d-lg-none"><span role="tooltip" aria-label="History" id="history-icon-button-tooltip" class="prc-Tooltip-Tooltip--1XZX prc-Tooltip-Tooltip--n-BOOzB tooltipped-n"><a aria-label="View commit history for this file." href="/yukihina/htl66/commits/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md" class="prc-Button-ButtonBase-c50BI LinkButton-module__code-view-link-button--thtqc flex-items-center fgColor-default" data-loading="false" data-size="small" data-variant="invisible" aria-describedby=":Rcmlal9lab:-loading-announcement history-icon-button-tooltip"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="leadingVisual" class="prc-Button-Visual-2epfX prc-Button-VisualWrap-Db-eB"><svg aria-hidden="true" focusable="false" class="octicon octicon-history" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="m.427 1.927 1.215 1.215a8.002 8.002 0 1 1-1.6 5.685.75.75 0 1 1 1.493-.154 6.5 6.5 0 1 0 1.18-4.458l1.358 1.358A.25.25 0 0 1 3.896 6H.25A.25.25 0 0 1 0 5.75V2.104a.25.25 0 0 1 .427-.177ZM7.75 4a.75.75 0 0 1 .75.75v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5A.75.75 0 0 1 7.75 4Z"></path></svg></span></span></a></span></div></div></div></div></div><div class="Box-sc-62in7e-0 hGzGyY"><div class="Box-sc-62in7e-0 ekdrwn container"><div class="Box-sc-62in7e-0 fpyUWF react-code-size-details-banner"><div class="react-code-size-details-banner CodeSizeDetails-module__Box--QdxnQ"><div class="text-mono CodeSizeDetails-module__Box_1--_uFDs"><div data-testid="blob-size" class="CodeSizeDetails-module__Truncate_1--er0Uk prc-Truncate-Truncate-A9Wn6" data-inline="true" title="34.7 KB" style="--truncate-max-width:100%"><span>1188 lines (874 loc) · 34.7 KB</span></div></div></div><div class="react-code-size-details-banner"><button type="button" style="--button-color:fg.default" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-label="Code 55% faster with GitHub Copilot" class="prc-Button-ButtonBase-c50BI Button__StyledButtonComponent-sc-vqy3e4-0 eNrdFK" data-loading="false" data-size="small" data-variant="invisible" aria-describedby=":Ripal9lab:-loading-announcement" id=":Ripal9lab:"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="leadingVisual" class="prc-Button-Visual-2epfX prc-Button-VisualWrap-Db-eB"><svg aria-hidden="true" focusable="false" class="octicon octicon-copilot" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M7.998 15.035c-4.562 0-7.873-2.914-7.998-3.749V9.338c.085-.628.677-1.686 1.588-2.065.013-.07.024-.143.036-.218.029-.183.06-.384.126-.612-.201-.508-.254-1.084-.254-1.656 0-.87.128-1.769.693-2.484.579-.733 1.494-1.124 2.724-1.261 1.206-.134 2.262.034 2.944.765.05.053.096.108.139.165.044-.057.094-.112.143-.165.682-.731 1.738-.899 2.944-.765 1.23.137 2.145.528 2.724 1.261.566.715.693 1.614.693 2.484 0 .572-.053 1.148-.254 1.656.066.228.098.429.126.612.012.076.024.148.037.218.924.385 1.522 1.471 1.591 2.095v1.872c0 .766-3.351 3.795-8.002 3.795Zm0-1.485c2.28 0 4.584-1.11 5.002-1.433V7.862l-.023-.116c-.49.21-1.075.291-1.727.291-1.146 0-2.059-.327-2.71-.991A3.222 3.222 0 0 1 8 6.303a3.24 3.24 0 0 1-.544.743c-.65.664-1.563.991-2.71.991-.652 0-1.236-.081-1.727-.291l-.023.116v4.255c.419.323 2.722 1.433 5.002 1.433ZM6.762 2.83c-.193-.206-.637-.413-1.682-.297-1.019.113-1.479.404-1.713.7-.247.312-.369.789-.369 1.554 0 .793.129 1.171.308 1.371.162.181.519.379 1.442.379.853 0 1.339-.235 1.638-.54.315-.322.527-.827.617-1.553.117-.935-.037-1.395-.241-1.614Zm4.155-.297c-1.044-.116-1.488.091-1.681.297-.204.219-.359.679-.242 1.614.091.726.303 1.231.618 1.553.299.305.784.54 1.638.54.922 0 1.28-.198 1.442-.379.179-.2.308-.578.308-1.371 0-.765-.123-1.242-.37-1.554-.233-.296-.693-.587-1.713-.7Z"></path><path d="M6.25 9.037a.75.75 0 0 1 .75.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 .75-.75Zm4.25.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 1.5 0Z"></path></svg></span></span></button></div></div><div class="Box-sc-62in7e-0 iafbuG react-blob-view-header-sticky" id="repos-sticky-header"><div class="BlobViewHeader-module__Box--pvsIA"><div class="react-blob-sticky-header"><div class="Box-sc-62in7e-0 iNRqcN"><div class="FileNameStickyHeader-module__Box_5--xBJ2J"><div class="Box-sc-62in7e-0 igwLyx"><nav data-testid="breadcrumbs" aria-labelledby="sticky-breadcrumb-heading" id="sticky-breadcrumb" class="Box-sc-62in7e-0 eLrlvS"><h2 class="sr-only ScreenReaderHeading-module__userSelectNone--vlUbc prc-Heading-Heading-6CmGO" data-testid="screen-reader-heading" id="sticky-breadcrumb-heading">Breadcrumbs</h2><ol class="Box-sc-62in7e-0 fNzIif"><li class="Box-sc-62in7e-0 iRLfgU"><a class="Link__StyledLink-sc-1syctfj-0 htWjsS prc-Link-Link-85e08" data-testid="breadcrumbs-repo-link" href="/yukihina/htl66/tree/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q" data-discover="true">htl66</a></li></ol></nav><div data-testid="breadcrumbs-filename" class="Box-sc-62in7e-0 iRLfgU"><span class="Text__StyledText-sc-1klmep6-0 iHrMHQ prc-Text-Text-0ima0" aria-hidden="true">/</span><h1 tabindex="-1" id="sticky-file-name-id" class="Heading-sc-1vc165i-0 cGzJbh">CORE_SYSTEM_DOCUMENTATION.md</h1></div></div><button type="button" class="prc-Button-ButtonBase-c50BI Button__StyledButtonComponent-sc-vqy3e4-0 FileNameStickyHeader-module__Button--SaiiH FileNameStickyHeader-module__GoToTopButton--9lB4x" data-loading="false" data-size="small" data-variant="invisible" aria-describedby=":R9cpal9lab:-loading-announcement"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="leadingVisual" class="prc-Button-Visual-2epfX prc-Button-VisualWrap-Db-eB"><svg aria-hidden="true" focusable="false" class="octicon octicon-arrow-up" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M3.47 7.78a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0l4.25 4.25a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018L9 4.81v7.44a.75.75 0 0 1-1.5 0V4.81L4.53 7.78a.75.75 0 0 1-1.06 0Z"></path></svg></span><span data-component="text" class="prc-Button-Label-pTQ3x">Top</span></span></button></div></div></div><div class="Box-sc-62in7e-0 koZdcA BlobViewHeader-module__Box_1--PPihg"><h2 class="sr-only ScreenReaderHeading-module__userSelectNone--vlUbc prc-Heading-Heading-6CmGO" data-testid="screen-reader-heading">File metadata and controls</h2><div class="BlobViewHeader-module__Box_2--G_jCG"><ul aria-label="File view" class="prc-SegmentedControl-SegmentedControl-e7570 BlobTabButtons-module__SegmentedControl--JMGov" data-size="small"><li class="prc-SegmentedControl-Item-7Aq6h" data-selected=""><button aria-current="true" class="prc-SegmentedControl-Button-ojWXD" type="button" style="--separator-color:transparent"><span class="prc-SegmentedControl-Content-gnQ4n segmentedControl-content"><div class="prc-SegmentedControl-Text-c5gSh segmentedControl-text" data-text="Preview">Preview</div></span></button></li><li class="prc-SegmentedControl-Item-7Aq6h"><button aria-current="false" class="prc-SegmentedControl-Button-ojWXD" type="button" style="--separator-color:var(--borderColor-default)"><span class="prc-SegmentedControl-Content-gnQ4n segmentedControl-content"><div class="prc-SegmentedControl-Text-c5gSh segmentedControl-text" data-text="Code">Code</div></span></button></li><li class="prc-SegmentedControl-Item-7Aq6h"><button aria-current="false" class="prc-SegmentedControl-Button-ojWXD" type="button" style="--separator-color:var(--borderColor-default)"><span class="prc-SegmentedControl-Content-gnQ4n segmentedControl-content"><div class="prc-SegmentedControl-Text-c5gSh segmentedControl-text" data-text="Blame">Blame</div></span></button></li></ul><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><div class="react-code-size-details-in-header CodeSizeDetails-module__Box--QdxnQ"><div class="text-mono CodeSizeDetails-module__Box_1--_uFDs"><div data-testid="blob-size" class="CodeSizeDetails-module__Truncate_1--er0Uk prc-Truncate-Truncate-A9Wn6" data-inline="true" title="34.7 KB" style="--truncate-max-width:100%"><span>1188 lines (874 loc) · 34.7 KB</span></div></div></div><div class="react-code-size-details-in-header"><button type="button" style="--button-color:fg.default" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-label="Code 55% faster with GitHub Copilot" class="prc-Button-ButtonBase-c50BI Button__StyledButtonComponent-sc-vqy3e4-0 eNrdFK" data-loading="false" data-size="small" data-variant="invisible" aria-describedby=":R1qcpal9lab:-loading-announcement" id=":R1qcpal9lab:"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="leadingVisual" class="prc-Button-Visual-2epfX prc-Button-VisualWrap-Db-eB"><svg aria-hidden="true" focusable="false" class="octicon octicon-copilot" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M7.998 15.035c-4.562 0-7.873-2.914-7.998-3.749V9.338c.085-.628.677-1.686 1.588-2.065.013-.07.024-.143.036-.218.029-.183.06-.384.126-.612-.201-.508-.254-1.084-.254-1.656 0-.87.128-1.769.693-2.484.579-.733 1.494-1.124 2.724-1.261 1.206-.134 2.262.034 2.944.765.05.053.096.108.139.165.044-.057.094-.112.143-.165.682-.731 1.738-.899 2.944-.765 1.23.137 2.145.528 2.724 1.261.566.715.693 1.614.693 2.484 0 .572-.053 1.148-.254 1.656.066.228.098.429.126.612.012.076.024.148.037.218.924.385 1.522 1.471 1.591 2.095v1.872c0 .766-3.351 3.795-8.002 3.795Zm0-1.485c2.28 0 4.584-1.11 5.002-1.433V7.862l-.023-.116c-.49.21-1.075.291-1.727.291-1.146 0-2.059-.327-2.71-.991A3.222 3.222 0 0 1 8 6.303a3.24 3.24 0 0 1-.544.743c-.65.664-1.563.991-2.71.991-.652 0-1.236-.081-1.727-.291l-.023.116v4.255c.419.323 2.722 1.433 5.002 1.433ZM6.762 2.83c-.193-.206-.637-.413-1.682-.297-1.019.113-1.479.404-1.713.7-.247.312-.369.789-.369 1.554 0 .793.129 1.171.308 1.371.162.181.519.379 1.442.379.853 0 1.339-.235 1.638-.54.315-.322.527-.827.617-1.553.117-.935-.037-1.395-.241-1.614Zm4.155-.297c-1.044-.116-1.488.091-1.681.297-.204.219-.359.679-.242 1.614.091.726.303 1.231.618 1.553.299.305.784.54 1.638.54.922 0 1.28-.198 1.442-.379.179-.2.308-.578.308-1.371 0-.765-.123-1.242-.37-1.554-.233-.296-.693-.587-1.713-.7Z"></path><path d="M6.25 9.037a.75.75 0 0 1 .75.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 .75-.75Zm4.25.75v1.501a.75.75 0 0 1-1.5 0V9.787a.75.75 0 0 1 1.5 0Z"></path></svg></span></span></button></div></div><div class="BlobViewHeader-module__Box_3--Kvpex"><div class="react-blob-header-edit-and-raw-actions BlobViewHeader-module__Box_4--vFP89"><div class="prc-ButtonGroup-ButtonGroup-vcMeG"><div><a href="https://github.com/yukihina/htl66/raw/refs/heads/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md" data-testid="raw-button" class="prc-Button-ButtonBase-c50BI LinkButton-sc-1v6zkmg-0 iwmTUC BlobViewHeader-module__LinkButton--DMph4" data-loading="false" data-no-visuals="true" data-size="small" data-variant="default" aria-describedby=":R5becpal9lab:-loading-announcement"><span data-component="buttonContent" data-align="center" class="prc-Button-ButtonContent-HKbr-"><span data-component="text" class="prc-Button-Label-pTQ3x">Raw</span></span></a></div><div><button data-component="IconButton" type="button" data-testid="copy-raw-button" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="small" data-variant="default" aria-describedby=":R6pbecpal9lab:-loading-announcement" aria-labelledby=":Rpbecpal9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-copy" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="n" aria-hidden="true" id=":Rpbecpal9lab:">Copy raw file</span></div><div><button data-component="IconButton" type="button" data-testid="download-raw-button" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 gXjFlG prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="small" data-variant="default" aria-describedby=":R1tbecpal9lab:-loading-announcement" aria-labelledby=":Rdbecpal9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-download" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"></path><path d="M7.25 7.689V2a.75.75 0 0 1 1.5 0v5.689l1.97-1.969a.749.749 0 1 1 1.06 1.06l-3.25 3.25a.749.749 0 0 1-1.06 0L4.22 6.78a.749.749 0 1 1 1.06-1.06l1.97 1.969Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="n" aria-hidden="true" id=":Rdbecpal9lab:">Download raw file</span></div></div><button hidden="" data-testid="raw-button-shortcut" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden="" data-testid="copy-raw-button-shortcut" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden="" data-testid="download-raw-button-shortcut" data-hotkey-scope="read-only-cursor-text-area"></button><a class="js-github-dev-shortcut d-none prc-Link-Link-85e08" href="https://github.dev/"></a><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><a class="js-github-dev-new-tab-shortcut d-none prc-Link-Link-85e08" href="https://github.dev/" target="_blank"></a><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><div class="prc-ButtonGroup-ButtonGroup-vcMeG"><div><a data-component="IconButton" type="button" data-testid="edit-button" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 gRAczH BlobViewHeader-module__IconButton_1--MzNlL prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="small" data-variant="default" aria-describedby=":R1mjecpal9lab:-loading-announcement" aria-labelledby=":R6jecpal9lab:" href="/yukihina/htl66/edit/claude/implement-auto-progression-rates-014rTUSkBwksKqqVA41Rxc4Q/CORE_SYSTEM_DOCUMENTATION.md" data-discover="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-pencil" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"></path></svg></a><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="nw" aria-hidden="true" id=":R6jecpal9lab:">Edit this file</span></div><div><button data-component="IconButton" type="button" data-testid="more-edit-button" aria-haspopup="true" aria-expanded="false" tabindex="0" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="small" data-variant="default" aria-describedby=":Rajecpal9lab:-loading-announcement" aria-labelledby=":R7qjecpal9lab:" id=":Rajecpal9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-triangle-down" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="nw" aria-hidden="true" id=":R7qjecpal9lab:">More edit options</span></div></div><button hidden="" data-testid="" data-hotkey="e,Shift+E" data-hotkey-scope="read-only-cursor-text-area"></button></div><button data-component="IconButton" type="button" aria-pressed="false" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 fvatuQ TableOfContents-module__IconButton--RCaNg prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="small" data-variant="invisible" aria-describedby=":Rsecpal9lab:-loading-announcement" aria-labelledby=":R4ecpal9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-list-unordered" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M5.75 2.5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-6a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM2 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="n" aria-hidden="true" id=":R4ecpal9lab:">Outline</span><div class="react-blob-header-edit-and-raw-actions-combined"><button data-component="IconButton" type="button" title="More file actions" data-testid="more-file-actions-button" aria-haspopup="true" aria-expanded="false" tabindex="0" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 js-blob-dropdown-click BlobViewHeader-module__IconButton--uO1fA prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="small" data-variant="invisible" aria-describedby=":Rkucpal9lab:-loading-announcement" aria-labelledby=":Rfkucpal9lab:" id=":Rkucpal9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-kebab-horizontal" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M8 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM1.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm13 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="nw" aria-hidden="true" id=":Rfkucpal9lab:">Edit and raw actions</span></div></div></div></div><div></div></div><div class="Box-sc-62in7e-0 dIDnLY"><section aria-labelledby="file-name-id-wide file-name-id-mobile" class="Box-sc-62in7e-0 iZiBDT"><div class="Box-sc-62in7e-0 lhfNqO js-snippet-clipboard-copy-unpositioned undefined" data-hpc="true"><article class="markdown-body entry-content container-lg" itemprop="text"><div class="markdown-heading" dir="auto"><h1 tabindex="-1" class="heading-element" dir="auto">Core System Documentation</h1><a id="user-content-core-system-documentation" class="anchor" aria-label="Permalink: Core System Documentation" href="#core-system-documentation"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Version:</strong> 1.0
+<strong>Language:</strong> English
+<strong>Last Updated:</strong> November 2024</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Table of Contents</h2><a id="user-content-table-of-contents" class="anchor" aria-label="Permalink: Table of Contents" href="#table-of-contents"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ol dir="auto">
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#system-overview">System Overview</a></li>
+<li><a href="#relationship-management-rm">Relationship Management (RM)</a></li>
+<li><a href="#sexual-statistics-sexstats">Sexual Statistics (SexStats)</a></li>
+<li><a href="#wardrobe-management-wm">Wardrobe Management (WM)</a></li>
+<li><a href="#level-system">Level System</a></li>
+<li><a href="#milestone-decision-system">Milestone Decision System</a></li>
+<li><a href="#practical-examples">Practical Examples</a></li>
+<li><a href="#character-reference">Character Reference</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Introduction</h2><a id="user-content-introduction" class="anchor" aria-label="Permalink: Introduction" href="#introduction"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The <strong>Core System</strong> is the heart of the game's character progression and relationship tracking. It manages everything from how characters feel about you, what they're wearing, their corruption levels, and which story paths they'll follow.</p>
+<p dir="auto">Think of it as the game's memory - it remembers every choice you make, every interaction you have, and uses that information to shape the story as you play.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">What Does It Do?</h3><a id="user-content-what-does-it-do" class="anchor" aria-label="Permalink: What Does It Do?" href="#what-does-it-do"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>Tracks Relationships</strong>: Remembers how much each character trusts you or how corrupted they've become</li>
+<li><strong>Manages Statistics</strong>: Keeps count of intimate moments and interactions</li>
+<li><strong>Handles Outfits</strong>: Controls which clothes characters wear and when they unlock new outfits</li>
+<li><strong>Determines Story Paths</strong>: Locks characters into specific storylines based on your choices</li>
+<li><strong>Shows Progress</strong>: Displays notifications when your relationship reaches new milestones</li>
+</ul>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">System Overview</h2><a id="user-content-system-overview" class="anchor" aria-label="Permalink: System Overview" href="#system-overview"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The Core System consists of five main components:</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">1. <strong>RM (Relationship Management)</strong></h3><a id="user-content-1-rm-relationship-management" class="anchor" aria-label="Permalink: 1. RM (Relationship Management)" href="#1-rm-relationship-management"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Controls character attributes like corruption, trust, integrity, and relationship status.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">2. <strong>SexStats</strong></h3><a id="user-content-2-sexstats" class="anchor" aria-label="Permalink: 2. SexStats" href="#2-sexstats"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Tracks intimate interactions and virginity status for all love interests.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">3. <strong>WM (Wardrobe Manager)</strong></h3><a id="user-content-3-wm-wardrobe-manager" class="anchor" aria-label="Permalink: 3. WM (Wardrobe Manager)" href="#3-wm-wardrobe-manager"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Manages character outfits, unlocking, and switching between them.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">4. <strong>Level System</strong></h3><a id="user-content-4-level-system" class="anchor" aria-label="Permalink: 4. Level System" href="#4-level-system"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Converts numerical stats (0-100) into levels (0-5) and shows notifications.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">5. <strong>Milestone Decision System</strong></h3><a id="user-content-5-milestone-decision-system" class="anchor" aria-label="Permalink: 5. Milestone Decision System" href="#5-milestone-decision-system"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Locks characters into story paths based on your cumulative choices.</p>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Relationship Management (RM)</h2><a id="user-content-relationship-management-rm" class="anchor" aria-label="Permalink: Relationship Management (RM)" href="#relationship-management-rm"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The RM system tracks how characters relate to you and each other.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Character Types</h3><a id="user-content-character-types" class="anchor" aria-label="Permalink: Character Types" href="#character-types"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The system manages three types of characters:</p>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto"><strong>Love Interests</strong> (Regular Characters)</h4><a id="user-content-love-interests-regular-characters" class="anchor" aria-label="Permalink: Love Interests (Regular Characters)" href="#love-interests-regular-characters"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>Characters</strong>: Amber, Nanami, Elizabeth, Isabella, Kanae, Arlette, Antonella, Madison, Paz</li>
+<li><strong>Attributes</strong>:
+<ul dir="auto">
+<li><code>cor</code> (Corruption): How corrupted the character has become (0-100)</li>
+<li><code>trust</code> (Trust): How much they trust you (0-100)</li>
+<li><code>preg</code> (Pregnancy): Whether the character is pregnant (True/False)</li>
+<li><code>rel</code> (Relationship): Whether you're in a relationship (True/False)</li>
+<li><code>knows</code> (Knowledge): Whether you've met this character (True/False)</li>
+<li><code>emotionally_locked</code> (Emotional Lock): Whether the character has shut you out (True/False)</li>
+</ul>
+</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto"><strong>Main Character (MC)</strong></h4><a id="user-content-main-character-mc" class="anchor" aria-label="Permalink: Main Character (MC)" href="#main-character-mc"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>Attributes</strong>:
+<ul dir="auto">
+<li><code>integrity</code>: Your moral compass (0-100)</li>
+<li><code>integrity_locked</code>: Whether integrity can still change (True/False)</li>
+</ul>
+</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto"><strong>Organizations</strong></h4><a id="user-content-organizations" class="anchor" aria-label="Permalink: Organizations" href="#organizations"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<ul dir="auto">
+<li><strong>Characters</strong>: Takeo, TMPD, Osaka</li>
+<li><strong>Attributes</strong>:
+<ul dir="auto">
+<li><code>trust</code>: How much the organization trusts you (0-100)</li>
+</ul>
+</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">How to Use RM</h3><a id="user-content-how-to-use-rm" class="anchor" aria-label="Permalink: How to Use RM" href="#how-to-use-rm"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Updating Character Stats</h4><a id="user-content-updating-character-stats" class="anchor" aria-label="Permalink: Updating Character Stats" href="#updating-character-stats"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">To change a character's stats, use the <code>update</code> function with <strong>base values</strong>:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Base values - system applies character rates automatically
+$ rm.update(&quot;amber&quot;, &quot;cor&quot;, 3)       # Base 3 → 3 × 1.5 = 5 corruption (Amber's 1.5x cor rate)
+$ rm.update(&quot;nanami&quot;, &quot;trust&quot;, 2)    # Base 2 → 2 × 3.0 = 6 trust (Nanami's 3x trust rate)
+$ rm.update(&quot;mc&quot;, &quot;integrity&quot;, -2)   # Base -2 = -2 integrity (no rate for MC)
+$ rm.update(&quot;takeo&quot;, &quot;trust&quot;, 5)     # Base 5 = 5 trust (organizations have no rates)"><pre><span class="pl-c"><span class="pl-c">#</span> Base values - system applies character rates automatically</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)       <span class="pl-c"><span class="pl-c">#</span> Base 3 → 3 × 1.5 = 5 corruption (Amber's 1.5x cor rate)</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)    <span class="pl-c"><span class="pl-c">#</span> Base 2 → 2 × 3.0 = 6 trust (Nanami's 3x trust rate)</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>mc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>integrity<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">2</span>)   <span class="pl-c"><span class="pl-c">#</span> Base -2 = -2 integrity (no rate for MC)</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>takeo<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)     <span class="pl-c"><span class="pl-c">#</span> Base 5 = 5 trust (organizations have no rates)</span></pre></div>
+<p dir="auto"><strong>Parameters:</strong></p>
+<ul dir="auto">
+<li><strong>Character ID</strong>: The character's name (lowercase)</li>
+<li><strong>Attribute</strong>: What you want to change ("cor", "trust", "integrity")</li>
+<li><strong>Value</strong>: Base value to add (positive) or subtract (negative) - <strong>system automatically applies character rates</strong></li>
+</ul>
+<p dir="auto"><strong>Important Rules:</strong></p>
+<ul dir="auto">
+<li>✅ <strong>Use base values (1, 2, 3, 5, 10)</strong> - the system multiplies by character rates automatically</li>
+<li>✅ Stats automatically stay between 0 and 100</li>
+<li>✅ MC's integrity locks when it reaches 0 or 100</li>
+<li>✅ You can't change a character's stats if they're emotionally locked</li>
+<li>✅ <strong>Each call only updates ONE attribute</strong> - to update multiple attributes, make multiple calls</li>
+<li>✅ <strong>Values are automatically rounded</strong> to integers (no decimals)</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Updating Multiple Attributes</h4><a id="user-content-updating-multiple-attributes" class="anchor" aria-label="Permalink: Updating Multiple Attributes" href="#updating-multiple-attributes"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">To update both corruption and trust (or any combination), make <strong>separate calls</strong> using <strong>base values</strong>:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Update both corruption and trust with same base value
+$ rm.update(&quot;amber&quot;, &quot;cor&quot;, 2)    # Base 2 → 2 × 1.5 = 3 corruption
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, 2)  # Base 2 → 2 × 1.0 = 2 trust
+
+# Update both with different base values
+$ rm.update(&quot;amber&quot;, &quot;cor&quot;, 3)    # Base 3 → 3 × 1.5 = 5 corruption
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, -2) # Base -2 → -2 × 1.0 = -2 trust
 
 # Common pattern: choice that increases one and decreases the other
 menu:
-    "Be gentle with her":
-        $ rm.update("amber", "trust", 10)
-        $ rm.update("amber", "cor", -5)
-        $ check_levels("amber", "trust", 10)
-        $ check_levels("amber", "cor", -5)
+    &quot;Be gentle with her&quot;:
+        $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 3)   # Base 3 → 3 × 1.0 = 3 trust
+        $ rm.update(&quot;amber&quot;, &quot;cor&quot;, -1)    # Base -1 → -1 × 1.5 = -2 corruption
+        $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 3)
+        $ check_levels(&quot;amber&quot;, &quot;cor&quot;, -1)
 
-    "Be forceful":
-        $ rm.update("amber", "cor", 10)
-        $ rm.update("amber", "trust", -5)
-        $ check_levels("amber", "cor", 10)
-        $ check_levels("amber", "trust", -5)
-```
+    &quot;Be forceful&quot;:
+        $ rm.update(&quot;amber&quot;, &quot;cor&quot;, 3)     # Base 3 → 3 × 1.5 = 5 corruption
+        $ rm.update(&quot;amber&quot;, &quot;trust&quot;, -2)  # Base -2 → -2 × 1.0 = -2 trust
+        $ check_levels(&quot;amber&quot;, &quot;cor&quot;, 3)
+        $ check_levels(&quot;amber&quot;, &quot;trust&quot;, -2)"><pre><span class="pl-c"><span class="pl-c">#</span> Update both corruption and trust with same base value</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)    <span class="pl-c"><span class="pl-c">#</span> Base 2 → 2 × 1.5 = 3 corruption</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)  <span class="pl-c"><span class="pl-c">#</span> Base 2 → 2 × 1.0 = 2 trust</span>
 
-**Note:** There is no syntax like `rm.update("amber", "cor" and "trust", 5)`. You must make individual calls for each attribute.
+<span class="pl-c"><span class="pl-c">#</span> Update both with different base values</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)    <span class="pl-c"><span class="pl-c">#</span> Base 3 → 3 × 1.5 = 5 corruption</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">2</span>) <span class="pl-c"><span class="pl-c">#</span> Base -2 → -2 × 1.0 = -2 trust</span>
 
-#### Getting Character Information
+<span class="pl-c"><span class="pl-c">#</span> Common pattern: choice that increases one and decreases the other</span>
+<span class="pl-k">menu</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Be gentle with her<span class="pl-pds">"</span></span>:
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)   <span class="pl-c"><span class="pl-c">#</span> Base 3 → 3 × 1.0 = 3 trust</span>
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">1</span>)    <span class="pl-c"><span class="pl-c">#</span> Base -1 → -1 × 1.5 = -2 corruption</span>
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">1</span>)
 
-To check a character's current stats:
-
-```renpy
-$ amber_corruption = rm.get("amber", "cor")
-$ nanami_trust = rm.get("nanami", "trust")
-$ mc_integrity = rm.get("mc", "integrity")
-$ in_relationship = rm.get("isabella", "rel")
-$ is_pregnant = rm.get("kanae", "preg")
-```
-
-#### Managing Relationships
-
-Update relationship status based on trust level:
-
-```renpy
-$ rm.update_rel("amber")  # If trust >= 70, sets rel to True
-```
-
-**Rule:** A character becomes your girlfriend when trust reaches 70 or higher.
-
-#### Tracking Character Knowledge
-
-Mark whether you've met a character:
-
-```renpy
-$ rm.set_knows("amber", True)   # You've met Amber
-$ rm.set_knows("paz", False)    # You haven't met Paz yet
-```
-
-### The Emotional Lock System
-
-When a character receives **3 strikes** (tracked separately in SexStats), they become emotionally locked:
-
-**What Happens:**
-- Their corruption and trust drop to 0
-- You can't change their corruption or trust anymore
-- The character has emotionally shut you out
-- This represents a permanent consequence for poor choices
-
-**Checking Emotional Lock:**
-
-```renpy
-$ is_locked = rm.is_emotionally_locked("amber")
+    <span class="pl-s"><span class="pl-pds">"</span>Be forceful<span class="pl-pds">"</span></span>:
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)     <span class="pl-c"><span class="pl-c">#</span> Base 3 → 3 × 1.5 = 5 corruption</span>
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">2</span>)  <span class="pl-c"><span class="pl-c">#</span> Base -2 → -2 × 1.0 = -2 trust</span>
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">2</span>)</pre></div>
+<p dir="auto"><strong>Note:</strong> There is no syntax like <code>rm.update("amber", "cor" and "trust", 2)</code>. You must make individual calls for each attribute. Always use base values - the system handles rate multiplication automatically.</p>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Getting Character Information</h4><a id="user-content-getting-character-information" class="anchor" aria-label="Permalink: Getting Character Information" href="#getting-character-information"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">To check a character's current stats:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ amber_corruption = rm.get(&quot;amber&quot;, &quot;cor&quot;)
+$ nanami_trust = rm.get(&quot;nanami&quot;, &quot;trust&quot;)
+$ mc_integrity = rm.get(&quot;mc&quot;, &quot;integrity&quot;)
+$ in_relationship = rm.get(&quot;isabella&quot;, &quot;rel&quot;)
+$ is_pregnant = rm.get(&quot;kanae&quot;, &quot;preg&quot;)"><pre><span class="pl-k">$</span> amber_corruption <span class="pl-k">=</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> nanami_trust <span class="pl-k">=</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> mc_integrity <span class="pl-k">=</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>mc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>integrity<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> in_relationship <span class="pl-k">=</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>rel<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> is_pregnant <span class="pl-k">=</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>kanae<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>preg<span class="pl-pds">"</span></span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Managing Relationships</h4><a id="user-content-managing-relationships" class="anchor" aria-label="Permalink: Managing Relationships" href="#managing-relationships"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Update relationship status based on trust level:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ rm.update_rel(&quot;amber&quot;)  # If trust &gt;= 70, sets rel to True"><pre><span class="pl-k">$</span> rm.update_rel(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)  <span class="pl-c"><span class="pl-c">#</span> If trust &gt;= 70, sets rel to True</span></pre></div>
+<p dir="auto"><strong>Rule:</strong> A character becomes your girlfriend when trust reaches 70 or higher.</p>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Tracking Character Knowledge</h4><a id="user-content-tracking-character-knowledge" class="anchor" aria-label="Permalink: Tracking Character Knowledge" href="#tracking-character-knowledge"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Mark whether you've met a character:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ rm.set_knows(&quot;amber&quot;, True)   # You've met Amber
+$ rm.set_knows(&quot;paz&quot;, False)    # You haven't met Paz yet"><pre><span class="pl-k">$</span> rm.set_knows(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">True</span>)   <span class="pl-c"><span class="pl-c">#</span> You've met Amber</span>
+<span class="pl-k">$</span> rm.set_knows(<span class="pl-s"><span class="pl-pds">"</span>paz<span class="pl-pds">"</span></span>, <span class="pl-c1">False</span>)    <span class="pl-c"><span class="pl-c">#</span> You haven't met Paz yet</span></pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">The Emotional Lock System</h3><a id="user-content-the-emotional-lock-system" class="anchor" aria-label="Permalink: The Emotional Lock System" href="#the-emotional-lock-system"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">When a character receives <strong>3 strikes</strong> (tracked separately in SexStats), they become emotionally locked:</p>
+<p dir="auto"><strong>What Happens:</strong></p>
+<ul dir="auto">
+<li>Their corruption and trust drop to 0</li>
+<li>You can't change their corruption or trust anymore</li>
+<li>The character has emotionally shut you out</li>
+<li>This represents a permanent consequence for poor choices</li>
+</ul>
+<p dir="auto"><strong>Checking Emotional Lock:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ is_locked = rm.is_emotionally_locked(&quot;amber&quot;)
 if is_locked:
-    "Amber won't talk to you anymore."
-```
+    &quot;Amber won't talk to you anymore.&quot;"><pre><span class="pl-k">$</span> is_locked <span class="pl-k">=</span> rm.is_emotionally_locked(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)
+<span class="pl-k">if</span> is_locked:
+    <span class="pl-s"><span class="pl-pds">"</span>Amber won't talk to you anymore.<span class="pl-pds">"</span></span></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Sexual Statistics (SexStats)</h2><a id="user-content-sexual-statistics-sexstats" class="anchor" aria-label="Permalink: Sexual Statistics (SexStats)" href="#sexual-statistics-sexstats"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The SexStats system tracks intimate interactions with all love interests.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Tracked Activities</h3><a id="user-content-tracked-activities" class="anchor" aria-label="Permalink: Tracked Activities" href="#tracked-activities"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">For each love interest, the system tracks:</p>
+<ul dir="auto">
+<li><code>anal</code> - Anal sex encounters</li>
+<li><code>assjob</code> - Assjob encounters</li>
+<li><code>blowjob</code> - Oral sex encounters</li>
+<li><code>creampie</code> - Creampie finishes</li>
+<li><code>pussyjob</code> - Pussyjob encounters</li>
+<li><code>sex</code> - Vaginal sex encounters</li>
+<li><code>titjob</code> - Titjob encounters</li>
+<li><code>virgin</code> - Virginity status (True/False)</li>
+<li><code>strike</code> - Number of strikes (0-3)</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Starting Virginity Status</h3><a id="user-content-starting-virginity-status" class="anchor" aria-label="Permalink: Starting Virginity Status" href="#starting-virginity-status"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Virgins at Start:</strong></p>
+<ul dir="auto">
+<li>Nanami</li>
+<li>Isabella</li>
+<li>Madison</li>
+<li>Paz</li>
+</ul>
+<p dir="auto"><strong>Non-Virgins at Start:</strong></p>
+<ul dir="auto">
+<li>Amber</li>
+<li>Elizabeth</li>
+<li>Kanae</li>
+<li>Arlette</li>
+<li>Antonella</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">How to Use SexStats</h3><a id="user-content-how-to-use-sexstats" class="anchor" aria-label="Permalink: How to Use SexStats" href="#how-to-use-sexstats"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Incrementing Counters</h4><a id="user-content-incrementing-counters" class="anchor" aria-label="Permalink: Incrementing Counters" href="#incrementing-counters"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">When an intimate scene occurs:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ ss.add(&quot;amber&quot;, &quot;blowjob&quot;)    # Add 1 to Amber's blowjob count
+$ ss.add(&quot;nanami&quot;, &quot;sex&quot;)       # Add 1 to Nanami's sex count
+$ ss.add(&quot;isabella&quot;, &quot;creampie&quot;) # Add 1 to Isabella's creampie count"><pre><span class="pl-k">$</span> ss.add(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>blowjob<span class="pl-pds">"</span></span>)    <span class="pl-c"><span class="pl-c">#</span> Add 1 to Amber's blowjob count</span>
+<span class="pl-k">$</span> ss.add(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>sex<span class="pl-pds">"</span></span>)       <span class="pl-c"><span class="pl-c">#</span> Add 1 to Nanami's sex count</span>
+<span class="pl-k">$</span> ss.add(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>creampie<span class="pl-pds">"</span></span>) <span class="pl-c"><span class="pl-c">#</span> Add 1 to Isabella's creampie count</span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Changing Virginity Status</h4><a id="user-content-changing-virginity-status" class="anchor" aria-label="Permalink: Changing Virginity Status" href="#changing-virginity-status"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">When a character loses their virginity:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ ss.set(&quot;nanami&quot;, &quot;virgin&quot;, False)  # Nanami is no longer a virgin"><pre><span class="pl-k">$</span> ss.set(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>virgin<span class="pl-pds">"</span></span>, <span class="pl-c1">False</span>)  <span class="pl-c"><span class="pl-c">#</span> Nanami is no longer a virgin</span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Managing Strikes</h4><a id="user-content-managing-strikes" class="anchor" aria-label="Permalink: Managing Strikes" href="#managing-strikes"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Add strikes for bad choices:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ current_strikes = ss.get(&quot;amber&quot;, &quot;strike&quot;)
+$ ss.set(&quot;amber&quot;, &quot;strike&quot;, current_strikes + 1)"><pre><span class="pl-k">$</span> current_strikes <span class="pl-k">=</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>strike<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> ss.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>strike<span class="pl-pds">"</span></span>, current_strikes <span class="pl-k">+</span> <span class="pl-c1">1</span>)</pre></div>
+<p dir="auto"><strong>Important:</strong> When a character reaches 3 strikes, they become emotionally locked automatically.</p>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Checking Statistics</h4><a id="user-content-checking-statistics" class="anchor" aria-label="Permalink: Checking Statistics" href="#checking-statistics"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Get current statistics:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ bj_count = ss.get(&quot;amber&quot;, &quot;blowjob&quot;)
+$ is_virgin = ss.get(&quot;nanami&quot;, &quot;virgin&quot;)
+$ strike_count = ss.get(&quot;isabella&quot;, &quot;strike&quot;)
 
----
-
-## Sexual Statistics (SexStats)
-
-The SexStats system tracks intimate interactions with all love interests.
-
-### Tracked Activities
-
-For each love interest, the system tracks:
-
-- `anal` - Anal sex encounters
-- `assjob` - Assjob encounters
-- `blowjob` - Oral sex encounters
-- `creampie` - Creampie finishes
-- `pussyjob` - Pussyjob encounters
-- `sex` - Vaginal sex encounters
-- `titjob` - Titjob encounters
-- `virgin` - Virginity status (True/False)
-- `strike` - Number of strikes (0-3)
-
-### Starting Virginity Status
-
-**Virgins at Start:**
-- Nanami
-- Isabella
-- Madison
-- Paz
-
-**Non-Virgins at Start:**
-- Amber
-- Elizabeth
-- Kanae
-- Arlette
-- Antonella
-
-### How to Use SexStats
-
-#### Incrementing Counters
-
-When an intimate scene occurs:
-
-```renpy
-$ ss.add("amber", "blowjob")    # Add 1 to Amber's blowjob count
-$ ss.add("nanami", "sex")       # Add 1 to Nanami's sex count
-$ ss.add("isabella", "creampie") # Add 1 to Isabella's creampie count
-```
-
-#### Changing Virginity Status
-
-When a character loses their virginity:
-
-```renpy
-$ ss.set("nanami", "virgin", False)  # Nanami is no longer a virgin
-```
-
-#### Managing Strikes
-
-Add strikes for bad choices:
-
-```renpy
-$ current_strikes = ss.get("amber", "strike")
-$ ss.set("amber", "strike", current_strikes + 1)
-```
-
-**Important:** When a character reaches 3 strikes, they become emotionally locked automatically.
-
-#### Checking Statistics
-
-Get current statistics:
-
-```renpy
-$ bj_count = ss.get("amber", "blowjob")
-$ is_virgin = ss.get("nanami", "virgin")
-$ strike_count = ss.get("isabella", "strike")
-
-if bj_count > 5:
-    "Amber has extensive experience now."
+if bj_count &gt; 5:
+    &quot;Amber has extensive experience now.&quot;
 
 if is_virgin:
-    "Nanami has never had sex before."
+    &quot;Nanami has never had sex before.&quot;
 
-if strike_count >= 2:
-    "Isabella is very upset with you. One more strike and she's done."
-```
+if strike_count &gt;= 2:
+    &quot;Isabella is very upset with you. One more strike and she's done.&quot;"><pre><span class="pl-k">$</span> bj_count <span class="pl-k">=</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>blowjob<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> is_virgin <span class="pl-k">=</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>virgin<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> strike_count <span class="pl-k">=</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>strike<span class="pl-pds">"</span></span>)
 
----
+<span class="pl-k">if</span> bj_count <span class="pl-k">&gt;</span> <span class="pl-c1">5</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Amber has extensive experience now.<span class="pl-pds">"</span></span>
 
-## Wardrobe Management (WM)
+<span class="pl-k">if</span> is_virgin:
+    <span class="pl-s"><span class="pl-pds">"</span>Nanami has never had sex before.<span class="pl-pds">"</span></span>
 
-The WM system handles character outfits and clothing changes.
-
-### Available Outfits Per Character
-
-Each character has a different number of outfits:
-
-| Character  | Max Outfits |
-|-----------|-------------|
-| Amber     | 6           |
-| Nanami    | 9           |
-| Elizabeth | 4           |
-| Isabella  | 7           |
-| Kanae     | 5           |
-| Arlette   | 8           |
-| Antonella | 4           |
-| Madison   | 5           |
-| Paz       | 6           |
-
-**Note:** Outfit IDs start at 0 (default outfit is always ID 0).
-
-### How to Use WM
-
-#### Unlocking Outfits
-
-To unlock a new outfit:
-
-```renpy
-$ wm.unlock("nanami", 3)     # Unlock outfit 3 for Nanami
-$ wm.unlock("amber", 2)      # Unlock outfit 2 for Amber
-```
-
-**Rules:**
-- Outfit 0 is always unlocked (default outfit)
-- You can only unlock outfits that exist (within max range)
-- Unlocking an outfit doesn't automatically equip it
-
-#### Checking If Outfit Is Unlocked
-
-```renpy
-$ is_unlocked = wm.is_unlocked("nanami", 3)
+<span class="pl-k">if</span> strike_count <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Isabella is very upset with you. One more strike and she's done.<span class="pl-pds">"</span></span></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Wardrobe Management (WM)</h2><a id="user-content-wardrobe-management-wm" class="anchor" aria-label="Permalink: Wardrobe Management (WM)" href="#wardrobe-management-wm"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The WM system handles character outfits and clothing changes.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Available Outfits Per Character</h3><a id="user-content-available-outfits-per-character" class="anchor" aria-label="Permalink: Available Outfits Per Character" href="#available-outfits-per-character"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Each character has a different number of outfits:</p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Max Outfits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Amber</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Nanami</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Elizabeth</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Isabella</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Kanae</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Arlette</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Antonella</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Madison</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Paz</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto"><strong>Note:</strong> Outfit IDs start at 0 (default outfit is always ID 0).</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">How to Use WM</h3><a id="user-content-how-to-use-wm" class="anchor" aria-label="Permalink: How to Use WM" href="#how-to-use-wm"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Unlocking Outfits</h4><a id="user-content-unlocking-outfits" class="anchor" aria-label="Permalink: Unlocking Outfits" href="#unlocking-outfits"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">To unlock a new outfit:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ wm.unlock(&quot;nanami&quot;, 3)     # Unlock outfit 3 for Nanami
+$ wm.unlock(&quot;amber&quot;, 2)      # Unlock outfit 2 for Amber"><pre><span class="pl-k">$</span> wm.unlock(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)     <span class="pl-c"><span class="pl-c">#</span> Unlock outfit 3 for Nanami</span>
+<span class="pl-k">$</span> wm.unlock(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)      <span class="pl-c"><span class="pl-c">#</span> Unlock outfit 2 for Amber</span></pre></div>
+<p dir="auto"><strong>Rules:</strong></p>
+<ul dir="auto">
+<li>Outfit 0 is always unlocked (default outfit)</li>
+<li>You can only unlock outfits that exist (within max range)</li>
+<li>Unlocking an outfit doesn't automatically equip it</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Checking If Outfit Is Unlocked</h4><a id="user-content-checking-if-outfit-is-unlocked" class="anchor" aria-label="Permalink: Checking If Outfit Is Unlocked" href="#checking-if-outfit-is-unlocked"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ is_unlocked = wm.is_unlocked(&quot;nanami&quot;, 3)
 if is_unlocked:
-    "Nanami's special outfit is available!"
-```
-
-#### Changing Current Outfit
-
-To set which outfit a character wears:
-
-```renpy
-$ wm.set("nanami", 2)   # Set Nanami's outfit to ID 2
-```
-
-**Rule:** You can only set outfits that have been unlocked.
-
-#### Getting Current Outfit
-
-Check which outfit is currently equipped:
-
-```renpy
-$ current = wm.get_current("nanami")
-"Nanami is wearing outfit [current]."
-```
-
-#### Cycling Through Outfits
-
-Move to next or previous unlocked outfit:
-
-```renpy
-$ wm.next_outfit("amber")    # Switch to next unlocked outfit
-$ wm.prev_outfit("amber")    # Switch to previous unlocked outfit
-```
-
-**Behavior:** Cycles through unlocked outfits in order (wraps around at the end).
-
-#### Getting All Unlocked Outfits
-
-Get a list of all unlocked outfits:
-
-```renpy
-$ unlocked_list = wm.get_all_unlocked("nanami")
-# Returns: [0, 2, 3, 5] (example)
-```
-
-### Practical Outfit Example
-
-```renpy
-label amber_date:
+    &quot;Nanami's special outfit is available!&quot;"><pre><span class="pl-k">$</span> is_unlocked <span class="pl-k">=</span> wm.is_unlocked(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)
+<span class="pl-k">if</span> is_unlocked:
+    <span class="pl-s"><span class="pl-pds">"</span>Nanami's special outfit is available!<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Changing Current Outfit</h4><a id="user-content-changing-current-outfit" class="anchor" aria-label="Permalink: Changing Current Outfit" href="#changing-current-outfit"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">To set which outfit a character wears:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ wm.set(&quot;nanami&quot;, 2)   # Set Nanami's outfit to ID 2"><pre><span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)   <span class="pl-c"><span class="pl-c">#</span> Set Nanami's outfit to ID 2</span></pre></div>
+<p dir="auto"><strong>Rule:</strong> You can only set outfits that have been unlocked.</p>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Getting Current Outfit</h4><a id="user-content-getting-current-outfit" class="anchor" aria-label="Permalink: Getting Current Outfit" href="#getting-current-outfit"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Check which outfit is currently equipped:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ current = wm.get_current(&quot;nanami&quot;)
+&quot;Nanami is wearing outfit [current].&quot;"><pre><span class="pl-k">$</span> current <span class="pl-k">=</span> wm.get_current(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>)
+<span class="pl-s"><span class="pl-pds">"</span>Nanami is wearing outfit <span class="pl-c1">[current]</span>.<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Cycling Through Outfits</h4><a id="user-content-cycling-through-outfits" class="anchor" aria-label="Permalink: Cycling Through Outfits" href="#cycling-through-outfits"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Move to next or previous unlocked outfit:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ wm.next_outfit(&quot;amber&quot;)    # Switch to next unlocked outfit
+$ wm.prev_outfit(&quot;amber&quot;)    # Switch to previous unlocked outfit"><pre><span class="pl-k">$</span> wm.next_outfit(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)    <span class="pl-c"><span class="pl-c">#</span> Switch to next unlocked outfit</span>
+<span class="pl-k">$</span> wm.prev_outfit(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)    <span class="pl-c"><span class="pl-c">#</span> Switch to previous unlocked outfit</span></pre></div>
+<p dir="auto"><strong>Behavior:</strong> Cycles through unlocked outfits in order (wraps around at the end).</p>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Getting All Unlocked Outfits</h4><a id="user-content-getting-all-unlocked-outfits" class="anchor" aria-label="Permalink: Getting All Unlocked Outfits" href="#getting-all-unlocked-outfits"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Get a list of all unlocked outfits:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ unlocked_list = wm.get_all_unlocked(&quot;nanami&quot;)
+# Returns: [0, 2, 3, 5] (example)"><pre><span class="pl-k">$</span> unlocked_list <span class="pl-k">=</span> wm.get_all_unlocked(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>)
+<span class="pl-c"><span class="pl-c">#</span> Returns: [0, 2, 3, 5] (example)</span></pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Practical Outfit Example</h3><a id="user-content-practical-outfit-example" class="anchor" aria-label="Permalink: Practical Outfit Example" href="#practical-outfit-example"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label amber_date:
     # Unlock special date outfit
-    $ wm.unlock("amber", 3)
+    $ wm.unlock(&quot;amber&quot;, 3)
 
     # Set it as current
-    $ wm.set("amber", 3)
+    $ wm.set(&quot;amber&quot;, 3)
 
     # Show Amber in the new outfit
     show amber happy at center
 
-    amber "Do you like my new dress?"
-```
+    amber &quot;Do you like my new dress?&quot;"><pre><span class="pl-k">label</span> <span class="pl-en">amber_date</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Unlock special date outfit</span>
+    <span class="pl-k">$</span> wm.unlock(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)
 
----
+    <span class="pl-c"><span class="pl-c">#</span> Set it as current</span>
+    <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)
 
-## Level System
+    <span class="pl-c"><span class="pl-c">#</span> Show Amber in the new outfit</span>
+    <span class="pl-k">show</span> amber happy <span class="pl-k">at</span> center
 
-The Level System converts raw numerical stats (0-100) into levels (0-5) for easier understanding and gating content.
+    amber <span class="pl-s"><span class="pl-pds">"</span>Do you like my new dress?<span class="pl-pds">"</span></span></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Level System</h2><a id="user-content-level-system" class="anchor" aria-label="Permalink: Level System" href="#level-system"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The Level System converts raw numerical stats (0-100) into levels (0-5) for easier understanding and gating content.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Level Ranges</h3><a id="user-content-level-ranges" class="anchor" aria-label="Permalink: Level Ranges" href="#level-ranges"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Both corruption and trust use the same level ranges:</p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Range</th>
+<th>Description (Trust)</th>
+<th>Description (Corruption)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0-16</td>
+<td>Stranger/Hostile</td>
+<td>Pure/Innocent</td>
+</tr>
+<tr>
+<td>1</td>
+<td>17-32</td>
+<td>Acquaintance</td>
+<td>Slightly Corrupted</td>
+</tr>
+<tr>
+<td>2</td>
+<td>33-48</td>
+<td>Friend</td>
+<td>Moderately Corrupted</td>
+</tr>
+<tr>
+<td>3</td>
+<td>49-64</td>
+<td>Close Friend</td>
+<td>Notably Corrupted</td>
+</tr>
+<tr>
+<td>4</td>
+<td>65-80</td>
+<td>Very Close</td>
+<td>Highly Corrupted</td>
+</tr>
+<tr>
+<td>5</td>
+<td>81-100</td>
+<td>Intimate/Best Friend</td>
+<td>Fully Corrupted</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Getting a Character's Level</h3><a id="user-content-getting-a-characters-level" class="anchor" aria-label="Permalink: Getting a Character's Level" href="#getting-a-characters-level"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">To check what level a character's stat is at:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ amber_trust_level = get_level_for_value(rm.get(&quot;amber&quot;, &quot;trust&quot;), trust_levels)
+$ nanami_cor_level = get_level_for_value(rm.get(&quot;nanami&quot;, &quot;cor&quot;), corruption_levels)
 
-### Level Ranges
+if amber_trust_level &gt;= 3:
+    &quot;Amber trusts you deeply.&quot;
 
-Both corruption and trust use the same level ranges:
+if nanami_cor_level &gt;= 2:
+    &quot;Nanami is becoming more open to your influence.&quot;"><pre><span class="pl-k">$</span> amber_trust_level <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>), trust_levels)
+<span class="pl-k">$</span> nanami_cor_level <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>), corruption_levels)
 
-| Level | Range    | Description (Trust)      | Description (Corruption) |
-|-------|----------|--------------------------|--------------------------|
-| 0     | 0-16     | Stranger/Hostile         | Pure/Innocent            |
-| 1     | 17-32    | Acquaintance             | Slightly Corrupted       |
-| 2     | 33-48    | Friend                   | Moderately Corrupted     |
-| 3     | 49-64    | Close Friend             | Notably Corrupted        |
-| 4     | 65-80    | Very Close               | Highly Corrupted         |
-| 5     | 81-100   | Intimate/Best Friend     | Fully Corrupted          |
+<span class="pl-k">if</span> amber_trust_level <span class="pl-k">&gt;=</span> <span class="pl-c1">3</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Amber trusts you deeply.<span class="pl-pds">"</span></span>
 
-### Getting a Character's Level
+<span class="pl-k">if</span> nanami_cor_level <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Nanami is becoming more open to your influence.<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Level Notifications</h3><a id="user-content-level-notifications" class="anchor" aria-label="Permalink: Level Notifications" href="#level-notifications"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The system automatically shows notifications when levels change:</p>
+<p dir="auto"><strong>Types of Notifications:</strong></p>
+<ul dir="auto">
+<li><strong>Small Increase/Decrease</strong>: When stats change but level stays the same</li>
+<li><strong>Level Up</strong>: When a character gains a level</li>
+<li><strong>Level Down</strong>: When a character loses a level</li>
+</ul>
+<p dir="auto">To trigger notifications after updating stats:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ rm.update(&quot;amber&quot;, &quot;cor&quot;, 15)
+$ check_levels(&quot;amber&quot;, &quot;cor&quot;, 15)  # Shows notification
 
-To check what level a character's stat is at:
+$ rm.update(&quot;nanami&quot;, &quot;trust&quot;, 20)
+$ check_levels(&quot;nanami&quot;, &quot;trust&quot;, 20)  # Shows notification"><pre><span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+<span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)  <span class="pl-c"><span class="pl-c">#</span> Shows notification</span>
 
-```renpy
-$ amber_trust_level = get_level_for_value(rm.get("amber", "trust"), trust_levels)
-$ nanami_cor_level = get_level_for_value(rm.get("nanami", "cor"), corruption_levels)
-
-if amber_trust_level >= 3:
-    "Amber trusts you deeply."
-
-if nanami_cor_level >= 2:
-    "Nanami is becoming more open to your influence."
-```
-
-### Level Notifications
-
-The system automatically shows notifications when levels change:
-
-**Types of Notifications:**
-- **Small Increase/Decrease**: When stats change but level stays the same
-- **Level Up**: When a character gains a level
-- **Level Down**: When a character loses a level
-
-To trigger notifications after updating stats:
-
-```renpy
-$ rm.update("amber", "cor", 15)
-$ check_levels("amber", "cor", 15)  # Shows notification
-
-$ rm.update("nanami", "trust", 20)
-$ check_levels("nanami", "trust", 20)  # Shows notification
-```
-
-**Important:** Always call `check_levels()` after `rm.update()` to show proper notifications.
-
-### Using Levels to Gate Content
-
-You can require specific levels to unlock dialogue choices:
-
-```renpy
-menu:
-    "Casual conversation":
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+<span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)  <span class="pl-c"><span class="pl-c">#</span> Shows notification</span></pre></div>
+<p dir="auto"><strong>Important:</strong> Always call <code>check_levels()</code> after <code>rm.update()</code> to show proper notifications.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Using Levels to Gate Content</h3><a id="user-content-using-levels-to-gate-content" class="anchor" aria-label="Permalink: Using Levels to Gate Content" href="#using-levels-to-gate-content"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">You can require specific levels to unlock dialogue choices:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="menu:
+    &quot;Casual conversation&quot;:
         jump .casual
 
-    "Ask about her feelings" if get_level_for_value(rm.get("amber", "trust"), trust_levels) >= 2:
+    &quot;Ask about her feelings&quot; if get_level_for_value(rm.get(&quot;amber&quot;, &quot;trust&quot;), trust_levels) &gt;= 2:
         # Only available if Amber's trust is Level 2 or higher
         jump .feelings
 
-    "Make a bold move" if get_level_for_value(rm.get("amber", "cor"), corruption_levels) >= 3:
+    &quot;Make a bold move&quot; if get_level_for_value(rm.get(&quot;amber&quot;, &quot;cor&quot;), corruption_levels) &gt;= 3:
         # Only available if Amber's corruption is Level 3 or higher
-        jump .bold
-```
+        jump .bold"><pre><span class="pl-k">menu</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Casual conversation<span class="pl-pds">"</span></span>:
+        <span class="pl-k">jump</span> .casual
 
----
+    <span class="pl-s"><span class="pl-pds">"</span>Ask about her feelings<span class="pl-pds">"</span></span> <span class="pl-k">if</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>), trust_levels) <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Only available if Amber's trust is Level 2 or higher</span>
+        <span class="pl-k">jump</span> .feelings
 
-## Milestone Decision System
+    <span class="pl-s"><span class="pl-pds">"</span>Make a bold move<span class="pl-pds">"</span></span> <span class="pl-k">if</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>), corruption_levels) <span class="pl-k">&gt;=</span> <span class="pl-c1">3</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Only available if Amber's corruption is Level 3 or higher</span>
+        <span class="pl-k">jump</span> .<span class="pl-e">bold</span></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Milestone Decision System</h2><a id="user-content-milestone-decision-system" class="anchor" aria-label="Permalink: Milestone Decision System" href="#milestone-decision-system"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The Milestone Decision System is a two-phase progression system that locks characters into specific story paths.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">How It Works</h3><a id="user-content-how-it-works" class="anchor" aria-label="Permalink: How It Works" href="#how-it-works"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto"><strong>Phase 1: Foundation (Episodes 1-5)</strong></h4><a id="user-content-phase-1-foundation-episodes-1-5" class="anchor" aria-label="Permalink: Phase 1: Foundation (Episodes 1-5)" href="#phase-1-foundation-episodes-1-5"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Goal:</strong> Build up stats and levels</p>
+<ul dir="auto">
+<li>You make choices that increase corruption or trust</li>
+<li>Stats accumulate (0-100)</li>
+<li>Stats determine levels (0-5)</li>
+<li>Levels act as "keys" that unlock future choices</li>
+</ul>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="menu:
+    &quot;Compliment her&quot;:
+        $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 10)
+        $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 10)
 
-The Milestone Decision System is a two-phase progression system that locks characters into specific story paths.
+    &quot;Tease her&quot;:
+        $ rm.update(&quot;amber&quot;, &quot;cor&quot;, 10)
+        $ check_levels(&quot;amber&quot;, &quot;cor&quot;, 10)"><pre><span class="pl-k">menu</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Compliment her<span class="pl-pds">"</span></span>:
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)
 
-### How It Works
-
-#### **Phase 1: Foundation (Episodes 1-5)**
-
-**Goal:** Build up stats and levels
-
-- You make choices that increase corruption or trust
-- Stats accumulate (0-100)
-- Stats determine levels (0-5)
-- Levels act as "keys" that unlock future choices
-
-**Example:**
-```renpy
-menu:
-    "Compliment her":
-        $ rm.update("amber", "trust", 10)
-        $ check_levels("amber", "trust", 10)
-
-    "Tease her":
-        $ rm.update("amber", "cor", 10)
-        $ check_levels("amber", "cor", 10)
-```
-
-#### **Phase 2: Consolidation (Episode 6+)**
-
-**Goal:** Make milestone decisions that determine final paths
-
-- Certain special choices are "Milestone Decisions"
-- These choices require specific levels to unlock
-- Making these choices increments counters
-- Reaching threshold (default 3) locks the path permanently
-
-**Example:**
-```renpy
-menu:
-    "Neutral choice":
+    <span class="pl-s"><span class="pl-pds">"</span>Tease her<span class="pl-pds">"</span></span>:
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto"><strong>Phase 2: Consolidation (Episode 6+)</strong></h4><a id="user-content-phase-2-consolidation-episode-6" class="anchor" aria-label="Permalink: Phase 2: Consolidation (Episode 6+)" href="#phase-2-consolidation-episode-6"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Goal:</strong> Make milestone decisions that determine final paths</p>
+<ul dir="auto">
+<li>Certain special choices are "Milestone Decisions"</li>
+<li>These choices require specific levels to unlock</li>
+<li>Making these choices increments counters</li>
+<li>Reaching threshold (default 3) locks the path permanently</li>
+</ul>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="menu:
+    &quot;Neutral choice&quot;:
         # Always available, doesn't count as milestone
         jump .neutral
 
-    "I truly care about you." if get_level_for_value(rm.get("amber", "trust"), trust_levels) >= 2:
+    &quot;I truly care about you.&quot; if get_level_for_value(rm.get(&quot;amber&quot;, &quot;trust&quot;), trust_levels) &gt;= 2:
         # LOVE Milestone Decision - requires Trust Level 2+
         $ amber_love_choices += 1
-        $ rm.update("amber", "trust", 15)
-        $ check_levels("amber", "trust", 15)
+        $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 15)
+        $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 15)
         jump .love_path
 
-    "You look better when flustered." if get_level_for_value(rm.get("amber", "cor"), corruption_levels) >= 2:
+    &quot;You look better when flustered.&quot; if get_level_for_value(rm.get(&quot;amber&quot;, &quot;cor&quot;), corruption_levels) &gt;= 2:
         # CORRUPTION Milestone Decision - requires Corruption Level 2+
         $ amber_cor_choices += 1
-        $ rm.update("amber", "cor", 15)
-        $ check_levels("amber", "cor", 15)
-        jump .corruption_path
-```
+        $ rm.update(&quot;amber&quot;, &quot;cor&quot;, 15)
+        $ check_levels(&quot;amber&quot;, &quot;cor&quot;, 15)
+        jump .corruption_path"><pre><span class="pl-k">menu</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Neutral choice<span class="pl-pds">"</span></span>:
+        <span class="pl-c"><span class="pl-c">#</span> Always available, doesn't count as milestone</span>
+        <span class="pl-k">jump</span> .neutral
 
-### Locking Paths
+    <span class="pl-s"><span class="pl-pds">"</span>I truly care about you.<span class="pl-pds">"</span></span> <span class="pl-k">if</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>), trust_levels) <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+        <span class="pl-c"><span class="pl-c">#</span> LOVE Milestone Decision - requires Trust Level 2+</span>
+        <span class="pl-k">$</span> amber_love_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+        <span class="pl-k">jump</span> .love_path
 
-At a dramatic story moment (usually end of Episode 6), lock the path:
-
-```renpy
-label lock_paths_ep06_end:
+    <span class="pl-s"><span class="pl-pds">"</span>You look better when flustered.<span class="pl-pds">"</span></span> <span class="pl-k">if</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>), corruption_levels) <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+        <span class="pl-c"><span class="pl-c">#</span> CORRUPTION Milestone Decision - requires Corruption Level 2+</span>
+        <span class="pl-k">$</span> amber_cor_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+        <span class="pl-k">jump</span> .corruption_path</pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Locking Paths</h3><a id="user-content-locking-paths" class="anchor" aria-label="Permalink: Locking Paths" href="#locking-paths"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">At a dramatic story moment (usually end of Episode 6), lock the path:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label lock_paths_ep06_end:
     # Lock Amber's path based on milestone choices
-    $ amber_path = lock_character_path("amber", love_threshold=3, cor_threshold=3)
+    $ amber_path = lock_character_path(&quot;amber&quot;, love_threshold=3, cor_threshold=3)
 
-    if persistent.amber_path == "love":
-        "You've committed to a loving relationship with Amber."
-    elif persistent.amber_path == "corruption":
-        "You've chosen to corrupt Amber completely."
+    if persistent.amber_path == &quot;love&quot;:
+        &quot;You've committed to a loving relationship with Amber.&quot;
+    elif persistent.amber_path == &quot;corruption&quot;:
+        &quot;You've chosen to corrupt Amber completely.&quot;
     else:
-        "Your relationship with Amber remains undefined."
-```
+        &quot;Your relationship with Amber remains undefined.&quot;"><pre><span class="pl-k">label</span> <span class="pl-en">lock_paths_ep06_end</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Lock Amber's path based on milestone choices</span>
+    <span class="pl-k">$</span> amber_path <span class="pl-k">=</span> lock_character_path(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-smi">love_threshold</span><span class="pl-k">=</span><span class="pl-c1">3</span>, <span class="pl-smi">cor_threshold</span><span class="pl-k">=</span><span class="pl-c1">3</span>)
 
-**Parameters:**
-- `char`: Character ID
-- `love_threshold`: Milestone love choices needed (default: 3)
-- `cor_threshold`: Milestone corruption choices needed (default: 3)
-
-**Returns:** `"love"`, `"corruption"`, or `"neutral"`
-
-### Path Determination Logic
-
-The system determines paths as follows:
-
-1. **Both thresholds met**: Choose the path with more milestone choices
-   - If tied: Use trust vs corruption stats as tiebreaker
-2. **Only love threshold met**: Lock to "love"
-3. **Only corruption threshold met**: Lock to "corruption"
-4. **Neither threshold met**: Lock to "neutral"
-
-### Using Locked Paths
-
-In episodes 7+, branch based on locked paths:
-
-```renpy
-label amber_scene_ep07:
-    if persistent.amber_path == "love":
+    <span class="pl-k">if</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>love<span class="pl-pds">"</span></span>:
+        <span class="pl-s"><span class="pl-pds">"</span>You've committed to a loving relationship with Amber.<span class="pl-pds">"</span></span>
+    <span class="pl-k">elif</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>corruption<span class="pl-pds">"</span></span>:
+        <span class="pl-s"><span class="pl-pds">"</span>You've chosen to corrupt Amber completely.<span class="pl-pds">"</span></span>
+    <span class="pl-k">else</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>Your relationship with Amber remains undefined.<span class="pl-pds">"</span></span></pre></div>
+<p dir="auto"><strong>Parameters:</strong></p>
+<ul dir="auto">
+<li><code>char</code>: Character ID</li>
+<li><code>love_threshold</code>: Milestone love choices needed (default: 3)</li>
+<li><code>cor_threshold</code>: Milestone corruption choices needed (default: 3)</li>
+</ul>
+<p dir="auto"><strong>Returns:</strong> <code>"love"</code>, <code>"corruption"</code>, or <code>"neutral"</code></p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Path Determination Logic</h3><a id="user-content-path-determination-logic" class="anchor" aria-label="Permalink: Path Determination Logic" href="#path-determination-logic"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The system determines paths as follows:</p>
+<ol dir="auto">
+<li><strong>Both thresholds met</strong>: Choose the path with more milestone choices
+<ul dir="auto">
+<li>If tied: Use trust vs corruption stats as tiebreaker</li>
+</ul>
+</li>
+<li><strong>Only love threshold met</strong>: Lock to "love"</li>
+<li><strong>Only corruption threshold met</strong>: Lock to "corruption"</li>
+<li><strong>Neither threshold met</strong>: Lock to "neutral"</li>
+</ol>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Using Locked Paths</h3><a id="user-content-using-locked-paths" class="anchor" aria-label="Permalink: Using Locked Paths" href="#using-locked-paths"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">In episodes 7+, branch based on locked paths:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label amber_scene_ep07:
+    if persistent.amber_path == &quot;love&quot;:
         jump .love_route
-    elif persistent.amber_path == "corruption":
+    elif persistent.amber_path == &quot;corruption&quot;:
         jump .corruption_route
     else:
-        jump .neutral_route
-```
-
-### Helper Functions
-
-#### Check Current Path
-```renpy
-$ current_path = get_character_path("amber")
-# Returns: "love", "corruption", "neutral", or None (if not locked)
-```
-
-#### Check If Path Is Locked
-```renpy
-$ locked = is_path_locked("amber")
-# Returns: True or False
-```
-
-#### Get Milestone Choice Count
-```renpy
-$ love_count = get_milestone_choices("amber", "love")
-$ cor_count = get_milestone_choices("amber", "cor")
-```
-
-### Combining Paths and Stats
-
-Even after locking paths, you can use stats for nuance:
-
-```renpy
-label amber_corruption_route:
-    if rm.get("amber", "trust") >= 70:
+        jump .neutral_route"><pre><span class="pl-k">label</span> <span class="pl-en">amber_scene_ep07</span>:
+    <span class="pl-k">if</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>love<span class="pl-pds">"</span></span>:
+        <span class="pl-k">jump</span> .love_route
+    <span class="pl-k">elif</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>corruption<span class="pl-pds">"</span></span>:
+        <span class="pl-k">jump</span> .corruption_route
+    <span class="pl-k">else</span>:
+        <span class="pl-k">jump</span> .neutral_route</pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Helper Functions</h3><a id="user-content-helper-functions" class="anchor" aria-label="Permalink: Helper Functions" href="#helper-functions"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Check Current Path</h4><a id="user-content-check-current-path" class="anchor" aria-label="Permalink: Check Current Path" href="#check-current-path"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ current_path = get_character_path(&quot;amber&quot;)
+# Returns: &quot;love&quot;, &quot;corruption&quot;, &quot;neutral&quot;, or None (if not locked)"><pre><span class="pl-k">$</span> current_path <span class="pl-k">=</span> get_character_path(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)
+<span class="pl-c"><span class="pl-c">#</span> Returns: "love", "corruption", "neutral", or None (if not locked)</span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Check If Path Is Locked</h4><a id="user-content-check-if-path-is-locked" class="anchor" aria-label="Permalink: Check If Path Is Locked" href="#check-if-path-is-locked"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ locked = is_path_locked(&quot;amber&quot;)
+# Returns: True or False"><pre><span class="pl-k">$</span> locked <span class="pl-k">=</span> is_path_locked(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)
+<span class="pl-c"><span class="pl-c">#</span> Returns: True or False</span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Get Milestone Choice Count</h4><a id="user-content-get-milestone-choice-count" class="anchor" aria-label="Permalink: Get Milestone Choice Count" href="#get-milestone-choice-count"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ love_count = get_milestone_choices(&quot;amber&quot;, &quot;love&quot;)
+$ cor_count = get_milestone_choices(&quot;amber&quot;, &quot;cor&quot;)"><pre><span class="pl-k">$</span> love_count <span class="pl-k">=</span> get_milestone_choices(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>love<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> cor_count <span class="pl-k">=</span> get_milestone_choices(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Combining Paths and Stats</h3><a id="user-content-combining-paths-and-stats" class="anchor" aria-label="Permalink: Combining Paths and Stats" href="#combining-paths-and-stats"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Even after locking paths, you can use stats for nuance:</p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label amber_corruption_route:
+    if rm.get(&quot;amber&quot;, &quot;trust&quot;) &gt;= 70:
         # High trust + corruption = willing submission
-        amber "I've prepared everything for you, Master."
+        amber &quot;I've prepared everything for you, Master.&quot;
     else:
         # Low trust + corruption = reluctant submission
-        amber "It's... ready."
-        "She looks away nervously."
-```
-
----
-
-## Practical Examples
-
-### Example 1: Basic Date Scene
-
-```renpy
-label amber_date_night:
+        amber &quot;It's... ready.&quot;
+        &quot;She looks away nervously.&quot;"><pre><span class="pl-k">label</span> <span class="pl-en">amber_corruption_route</span>:
+    <span class="pl-k">if</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>) <span class="pl-k">&gt;=</span> <span class="pl-c1">70</span>:
+        <span class="pl-c"><span class="pl-c">#</span> High trust + corruption = willing submission</span>
+        amber <span class="pl-s"><span class="pl-pds">"</span>I've prepared everything for you, Master.<span class="pl-pds">"</span></span>
+    <span class="pl-k">else</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Low trust + corruption = reluctant submission</span>
+        amber <span class="pl-s"><span class="pl-pds">"</span>It's... ready.<span class="pl-pds">"</span></span>
+        <span class="pl-s"><span class="pl-pds">"</span>She looks away nervously.<span class="pl-pds">"</span></span></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Practical Examples</h2><a id="user-content-practical-examples" class="anchor" aria-label="Permalink: Practical Examples" href="#practical-examples"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Example 1: Basic Date Scene</h3><a id="user-content-example-1-basic-date-scene" class="anchor" aria-label="Permalink: Example 1: Basic Date Scene" href="#example-1-basic-date-scene"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label amber_date_night:
     # Check if we've met Amber
-    if not rm.get("amber", "knows"):
-        $ rm.set_knows("amber", True)
-        "You've just met Amber for the first time."
+    if not rm.get(&quot;amber&quot;, &quot;knows&quot;):
+        $ rm.set_knows(&quot;amber&quot;, True)
+        &quot;You've just met Amber for the first time.&quot;
 
     # Increase trust from the date
-    $ rm.update("amber", "trust", 15)
-    $ check_levels("amber", "trust", 15)
+    $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 15)
+    $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 15)
 
     # Unlock and set a nice dress
-    $ wm.unlock("amber", 2)
-    $ wm.set("amber", 2)
+    $ wm.unlock(&quot;amber&quot;, 2)
+    $ wm.set(&quot;amber&quot;, 2)
 
     show amber happy at center
 
-    amber "This has been wonderful."
+    amber &quot;This has been wonderful.&quot;
 
     # Update relationship status
-    $ rm.update_rel("amber")
+    $ rm.update_rel(&quot;amber&quot;)
 
-    if rm.get("amber", "rel"):
-        "Amber is now your girlfriend!"
-```
+    if rm.get(&quot;amber&quot;, &quot;rel&quot;):
+        &quot;Amber is now your girlfriend!&quot;"><pre><span class="pl-k">label</span> <span class="pl-en">amber_date_night</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Check if we've met Amber</span>
+    <span class="pl-k">if</span> <span class="pl-k">not</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>knows<span class="pl-pds">"</span></span>):
+        <span class="pl-k">$</span> rm.set_knows(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">True</span>)
+        <span class="pl-s"><span class="pl-pds">"</span>You've just met Amber for the first time.<span class="pl-pds">"</span></span>
 
-### Example 2: Corruption Scene
+    <span class="pl-c"><span class="pl-c">#</span> Increase trust from the date</span>
+    <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+    <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
 
-```renpy
-label corrupt_isabella:
+    <span class="pl-c"><span class="pl-c">#</span> Unlock and set a nice dress</span>
+    <span class="pl-k">$</span> wm.unlock(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)
+    <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)
+
+    <span class="pl-k">show</span> amber happy <span class="pl-k">at</span> center
+
+    amber <span class="pl-s"><span class="pl-pds">"</span>This has been wonderful.<span class="pl-pds">"</span></span>
+
+    <span class="pl-c"><span class="pl-c">#</span> Update relationship status</span>
+    <span class="pl-k">$</span> rm.update_rel(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)
+
+    <span class="pl-k">if</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>rel<span class="pl-pds">"</span></span>):
+        <span class="pl-s"><span class="pl-pds">"</span>Amber is now your girlfriend!<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Example 2: Corruption Scene</h3><a id="user-content-example-2-corruption-scene" class="anchor" aria-label="Permalink: Example 2: Corruption Scene" href="#example-2-corruption-scene"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label corrupt_isabella:
     # Check corruption level first
-    $ isabella_cor = get_level_for_value(rm.get("isabella", "cor"), corruption_levels)
+    $ isabella_cor = get_level_for_value(rm.get(&quot;isabella&quot;, &quot;cor&quot;), corruption_levels)
 
-    if isabella_cor < 2:
-        "Isabella isn't corrupted enough for this."
+    if isabella_cor &lt; 2:
+        &quot;Isabella isn't corrupted enough for this.&quot;
         return
 
     # Scene proceeds
     menu:
-        "Push her further":
-            $ rm.update("isabella", "cor", 20)
-            $ check_levels("isabella", "cor", 20)
+        &quot;Push her further&quot;:
+            $ rm.update(&quot;isabella&quot;, &quot;cor&quot;, 20)
+            $ check_levels(&quot;isabella&quot;, &quot;cor&quot;, 20)
 
             # Track the encounter
-            $ ss.add("isabella", "sex")
+            $ ss.add(&quot;isabella&quot;, &quot;sex&quot;)
 
             # Check if she was a virgin
-            if ss.get("isabella", "virgin"):
-                $ ss.set("isabella", "virgin", False)
-                "Isabella has given you her virginity."
+            if ss.get(&quot;isabella&quot;, &quot;virgin&quot;):
+                $ ss.set(&quot;isabella&quot;, &quot;virgin&quot;, False)
+                &quot;Isabella has given you her virginity.&quot;
 
-        "Stop here":
-            $ rm.update("isabella", "trust", 10)
-            $ check_levels("isabella", "trust", 10)
-```
+        &quot;Stop here&quot;:
+            $ rm.update(&quot;isabella&quot;, &quot;trust&quot;, 10)
+            $ check_levels(&quot;isabella&quot;, &quot;trust&quot;, 10)"><pre><span class="pl-k">label</span> <span class="pl-en">corrupt_isabella</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Check corruption level first</span>
+    <span class="pl-k">$</span> isabella_cor <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>), corruption_levels)
 
-### Example 3: Strike System
+    <span class="pl-k">if</span> isabella_cor <span class="pl-k">&lt;</span> <span class="pl-c1">2</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>Isabella isn't corrupted enough for this.<span class="pl-pds">"</span></span>
+        <span class="pl-k">return</span>
 
-```renpy
-label bad_choice_amber:
+    <span class="pl-c"><span class="pl-c">#</span> Scene proceeds</span>
+    <span class="pl-k">menu</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>Push her further<span class="pl-pds">"</span></span>:
+            <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+            <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+
+            <span class="pl-c"><span class="pl-c">#</span> Track the encounter</span>
+            <span class="pl-k">$</span> ss.add(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>sex<span class="pl-pds">"</span></span>)
+
+            <span class="pl-c"><span class="pl-c">#</span> Check if she was a virgin</span>
+            <span class="pl-k">if</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>virgin<span class="pl-pds">"</span></span>):
+                <span class="pl-k">$</span> ss.set(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>virgin<span class="pl-pds">"</span></span>, <span class="pl-c1">False</span>)
+                <span class="pl-s"><span class="pl-pds">"</span>Isabella has given you her virginity.<span class="pl-pds">"</span></span>
+
+        <span class="pl-s"><span class="pl-pds">"</span>Stop here<span class="pl-pds">"</span></span>:
+            <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)
+            <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Example 3: Strike System</h3><a id="user-content-example-3-strike-system" class="anchor" aria-label="Permalink: Example 3: Strike System" href="#example-3-strike-system"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label bad_choice_amber:
     menu:
-        "Apologize":
-            $ rm.update("amber", "trust", 5)
-            $ check_levels("amber", "trust", 5)
+        &quot;Apologize&quot;:
+            $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 5)
+            $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 5)
 
-        "Double down":
+        &quot;Double down&quot;:
             # This is a bad choice - add a strike
-            $ current_strikes = ss.get("amber", "strike")
-            $ ss.set("amber", "strike", current_strikes + 1)
+            $ current_strikes = ss.get(&quot;amber&quot;, &quot;strike&quot;)
+            $ ss.set(&quot;amber&quot;, &quot;strike&quot;, current_strikes + 1)
 
             # Check if we hit 3 strikes
-            $ just_locked = rm.check_emotional_lock("amber")
+            $ just_locked = rm.check_emotional_lock(&quot;amber&quot;)
 
             if just_locked:
-                amber "I can't believe you... We're done. Don't talk to me again."
-                "Amber has emotionally shut you out."
-                "Her corruption and trust have been reset to 0."
-                "You can no longer pursue a relationship with her."
-            elif current_strikes + 1 >= 2:
-                amber "I'm getting really tired of this..."
-                "Warning: Amber has [current_strikes + 1] strike(s)."
-```
+                amber &quot;I can't believe you... We're done. Don't talk to me again.&quot;
+                &quot;Amber has emotionally shut you out.&quot;
+                &quot;Her corruption and trust have been reset to 0.&quot;
+                &quot;You can no longer pursue a relationship with her.&quot;
+            elif current_strikes + 1 &gt;= 2:
+                amber &quot;I'm getting really tired of this...&quot;
+                &quot;Warning: Amber has [current_strikes + 1] strike(s).&quot;"><pre><span class="pl-k">label</span> <span class="pl-en">bad_choice_amber</span>:
+    <span class="pl-k">menu</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>Apologize<span class="pl-pds">"</span></span>:
+            <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)
+            <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)
 
-### Example 4: Dynamic Outfit Selection
+        <span class="pl-s"><span class="pl-pds">"</span>Double down<span class="pl-pds">"</span></span>:
+            <span class="pl-c"><span class="pl-c">#</span> This is a bad choice - add a strike</span>
+            <span class="pl-k">$</span> current_strikes <span class="pl-k">=</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>strike<span class="pl-pds">"</span></span>)
+            <span class="pl-k">$</span> ss.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>strike<span class="pl-pds">"</span></span>, current_strikes <span class="pl-k">+</span> <span class="pl-c1">1</span>)
 
-```renpy
-label amber_apartment:
+            <span class="pl-c"><span class="pl-c">#</span> Check if we hit 3 strikes</span>
+            <span class="pl-k">$</span> just_locked <span class="pl-k">=</span> rm.check_emotional_lock(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)
+
+            <span class="pl-k">if</span> just_locked:
+                amber <span class="pl-s"><span class="pl-pds">"</span>I can't believe you... We're done. Don't talk to me again.<span class="pl-pds">"</span></span>
+                <span class="pl-s"><span class="pl-pds">"</span>Amber has emotionally shut you out.<span class="pl-pds">"</span></span>
+                <span class="pl-s"><span class="pl-pds">"</span>Her corruption and trust have been reset to 0.<span class="pl-pds">"</span></span>
+                <span class="pl-s"><span class="pl-pds">"</span>You can no longer pursue a relationship with her.<span class="pl-pds">"</span></span>
+            <span class="pl-k">elif</span> current_strikes <span class="pl-k">+</span> <span class="pl-c1">1</span> <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+                amber <span class="pl-s"><span class="pl-pds">"</span>I'm getting really tired of this...<span class="pl-pds">"</span></span>
+                <span class="pl-s"><span class="pl-pds">"</span>Warning: Amber has <span class="pl-c1">[current_strikes + 1]</span> strike(s).<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Example 4: Dynamic Outfit Selection</h3><a id="user-content-example-4-dynamic-outfit-selection" class="anchor" aria-label="Permalink: Example 4: Dynamic Outfit Selection" href="#example-4-dynamic-outfit-selection"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label amber_apartment:
     # Set outfit based on trust level
-    $ trust_level = get_level_for_value(rm.get("amber", "trust"), trust_levels)
+    $ trust_level = get_level_for_value(rm.get(&quot;amber&quot;, &quot;trust&quot;), trust_levels)
 
-    if trust_level >= 4:
+    if trust_level &gt;= 4:
         # Very close - wear intimate outfit
-        if wm.is_unlocked("amber", 4):
-            $ wm.set("amber", 4)
-    elif trust_level >= 2:
+        if wm.is_unlocked(&quot;amber&quot;, 4):
+            $ wm.set(&quot;amber&quot;, 4)
+    elif trust_level &gt;= 2:
         # Friends - wear casual outfit
-        if wm.is_unlocked("amber", 2):
-            $ wm.set("amber", 2)
+        if wm.is_unlocked(&quot;amber&quot;, 2):
+            $ wm.set(&quot;amber&quot;, 2)
     else:
         # Not close - default outfit
-        $ wm.set("amber", 0)
+        $ wm.set(&quot;amber&quot;, 0)
 
-    show amber at center
-```
+    show amber at center"><pre><span class="pl-k">label</span> <span class="pl-en">amber_apartment</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Set outfit based on trust level</span>
+    <span class="pl-k">$</span> trust_level <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>), trust_levels)
 
-### Example 5: Milestone Decision Scene
+    <span class="pl-k">if</span> trust_level <span class="pl-k">&gt;=</span> <span class="pl-c1">4</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Very close - wear intimate outfit</span>
+        <span class="pl-k">if</span> wm.is_unlocked(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">4</span>):
+            <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">4</span>)
+    <span class="pl-k">elif</span> trust_level <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Friends - wear casual outfit</span>
+        <span class="pl-k">if</span> wm.is_unlocked(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>):
+            <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)
+    <span class="pl-k">else</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Not close - default outfit</span>
+        <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">0</span>)
 
-```renpy
-label amber_critical_choice_ep06:
+    <span class="pl-k">show</span> amber <span class="pl-k">at</span> center</pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Example 5: Milestone Decision Scene</h3><a id="user-content-example-5-milestone-decision-scene" class="anchor" aria-label="Permalink: Example 5: Milestone Decision Scene" href="#example-5-milestone-decision-scene"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label amber_critical_choice_ep06:
     # This is a key moment in Episode 6
-    $ trust_level = get_level_for_value(rm.get("amber", "trust"), trust_levels)
-    $ cor_level = get_level_for_value(rm.get("amber", "cor"), corruption_levels)
+    $ trust_level = get_level_for_value(rm.get(&quot;amber&quot;, &quot;trust&quot;), trust_levels)
+    $ cor_level = get_level_for_value(rm.get(&quot;amber&quot;, &quot;cor&quot;), corruption_levels)
 
-    amber "What do you really want from me?"
+    amber &quot;What do you really want from me?&quot;
 
     menu:
-        "I want us to be together.":
+        &quot;I want us to be together.&quot;:
             # This is always available but doesn't count as milestone
-            $ rm.update("amber", "trust", 5)
-            $ check_levels("amber", "trust", 5)
+            $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 5)
+            $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 5)
             jump .neutral_response
 
-        "I care about you deeply." if trust_level >= 2:
+        &quot;I care about you deeply.&quot; if trust_level &gt;= 2:
             # LOVE MILESTONE - counts toward love path
             $ amber_love_choices += 1
-            $ rm.update("amber", "trust", 20)
-            $ check_levels("amber", "trust", 20)
+            $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 20)
+            $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 20)
 
-            amber "I... I care about you too."
+            amber &quot;I... I care about you too.&quot;
             jump .love_response
 
-        "I want to own you completely." if cor_level >= 2:
+        &quot;I want to own you completely.&quot; if cor_level &gt;= 2:
             # CORRUPTION MILESTONE - counts toward corruption path
             $ amber_cor_choices += 1
-            $ rm.update("amber", "cor", 20)
-            $ check_levels("amber", "cor", 20)
+            $ rm.update(&quot;amber&quot;, &quot;cor&quot;, 20)
+            $ check_levels(&quot;amber&quot;, &quot;cor&quot;, 20)
 
-            amber "I... I understand."
-            "She looks at you with a mix of fear and excitement."
-            jump .corruption_response
-```
+            amber &quot;I... I understand.&quot;
+            &quot;She looks at you with a mix of fear and excitement.&quot;
+            jump .corruption_response"><pre><span class="pl-k">label</span> <span class="pl-en">amber_critical_choice_ep06</span>:
+    <span class="pl-c"><span class="pl-c">#</span> This is a key moment in Episode 6</span>
+    <span class="pl-k">$</span> trust_level <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>), trust_levels)
+    <span class="pl-k">$</span> cor_level <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>), corruption_levels)
 
-### Example 6: Path Locking at End of Episode 6
+    amber <span class="pl-s"><span class="pl-pds">"</span>What do you really want from me?<span class="pl-pds">"</span></span>
 
-```renpy
-label ep06_finale:
+    <span class="pl-k">menu</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>I want us to be together.<span class="pl-pds">"</span></span>:
+            <span class="pl-c"><span class="pl-c">#</span> This is always available but doesn't count as milestone</span>
+            <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)
+            <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)
+            <span class="pl-k">jump</span> .neutral_response
+
+        <span class="pl-s"><span class="pl-pds">"</span>I care about you deeply.<span class="pl-pds">"</span></span> <span class="pl-k">if</span> trust_level <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+            <span class="pl-c"><span class="pl-c">#</span> LOVE MILESTONE - counts toward love path</span>
+            <span class="pl-k">$</span> amber_love_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+            <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+            <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+
+            amber <span class="pl-s"><span class="pl-pds">"</span>I... I care about you too.<span class="pl-pds">"</span></span>
+            <span class="pl-k">jump</span> .love_response
+
+        <span class="pl-s"><span class="pl-pds">"</span>I want to own you completely.<span class="pl-pds">"</span></span> <span class="pl-k">if</span> cor_level <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+            <span class="pl-c"><span class="pl-c">#</span> CORRUPTION MILESTONE - counts toward corruption path</span>
+            <span class="pl-k">$</span> amber_cor_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+            <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+            <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+
+            amber <span class="pl-s"><span class="pl-pds">"</span>I... I understand.<span class="pl-pds">"</span></span>
+            <span class="pl-s"><span class="pl-pds">"</span>She looks at you with a mix of fear and excitement.<span class="pl-pds">"</span></span>
+            <span class="pl-k">jump</span> .corruption_response</pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Example 6: Path Locking at End of Episode 6</h3><a id="user-content-example-6-path-locking-at-end-of-episode-6" class="anchor" aria-label="Permalink: Example 6: Path Locking at End of Episode 6" href="#example-6-path-locking-at-end-of-episode-6"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label ep06_finale:
     # Lock all character paths
-    $ amber_path = lock_character_path("amber")
-    $ nanami_path = lock_character_path("nanami")
-    $ isabella_path = lock_character_path("isabella")
+    $ amber_path = lock_character_path(&quot;amber&quot;)
+    $ nanami_path = lock_character_path(&quot;nanami&quot;)
+    $ isabella_path = lock_character_path(&quot;isabella&quot;)
 
     # Show results to player
-    "Your choices have determined your relationships:"
+    &quot;Your choices have determined your relationships:&quot;
 
-    if persistent.amber_path == "love":
-        "Amber: Love Path - You've built a genuine relationship."
-    elif persistent.amber_path == "corruption":
-        "Amber: Corruption Path - You've dominated her completely."
+    if persistent.amber_path == &quot;love&quot;:
+        &quot;Amber: Love Path - You've built a genuine relationship.&quot;
+    elif persistent.amber_path == &quot;corruption&quot;:
+        &quot;Amber: Corruption Path - You've dominated her completely.&quot;
     else:
-        "Amber: Neutral Path - Your relationship remains casual."
+        &quot;Amber: Neutral Path - Your relationship remains casual.&quot;
 
-    # Continue for other characters...
-```
+    # Continue for other characters..."><pre><span class="pl-k">label</span> <span class="pl-en">ep06_finale</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Lock all character paths</span>
+    <span class="pl-k">$</span> amber_path <span class="pl-k">=</span> lock_character_path(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)
+    <span class="pl-k">$</span> nanami_path <span class="pl-k">=</span> lock_character_path(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>)
+    <span class="pl-k">$</span> isabella_path <span class="pl-k">=</span> lock_character_path(<span class="pl-s"><span class="pl-pds">"</span>isabella<span class="pl-pds">"</span></span>)
 
-### Example 7: Using Locked Paths in Episode 7+
+    <span class="pl-c"><span class="pl-c">#</span> Show results to player</span>
+    <span class="pl-s"><span class="pl-pds">"</span>Your choices have determined your relationships:<span class="pl-pds">"</span></span>
 
-```renpy
-label amber_bedroom_ep07:
+    <span class="pl-k">if</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>love<span class="pl-pds">"</span></span>:
+        <span class="pl-s"><span class="pl-pds">"</span>Amber: Love Path - You've built a genuine relationship.<span class="pl-pds">"</span></span>
+    <span class="pl-k">elif</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>corruption<span class="pl-pds">"</span></span>:
+        <span class="pl-s"><span class="pl-pds">"</span>Amber: Corruption Path - You've dominated her completely.<span class="pl-pds">"</span></span>
+    <span class="pl-k">else</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>Amber: Neutral Path - Your relationship remains casual.<span class="pl-pds">"</span></span>
+
+    <span class="pl-c"><span class="pl-c">#</span> Continue for other characters...</span></pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Example 7: Using Locked Paths in Episode 7+</h3><a id="user-content-example-7-using-locked-paths-in-episode-7" class="anchor" aria-label="Permalink: Example 7: Using Locked Paths in Episode 7+" href="#example-7-using-locked-paths-in-episode-7"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="label amber_bedroom_ep07:
     # Branch based on locked path
-    if persistent.amber_path == "love":
+    if persistent.amber_path == &quot;love&quot;:
         jump .love_scene
-    elif persistent.amber_path == "corruption":
+    elif persistent.amber_path == &quot;corruption&quot;:
         jump .corruption_scene
     else:
         jump .neutral_scene
 
 label .love_scene:
-    $ wm.set("amber", 3)  # Romantic outfit
+    $ wm.set(&quot;amber&quot;, 3)  # Romantic outfit
     show amber loving at center
 
-    amber "I've been waiting for you."
+    amber &quot;I've been waiting for you.&quot;
 
     # Use trust for additional nuance
-    if rm.get("amber", "trust") >= 85:
-        "She embraces you warmly."
+    if rm.get(&quot;amber&quot;, &quot;trust&quot;) &gt;= 85:
+        &quot;She embraces you warmly.&quot;
     else:
-        "She smiles shyly."
+        &quot;She smiles shyly.&quot;
 
     # Scene continues...
 
 label .corruption_scene:
-    $ wm.set("amber", 5)  # Submissive outfit
+    $ wm.set(&quot;amber&quot;, 5)  # Submissive outfit
     show amber submissive at center
 
-    amber "What are your orders, Master?"
+    amber &quot;What are your orders, Master?&quot;
 
     # Use corruption for intensity
-    if rm.get("amber", "cor") >= 85:
-        "She kneels immediately."
+    if rm.get(&quot;amber&quot;, &quot;cor&quot;) &gt;= 85:
+        &quot;She kneels immediately.&quot;
     else:
-        "She hesitates briefly before kneeling."
+        &quot;She hesitates briefly before kneeling.&quot;
 
     # Scene continues...
 
 label .neutral_scene:
-    $ wm.set("amber", 0)  # Default outfit
+    $ wm.set(&quot;amber&quot;, 0)  # Default outfit
     show amber neutral at center
 
-    amber "Oh, hey. What's up?"
+    amber &quot;Oh, hey. What's up?&quot;
 
-    # Casual interaction
-```
+    # Casual interaction"><pre><span class="pl-k">label</span> <span class="pl-en">amber_bedroom_ep07</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Branch based on locked path</span>
+    <span class="pl-k">if</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>love<span class="pl-pds">"</span></span>:
+        <span class="pl-k">jump</span> .love_scene
+    <span class="pl-k">elif</span> persistent.amber_path <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>corruption<span class="pl-pds">"</span></span>:
+        <span class="pl-k">jump</span> .corruption_scene
+    <span class="pl-k">else</span>:
+        <span class="pl-k">jump</span> .neutral_scene
 
----
+<span class="pl-k">label</span> .love_scene:
+    <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)  <span class="pl-c"><span class="pl-c">#</span> Romantic outfit</span>
+    <span class="pl-k">show</span> amber loving <span class="pl-k">at</span> center
 
-## Character Reference
+    amber <span class="pl-s"><span class="pl-pds">"</span>I've been waiting for you.<span class="pl-pds">"</span></span>
 
-### All Characters
+    <span class="pl-c"><span class="pl-c">#</span> Use trust for additional nuance</span>
+    <span class="pl-k">if</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>) <span class="pl-k">&gt;=</span> <span class="pl-c1">85</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>She embraces you warmly.<span class="pl-pds">"</span></span>
+    <span class="pl-k">else</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>She smiles shyly.<span class="pl-pds">"</span></span>
 
-| Character  | Type          | Available Attributes                          |
-|-----------|---------------|-----------------------------------------------|
-| Amber     | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Nanami    | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Elizabeth | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Isabella  | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Kanae     | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Arlette   | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Antonella | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Madison   | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| Paz       | Love Interest | cor, trust, preg, rel, knows, emotionally_locked |
-| MC        | Main Character| integrity, integrity_locked                   |
-| Takeo     | Organization  | trust                                         |
-| TMPD      | Organization  | trust                                         |
-| Osaka     | Organization  | trust                                         |
+    <span class="pl-c"><span class="pl-c">#</span> Scene continues...</span>
 
-### Character Progression Rates
+<span class="pl-k">label</span> .corruption_scene:
+    <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)  <span class="pl-c"><span class="pl-c">#</span> Submissive outfit</span>
+    <span class="pl-k">show</span> amber submissive <span class="pl-k">at</span> center
 
-Different characters respond differently to your actions:
+    amber <span class="pl-s"><span class="pl-pds">"</span>What are your orders, Master?<span class="pl-pds">"</span></span>
 
-| Character  | Trust Rate | Corruption Rate | Notes                           |
-|-----------|------------|-----------------|----------------------------------|
-| Amber     | 1x         | 1.5x            | More easily corrupted           |
-| Antonella | 0.25x      | 1x              | Very hard to gain trust         |
-| Arlette   | 1.5x       | 1.5x            | Responds strongly to both       |
-| Elizabeth | 2x         | 1x              | Gains trust quickly             |
-| Isabella  | 1x         | 1x              | Balanced progression            |
-| Kanae     | 0.5x       | 0.5x            | Slow progression both ways      |
-| Madison   | 0.5x       | 2x              | Hard to trust, easily corrupted |
-| Nanami    | 3x         | 1x              | Very trusting, hard to corrupt  |
-| Paz       | 1x         | 1x              | Balanced progression            |
+    <span class="pl-c"><span class="pl-c">#</span> Use corruption for intensity</span>
+    <span class="pl-k">if</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>) <span class="pl-k">&gt;=</span> <span class="pl-c1">85</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>She kneels immediately.<span class="pl-pds">"</span></span>
+    <span class="pl-k">else</span>:
+        <span class="pl-s"><span class="pl-pds">"</span>She hesitates briefly before kneeling.<span class="pl-pds">"</span></span>
 
-**What This Means:**
-- If you increase Nanami's trust by 10, she gains 30 points (3x multiplier)
-- If you increase Madison's corruption by 10, she gains 20 points (2x multiplier)
-- If you increase Antonella's trust by 10, she only gains 2.5 points (0.25x multiplier)
+    <span class="pl-c"><span class="pl-c">#</span> Scene continues...</span>
 
-### Sexual Statistics Reference
+<span class="pl-k">label</span> .neutral_scene:
+    <span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">0</span>)  <span class="pl-c"><span class="pl-c">#</span> Default outfit</span>
+    <span class="pl-k">show</span> amber neutral <span class="pl-k">at</span> center
 
-All love interests track these statistics:
+    amber <span class="pl-s"><span class="pl-pds">"</span>Oh, hey. What's up?<span class="pl-pds">"</span></span>
 
-| Statistic | Type    | Description                    |
-|-----------|---------|--------------------------------|
-| anal      | Integer | Number of anal sex encounters  |
-| assjob    | Integer | Number of assjob encounters    |
-| blowjob   | Integer | Number of oral sex encounters  |
-| creampie  | Integer | Number of creampie finishes    |
-| pussyjob  | Integer | Number of pussyjob encounters  |
-| sex       | Integer | Number of vaginal sex encounters |
-| titjob    | Integer | Number of titjob encounters    |
-| virgin    | Boolean | Virginity status (True/False)  |
-| strike    | Integer | Number of strikes (0-3)        |
+    <span class="pl-c"><span class="pl-c">#</span> Casual interaction</span></pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Character Reference</h2><a id="user-content-character-reference" class="anchor" aria-label="Permalink: Character Reference" href="#character-reference"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">All Characters</h3><a id="user-content-all-characters" class="anchor" aria-label="Permalink: All Characters" href="#all-characters"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Type</th>
+<th>Available Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Amber</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Nanami</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Elizabeth</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Isabella</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Kanae</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Arlette</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Antonella</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Madison</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>Paz</td>
+<td>Love Interest</td>
+<td>cor, trust, preg, rel, knows, emotionally_locked</td>
+</tr>
+<tr>
+<td>MC</td>
+<td>Main Character</td>
+<td>integrity, integrity_locked</td>
+</tr>
+<tr>
+<td>Takeo</td>
+<td>Organization</td>
+<td>trust</td>
+</tr>
+<tr>
+<td>TMPD</td>
+<td>Organization</td>
+<td>trust</td>
+</tr>
+<tr>
+<td>Osaka</td>
+<td>Organization</td>
+<td>trust</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Automatic Character Progression Rates</h3><a id="user-content-automatic-character-progression-rates" class="anchor" aria-label="Permalink: Automatic Character Progression Rates" href="#automatic-character-progression-rates"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>NEW SYSTEM (Version 2.0):</strong> Character progression rates are now applied <strong>automatically</strong> to all stat changes. You only need to think about "base values" - the system multiplies them by character-specific rates for you.</p>
+<p dir="auto">Different characters respond differently to your actions:</p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Trust Rate</th>
+<th>Corruption Rate</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Amber</td>
+<td>1x</td>
+<td>1.5x</td>
+<td>More easily corrupted</td>
+</tr>
+<tr>
+<td>Antonella</td>
+<td>0.25x</td>
+<td>1x</td>
+<td>Very hard to gain trust</td>
+</tr>
+<tr>
+<td>Arlette</td>
+<td>1.5x</td>
+<td>1.5x</td>
+<td>Responds strongly to both</td>
+</tr>
+<tr>
+<td>Elizabeth</td>
+<td>2x</td>
+<td>1x</td>
+<td>Gains trust quickly</td>
+</tr>
+<tr>
+<td>Isabella</td>
+<td>1x</td>
+<td>1x</td>
+<td>Balanced progression</td>
+</tr>
+<tr>
+<td>Kanae</td>
+<td>0.5x</td>
+<td>0.5x</td>
+<td>Slow progression both ways</td>
+</tr>
+<tr>
+<td>Madison</td>
+<td>0.5x</td>
+<td>2x</td>
+<td>Hard to trust, easily corrupted</td>
+</tr>
+<tr>
+<td>Nanami</td>
+<td>3x</td>
+<td>1x</td>
+<td>Very trusting, hard to corrupt</td>
+</tr>
+<tr>
+<td>Paz</td>
+<td>1x</td>
+<td>1x</td>
+<td>Balanced progression</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto"><strong>How It Works (Automatic):</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# You write base values:
+$ rm.update(&quot;nanami&quot;, &quot;trust&quot;, 3)    # Base value: 3
+$ rm.update(&quot;madison&quot;, &quot;cor&quot;, 5)     # Base value: 5
+$ rm.update(&quot;antonella&quot;, &quot;trust&quot;, 8) # Base value: 8
 
-### Wardrobe Reference
+# System automatically applies rates:
+# Nanami gets: 3 × 3.0 = 9 trust (3x rate)
+# Madison gets: 5 × 2.0 = 10 corruption (2x rate)
+# Antonella gets: 8 × 0.25 = 2 trust (0.25x rate)"><pre><span class="pl-c"><span class="pl-c">#</span> You write base values:</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)    <span class="pl-c"><span class="pl-c">#</span> Base value: 3</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>madison<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)     <span class="pl-c"><span class="pl-c">#</span> Base value: 5</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>antonella<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">8</span>) <span class="pl-c"><span class="pl-c">#</span> Base value: 8</span>
 
-| Character  | Available Outfits |
-|-----------|-------------------|
-| Amber     | 0, 1, 2, 3, 4, 5  |
-| Nanami    | 0, 1, 2, 3, 4, 5, 6, 7, 8 |
-| Elizabeth | 0, 1, 2, 3        |
-| Isabella  | 0, 1, 2, 3, 4, 5, 6 |
-| Kanae     | 0, 1, 2, 3, 4     |
-| Arlette   | 0, 1, 2, 3, 4, 5, 6, 7 |
-| Antonella | 0, 1, 2, 3        |
-| Madison   | 0, 1, 2, 3, 4     |
-| Paz       | 0, 1, 2, 3, 4, 5  |
+<span class="pl-c"><span class="pl-c">#</span> System automatically applies rates:</span>
+<span class="pl-c"><span class="pl-c">#</span> Nanami gets: 3 × 3.0 = 9 trust (3x rate)</span>
+<span class="pl-c"><span class="pl-c">#</span> Madison gets: 5 × 2.0 = 10 corruption (2x rate)</span>
+<span class="pl-c"><span class="pl-c">#</span> Antonella gets: 8 × 0.25 = 2 trust (0.25x rate)</span></pre></div>
+<p dir="auto"><strong>Key Points:</strong></p>
+<ul dir="auto">
+<li>✅ <strong>Always use base values</strong> - the system handles multiplication automatically</li>
+<li>✅ <strong>Values are rounded</strong> - no decimal stats (e.g., 2.5 becomes 3)</li>
+<li>✅ <strong>Works with negatives</strong> - negative values are also multiplied by rates</li>
+<li>✅ <strong>No special syntax needed</strong> - just use <code>rm.update()</code> as usual</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Standard Base Values Guide</h3><a id="user-content-standard-base-values-guide" class="anchor" aria-label="Permalink: Standard Base Values Guide" href="#standard-base-values-guide"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">Use these <strong>base values</strong> in your rm.update() calls. The system will automatically apply character-specific multipliers.</p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Decision Type</th>
+<th>Trust Base</th>
+<th>Corruption Base</th>
+<th>Integrity Base</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Casual interaction</strong></td>
+<td>±1</td>
+<td>±1</td>
+<td>±1</td>
+<td>Small talk, minor choices</td>
+</tr>
+<tr>
+<td><strong>Personal moment</strong></td>
+<td>±2</td>
+<td>±2</td>
+<td>±2</td>
+<td>Sharing feelings, personal favor</td>
+</tr>
+<tr>
+<td><strong>Important decision</strong></td>
+<td>±3</td>
+<td>±3</td>
+<td>±3</td>
+<td>Significant moral choice</td>
+</tr>
+<tr>
+<td><strong>Critical story moment</strong></td>
+<td>±5</td>
+<td>±5</td>
+<td>±5</td>
+<td>Major relationship turning point</td>
+</tr>
+<tr>
+<td><strong>Milestone decision</strong></td>
+<td>±10</td>
+<td>±10</td>
+<td>N/A</td>
+<td>Episode 6+ path-defining choices</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p dir="auto"><strong>Examples in Practice:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Casual: complimenting a character
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, 1)  # Base 1 × 1.0 = 1 trust
 
----
+# Personal: comforting someone emotional
+$ rm.update(&quot;nanami&quot;, &quot;trust&quot;, 2)  # Base 2 × 3.0 = 6 trust
 
-## Troubleshooting
+# Important: choosing to protect someone
+$ rm.update(&quot;elizabeth&quot;, &quot;trust&quot;, 3)  # Base 3 × 2.0 = 6 trust
 
-### Common Issues and Solutions
+# Critical: accepting intimate proposal
+$ rm.update(&quot;madison&quot;, &quot;cor&quot;, 5)  # Base 5 × 2.0 = 10 corruption
+$ rm.update(&quot;mc&quot;, &quot;integrity&quot;, -5)  # Base -5 = -5 integrity
 
-#### Issue: Stats Don't Update
+# Milestone (Episode 6+): path-defining choice
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, 10)  # Base 10 × 1.0 = 10 trust
+$ amber_love_choices += 1"><pre><span class="pl-c"><span class="pl-c">#</span> Casual: complimenting a character</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">1</span>)  <span class="pl-c"><span class="pl-c">#</span> Base 1 × 1.0 = 1 trust</span>
 
-**Symptoms:** You call `rm.update()` but nothing changes
+<span class="pl-c"><span class="pl-c">#</span> Personal: comforting someone emotional</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">2</span>)  <span class="pl-c"><span class="pl-c">#</span> Base 2 × 3.0 = 6 trust</span>
 
-**Solutions:**
-1. Check character name spelling (must be lowercase)
-2. Verify attribute name is correct ("cor", "trust", "integrity")
-3. Make sure character isn't emotionally locked
-4. Check if MC's integrity is locked
+<span class="pl-c"><span class="pl-c">#</span> Important: choosing to protect someone</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>elizabeth<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)  <span class="pl-c"><span class="pl-c">#</span> Base 3 × 2.0 = 6 trust</span>
 
-**Example:**
-```renpy
-# Wrong
-$ rm.update("Amber", "corruption", 10)  # Wrong: uppercase name, wrong attribute
+<span class="pl-c"><span class="pl-c">#</span> Critical: accepting intimate proposal</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>madison<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)  <span class="pl-c"><span class="pl-c">#</span> Base 5 × 2.0 = 10 corruption</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>mc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>integrity<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">5</span>)  <span class="pl-c"><span class="pl-c">#</span> Base -5 = -5 integrity</span>
+
+<span class="pl-c"><span class="pl-c">#</span> Milestone (Episode 6+): path-defining choice</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)  <span class="pl-c"><span class="pl-c">#</span> Base 10 × 1.0 = 10 trust</span>
+<span class="pl-k">$</span> amber_love_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span></pre></div>
+<p dir="auto"><strong>Negative Values:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Rejecting someone
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, -2)  # Base -2 × 1.0 = -2 trust
+
+# Disappointing Nanami
+$ rm.update(&quot;nanami&quot;, &quot;trust&quot;, -3)  # Base -3 × 3.0 = -9 trust
+
+# Corruption reversal (rare)
+$ rm.update(&quot;madison&quot;, &quot;cor&quot;, -1)  # Base -1 × 2.0 = -2 corruption"><pre><span class="pl-c"><span class="pl-c">#</span> Rejecting someone</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">2</span>)  <span class="pl-c"><span class="pl-c">#</span> Base -2 × 1.0 = -2 trust</span>
+
+<span class="pl-c"><span class="pl-c">#</span> Disappointing Nanami</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">3</span>)  <span class="pl-c"><span class="pl-c">#</span> Base -3 × 3.0 = -9 trust</span>
+
+<span class="pl-c"><span class="pl-c">#</span> Corruption reversal (rare)</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>madison<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-k">-</span><span class="pl-c1">1</span>)  <span class="pl-c"><span class="pl-c">#</span> Base -1 × 2.0 = -2 corruption</span></pre></div>
+<p dir="auto"><strong>Why These Values?</strong></p>
+<p dir="auto">These base values create balanced progression across all 20 episodes:</p>
+<ul dir="auto">
+<li><strong>Casual (±1)</strong>: Small, incremental changes</li>
+<li><strong>Personal (±2)</strong>: Noticeable impact</li>
+<li><strong>Important (±3)</strong>: Significant relationship shift</li>
+<li><strong>Critical (±5)</strong>: Major story moments</li>
+<li><strong>Milestone (±10)</strong>: Path-defining decisions (ep6+)</li>
+</ul>
+<p dir="auto">With character rates, these translate to meaningful but not extreme changes. For example:</p>
+<ul dir="auto">
+<li>Nanami gains 3-6 trust from personal moments (2 × 3.0)</li>
+<li>Madison struggles to gain trust (2 × 0.5 = 1) but corrupts easily (2 × 2.0 = 4)</li>
+</ul>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Sexual Statistics Reference</h3><a id="user-content-sexual-statistics-reference" class="anchor" aria-label="Permalink: Sexual Statistics Reference" href="#sexual-statistics-reference"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">All love interests track these statistics:</p>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Statistic</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>anal</td>
+<td>Integer</td>
+<td>Number of anal sex encounters</td>
+</tr>
+<tr>
+<td>assjob</td>
+<td>Integer</td>
+<td>Number of assjob encounters</td>
+</tr>
+<tr>
+<td>blowjob</td>
+<td>Integer</td>
+<td>Number of oral sex encounters</td>
+</tr>
+<tr>
+<td>creampie</td>
+<td>Integer</td>
+<td>Number of creampie finishes</td>
+</tr>
+<tr>
+<td>pussyjob</td>
+<td>Integer</td>
+<td>Number of pussyjob encounters</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>Integer</td>
+<td>Number of vaginal sex encounters</td>
+</tr>
+<tr>
+<td>titjob</td>
+<td>Integer</td>
+<td>Number of titjob encounters</td>
+</tr>
+<tr>
+<td>virgin</td>
+<td>Boolean</td>
+<td>Virginity status (True/False)</td>
+</tr>
+<tr>
+<td>strike</td>
+<td>Integer</td>
+<td>Number of strikes (0-3)</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Wardrobe Reference</h3><a id="user-content-wardrobe-reference" class="anchor" aria-label="Permalink: Wardrobe Reference" href="#wardrobe-reference"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<markdown-accessiblity-table><table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Available Outfits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Amber</td>
+<td>0, 1, 2, 3, 4, 5</td>
+</tr>
+<tr>
+<td>Nanami</td>
+<td>0, 1, 2, 3, 4, 5, 6, 7, 8</td>
+</tr>
+<tr>
+<td>Elizabeth</td>
+<td>0, 1, 2, 3</td>
+</tr>
+<tr>
+<td>Isabella</td>
+<td>0, 1, 2, 3, 4, 5, 6</td>
+</tr>
+<tr>
+<td>Kanae</td>
+<td>0, 1, 2, 3, 4</td>
+</tr>
+<tr>
+<td>Arlette</td>
+<td>0, 1, 2, 3, 4, 5, 6, 7</td>
+</tr>
+<tr>
+<td>Antonella</td>
+<td>0, 1, 2, 3</td>
+</tr>
+<tr>
+<td>Madison</td>
+<td>0, 1, 2, 3, 4</td>
+</tr>
+<tr>
+<td>Paz</td>
+<td>0, 1, 2, 3, 4, 5</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Troubleshooting</h2><a id="user-content-troubleshooting" class="anchor" aria-label="Permalink: Troubleshooting" href="#troubleshooting"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Common Issues and Solutions</h3><a id="user-content-common-issues-and-solutions" class="anchor" aria-label="Permalink: Common Issues and Solutions" href="#common-issues-and-solutions"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Issue: Stats Don't Update</h4><a id="user-content-issue-stats-dont-update" class="anchor" aria-label="Permalink: Issue: Stats Don't Update" href="#issue-stats-dont-update"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Symptoms:</strong> You call <code>rm.update()</code> but nothing changes</p>
+<p dir="auto"><strong>Solutions:</strong></p>
+<ol dir="auto">
+<li>Check character name spelling (must be lowercase)</li>
+<li>Verify attribute name is correct ("cor", "trust", "integrity")</li>
+<li>Make sure character isn't emotionally locked</li>
+<li>Check if MC's integrity is locked</li>
+</ol>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Wrong
+$ rm.update(&quot;Amber&quot;, &quot;corruption&quot;, 10)  # Wrong: uppercase name, wrong attribute
 
 # Correct
-$ rm.update("amber", "cor", 10)
-```
+$ rm.update(&quot;amber&quot;, &quot;cor&quot;, 10)"><pre><span class="pl-c"><span class="pl-c">#</span> Wrong</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>Amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>corruption<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)  <span class="pl-c"><span class="pl-c">#</span> Wrong: uppercase name, wrong attribute</span>
 
-#### Issue: Notifications Don't Appear
-
-**Symptoms:** Stats update but no notification shows
-
-**Solution:** Always call `check_levels()` after `rm.update()`
-
-**Example:**
-```renpy
-# Wrong
-$ rm.update("amber", "trust", 15)  # No notification
+<span class="pl-c"><span class="pl-c">#</span> Correct</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Issue: Notifications Don't Appear</h4><a id="user-content-issue-notifications-dont-appear" class="anchor" aria-label="Permalink: Issue: Notifications Don't Appear" href="#issue-notifications-dont-appear"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Symptoms:</strong> Stats update but no notification shows</p>
+<p dir="auto"><strong>Solution:</strong> Always call <code>check_levels()</code> after <code>rm.update()</code></p>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Wrong
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, 15)  # No notification
 
 # Correct
-$ rm.update("amber", "trust", 15)
-$ check_levels("amber", "trust", 15)  # Shows notification
-```
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, 15)
+$ check_levels(&quot;amber&quot;, &quot;trust&quot;, 15)  # Shows notification"><pre><span class="pl-c"><span class="pl-c">#</span> Wrong</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)  <span class="pl-c"><span class="pl-c">#</span> No notification</span>
 
-#### Issue: Can't Change Outfit
-
-**Symptoms:** `wm.set()` doesn't work
-
-**Solutions:**
-1. Make sure outfit is unlocked first
-2. Check that outfit ID is valid for that character
-3. Verify character name is correct
-
-**Example:**
-```renpy
-# Wrong
-$ wm.set("amber", 10)  # Amber only has 6 outfits (0-5)
+<span class="pl-c"><span class="pl-c">#</span> Correct</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+<span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)  <span class="pl-c"><span class="pl-c">#</span> Shows notification</span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Issue: Can't Change Outfit</h4><a id="user-content-issue-cant-change-outfit" class="anchor" aria-label="Permalink: Issue: Can't Change Outfit" href="#issue-cant-change-outfit"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Symptoms:</strong> <code>wm.set()</code> doesn't work</p>
+<p dir="auto"><strong>Solutions:</strong></p>
+<ol dir="auto">
+<li>Make sure outfit is unlocked first</li>
+<li>Check that outfit ID is valid for that character</li>
+<li>Verify character name is correct</li>
+</ol>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Wrong
+$ wm.set(&quot;amber&quot;, 10)  # Amber only has 6 outfits (0-5)
 
 # Correct
-$ wm.unlock("amber", 3)  # Unlock first
-$ wm.set("amber", 3)     # Then set
-```
+$ wm.unlock(&quot;amber&quot;, 3)  # Unlock first
+$ wm.set(&quot;amber&quot;, 3)     # Then set"><pre><span class="pl-c"><span class="pl-c">#</span> Wrong</span>
+<span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>)  <span class="pl-c"><span class="pl-c">#</span> Amber only has 6 outfits (0-5)</span>
 
-#### Issue: Character Is Emotionally Locked
-
-**Symptoms:** Can't change corruption or trust for a character
-
-**Solution:** Check if character has 3 strikes
-
-**Example:**
-```renpy
-$ is_locked = rm.is_emotionally_locked("amber")
-$ strikes = ss.get("amber", "strike")
+<span class="pl-c"><span class="pl-c">#</span> Correct</span>
+<span class="pl-k">$</span> wm.unlock(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)  <span class="pl-c"><span class="pl-c">#</span> Unlock first</span>
+<span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)     <span class="pl-c"><span class="pl-c">#</span> Then set</span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Issue: Character Is Emotionally Locked</h4><a id="user-content-issue-character-is-emotionally-locked" class="anchor" aria-label="Permalink: Issue: Character Is Emotionally Locked" href="#issue-character-is-emotionally-locked"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Symptoms:</strong> Can't change corruption or trust for a character</p>
+<p dir="auto"><strong>Solution:</strong> Check if character has 3 strikes</p>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ is_locked = rm.is_emotionally_locked(&quot;amber&quot;)
+$ strikes = ss.get(&quot;amber&quot;, &quot;strike&quot;)
 
 if is_locked:
-    "Amber has [strikes] strikes and is emotionally locked."
-    "Her stats can no longer change."
-```
+    &quot;Amber has [strikes] strikes and is emotionally locked.&quot;
+    &quot;Her stats can no longer change.&quot;"><pre><span class="pl-k">$</span> is_locked <span class="pl-k">=</span> rm.is_emotionally_locked(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> strikes <span class="pl-k">=</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>strike<span class="pl-pds">"</span></span>)
 
-#### Issue: Path Won't Lock
+<span class="pl-k">if</span> is_locked:
+    <span class="pl-s"><span class="pl-pds">"</span>Amber has <span class="pl-c1">[strikes]</span> strikes and is emotionally locked.<span class="pl-pds">"</span></span>
+    <span class="pl-s"><span class="pl-pds">"</span>Her stats can no longer change.<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Issue: Path Won't Lock</h4><a id="user-content-issue-path-wont-lock" class="anchor" aria-label="Permalink: Issue: Path Won't Lock" href="#issue-path-wont-lock"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Symptoms:</strong> <code>lock_character_path()</code> returns "neutral" when you expected "love" or "corruption"</p>
+<p dir="auto"><strong>Solutions:</strong></p>
+<ol dir="auto">
+<li>Check milestone choice counters</li>
+<li>Verify you incremented the correct counters in dialogue</li>
+<li>Make sure thresholds aren't set too high</li>
+</ol>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Check current progress
+$ love_count = get_milestone_choices(&quot;amber&quot;, &quot;love&quot;)
+$ cor_count = get_milestone_choices(&quot;amber&quot;, &quot;cor&quot;)
 
-**Symptoms:** `lock_character_path()` returns "neutral" when you expected "love" or "corruption"
+&quot;Amber has [love_count] love choices and [cor_count] corruption choices.&quot;
+&quot;Need 3 of either to lock path.&quot;"><pre><span class="pl-c"><span class="pl-c">#</span> Check current progress</span>
+<span class="pl-k">$</span> love_count <span class="pl-k">=</span> get_milestone_choices(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>love<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> cor_count <span class="pl-k">=</span> get_milestone_choices(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>cor<span class="pl-pds">"</span></span>)
 
-**Solutions:**
-1. Check milestone choice counters
-2. Verify you incremented the correct counters in dialogue
-3. Make sure thresholds aren't set too high
-
-**Example:**
-```renpy
-# Check current progress
-$ love_count = get_milestone_choices("amber", "love")
-$ cor_count = get_milestone_choices("amber", "cor")
-
-"Amber has [love_count] love choices and [cor_count] corruption choices."
-"Need 3 of either to lock path."
-```
-
-#### Issue: MC's Integrity Won't Change
-
-**Symptoms:** Integrity is stuck
-
-**Solution:** Check if integrity is locked (happens at 0 or 100)
-
-**Example:**
-```renpy
-$ is_locked = rm.get("mc", "integrity_locked")
-$ current_integrity = rm.get("mc", "integrity")
+<span class="pl-s"><span class="pl-pds">"</span>Amber has <span class="pl-c1">[love_count]</span> love choices and <span class="pl-c1">[cor_count]</span> corruption choices.<span class="pl-pds">"</span></span>
+<span class="pl-s"><span class="pl-pds">"</span>Need 3 of either to lock path.<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">Issue: MC's Integrity Won't Change</h4><a id="user-content-issue-mcs-integrity-wont-change" class="anchor" aria-label="Permalink: Issue: MC's Integrity Won't Change" href="#issue-mcs-integrity-wont-change"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto"><strong>Symptoms:</strong> Integrity is stuck</p>
+<p dir="auto"><strong>Solution:</strong> Check if integrity is locked (happens at 0 or 100)</p>
+<p dir="auto"><strong>Example:</strong></p>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="$ is_locked = rm.get(&quot;mc&quot;, &quot;integrity_locked&quot;)
+$ current_integrity = rm.get(&quot;mc&quot;, &quot;integrity&quot;)
 
 if is_locked:
-    "Your integrity is locked at [current_integrity]."
-    "This represents your final moral state."
-```
+    &quot;Your integrity is locked at [current_integrity].&quot;
+    &quot;This represents your final moral state.&quot;"><pre><span class="pl-k">$</span> is_locked <span class="pl-k">=</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>mc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>integrity_locked<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> current_integrity <span class="pl-k">=</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>mc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>integrity<span class="pl-pds">"</span></span>)
 
-### Best Practices
+<span class="pl-k">if</span> is_locked:
+    <span class="pl-s"><span class="pl-pds">"</span>Your integrity is locked at <span class="pl-c1">[current_integrity]</span>.<span class="pl-pds">"</span></span>
+    <span class="pl-s"><span class="pl-pds">"</span>This represents your final moral state.<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Best Practices</h3><a id="user-content-best-practices" class="anchor" aria-label="Permalink: Best Practices" href="#best-practices"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">1. Always Use check_levels()</h4><a id="user-content-1-always-use-check_levels" class="anchor" aria-label="Permalink: 1. Always Use check_levels()" href="#1-always-use-check_levels"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Good practice
+$ rm.update(&quot;amber&quot;, &quot;trust&quot;, 15)
+$ check_levels(&quot;amber&quot;, &quot;trust&quot;, 15)"><pre><span class="pl-c"><span class="pl-c">#</span> Good practice</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)
+<span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">15</span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">2. Check Before Unlocking Content</h4><a id="user-content-2-check-before-unlocking-content" class="anchor" aria-label="Permalink: 2. Check Before Unlocking Content" href="#2-check-before-unlocking-content"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Check levels before showing content
+$ trust_level = get_level_for_value(rm.get(&quot;amber&quot;, &quot;trust&quot;), trust_levels)
 
-#### 1. Always Use check_levels()
-
-```renpy
-# Good practice
-$ rm.update("amber", "trust", 15)
-$ check_levels("amber", "trust", 15)
-```
-
-#### 2. Check Before Unlocking Content
-
-```renpy
-# Check levels before showing content
-$ trust_level = get_level_for_value(rm.get("amber", "trust"), trust_levels)
-
-if trust_level >= 3:
+if trust_level &gt;= 3:
     # Show intimate scene
     jump .intimate_scene
 else:
     # Not ready yet
-    "Amber isn't comfortable with this yet."
-    return
-```
+    &quot;Amber isn't comfortable with this yet.&quot;
+    return"><pre><span class="pl-c"><span class="pl-c">#</span> Check levels before showing content</span>
+<span class="pl-k">$</span> trust_level <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>), trust_levels)
 
-#### 3. Unlock Outfits Naturally
+<span class="pl-k">if</span> trust_level <span class="pl-k">&gt;=</span> <span class="pl-c1">3</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Show intimate scene</span>
+    <span class="pl-k">jump</span> .intimate_scene
+<span class="pl-k">else</span>:
+    <span class="pl-c"><span class="pl-c">#</span> Not ready yet</span>
+    <span class="pl-s"><span class="pl-pds">"</span>Amber isn't comfortable with this yet.<span class="pl-pds">"</span></span>
+    <span class="pl-k">return</span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">3. Unlock Outfits Naturally</h4><a id="user-content-3-unlock-outfits-naturally" class="anchor" aria-label="Permalink: 3. Unlock Outfits Naturally" href="#3-unlock-outfits-naturally"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Unlock outfits as rewards or story progression
+if rm.get(&quot;amber&quot;, &quot;rel&quot;):
+    $ wm.unlock(&quot;amber&quot;, 3)
+    &quot;Amber has unlocked a special outfit for you!&quot;"><pre><span class="pl-c"><span class="pl-c">#</span> Unlock outfits as rewards or story progression</span>
+<span class="pl-k">if</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>rel<span class="pl-pds">"</span></span>):
+    <span class="pl-k">$</span> wm.unlock(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-c1">3</span>)
+    <span class="pl-s"><span class="pl-pds">"</span>Amber has unlocked a special outfit for you!<span class="pl-pds">"</span></span></pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">4. Track Virginity Properly</h4><a id="user-content-4-track-virginity-properly" class="anchor" aria-label="Permalink: 4. Track Virginity Properly" href="#4-track-virginity-properly"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Always check and update virginity status
+if ss.get(&quot;nanami&quot;, &quot;virgin&quot;):
+    &quot;This is Nanami's first time.&quot;
+    $ ss.set(&quot;nanami&quot;, &quot;virgin&quot;, False)
 
-```renpy
-# Unlock outfits as rewards or story progression
-if rm.get("amber", "rel"):
-    $ wm.unlock("amber", 3)
-    "Amber has unlocked a special outfit for you!"
-```
+$ ss.add(&quot;nanami&quot;, &quot;sex&quot;)"><pre><span class="pl-c"><span class="pl-c">#</span> Always check and update virginity status</span>
+<span class="pl-k">if</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>virgin<span class="pl-pds">"</span></span>):
+    <span class="pl-s"><span class="pl-pds">"</span>This is Nanami's first time.<span class="pl-pds">"</span></span>
+    <span class="pl-k">$</span> ss.set(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>virgin<span class="pl-pds">"</span></span>, <span class="pl-c1">False</span>)
 
-#### 4. Track Virginity Properly
-
-```renpy
-# Always check and update virginity status
-if ss.get("nanami", "virgin"):
-    "This is Nanami's first time."
-    $ ss.set("nanami", "virgin", False)
-
-$ ss.add("nanami", "sex")
-```
-
-#### 5. Use Milestone Decisions Strategically
-
-```renpy
-# Reserve milestone decisions for important choices
+<span class="pl-k">$</span> ss.add(<span class="pl-s"><span class="pl-pds">"</span>nanami<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>sex<span class="pl-pds">"</span></span>)</pre></div>
+<div class="markdown-heading" dir="auto"><h4 tabindex="-1" class="heading-element" dir="auto">5. Use Milestone Decisions Strategically</h4><a id="user-content-5-use-milestone-decisions-strategically" class="anchor" aria-label="Permalink: 5. Use Milestone Decisions Strategically" href="#5-use-milestone-decisions-strategically"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Reserve milestone decisions for important choices
 # Regular choices don't need to increment counters
 menu:
-    "Chat casually":
+    &quot;Chat casually&quot;:
         # Regular choice - no counter
-        $ rm.update("amber", "trust", 5)
-        $ check_levels("amber", "trust", 5)
+        $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 5)
+        $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 5)
 
-    "Confess your feelings" if trust_level >= 2:
+    &quot;Confess your feelings&quot; if trust_level &gt;= 2:
         # Milestone decision - increment counter
         $ amber_love_choices += 1
-        $ rm.update("amber", "trust", 20)
-        $ check_levels("amber", "trust", 20)
-```
+        $ rm.update(&quot;amber&quot;, &quot;trust&quot;, 20)
+        $ check_levels(&quot;amber&quot;, &quot;trust&quot;, 20)"><pre><span class="pl-c"><span class="pl-c">#</span> Reserve milestone decisions for important choices</span>
+<span class="pl-c"><span class="pl-c">#</span> Regular choices don't need to increment counters</span>
+<span class="pl-k">menu</span>:
+    <span class="pl-s"><span class="pl-pds">"</span>Chat casually<span class="pl-pds">"</span></span>:
+        <span class="pl-c"><span class="pl-c">#</span> Regular choice - no counter</span>
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">5</span>)
 
----
-
-## Summary
-
-The Core System is designed to create a living, breathing relationship system that:
-
-- **Remembers** every choice you make
-- **Responds** with realistic character progression
-- **Locks** characters into meaningful paths
-- **Rewards** player investment with unlockable content
-- **Punishes** poor choices with consequences
-
-By understanding these systems, you can create compelling, dynamic stories that respond to player choices in meaningful ways.
-
-### Quick Reference
-
-```renpy
-# Relationship Management
-$ rm.update("char", "attr", value)
-$ rm.get("char", "attr")
-$ rm.update_rel("char")
-$ rm.set_knows("char", True/False)
+    <span class="pl-s"><span class="pl-pds">"</span>Confess your feelings<span class="pl-pds">"</span></span> <span class="pl-k">if</span> trust_level <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>:
+        <span class="pl-c"><span class="pl-c">#</span> Milestone decision - increment counter</span>
+        <span class="pl-k">$</span> amber_love_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+        <span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)
+        <span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>amber<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>trust<span class="pl-pds">"</span></span>, <span class="pl-c1">20</span>)</pre></div>
+<hr>
+<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">Summary</h2><a id="user-content-summary" class="anchor" aria-label="Permalink: Summary" href="#summary"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<p dir="auto">The Core System is designed to create a living, breathing relationship system that:</p>
+<ul dir="auto">
+<li><strong>Remembers</strong> every choice you make</li>
+<li><strong>Responds</strong> with realistic character progression</li>
+<li><strong>Locks</strong> characters into meaningful paths</li>
+<li><strong>Rewards</strong> player investment with unlockable content</li>
+<li><strong>Punishes</strong> poor choices with consequences</li>
+</ul>
+<p dir="auto">By understanding these systems, you can create compelling, dynamic stories that respond to player choices in meaningful ways.</p>
+<div class="markdown-heading" dir="auto"><h3 tabindex="-1" class="heading-element" dir="auto">Quick Reference</h3><a id="user-content-quick-reference" class="anchor" aria-label="Permalink: Quick Reference" href="#quick-reference"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+<div class="highlight highlight-source-renpy notranslate position-relative overflow-auto" dir="auto" data-snippet-clipboard-copy-content="# Relationship Management
+$ rm.update(&quot;char&quot;, &quot;attr&quot;, value)
+$ rm.get(&quot;char&quot;, &quot;attr&quot;)
+$ rm.update_rel(&quot;char&quot;)
+$ rm.set_knows(&quot;char&quot;, True/False)
 
 # Sexual Statistics
-$ ss.add("char", "stat")
-$ ss.get("char", "stat")
-$ ss.set("char", "stat", value)
+$ ss.add(&quot;char&quot;, &quot;stat&quot;)
+$ ss.get(&quot;char&quot;, &quot;stat&quot;)
+$ ss.set(&quot;char&quot;, &quot;stat&quot;, value)
 
 # Wardrobe Management
-$ wm.unlock("char", outfit_id)
-$ wm.set("char", outfit_id)
-$ wm.get_current("char")
-$ wm.next_outfit("char")
+$ wm.unlock(&quot;char&quot;, outfit_id)
+$ wm.set(&quot;char&quot;, outfit_id)
+$ wm.get_current(&quot;char&quot;)
+$ wm.next_outfit(&quot;char&quot;)
 
 # Level System
-$ level = get_level_for_value(rm.get("char", "attr"), level_dict)
-$ check_levels("char", "attr", value)
+$ level = get_level_for_value(rm.get(&quot;char&quot;, &quot;attr&quot;), level_dict)
+$ check_levels(&quot;char&quot;, &quot;attr&quot;, value)
 
 # Milestone System
 $ char_love_choices += 1
 $ char_cor_choices += 1
-$ path = lock_character_path("char")
-$ path = get_character_path("char")
-$ locked = is_path_locked("char")
-```
+$ path = lock_character_path(&quot;char&quot;)
+$ path = get_character_path(&quot;char&quot;)
+$ locked = is_path_locked(&quot;char&quot;)"><pre><span class="pl-c"><span class="pl-c">#</span> Relationship Management</span>
+<span class="pl-k">$</span> rm.update(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>attr<span class="pl-pds">"</span></span>, <span class="pl-e">value</span>)
+<span class="pl-k">$</span> rm.get(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>attr<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> rm.update_rel(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> rm.set_knows(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-c1">True</span><span class="pl-k">/</span><span class="pl-c1">False</span>)
 
----
+<span class="pl-c"><span class="pl-c">#</span> Sexual Statistics</span>
+<span class="pl-k">$</span> ss.add(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>stat<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> ss.get(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>stat<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> ss.set(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>stat<span class="pl-pds">"</span></span>, <span class="pl-e">value</span>)
 
-**End of Documentation**
+<span class="pl-c"><span class="pl-c">#</span> Wardrobe Management</span>
+<span class="pl-k">$</span> wm.unlock(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, outfit_id)
+<span class="pl-k">$</span> wm.set(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, outfit_id)
+<span class="pl-k">$</span> wm.get_current(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> wm.next_outfit(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>)
+
+<span class="pl-c"><span class="pl-c">#</span> Level System</span>
+<span class="pl-k">$</span> level <span class="pl-k">=</span> get_level_for_value(rm.get(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>attr<span class="pl-pds">"</span></span>), level_dict)
+<span class="pl-k">$</span> check_levels(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>attr<span class="pl-pds">"</span></span>, <span class="pl-e">value</span>)
+
+<span class="pl-c"><span class="pl-c">#</span> Milestone System</span>
+<span class="pl-k">$</span> char_love_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+<span class="pl-k">$</span> char_cor_choices <span class="pl-k">+=</span> <span class="pl-c1">1</span>
+<span class="pl-k">$</span> path <span class="pl-k">=</span> lock_character_path(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> path <span class="pl-k">=</span> get_character_path(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>)
+<span class="pl-k">$</span> locked <span class="pl-k">=</span> is_path_locked(<span class="pl-s"><span class="pl-pds">"</span>char<span class="pl-pds">"</span></span>)</pre></div>
+<hr>
+<p dir="auto"><strong>End of Documentation</strong></p>
+</article></div><button hidden=""></button></section></div></div><div class="Box-sc-62in7e-0 kuJVuq"></div><div class="Box-sc-62in7e-0 iafbuG Panel-module__Box--lC3LD panel-content-narrow-styles inner-panel-content-not-narrow"><div id="symbols-pane"><div aria-labelledby="symbols-pane-header" class="Box-sc-62in7e-0 cxWhiL"><div class="Box-sc-62in7e-0 fHoMbg"><h2 id="symbols-pane-header" tabindex="-1" class="Box-sc-62in7e-0 cnoVsg">Symbols</h2><button data-component="IconButton" type="button" data-hotkey="Escape" class="prc-Button-ButtonBase-c50BI IconButton__StyledIconButton-sc-i53dt6-0 bTccwu prc-Button-IconButton-szpyj" data-loading="false" data-no-visuals="true" data-size="medium" data-variant="invisible" aria-describedby=":R3hd9al9lab:-loading-announcement" aria-labelledby=":Rhd9al9lab:"><svg aria-hidden="true" focusable="false" class="octicon octicon-x" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path></svg></button><span class="prc-TooltipV2-Tooltip-cYMVY" data-direction="w" aria-hidden="true" id=":Rhd9al9lab:">Close symbols</span></div><div class="Box-sc-62in7e-0 bjdPSr">Find definitions and references for functions and other symbols in this file by clicking a symbol below or in the code.</div><span class="TextInput__StyledTextInput-sc-ttxlvl-0 bLATi TextInput-wrapper prc-components-TextInputWrapper-i1ofR prc-components-TextInputBaseWrapper-ueK9q" data-block="true" data-trailing-action="true" data-leading-visual="true" data-trailing-visual="true" aria-busy="false"><span class="TextInput-icon" id=":R3d9al9lab:" aria-hidden="true"><svg aria-hidden="true" focusable="false" class="octicon octicon-filter" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M.75 3h14.5a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1 0-1.5ZM3 7.75A.75.75 0 0 1 3.75 7h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 3 7.75Zm3 4a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg></span><input type="text" placeholder="Filter symbols" name="Filter symbols" aria-label="Filter symbols" aria-controls="filter-results" aria-expanded="true" aria-autocomplete="list" role="combobox" aria-describedby=":R3d9al9lab: :R3d9al9labH1:" data-component="input" class="prc-components-Input-Ic-y8" value=""/><span class="TextInput-icon" id=":R3d9al9labH1:" aria-hidden="true"><div class="Box-sc-62in7e-0 cIntug"><kbd>r</kbd></div></span></span><div class="Box-sc-62in7e-0 dILSWH"><div id="filter-results" class="Box-sc-62in7e-0 knbnik"><span class="prc-src-InternalVisuallyHidden-nlR9R" role="status" aria-live="polite" aria-atomic="true"></span><ul role="tree" aria-label="Code Navigation" data-omit-spacer="false" data-truncate-text="true" class="prc-TreeView-TreeViewRootUlStyles-eZtxW"><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="0Core System Documentation" role="treeitem" aria-labelledby=":R1kd9al9lab:" aria-level="1" aria-expanded="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:1"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover PRIVATE_TreeView-item-toggle--end prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-down" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R1kd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="Core System Documentation" style="--truncate-max-width:125px"><span>Core System Documentation</span></div></div></span></div></div><ul role="group" style="list-style:none;padding:0;margin:0" aria-label=""><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="0Table of Contents" role="treeitem" aria-labelledby=":R2rkd9al9lab:" aria-level="2" aria-expanded="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:2"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-down" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R2rkd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="Table of Contents" style="--truncate-max-width:125px"><span>Table of Contents</span></div></div></span></div></div><ul role="group" style="list-style:none;padding:0;margin:0" aria-label=""><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="0Introduction" role="treeitem" aria-labelledby=":R5mrkd9al9lab:" aria-level="3" aria-expanded="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:3"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-down" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R5mrkd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="Introduction" style="--truncate-max-width:125px"><span>Introduction</span></div></div></span></div></div><ul role="group" style="list-style:none;padding:0;margin:0" aria-label=""><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="0What Does It Do?" role="treeitem" aria-labelledby=":Rbdmrkd9al9lab:" aria-level="4" aria-expanded="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:4"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-down" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":Rbdmrkd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="What Does It Do?" style="--truncate-max-width:125px"><span>What Does It Do?</span></div></div></span></div></div><ul role="group" style="list-style:none;padding:0;margin:0" aria-label=""><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="0System Overview" role="treeitem" aria-labelledby=":Rmrdmrkd9al9lab:" aria-level="5" aria-expanded="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:5"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-down" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":Rmrdmrkd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="System Overview" style="--truncate-max-width:125px"><span>System Overview</span></div></div></span></div></div><ul role="group" style="list-style:none;padding:0;margin:0" aria-label=""><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="01. **RM (Relationship Management)**" role="treeitem" aria-labelledby=":R1dmrdmrkd9al9lab:" aria-level="6" aria-expanded="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:6"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-down" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R1dmrdmrkd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="1. **RM (Relationship Management)**" style="--truncate-max-width:125px"><span>1. **RM (Relationship Management)**</span></div></div></span></div></div><ul role="group" style="list-style:none;padding:0;margin:0" aria-label=""><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="02. **SexStats**" role="treeitem" aria-labelledby=":R2rdmrdmrkd9al9lab:" aria-level="7" aria-expanded="true" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:7"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-down" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M6 8.825c-.2 0-.4-.1-.5-.2l-3.3-3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l2.7 2.7 2.7-2.7c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-3.2 3.2c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R2rdmrdmrkd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="2. **SexStats**" style="--truncate-max-width:125px"><span>2. **SexStats**</span></div></div></span></div></div><ul role="group" style="list-style:none;padding:0;margin:0" aria-label=""><li class="PRIVATE_TreeView-item prc-TreeView-TreeViewItem-ShJr0" tabindex="0" id="03. **WM (Wardrobe Manager)**" role="treeitem" aria-labelledby=":R5mrdmrdmrkd9al9lab:" aria-level="8" aria-expanded="false" aria-selected="false"><div class="PRIVATE_TreeView-item-container prc-TreeView-TreeViewItemContainer--2Rkn" style="--level:8"><div style="grid-area:spacer;display:flex"><div style="width:100%;display:flex"><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div><div class="PRIVATE_TreeView-item-level-line prc-TreeView-TreeViewItemLevelLine-KPSSL"></div></div></div><div class="PRIVATE_TreeView-item-toggle PRIVATE_TreeView-item-toggle--hover prc-TreeView-TreeViewItemToggle-gWUdE prc-TreeView-TreeViewItemToggleHover-nEgP- prc-TreeView-TreeViewItemToggleEnd-t-AEB"><svg aria-hidden="true" focusable="false" class="octicon octicon-chevron-right" viewBox="0 0 12 12" width="12" height="12" fill="currentColor" display="inline-block" overflow="visible" style="vertical-align:text-bottom"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg></div><div id=":R5mrdmrdmrkd9al9lab:" class="PRIVATE_TreeView-item-content prc-TreeView-TreeViewItemContent-f0r0b"><span class="PRIVATE_TreeView-item-content-text prc-TreeView-TreeViewItemContentText-smZM-"><div class="Box-sc-62in7e-0 iRVXIo"><div class="Box-sc-62in7e-0 kOALiS"><div class="Box-sc-62in7e-0 kxkZhe"></div><div class="Box-sc-62in7e-0 eLoRjE">s</div></div>  <div class="Truncate-sc-x3i4it-0 bkmqFA prc-Truncate-Truncate-A9Wn6" title="3. **WM (Wardrobe Manager)**" style="--truncate-max-width:125px"><span>3. **WM (Wardrobe Manager)**</span></div></div></span></div></div></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></li></ul></div></div></div></div></div></div> <!-- --> <!-- --> </div></div></div></div></div></div></div><div id="find-result-marks-container" class="Box-sc-62in7e-0 vdPNv"></div><button hidden="" data-testid="" data-hotkey-scope="read-only-cursor-text-area"></button><button hidden=""></button></div> <!-- --> <!-- --> <script type="application/json" id="__PRIMER_DATA_:R0:__">{"resolvedServerColorMode":"night"}</script></div>
+</react-app>
+</turbo-frame>
+
+
+
+  </div>
+
+</turbo-frame>
+
+    </main>
+  </div>
+
+  </div>
+
+          <footer class="footer pt-8 pb-6 f6 color-fg-muted p-responsive" role="contentinfo" >
+  <h2 class='sr-only'>Footer</h2>
+
+  
+
+
+  <div class="d-flex flex-justify-center flex-items-center flex-column-reverse flex-lg-row flex-wrap flex-lg-nowrap">
+    <div class="d-flex flex-items-center flex-shrink-0 mx-2">
+      <a aria-label="GitHub Homepage" class="footer-octicon mr-2" href="https://github.com">
+        <svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-mark-github">
+    <path d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436.55.096.756-.233.756-.522 0-.262-.013-1.128-.013-2.049-2.764.509-3.479-.674-3.699-1.292-.124-.317-.66-1.293-1.127-1.554-.385-.207-.936-.715-.014-.729.866-.014 1.485.797 1.691 1.128.99 1.663 2.571 1.196 3.204.907.096-.715.385-1.196.701-1.471-2.448-.275-5.005-1.224-5.005-5.432 0-1.196.426-2.186 1.128-2.956-.111-.275-.496-1.402.11-2.915 0 0 .921-.288 3.024 1.128a10.193 10.193 0 0 1 2.75-.371c.936 0 1.871.123 2.75.371 2.104-1.43 3.025-1.128 3.025-1.128.605 1.513.221 2.64.111 2.915.701.77 1.127 1.747 1.127 2.956 0 4.222-2.571 5.157-5.019 5.432.399.344.743 1.004.743 2.035 0 1.471-.014 2.654-.014 3.025 0 .289.206.632.756.522C19.851 20.979 23 16.854 23 12c0-6.077-4.922-11-11-11Z"></path>
+</svg>
+</a>
+      <span>
+        &copy; 2025 GitHub,&nbsp;Inc.
+      </span>
+    </div>
+
+    <nav aria-label="Footer">
+      <h3 class="sr-only" id="sr-footer-heading">Footer navigation</h3>
+
+      <ul class="list-style-none d-flex flex-justify-center flex-wrap mb-2 mb-lg-0" aria-labelledby="sr-footer-heading">
+
+          <li class="mx-2">
+            <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Terms&quot;,&quot;label&quot;:&quot;text:terms&quot;}" href="https://docs.github.com/site-policy/github-terms/github-terms-of-service" data-view-component="true" class="Link--secondary Link">Terms</a>
+          </li>
+
+          <li class="mx-2">
+            <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;}" href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" data-view-component="true" class="Link--secondary Link">Privacy</a>
+          </li>
+
+          <li class="mx-2">
+            <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to security&quot;,&quot;label&quot;:&quot;text:security&quot;}" href="https://github.com/security" data-view-component="true" class="Link--secondary Link">Security</a>
+          </li>
+
+          <li class="mx-2">
+            <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to status&quot;,&quot;label&quot;:&quot;text:status&quot;}" href="https://www.githubstatus.com/" data-view-component="true" class="Link--secondary Link">Status</a>
+          </li>
+
+          <li class="mx-2">
+            <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to community&quot;,&quot;label&quot;:&quot;text:community&quot;}" href="https://github.community/" data-view-component="true" class="Link--secondary Link">Community</a>
+          </li>
+
+          <li class="mx-2">
+            <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to docs&quot;,&quot;label&quot;:&quot;text:docs&quot;}" href="https://docs.github.com/" data-view-component="true" class="Link--secondary Link">Docs</a>
+          </li>
+
+          <li class="mx-2">
+            <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;}" href="https://support.github.com?tags=dotcom-footer" data-view-component="true" class="Link--secondary Link">Contact</a>
+          </li>
+
+          <li class="mx-2" >
+  <cookie-consent-link>
+    <button
+      type="button"
+      class="Link--secondary underline-on-hover border-0 p-0 color-bg-transparent"
+      data-action="click:cookie-consent-link#showConsentManagement"
+      data-analytics-event="{&quot;location&quot;:&quot;footer&quot;,&quot;action&quot;:&quot;cookies&quot;,&quot;context&quot;:&quot;subfooter&quot;,&quot;tag&quot;:&quot;link&quot;,&quot;label&quot;:&quot;cookies_link_subfooter_footer&quot;}"
+    >
+       Manage cookies
+    </button>
+  </cookie-consent-link>
+</li>
+
+<li class="mx-2">
+  <cookie-consent-link>
+    <button
+      type="button"
+      class="Link--secondary underline-on-hover border-0 p-0 color-bg-transparent text-left"
+      data-action="click:cookie-consent-link#showConsentManagement"
+      data-analytics-event="{&quot;location&quot;:&quot;footer&quot;,&quot;action&quot;:&quot;dont_share_info&quot;,&quot;context&quot;:&quot;subfooter&quot;,&quot;tag&quot;:&quot;link&quot;,&quot;label&quot;:&quot;dont_share_info_link_subfooter_footer&quot;}"
+    >
+      Do not share my personal information
+    </button>
+  </cookie-consent-link>
+</li>
+
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+
+    <ghcc-consent id="ghcc" class="position-fixed bottom-0 left-0" style="z-index: 999999"
+      data-locale="en"
+      data-initial-cookie-consent-allowed=""
+      data-cookie-consent-required="false"
+    ></ghcc-consent>
+
+
+
+
+  <div id="ajax-error-message" class="ajax-error-message flash flash-error" hidden>
+    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+    <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+</svg>
+    <button type="button" class="flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+    </button>
+    You can’t perform that action at this time.
+  </div>
+
+    <template id="site-details-dialog">
+  <details class="details-reset details-overlay details-overlay-dark lh-default color-fg-default hx_rsm" open>
+    <summary role="button" aria-label="Close dialog"></summary>
+    <details-dialog class="Box Box--overlay d-flex flex-column anim-fade-in fast hx_rsm-dialog hx_rsm-modal">
+      <button class="Box-btn-octicon m-0 btn-octicon position-absolute right-0 top-0" type="button" aria-label="Close dialog" data-close-dialog>
+        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+    <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+</svg>
+      </button>
+      <div class="octocat-spinner my-6 js-details-dialog-spinner"></div>
+    </details-dialog>
+  </details>
+</template>
+
+    <div class="Popover js-hovercard-content position-absolute" style="display: none; outline: none;">
+  <div class="Popover-message Popover-message--bottom-left Popover-message--large Box color-shadow-large" style="width:360px;">
+  </div>
+</div>
+
+    <template id="snippet-clipboard-copy-button">
+  <div class="zeroclipboard-container position-absolute right-0 top-0">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn js-clipboard-copy m-2 p-0" data-copy-feedback="Copied!" data-tooltip-direction="w">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon m-2">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none m-2">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div>
+</template>
+<template id="snippet-clipboard-copy-button-unpositioned">
+  <div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div>
+</template>
+
+
+    <style>
+      .user-mention[href$="/yukihina"] {
+        color: var(--color-user-mention-fg);
+        background-color: var(--bgColor-attention-muted, var(--color-attention-subtle));
+        border-radius: 2px;
+        margin-left: -2px;
+        margin-right: -2px;
+      }
+      .user-mention[href$="/yukihina"]:before,
+      .user-mention[href$="/yukihina"]:after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+      }
+    </style>
+
+
+    </div>
+    <div id="js-global-screen-reader-notice" class="sr-only mt-n1" aria-live="polite" aria-atomic="true" ></div>
+    <div id="js-global-screen-reader-notice-assertive" class="sr-only mt-n1" aria-live="assertive" aria-atomic="true"></div>
+  </body>
+</html>
+

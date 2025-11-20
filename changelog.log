@@ -12,6 +12,7 @@ v0.28 Episode 6 - 1st part
   • Some GUI elements updated
   • Animated episode title backgrounds
   • All achievements remade and re-rendered in 8K UHD (so I get rid of AI blending)
+  • Paths now properly track character development
 
 ! FIXED:
   • 01 render from version 0.27

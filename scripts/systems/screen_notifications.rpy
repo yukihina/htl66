@@ -131,6 +131,18 @@ init python:
             "icon": "strike"
         },
 
+        # Path lock notifications (milestone decision system)
+        "path_lock_love": {
+            "title": "Love Path Locked",
+            "message": "Your relationship with {char} is now committed to the love path. Corruption gains blocked. Trust gains doubled.",
+            "icon": "love"
+        },
+        "path_lock_corruption": {
+            "title": "Corruption Path Locked",
+            "message": "Your relationship with {char} is now committed to the corruption path. Trust gains blocked. Corruption gains doubled.",
+            "icon": "corr"
+        },
+
         # Corruption level notifications
         "corruption_level_up": {
             "title": "Corruption Level Up!",
