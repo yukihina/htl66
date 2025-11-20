@@ -4,9 +4,27 @@
 
 init -900 python:
     ############################################################################
+    ## CHARACTER PROGRESSION RATES
+    ############################################################################
+    # These multipliers are applied automatically to all stat changes
+    # Different characters respond differently to player actions
+
+    char_progression_rates = {
+        "amber": {"trust": 1.0, "cor": 1.5},        # More easily corrupted
+        "antonella": {"trust": 0.25, "cor": 1.0},   # Very hard to gain trust
+        "arlette": {"trust": 1.5, "cor": 1.5},      # Responds strongly to both
+        "elizabeth": {"trust": 2.0, "cor": 1.0},    # Gains trust quickly
+        "isabella": {"trust": 1.0, "cor": 1.0},     # Balanced progression
+        "kanae": {"trust": 0.5, "cor": 0.5},        # Slow progression both ways
+        "madison": {"trust": 0.5, "cor": 2.0},      # Hard to trust, easily corrupted
+        "nanami": {"trust": 3.0, "cor": 1.0},       # Very trusting, hard to corrupt
+        "paz": {"trust": 1.0, "cor": 1.0}           # Balanced progression
+    }
+
+    ############################################################################
     ## RM CLASS - RELATIONSHIP MANAGEMENT CORE
     ############################################################################
-    
+
     class RM:
         """
         RM stands for Relationship Management - handles all character relationships and attributes
@@ -38,12 +56,14 @@ init -900 python:
         def update(self, char, attr, val):
             """
             Updates a character's attribute by adding/subtracting a value
-            Now includes emotional lock check for characters with 3 strikes
+            Now includes:
+            - Emotional lock check for characters with 3 strikes
+            - Automatic progression rate multipliers
 
             Args:
                 char (str): Character ID (e.g., "amber", "mc")
                 attr (str): Attribute to update ("cor", "trust", "integrity", etc.)
-                val (int): Value to add/subtract
+                val (int or float): Base value to add/subtract (will be multiplied by character rate)
             """
             if char in self.rels:  # Check if character exists
                 # EMOTIONAL LOCK SYSTEM: Check if character has 3 strikes (only for regular characters)
@@ -59,6 +79,13 @@ init -900 python:
                         # Set emotional lock and return without updating stats
                         self.rels[char]["emotionally_locked"] = True
                         return  # Block the update - stats frozen at 0
+
+                # AUTOMATIC PROGRESSION RATES: Apply character-specific multipliers
+                if char in char_progression_rates and attr in ["cor", "trust"]:
+                    # Get the rate for this character and attribute
+                    rate = char_progression_rates[char].get(attr, 1.0)
+                    # Multiply the base value by the rate and round to integer
+                    val = round(val * rate)
 
                 if attr in ["cor", "trust", "integrity"]:  # These attributes are numerical (0-100)
                     # Special case: can't update integrity if it's locked
@@ -133,6 +160,29 @@ init -900 python:
                             self.rels[char]["cor"] = 0
                             self.rels[char]["trust"] = 0
                             self.rels[char]["emotionally_locked"] = True
+
+        def migrate_to_ratio_system(self):
+            """
+            Migrates saves from pre-ratio system to new automatic ratio system
+            Divides existing stat values by character rates to convert to base values
+            Called automatically when loading old saves (save_system_version == 1)
+            """
+            for char in char_progression_rates:
+                if char in self.rels:
+                    # Divide existing values by their rates to get base values
+                    trust_rate = char_progression_rates[char].get("trust", 1.0)
+                    cor_rate = char_progression_rates[char].get("cor", 1.0)
+
+                    old_trust = self.rels[char]["trust"]
+                    old_cor = self.rels[char]["cor"]
+
+                    # Convert to base values (rounded)
+                    new_trust = round(old_trust / trust_rate) if trust_rate != 0 else old_trust
+                    new_cor = round(old_cor / cor_rate) if cor_rate != 0 else old_cor
+
+                    # Ensure values stay within bounds
+                    self.rels[char]["trust"] = max(0, min(100, new_trust))
+                    self.rels[char]["cor"] = max(0, min(100, new_cor))
 
         def check_emotional_lock(self, char):
             """

@@ -66,6 +66,14 @@ default paz_love_choices = 0
 default paz_cor_choices = 0
 
 
+################################################################################
+## SAVE SYSTEM VERSION - For Migration Tracking
+################################################################################
+## Version 1: Original system without automatic progression rates
+## Version 2: New system with automatic character progression rate multipliers
+default save_system_version = 2
+
+
 init python:
     def show_walkthrough(key):
         if walkthrough_enabled and renpy.loadable("wt_core.rpyc"):
@@ -196,5 +204,21 @@ label after_load:
             strikes = ss.get(char, "strike")
             if strikes >= 3:
                 rm.check_emotional_lock(char)
+
+    # Migrate old saves to new automatic progression rate system
+    if save_system_version == 1:
+        scene black with dissolve
+
+        centered "{b}Character Progression System Updated{/b}\n\nWe've implemented an automatic character progression rate system\nto make stat changes more consistent and balanced.\n\n{color=#ffcc00}Your save will be automatically migrated.{/color}\n\nNote: Due to technical limitations, the migration may not be 100%% perfect.\nFor the best experience, we recommend starting a new playthrough.\n\nPress any key to continue..."
+
+        $ renpy.pause(hard=True)
+
+        # Perform the migration
+        $ rm.migrate_to_ratio_system()
+        $ save_system_version = 2
+
+        centered "{b}Migration Complete{/b}\n\nYour character stats have been adjusted to the new system.\nFuture stat changes will use automatic progression rates.\n\nPress any key to continue..."
+
+        $ renpy.pause(hard=True)
 
     return

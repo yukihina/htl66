@@ -90,55 +90,58 @@ The system manages three types of characters:
 
 #### Updating Character Stats
 
-To change a character's stats, use the `update` function:
+To change a character's stats, use the `update` function with **base values**:
 
 ```renpy
-$ rm.update("amber", "cor", 10)      # Increase Amber's corruption by 10
-$ rm.update("nanami", "trust", 15)   # Increase Nanami's trust by 15
-$ rm.update("mc", "integrity", -5)   # Decrease MC's integrity by 5
-$ rm.update("takeo", "trust", 20)    # Increase Takeo's trust by 20
+# Base values - system applies character rates automatically
+$ rm.update("amber", "cor", 3)       # Base 3 → 3 × 1.5 = 5 corruption (Amber's 1.5x cor rate)
+$ rm.update("nanami", "trust", 2)    # Base 2 → 2 × 3.0 = 6 trust (Nanami's 3x trust rate)
+$ rm.update("mc", "integrity", -2)   # Base -2 = -2 integrity (no rate for MC)
+$ rm.update("takeo", "trust", 5)     # Base 5 = 5 trust (organizations have no rates)
 ```
 
 **Parameters:**
 - **Character ID**: The character's name (lowercase)
 - **Attribute**: What you want to change ("cor", "trust", "integrity")
-- **Value**: How much to add (positive) or subtract (negative)
+- **Value**: Base value to add (positive) or subtract (negative) - **system automatically applies character rates**
 
 **Important Rules:**
-- Stats automatically stay between 0 and 100
-- MC's integrity locks when it reaches 0 or 100
-- You can't change a character's stats if they're emotionally locked
-- **Each call only updates ONE attribute** - to update multiple attributes, make multiple calls
+- ✅ **Use base values (1, 2, 3, 5, 10)** - the system multiplies by character rates automatically
+- ✅ Stats automatically stay between 0 and 100
+- ✅ MC's integrity locks when it reaches 0 or 100
+- ✅ You can't change a character's stats if they're emotionally locked
+- ✅ **Each call only updates ONE attribute** - to update multiple attributes, make multiple calls
+- ✅ **Values are automatically rounded** to integers (no decimals)
 
 #### Updating Multiple Attributes
 
-To update both corruption and trust (or any combination), make **separate calls**:
+To update both corruption and trust (or any combination), make **separate calls** using **base values**:
 
 ```renpy
-# Update both corruption and trust with same value
-$ rm.update("amber", "cor", 5)
-$ rm.update("amber", "trust", 5)
+# Update both corruption and trust with same base value
+$ rm.update("amber", "cor", 2)    # Base 2 → 2 × 1.5 = 3 corruption
+$ rm.update("amber", "trust", 2)  # Base 2 → 2 × 1.0 = 2 trust
 
-# Update both with different values
-$ rm.update("amber", "cor", 10)
-$ rm.update("amber", "trust", -5)
+# Update both with different base values
+$ rm.update("amber", "cor", 3)    # Base 3 → 3 × 1.5 = 5 corruption
+$ rm.update("amber", "trust", -2) # Base -2 → -2 × 1.0 = -2 trust
 
 # Common pattern: choice that increases one and decreases the other
 menu:
     "Be gentle with her":
-        $ rm.update("amber", "trust", 10)
-        $ rm.update("amber", "cor", -5)
-        $ check_levels("amber", "trust", 10)
-        $ check_levels("amber", "cor", -5)
+        $ rm.update("amber", "trust", 3)   # Base 3 → 3 × 1.0 = 3 trust
+        $ rm.update("amber", "cor", -1)    # Base -1 → -1 × 1.5 = -2 corruption
+        $ check_levels("amber", "trust", 3)
+        $ check_levels("amber", "cor", -1)
 
     "Be forceful":
-        $ rm.update("amber", "cor", 10)
-        $ rm.update("amber", "trust", -5)
-        $ check_levels("amber", "cor", 10)
-        $ check_levels("amber", "trust", -5)
+        $ rm.update("amber", "cor", 3)     # Base 3 → 3 × 1.5 = 5 corruption
+        $ rm.update("amber", "trust", -2)  # Base -2 → -2 × 1.0 = -2 trust
+        $ check_levels("amber", "cor", 3)
+        $ check_levels("amber", "trust", -2)
 ```
 
-**Note:** There is no syntax like `rm.update("amber", "cor" and "trust", 5)`. You must make individual calls for each attribute.
+**Note:** There is no syntax like `rm.update("amber", "cor" and "trust", 2)`. You must make individual calls for each attribute. Always use base values - the system handles rate multiplication automatically.
 
 #### Getting Character Information
 
@@ -834,7 +837,9 @@ label .neutral_scene:
 | TMPD      | Organization  | trust                                         |
 | Osaka     | Organization  | trust                                         |
 
-### Character Progression Rates
+### Automatic Character Progression Rates
+
+**NEW SYSTEM (Version 2.0):** Character progression rates are now applied **automatically** to all stat changes. You only need to think about "base values" - the system multiplies them by character-specific rates for you.
 
 Different characters respond differently to your actions:
 
@@ -850,10 +855,83 @@ Different characters respond differently to your actions:
 | Nanami    | 3x         | 1x              | Very trusting, hard to corrupt  |
 | Paz       | 1x         | 1x              | Balanced progression            |
 
-**What This Means:**
-- If you increase Nanami's trust by 10, she gains 30 points (3x multiplier)
-- If you increase Madison's corruption by 10, she gains 20 points (2x multiplier)
-- If you increase Antonella's trust by 10, she only gains 2.5 points (0.25x multiplier)
+**How It Works (Automatic):**
+```renpy
+# You write base values:
+$ rm.update("nanami", "trust", 3)    # Base value: 3
+$ rm.update("madison", "cor", 5)     # Base value: 5
+$ rm.update("antonella", "trust", 8) # Base value: 8
+
+# System automatically applies rates:
+# Nanami gets: 3 × 3.0 = 9 trust (3x rate)
+# Madison gets: 5 × 2.0 = 10 corruption (2x rate)
+# Antonella gets: 8 × 0.25 = 2 trust (0.25x rate)
+```
+
+**Key Points:**
+- ✅ **Always use base values** - the system handles multiplication automatically
+- ✅ **Values are rounded** - no decimal stats (e.g., 2.5 becomes 3)
+- ✅ **Works with negatives** - negative values are also multiplied by rates
+- ✅ **No special syntax needed** - just use `rm.update()` as usual
+
+### Standard Base Values Guide
+
+Use these **base values** in your rm.update() calls. The system will automatically apply character-specific multipliers.
+
+| Decision Type              | Trust Base | Corruption Base | Integrity Base | Example                          |
+|----------------------------|------------|-----------------|----------------|----------------------------------|
+| **Casual interaction**     | ±1         | ±1              | ±1             | Small talk, minor choices        |
+| **Personal moment**        | ±2         | ±2              | ±2             | Sharing feelings, personal favor |
+| **Important decision**     | ±3         | ±3              | ±3             | Significant moral choice         |
+| **Critical story moment**  | ±5         | ±5              | ±5             | Major relationship turning point |
+| **Milestone decision**     | ±10        | ±10             | N/A            | Episode 6+ path-defining choices |
+
+**Examples in Practice:**
+
+```renpy
+# Casual: complimenting a character
+$ rm.update("amber", "trust", 1)  # Base 1 × 1.0 = 1 trust
+
+# Personal: comforting someone emotional
+$ rm.update("nanami", "trust", 2)  # Base 2 × 3.0 = 6 trust
+
+# Important: choosing to protect someone
+$ rm.update("elizabeth", "trust", 3)  # Base 3 × 2.0 = 6 trust
+
+# Critical: accepting intimate proposal
+$ rm.update("madison", "cor", 5)  # Base 5 × 2.0 = 10 corruption
+$ rm.update("mc", "integrity", -5)  # Base -5 = -5 integrity
+
+# Milestone (Episode 6+): path-defining choice
+$ rm.update("amber", "trust", 10)  # Base 10 × 1.0 = 10 trust
+$ amber_love_choices += 1
+```
+
+**Negative Values:**
+
+```renpy
+# Rejecting someone
+$ rm.update("amber", "trust", -2)  # Base -2 × 1.0 = -2 trust
+
+# Disappointing Nanami
+$ rm.update("nanami", "trust", -3)  # Base -3 × 3.0 = -9 trust
+
+# Corruption reversal (rare)
+$ rm.update("madison", "cor", -1)  # Base -1 × 2.0 = -2 corruption
+```
+
+**Why These Values?**
+
+These base values create balanced progression across all 20 episodes:
+- **Casual (±1)**: Small, incremental changes
+- **Personal (±2)**: Noticeable impact
+- **Important (±3)**: Significant relationship shift
+- **Critical (±5)**: Major story moments
+- **Milestone (±10)**: Path-defining decisions (ep6+)
+
+With character rates, these translate to meaningful but not extreme changes. For example:
+- Nanami gains 3-6 trust from personal moments (2 × 3.0)
+- Madison struggles to gain trust (2 × 0.5 = 1) but corrupts easily (2 × 2.0 = 4)
 
 ### Sexual Statistics Reference
 
