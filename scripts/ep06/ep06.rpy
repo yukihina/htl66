@@ -829,6 +829,8 @@ label ep06_mornwithamber_ending:
 
 label ep06_mornwithamber_corruption:
     $ amber_cor_choices += 1
+    $ rm.update("amber", "cor", 10)
+    $ check_levels("amber", "cor", 10)
     show ep06_ambermorn25
     amb "You want a show?"
     mc_s "Every detail."
@@ -1029,6 +1031,8 @@ label ep06_mornwithamber_cor_continue:
 
 label ep06_mornwithamber_love:
     $ amber_love_choices += 1
+    $ rm.update("amber", "trust", 10)
+    $ check_levels("amber", "trust", 10)
     show ep06_ambermorn50
     amb "Say that again."
     mc_s "You're the only good thing."
@@ -1373,6 +1377,8 @@ label ep06_madison_traingame:
         menu:
             "I don't know.":
                 mc_s "I don't know."
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera12
                 mad "You don't know."
@@ -1386,6 +1392,8 @@ label ep06_madison_traingame:
                 mc_s "Does it matter?"
                 mad "Yes."
                 mc_s "It happened. That's all that matters."
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera13
                 mad "Bullshit."
@@ -1398,6 +1406,8 @@ label ep06_madison_traingame:
 
             "No. I didn't.":
                 mc_s "No. I didn't."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera14
                 mad "Then why did you--?"
@@ -1418,6 +1428,8 @@ label ep06_madison_traingame:
                 mc_s "Because you're irritating."
                 mad "Irritating."
                 mc_s "Everything's a war with you. Every interaction."
+                $ rm.update("madison", "trust", -2)
+                $ check_levels("madison", "trust", -2)
 
                 show ep06_madisoncamera15
                 mad "That's not a reason."
@@ -1431,6 +1443,8 @@ label ep06_madison_traingame:
                 mc_s "Because the timing was wrong."
                 mad "Timing."
                 mc_s "Yeah."
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera13
                 mad "Bullshit."
@@ -1442,6 +1456,8 @@ label ep06_madison_traingame:
 
             "Because I wasn't attracted to you.":
                 mc_s "Because I wasn't attracted to you."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera14
                 mad "Liar."
@@ -1503,6 +1519,8 @@ label ep06_madison_traingame:
                 mc_s "You were the one who used that excuse."
                 mad "I... I wasn't—"
                 mc_s "You said it was to protect her purity. Your words."
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera38
                 mad "It was true! But--"
@@ -1514,6 +1532,8 @@ label ep06_madison_traingame:
                 mc_s "You believed it when you said it."
                 mad "That's not answering my question."
                 mc_s "It's the only answer I have."
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera39
                 mad "Coward."
@@ -1525,6 +1545,8 @@ label ep06_madison_traingame:
 
             "You were protecting her. Obviously.":
                 mc_s "You were protecting her. Obviously."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera40
                 mad "Liar. You don't really believe that."
@@ -1548,6 +1570,8 @@ label ep06_madison_traingame:
                 mc_s "It's more about the way you are. Not who you are."
                 mad "The way I am?"
                 mc_s "Yeah."
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera41
                 mad "So if I were different, you'd have said yes."
@@ -1558,6 +1582,8 @@ label ep06_madison_traingame:
                 mc_s "Does it matter?"
                 mad "Yes."
                 mc_s "Well, you could put it that way, and that's enough."
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera39
                 mad "But that's not all, right?"
@@ -1569,6 +1595,8 @@ label ep06_madison_traingame:
 
             "Yes. Only because you're my sister.":
                 mc_s "Yes. Only because you're my sister."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera40
                 mad "I know you're lying."
@@ -1689,6 +1717,8 @@ label ep06_madison_traingame:
                 mc_s "The sex wasn't the problem. I wanted it. You wanted it."
                 mad "Then what's the problem?"
                 mc_s "Everything that came after."
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera20
                 mad "Meaning?"
@@ -1703,6 +1733,8 @@ label ep06_madison_traingame:
                 mc_s "Sometimes."
                 mad "Sometimes you regret it."
                 mc_s "Sometimes I think it was a mistake."
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera21
                 mad "Which times?"
@@ -1716,6 +1748,8 @@ label ep06_madison_traingame:
 
             "Yes. Absolutely.":
                 mc_s "Yes. Absolutely."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera22
                 mad "You're lying again."
@@ -1737,6 +1771,8 @@ label ep06_madison_traingame:
                 mc_s "You want me to answer that seriously?"
                 mad "Yes."
                 mc_s "I'm not one to judge. I'm hardly a model of mental health myself."
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera20
                 mad "That's not an answer."
@@ -1749,6 +1785,8 @@ label ep06_madison_traingame:
                 mc_s "Define \"broken\"."
                 mad "You know what I mean."
                 mc_s "Do I? Are we talking about a machine? A toy? A system?"
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera21
                 mad "You're dodging."
@@ -1760,6 +1798,8 @@ label ep06_madison_traingame:
 
             "No. You're fine. Really.":
                 mc_s "No. You're fine. Really."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera22
                 mad "Liar."
@@ -1846,6 +1886,8 @@ label ep06_madison_traingame:
                 mc_s "Of course not. Are you insane?"
                 mad "Why would that be insane?"
                 mc_s "Because she's too young to understand."
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera48
                 mad "Too young? We were born in the same year."
@@ -1858,6 +1900,8 @@ label ep06_madison_traingame:
 
             "I don't think so.":
                 mc_s "I don't think so."
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera49
                 mad "You don't \"think\" so."
@@ -1872,6 +1916,8 @@ label ep06_madison_traingame:
 
             "Maybe. I don't know.":
                 mc_s "Maybe. I don't know."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera50
                 mad "Liar."
@@ -1892,6 +1938,8 @@ label ep06_madison_traingame:
                 mc_s "What do you mean?"
                 mad "Did you leave because we're all damaged goods?"
                 mc_s "No."
+                $ rm.update("madison", "trust", 2)
+                $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera51
                 mad "Then why?"
@@ -1902,6 +1950,8 @@ label ep06_madison_traingame:
 
             "I left for work.":
                 mc_s "I left for work."
+                $ rm.update("madison", "cor", 1)
+                $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera49
                 mad "Bullshit."
@@ -1916,6 +1966,8 @@ label ep06_madison_traingame:
 
             "I left because of career opportunities.":
                 mc_s "I left because of career opportunities."
+                $ rm.update("madison", "cor", 2)
+                $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera50
                 mad "You're lying."
@@ -2208,6 +2260,9 @@ label ep06_madison_traingame:
                 mad "Hmmmm... Okay."
 
                 $ ep06_chosen_path = "love"
+                $ madison_love_choices += 1
+                $ rm.update("madison", "trust", 10)
+                $ check_levels("madison", "trust", 10)
 
             "Yes.":
                 mc_s "Yes. God help me, yes."
@@ -2226,6 +2281,9 @@ label ep06_madison_traingame:
                 mc_t "She wants an accomplice, not a savior."
 
                 $ ep06_chosen_path = "corruption"
+                $ madison_cor_choices += 1
+                $ rm.update("madison", "cor", 10)
+                $ check_levels("madison", "cor", 10)
 
             "No.":
                 mc_s "No."
@@ -2267,6 +2325,9 @@ label ep06_madison_traingame:
                 mad "Okay."
 
                 $ ep06_chosen_path = "love"
+                $ madison_love_choices += 1
+                $ rm.update("madison", "trust", 10)
+                $ check_levels("madison", "trust", 10)
 
             "Probably. Depends.":
                 mc_s "Probably. The taboo is... tempting."
@@ -2284,6 +2345,9 @@ label ep06_madison_traingame:
                 mc_t "She wants me to acknowledge the desire is mutual."
 
                 $ ep06_chosen_path = "corruption"
+                $ madison_cor_choices += 1
+                $ rm.update("madison", "cor", 10)
+                $ check_levels("madison", "cor", 10)
 
             "No.":
                 mc_s "No."
