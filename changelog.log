@@ -1,47 +1,83 @@
 =====================================================================
                              CHANGELOG
 =====================================================================
-v0.28 Episode 6 - 1st part
+v0.28 Episode 6 - 1st part (Act 2 begins)
 ---------------------------------------------------------------------
 + ADDED:
-  • 225 new renders
+  • Episode 6 released with 225 new renders
   • 14 new animations
-  • 2 new achievements
+  • 2 new achievements for Episode 6
   • Walkthrough updated for Episode 6 decisions
+  • 7 new comprehensive system documentation files (Achievements, Audio,
+    Character Info, Core Systems, Notifications, Phone, Stats Screen)
   • Migration of save data for new systems
+  • New story path begins (Act 2 storyline)
+  • New character interactions and scenes
 
 ~ CHANGED:
-  • Some GUI elements updated
-  • Animated episode title backgrounds
-  • All achievements remade and re-rendered in 8K UHD (so I get rid of AI blending)
-  • Paths now properly track character development
-  • All walkthrough points reflect the new point system
+  • Episode title backgrounds now fully animated
+  • All achievements remade and re-rendered in 8K UHD (7680x4320)
+  • Achievement images optimized for high-resolution displays
+  • Character relationship tracking system enhanced
+  • All walkthrough points updated to reflect new point system
+  • GUI elements refined for better user experience
+  • Animated transitions for episode titles improved
 
 ! FIXED:
-  • 01 render from version 0.27
-  • Achievement screen zoom and drag fixed for 8K UHD
+  • 01 render corrected from version 0.27
+  • Achievement screen zoom and drag functionality fixed for 8K UHD images
+  • Zoom now centers at mouse position (mousewheel support added)
+  • Drag constraints prevent showing empty background
+  • Achievement display scaling fixed (base zoom 0.25 for 8K images)
 
 * TECHNICAL:
-  • Updated to Renpy 8.5
-  • Changed webm codec to libaom-av1
+  • Updated to Ren'Py 8.5
+  • Changed webm codec to libaom-av1 for better compression
+  • Achievement screen now supports 7680x4320 images with proper scaling
+  • Added ZoomAtMouse class for smooth zoom functionality
+  • Implemented constrain_offsets function for proper image boundaries
+  • Episode 6 codebase: 2,635 lines (ep06.rpy), 234 lines (ep06_images.rpy),
+    46 lines (ep06_vars.rpy)
+  • Total code changes: ~25,850 insertions, ~39,416 deletions
 
 
-v0.27 AI removal and animation update
+v0.27 Code refactoring and dialogue consolidation
 ---------------------------------------------------------------------
 + ADDED:
-  • 09 new animations on episode 4 (Nanami night scene)
+  • 09 new animations on Episode 4 (Nanami night scene)
 
 ~ CHANGED:
-  • Re-rendered 211 renders on episode 4 (Nanami night scene)
+  • Re-rendered 211 renders on Episode 4 (Nanami night scene)
+  • **MAJOR**: Consolidated all dialogue files into main episode files
+  • All Episodes (1-5) refactored with inline dialogues
+  • Dialogue system modernized and streamlined
+  • Removed separation between dialogue and script files
 
 ! FIXED:
-  • Sound bugs on v0.26
-  • Amber/MC bugged dialogues on episode 3
+  • Sound bugs from v0.26 resolved
+  • Amber/MC dialogue bugs in Episode 3 corrected
+  • Path inconsistencies in episode scripts
 
 * TECHNICAL:
-  • AVIF sharpening fixed on episode 5.
-  • Deleted unused files from previous versions.
-  • Webm using AV1 codec instead of VP9
+  • AVIF sharpening fixed on Episode 5
+  • Deleted 21 obsolete/deprecated files
+  • Removed all separated dialogue files (ep01-ep05_dialogue.rpy)
+  • Cleaned up deprecated folder entirely (8 files removed):
+    - def_charname.rpyx
+    - def_episode_titles.rpyx
+    - def_transforms.rpyx
+    - music_assets.rpyx
+    - patch.rpyx
+    - py_textmod.rpyx
+    - sound_assets.rpyx
+  • Removed obsolete files:
+    - screens_bookmark.rpyx
+    - wt.rpyx
+    - py_fx_wave.rpy
+    - screen_achievments.rpyx
+    - ep03_images.rpy
+  • Webm codec changed to AV1 (from VP9) for all animations
+  • Improved code organization and maintainability
 
 v0.26 (Episode 5)
 ---------------------------------------------------------------------
