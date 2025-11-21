@@ -22,6 +22,11 @@
     default persistent.madison_path = None
     default persistent.paz_path = None
 
+    # MC Alignment System
+    # Values: "rogue", "neutral", "paragon", or None (unlocked)
+    default persistent.mc_alignment = None
+    default persistent.current_episode = 0
+
 
 ################################################################################
 ## MILESTONE DECISION SYSTEM - Episode 6+ Path Locking
@@ -134,6 +139,7 @@ label get_player_name:
 label start:
     $ update_htl_episodes()
     $ save_system_version = 2  # New games start with version 2 (automatic progression rates)
+    $ persistent.current_episode = 1  # New games start at episode 1
     stop music fadeout 0.5
     if not persistent.disclaimer:
         $ persistent.disclaimer = True
@@ -218,5 +224,18 @@ label after_load:
         $ save_system_version = 2  # Apply version 2 "seal"
 
         centered "{b}Migration Complete{/b}\n\nYour character stats have been adjusted to the new system.\nFuture stat changes will use automatic progression rates.\n\n{size=24}Click to continue...{/size}"
+
+    # Migrate current_episode for old saves
+    # Auto-detect which episode the player is on based on seen labels
+    python:
+        if not hasattr(persistent, 'current_episode') or persistent.current_episode == 0:
+            # Check which episode labels have been seen (in reverse order)
+            for ep in range(20, 0, -1):  # Check from ep20 down to ep01
+                if renpy.seen_label(f"ep{ep:02d}_start"):
+                    persistent.current_episode = ep
+                    break
+            # If no episode labels seen, default to 1
+            if persistent.current_episode == 0:
+                persistent.current_episode = 1
 
     return

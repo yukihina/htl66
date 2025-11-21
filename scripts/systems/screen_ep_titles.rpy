@@ -38,8 +38,8 @@ init python:
         2: "A Glimmer in the Darkness",
         3: "Flirting with the Past",
         4: "Blossoming Innocence",
-        5: "Beautiful Scars"
-        # 6: "A New Beginning",  # <-- Example for episode 6
+        5: "Beautiful Scars",
+        6: "Bloodstained Fox",  # <-- Example for episode 6
         # 7: "Shadows of Yesterday",   # <-- Example for episode 7
         # ... and so on for up to 20 or more.
     }
@@ -211,6 +211,10 @@ label ep04_title:
 
 label ep05_title:
     call show_episode_title(5)
+    return
+
+label ep06_title:
+    call show_episode_title(6)
     return
 
 # When you create episode 6, simply add:

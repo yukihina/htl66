@@ -2763,4 +2763,4 @@ label act1_ending:
         scene eigengrau with rose
         pause 2
         $ resetAllVolumes()
-        jump ep05_title
+        jump ep06_title

@@ -3,6 +3,7 @@
 
 
 label ep04_start:
+    $ persistent.current_episode = 4
     scene eigengrau with watercolor
     $ stopAllSubchannels(channel="music", fadeout=1)
     pause 0.5

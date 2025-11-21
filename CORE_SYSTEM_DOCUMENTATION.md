@@ -15,9 +15,10 @@
 5. [Wardrobe Management (WM)](#wardrobe-management-wm)
 6. [Level System](#level-system)
 7. [Milestone Decision System](#milestone-decision-system)
-8. [Practical Examples](#practical-examples)
-9. [Character Reference](#character-reference)
-10. [Troubleshooting](#troubleshooting)
+8. [MC Integrity & Alignment System](#mc-integrity--alignment-system)
+9. [Practical Examples](#practical-examples)
+10. [Character Reference](#character-reference)
+11. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -39,7 +40,7 @@ Think of it as the game's memory - it remembers every choice you make, every int
 
 ## System Overview
 
-The Core System consists of five main components:
+The Core System consists of six main components:
 
 ### 1. **RM (Relationship Management)**
 Controls character attributes like corruption, trust, integrity, and relationship status.
@@ -55,6 +56,9 @@ Converts numerical stats (0-100) into levels (0-5) and shows notifications.
 
 ### 5. **Milestone Decision System**
 Locks characters into story paths based on your cumulative choices.
+
+### 6. **MC Integrity & Alignment System**
+Tracks MC's moral choices and locks their alignment (Paragon/Neutral/Rogue) at Episode 15.
 
 ---
 
@@ -598,6 +602,332 @@ label amber_corruption_route:
 
 ---
 
+## MC Integrity & Alignment System
+
+The Integrity System tracks MC's moral choices and locks their alignment at the end of Episode 15, affecting how the story branches in episodes 16+.
+
+### How It Works
+
+#### **Phase 1: Building Integrity (Episodes 1-15)**
+
+MC starts with **integrity = 50** (neutral). Every moral choice adjusts this value:
+
+- **Paragon choices**: Increase integrity (+1 to +8)
+- **Rogue choices**: Decrease integrity (-1 to -8)
+- **Range**: 0-100
+
+#### **Phase 2: Alignment Lock**
+
+The alignment locks in two ways:
+
+1. **Early Lock (Pure Paths)**: If integrity reaches **0** or **100** at ANY point before ep15
+   - **0 = Rogue Pure** (locked permanently)
+   - **100 = Paragon Pure** (locked permanently)
+
+2. **Forced Lock (End of Episode 15)**: Alignment locks based on current integrity range:
+   - **0-30 = Rogue** (Antihero, ends justify means)
+   - **31-69 = Neutral** (Pragmatic, case by case)
+   - **70-100 = Paragon** (Hero, always does right)
+
+#### **Phase 3: Branching (Episode 16+)**
+
+Once locked, integrity can no longer change. Use the locked alignment to branch story paths.
+
+### Integrity Ranges
+
+| Alignment | Range | Description | Lock Behavior |
+|-----------|-------|-------------|---------------|
+| **Rogue** | 0-30 | Antihero, ends justify means | Locks at ep15 end, or immediately at 0 |
+| **Neutral** | 31-69 | Pragmatic, case by case | Locks at ep15 end only |
+| **Paragon** | 70-100 | Hero, always does right | Locks at ep15 end, or immediately at 100 |
+
+### Decision Point Values
+
+Use these base values for integrity-affecting decisions:
+
+| Decision Type | Points | Examples | Frequency/Ep |
+|---------------|--------|----------|--------------|
+| **Micro** | ±1 | Minor dialogue choices, attitude | 4-6 |
+| **Minor** | ±2 | Small moral decisions | 2-3 |
+| **Important** | ±3 | Significant moral choices | 2-3 |
+| **Critical** | ±5 | Major character-defining moments | 1-2 |
+| **Definitive** | ±8 | Extreme moral choices | 0-1 |
+
+**Total swing per episode**: ~±10 to ±18 points
+
+### How to Use the Integrity System
+
+#### Updating Integrity
+
+```renpy
+# Paragon choices (positive)
+menu:
+    "Help the stranger":
+        $ rm.update("mc", "integrity", 2)  # +2 integrity
+
+    "Reject the bribe":
+        $ rm.update("mc", "integrity", 5)  # +5 integrity
+
+# Rogue choices (negative)
+menu:
+    "Ignore their plea":
+        $ rm.update("mc", "integrity", -2)  # -2 integrity
+
+    "Take the bribe":
+        $ rm.update("mc", "integrity", -5)  # -5 integrity
+```
+
+#### Tracking Current Episode
+
+**IMPORTANT**: Add this line at the start of EVERY episode label:
+
+```renpy
+label ep01_start:
+    $ persistent.current_episode = 1
+    # rest of episode...
+
+label ep02_start:
+    $ persistent.current_episode = 2
+    # rest of episode...
+
+# Continue for all episodes...
+```
+
+This enables automatic alignment locking at ep15.
+
+#### Checking Alignment
+
+```renpy
+# Get current alignment (returns None if unlocked)
+$ alignment = get_mc_alignment()
+
+if alignment == "paragon":
+    "You are a hero."
+elif alignment == "rogue":
+    "You are an antihero."
+elif alignment == "neutral":
+    "You are pragmatic."
+else:
+    "Your alignment is not yet locked."
+```
+
+#### Checking If Locked
+
+```renpy
+$ locked = is_alignment_locked()
+
+if locked:
+    "Your moral path has been decided."
+else:
+    "Your choices still matter."
+```
+
+#### Manual Lock (Optional)
+
+The system auto-locks at ep15, but you can force it earlier:
+
+```renpy
+# At end of episode 15
+label ep15_end:
+    $ alignment = lock_mc_alignment()
+
+    if persistent.mc_alignment == "paragon":
+        "You have walked the path of righteousness."
+    elif persistent.mc_alignment == "rogue":
+        "You have embraced the shadows."
+    else:
+        "You remain pragmatic, choosing neither extreme."
+```
+
+### Using Locked Alignment in Episodes 16+
+
+Branch your story based on locked alignment:
+
+```renpy
+label ep16_critical_scene:
+    if persistent.mc_alignment == "paragon":
+        jump .paragon_route
+    elif persistent.mc_alignment == "rogue":
+        jump .rogue_route
+    else:
+        jump .neutral_route
+
+label .paragon_route:
+    "You choose the honorable path, no matter the cost."
+    # Paragon-specific content
+
+label .rogue_route:
+    "You do what must be done, consequences be damned."
+    # Rogue-specific content
+
+label .neutral_route:
+    "You weigh your options carefully before deciding."
+    # Neutral-specific content
+```
+
+### Combining Alignment with Current Integrity
+
+Even after locking, you can use the exact integrity value for nuance:
+
+```renpy
+label ep16_scene:
+    if persistent.mc_alignment == "paragon":
+        $ integrity = rm.get("mc", "integrity")
+
+        if integrity >= 90:
+            # High paragon - absolutely pure
+            mc "I will never compromise my principles."
+        else:
+            # Low paragon - still heroic but more flexible
+            mc "I believe in doing what's right... mostly."
+```
+
+### Practical Decision Examples
+
+#### Paragon Choices
+
+```renpy
+# Micro (+1)
+menu:
+    "Be polite to the rude waiter":
+        $ rm.update("mc", "integrity", 1)
+
+# Minor (+2)
+menu:
+    "Return the lost wallet":
+        $ rm.update("mc", "integrity", 2)
+
+# Important (+3)
+menu:
+    "Tell the painful truth instead of lying":
+        $ rm.update("mc", "integrity", 3)
+
+# Critical (+5)
+menu:
+    "Reject the yakuza's money":
+        $ rm.update("mc", "integrity", 5)
+
+# Definitive (+8)
+menu:
+    "Sacrifice yourself to save innocents":
+        $ rm.update("mc", "integrity", 8)
+```
+
+#### Rogue Choices
+
+```renpy
+# Micro (-1)
+menu:
+    "Intimidate the guard":
+        $ rm.update("mc", "integrity", -1)
+
+# Minor (-2)
+menu:
+    "Keep the lost wallet":
+        $ rm.update("mc", "integrity", -2)
+
+# Important (-3)
+menu:
+    "Lie to protect your interests":
+        $ rm.update("mc", "integrity", -3)
+
+# Critical (-5)
+menu:
+    "Accept the yakuza's money":
+        $ rm.update("mc", "integrity", -5)
+
+# Definitive (-8)
+menu:
+    "Sacrifice an innocent to save many":
+        $ rm.update("mc", "integrity", -8)
+```
+
+### Best Practices
+
+#### 1. Update Episode Tracking
+
+Always set the current episode at the start of each episode label:
+
+```renpy
+label ep06_start:
+    $ persistent.current_episode = 6
+    # ...
+```
+
+#### 2. Balance Decision Frequency
+
+Don't overload episodes with integrity choices. Aim for:
+- 4-6 micro decisions (±1)
+- 2-3 minor decisions (±2)
+- 2-3 important decisions (±3)
+- 1-2 critical decisions (±5)
+- 0-1 definitive decisions (±8)
+
+#### 3. Make Choices Meaningful
+
+Integrity choices should feel significant, not arbitrary:
+
+```renpy
+# Good - clear moral dimension
+menu:
+    "Save the child, even if it means breaking your cover":
+        $ rm.update("mc", "integrity", 5)
+
+    "Maintain your cover, the mission comes first":
+        $ rm.update("mc", "integrity", -5)
+
+# Bad - arbitrary choice without moral weight
+menu:
+    "Order coffee":
+        $ rm.update("mc", "integrity", 2)  # Why is this heroic?
+
+    "Order tea":
+        $ rm.update("mc", "integrity", -2)  # Why is this villainous?
+```
+
+#### 4. Preview Alignment Before Lock
+
+Give players feedback before the final lock:
+
+```renpy
+label ep14_end:
+    $ integrity = rm.get("mc", "integrity")
+
+    if integrity >= 70:
+        "Your actions have painted you as a hero."
+    elif integrity <= 30:
+        "Your methods have marked you as an antihero."
+    else:
+        "You walk a fine line between light and shadow."
+
+    "One more episode remains before your path is set in stone."
+```
+
+### Helper Functions Reference
+
+```renpy
+# Lock MC alignment (auto-called at ep15, can call manually)
+$ alignment = lock_mc_alignment()
+
+# Get current locked alignment
+$ alignment = get_mc_alignment()
+# Returns: "rogue", "neutral", "paragon", or None
+
+# Check if alignment is locked
+$ locked = is_alignment_locked()
+# Returns: True or False
+
+# Get current integrity value
+$ integrity = rm.get("mc", "integrity")
+# Returns: 0-100
+
+# Check if integrity is locked
+$ integrity_locked = rm.get("mc", "integrity_locked")
+# Returns: True or False
+```
+
+---
+
 ## Practical Examples
 
 ### Example 1: Basic Date Scene
@@ -880,11 +1210,12 @@ Use these **base values** in your rm.update() calls. The system will automatical
 
 | Decision Type              | Trust Base | Corruption Base | Integrity Base | Example                          |
 |----------------------------|------------|-----------------|----------------|----------------------------------|
-| **Casual interaction**     | ±1         | ±1              | ±1             | Small talk, minor choices        |
-| **Personal moment**        | ±2         | ±2              | ±2             | Sharing feelings, personal favor |
-| **Important decision**     | ±3         | ±3              | ±3             | Significant moral choice         |
-| **Critical story moment**  | ±5         | ±5              | ±5             | Major relationship turning point |
-| **Milestone decision**     | ±10        | ±10             | N/A            | Episode 6+ path-defining choices |
+| **Micro decision**         | ±1         | ±1              | ±1             | Small talk, minor attitude choices |
+| **Minor decision**         | ±2         | ±2              | ±2             | Small moral/personal choices     |
+| **Important decision**     | ±3         | ±3              | ±3             | Significant moral/relationship choice |
+| **Critical decision**      | ±5         | ±5              | ±5             | Major character-defining moment  |
+| **Definitive decision**    | N/A        | N/A             | ±8             | Extreme moral choice (integrity only) |
+| **Milestone decision**     | ±10        | ±10             | N/A            | Episode 6+ path-defining choices (char paths only) |
 
 **Examples in Practice:**
 
@@ -1072,6 +1403,64 @@ $ current_integrity = rm.get("mc", "integrity")
 if is_locked:
     "Your integrity is locked at [current_integrity]."
     "This represents your final moral state."
+```
+
+#### Issue: Alignment Won't Lock at Episode 15
+
+**Symptoms:** Reached ep15 but alignment isn't locking
+
+**Solutions:**
+1. Make sure you're setting `persistent.current_episode` at the start of each episode
+2. Verify the system version is 2 (new saves start with it)
+3. Check if alignment was already locked earlier (reached 0 or 100)
+
+**Example:**
+```renpy
+# At start of ep15
+label ep15_start:
+    $ persistent.current_episode = 15  # Must set this!
+    # ...
+
+# Check alignment status
+$ alignment = get_mc_alignment()
+$ locked = is_alignment_locked()
+
+if not locked:
+    "Alignment should lock by end of this episode."
+else:
+    "Alignment already locked as: [alignment]"
+```
+
+#### Issue: Episode Tracking Not Working on Old Saves
+
+**Symptoms:** Old saves don't have `current_episode` set correctly
+
+**Solution:** The migration system auto-detects using `renpy.seen_label()`, but you can manually set it:
+
+**Example:**
+```renpy
+# Manually set if needed
+$ persistent.current_episode = 6  # Set to your current episode
+```
+
+#### Issue: Alignment Locked Too Early
+
+**Symptoms:** Alignment locked before Episode 15
+
+**Cause:** Integrity reached 0 or 100 (pure paths)
+
+**This is intentional behavior:**
+- Reaching 0 = Rogue Pure (locked immediately)
+- Reaching 100 = Paragon Pure (locked immediately)
+
+**Example:**
+```renpy
+$ integrity = rm.get("mc", "integrity")
+
+if integrity == 0:
+    "You've fully committed to the Rogue path."
+elif integrity == 100:
+    "You've fully committed to the Paragon path."
 ```
 
 ### Best Practices

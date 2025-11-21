@@ -1,4 +1,5 @@
 label ep06_start:
+    $ persistent.current_episode = 6
     scene eigengrau with watercolor
     $ stopAllSubchannels(channel="music", fadeout=1)
     pause 0.5
@@ -77,10 +78,14 @@ label ep06_ope:
     menu:
         "I'll do this right.":
             mc_t "I'll investigate thoroughly. Professional standards still matter."
+            $ rm.update("mc", "integrity", 1)
+
         "I wasn't ready for this.":
             mc_t "Three months wasn't enough recovery time for this kind of case."
+
         "Perfect. Time for payback.":
             mc_t "Good. I've got unfinished business with those bastards anyway."
+            $ rm.update("mc", "integrity", -1)
 
     show ep06_opening11
     wat "He's at the scene. Don't keep him waiting."
@@ -319,10 +324,14 @@ label ep06_crimescene:
 
     menu:
         "They believed in justice.":
+            $ rm.update("mc", "integrity", 2)
             mc_s "Someone who believes they're serving a higher purpose. Justice, even if it's wrong."
+
         "Just following orders.":
             mc_s "Someone doing a job. Following orders. No emotion involved."
+
         "They enjoyed the kill.":
+            $ rm.update("mc", "integrity", -2)
             mc_s "Someone who enjoys it. The killing and the art of it."
 
     tak "We're hunting someone very dangerous."
@@ -437,12 +446,14 @@ label ep06_crimescene:
 
     menu:
         "Stop them legally.":
+            $ rm.update("mc", "integrity", 2)
             mc_s "People who've lost sight of any moral line. They need to be stopped through proper legal process."
 
         "Just catch them.":
             mc_s "Criminals doing criminal things. The brutality doesn't matter. What matters is catching them."
 
         "They deserve everything.":
+            $ rm.update("mc", "integrity", -2)
             mc_s "Monsters. The kind who deserve whatever happens to them when we find them."
     
     tak "I wanted to hear your answer."
@@ -817,6 +828,7 @@ label ep06_mornwithamber_ending:
 
 
 label ep06_mornwithamber_corruption:
+    $ amber_cor_choices += 1
     show ep06_ambermorn25
     amb "You want a show?"
     mc_s "Every detail."
@@ -988,12 +1000,14 @@ label ep06_mornwithamber_cor_continue:
             mc_s "You're mine completely."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
+
         "Fucking perfect.":
             mc_s "Fucking perfect."
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
+
         "Good girl.":
             mc_s "Good girl."
             $ rm.update("amber", "trust", 2)
@@ -1014,6 +1028,7 @@ label ep06_mornwithamber_cor_continue:
 
 
 label ep06_mornwithamber_love:
+    $ amber_love_choices += 1
     show ep06_ambermorn50
     amb "Say that again."
     mc_s "You're the only good thing."
@@ -1160,19 +1175,18 @@ label ep06_mornwithamber_love_hold:
         "I love you.":
             mc_s "I love you. Always."
             # Milestone decision - love path
-            $ amber_love_choices += 1
             $ rm.update("amber", "trust", 10)
             $ check_levels("amber", "trust", 10)
+
         "You're safe.":
             mc_s "You're safe with me."
             # Milestone decision - love path (moderate)
-            $ amber_love_choices += 1
             $ rm.update("amber", "trust", 7)
             $ check_levels("amber", "trust", 7)
+
         "I'm staying.":
             mc_s "I'm not going anywhere."
             # Milestone decision - love path (subtle)
-            $ amber_love_choices += 1
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
     
@@ -2609,6 +2623,20 @@ label ep06_madison_station_proposal:
 
     mc_t "Last chance to walk away."
     mc_t "Every reason says run. Every instinct says stay."
+
+    #-- End Update
+    if htl_episodes == 6.1:
+        $ stopAllSubchannels(channel="sfx", fadeout=1)
+        $ stopAllSubchannels(channel="amb", fadeout=1.5)
+        $ stopAllSubchannels(channel="music", fadeout=2)
+        scene eigengrau with rose
+        pause 2.0
+        $ resetAllVolumes()
+        return
+
+    else:
+        pass
+
 
     # CRITICAL CHOICE - Player decides
     menu:
