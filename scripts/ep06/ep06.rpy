@@ -74,6 +74,7 @@ label ep06_ope:
     mc_t "Diversity. That's what we're calling it now."
     wat "Of course, **we** value all contributions to the department."
 
+    $ show_walkthrough("ep06_opening_menu1")
     menu:
         "I'll do this right.":
             mc_t "I'll investigate thoroughly. Professional standards still matter."
@@ -317,6 +318,7 @@ label ep06_crimescene:
     tak "What kind of person kills a police officer, then stays at the crime scene to arrange shell casings in a geometric pattern?"
     mc_s "That depends on how you look at it."
 
+    $ show_walkthrough("ep06_crimescene_menu1")
     menu:
         "They believed in justice.":
             mc_s "Someone who believes they're serving a higher purpose. Justice, even if it's wrong."
@@ -435,6 +437,7 @@ label ep06_crimescene:
     tak "Not tactically. Not structurally."
     tak "Morally. What kind of people do this?"
 
+    $ show_walkthrough("ep06_crimescene_menu2")
     menu:
         "Stop them legally.":
             mc_s "People who've lost sight of any moral line. They need to be stopped through proper legal process."
@@ -499,6 +502,7 @@ label ep06_mornwithamber:
     amb "Shut up and feel this."
     mc_t "I should stop. I can't. God, I can't."
 
+    $ show_walkthrough("ep06_morn_amb_menu1")
     menu:
         "Show me." if amber_strikes == 0 and rm.get("amber", "cor") >= 25:
             mc_s "Show me what you were doing."
@@ -537,6 +541,7 @@ label ep06_mornwithamber:
     amb "It's so fucking hot."
     mc_t "She sees the worst parts and wants them."
 
+    $ show_walkthrough("ep06_morn_amb_menu2")
     menu:
         "You see me." if amber_strikes == 0 and rm.get("amber", "trust") >= 40:
             mc_s "You've always seen me."
@@ -572,6 +577,7 @@ label ep06_mornwithamber_neutral:
     mc_t "Say it. She needs to hear it."
     amb "Tell me..."
 
+    $ show_walkthrough("ep06_amb_neutral_menu1")
     menu:
         "I love you.":
             mc_s "I love you, Amber."
@@ -604,6 +610,7 @@ label ep06_mornwithamber_neutral:
 
 
 label ep06_mornwithamber_neutral_sexmenu:
+    $ show_walkthrough("ep06_amb_neutral_sexmenu")
     menu:
         amb "Tell me what you want..."
         "Come here." if not e6_amber_neutral_blowjob_seen:
@@ -673,6 +680,7 @@ label ep06_mornwithamber_neutral_continue:
     amb "We both are."
     mc_t "God, she's right. We're both fucking insane."
 
+    $ show_walkthrough("ep06_amb_neutral_menu2")
     menu:
         "Only you get me.":
             mc_s "You're the only one who understands."
@@ -723,7 +731,8 @@ label ep06_mornwithamber_postclimax:
         amb "Every time... I worry you'll see me different."
         mc_s "I see you exactly as you are."
         amb "And that doesn't scare you?"
-        
+
+        $ show_walkthrough("ep06_amb_cor_postclimax")
         menu:
             "You don't scare me.":
                 mc_s "Nothing about you scares me."
@@ -754,6 +763,7 @@ label ep06_mornwithamber_postclimax:
         amb "Even when I'm..."
         mc_s "Especially then."
 
+        $ show_walkthrough("ep06_amb_love_postclimax")
         menu:
             "I mean it.":
                 mc_s "I know exactly what I'm saying."
@@ -784,6 +794,7 @@ label ep06_mornwithamber_postclimax:
         show ep06_ambermorn23
         amb "No one else said that. I mean... everyone else just looked at me like I'd—like I'd ruined something."
 
+        $ show_walkthrough("ep06_amb_neutral_postclimax")
         menu:
             "Perfect to me.":
                 mc_s "You've always been perfect to me."
@@ -849,6 +860,7 @@ label ep06_mornwithamber_corruption:
 
 
 label ep06_mornwithamber_corruption_sexmenu:
+    $ show_walkthrough("ep06_amb_cor_sexmenu")
     menu:
         amb "What do you want from me?"
         
@@ -983,6 +995,7 @@ label ep06_mornwithamber_cor_continue:
     amb "Inside... yes..."
     mc_s "All of it."
     mc_t "Mine. She's fucking mine."
+    $ show_walkthrough("ep06_amb_cor_climax")
     menu:
         "You're mine.":
             mc_s "You're mine completely."
@@ -1030,6 +1043,7 @@ label ep06_mornwithamber_love:
 
 
 label ep06_mornwithamber_love_sexmenu:
+    $ show_walkthrough("ep06_amb_love_sexmenu")
     menu:
         amb "What do you want?"
         
@@ -1156,6 +1170,7 @@ label ep06_mornwithamber_love_hold:
     amb "Don't... let... go..."
     mc_s "I won't. I'm here."
 
+    $ show_walkthrough("ep06_amb_love_climax")
     menu:
         "I love you.":
             mc_s "I love you. Always."
@@ -1356,6 +1371,7 @@ label ep06_madison_traingame:
         show ep06_madisoncamera11
         mad "Did you want me that night?"
 
+        $ show_walkthrough("ep06_mad_train_r1_true")
         menu:
             "I don't know.":
                 mc_s "I don't know."
@@ -1399,6 +1415,7 @@ label ep06_madison_traingame:
         show ep06_madisoncamera11
         mad "Why did you say no?"
 
+        $ show_walkthrough("ep06_mad_train_r1_false")
         menu:
             "Because you're irritating.":
                 mc_s "Because you're irritating."
@@ -1482,6 +1499,7 @@ label ep06_madison_traingame:
         # TRUE PATH - Madison asks if MC was really protecting Nanami
         mad "Was I really protecting Nanami? Or was I using you?"
 
+        $ show_walkthrough("ep06_mad_train_r2_true")
         menu:
             "I don't know. You tell me.":
                 mc_s "I don't know. You tell me."
@@ -1527,6 +1545,7 @@ label ep06_madison_traingame:
         # FALSE PATH - Madison asks if it was because she's MC's sister
         mad "Was it because I'm your sister?"
 
+        $ show_walkthrough("ep06_mad_train_r2_false")
         menu:
             "Partially.":
                 mc_s "Partially."
@@ -1575,6 +1594,7 @@ label ep06_madison_traingame:
     if ep05_confrontation_peaceful:
         # TRUE PATH - MC asks about who Madison was planning to show recording to
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_mad_train_r2_mc_true")
             menu:
                 "Who were you planning on showing it to?":
                     show ep06_madisoncamera43
@@ -1618,6 +1638,7 @@ label ep06_madison_traingame:
     else:
         # FALSE PATH - MC asks how many men said yes before
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_mad_train_r2_mc_false")
             menu:
                 "How many men have said yes before me?":
                     show ep06_madisoncamera45
@@ -1668,6 +1689,7 @@ label ep06_madison_traingame:
         # TRUE PATH - Madison asks if MC regrets it happened
         mad "Do you regret that it happened?"
 
+        $ show_walkthrough("ep06_mad_train_r3_true")
         menu:
             "No. I don't.":
                 mc_s "No. I don't."
@@ -1718,6 +1740,7 @@ label ep06_madison_traingame:
         # FALSE PATH - Madison asks if MC thinks she's broken
         mad "Do you think I'm broken?"
 
+        $ show_walkthrough("ep06_mad_train_r3_false")
         menu:
             "You want me to answer that seriously?":
                 mc_s "You want me to answer that seriously?"
@@ -1827,6 +1850,7 @@ label ep06_madison_traingame:
         # TRUE PATH - Madison asks if Isabella knows
         mad "Does Isabella know what you did with me?"
 
+        $ show_walkthrough("ep06_mad_train_r4_true")
         menu:
             "Of course not. Are you insane?":
                 mc_s "Of course not. Are you insane?"
@@ -1873,6 +1897,7 @@ label ep06_madison_traingame:
         # FALSE PATH - Madison asks if MC left because they're damaged
         mad "Is that why you left us for eight years?"
 
+        $ show_walkthrough("ep06_mad_train_r4_false")
         menu:
             "What do you mean?":
                 mc_s "What do you mean?"
@@ -1922,6 +1947,7 @@ label ep06_madison_traingame:
     if ep05_confrontation_peaceful:
         # TRUE PATH - MC asks about Michael
         if ep06_mc_advantage_points >= 2:
+            $ show_walkthrough("ep06_mad_train_r4_mc_true")
             menu:
                 "What did Michael do to you the night you stopped being good?":
                     show ep06_madisoncamera53
@@ -1968,6 +1994,7 @@ label ep06_madison_traingame:
     else:
         # FALSE PATH - MC asks if Michael taught Madison to use sex as leverage
         if ep06_mc_advantage_points >= 2:
+            $ show_walkthrough("ep06_mad_train_r4_mc_false")
             menu:
                 "Did Michael teach you to use sex as leverage?":
                     show ep06_madisoncamera53
@@ -2024,6 +2051,7 @@ label ep06_madison_traingame:
         show ep06_madisoncamera57
         mad "If I delete this, will you pretend it never happened?"
 
+        $ show_walkthrough("ep06_mad_train_r5_true")
         menu:
             "No.":
                 mc_s "No."
@@ -2074,6 +2102,7 @@ label ep06_madison_traingame:
         show ep06_madisoncamera57
         mad "Would you have said yes if I wasn't related to you?"
 
+        $ show_walkthrough("ep06_mad_train_r5_false")
         menu:
             "I already told you. It's not about being related.":
                 mc_s "I already told you. It's not about being related."
@@ -2173,6 +2202,7 @@ label ep06_madison_traingame:
         mad "If I delete this right now..."
         mad "Would you do it again?"
 
+        $ show_walkthrough("ep06_mad_train_r6_final_true")
         menu:
             "Not like that.":
                 mc_s "Not like that."
@@ -2234,6 +2264,7 @@ label ep06_madison_traingame:
         mad "If I asked again—right now—"
         mad "Would you say yes?"
 
+        $ show_walkthrough("ep06_mad_train_r6_final_false")
         menu:
             "Honestly? The dynamic has changed.":
                 mc_s "Honestly? The dynamic has changed."
@@ -2294,6 +2325,7 @@ label ep06_madison_traingame:
     if ep05_confrontation_peaceful:
         # TRUE PATH - MC asks about the good girl
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_mad_train_r6_mc_true")
             menu:
                 "Do you miss the good girl?":
                     mc_s "Do you miss the good girl?"
@@ -2353,6 +2385,7 @@ label ep06_madison_traingame:
     else:
         # FALSE PATH - MC asks if stopping being good was her choice
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_mad_train_r6_mc_false")
             menu:
                 "When you stopped being the good girl, was it your choice?":
                     mc_s "When you stopped being the good girl, was it your choice?"
@@ -2611,6 +2644,7 @@ label ep06_madison_station_proposal:
     mc_t "Every reason says run. Every instinct says stay."
 
     # CRITICAL CHOICE - Player decides
+    $ show_walkthrough("ep06_madison_studio_final")
     menu:
         "Let's go.":
             mc_s "Let's go."
