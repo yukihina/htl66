@@ -211,16 +211,12 @@ label after_load:
     if save_system_version != 2:
         scene black with dissolve
 
-        centered "{b}Character Progression System Updated{/b}\n\nWe've implemented an automatic character progression rate system\nto make stat changes more consistent and balanced.\n\n{color=#ffcc00}Your save will be automatically migrated.{/color}\n\nNote: Due to technical limitations, the migration may not be 100%% perfect.\nFor the best experience, we recommend starting a new playthrough.\n\nPress any key to continue..."
-
-        $ renpy.pause(hard=True)
+        centered "{b}Character Progression System Updated{/b}\n\nWe've implemented an automatic character progression rate system\nto make stat changes more consistent and balanced.\n\n{color=#ffcc00}Your save will be automatically migrated.{/color}\n\nNote: Due to technical limitations, the migration may not be 100%% perfect.\nFor the best experience, we recommend starting a new playthrough.\n\n{size=24}Click to continue...{/size}"
 
         # Perform the migration
         $ rm.migrate_to_ratio_system()
         $ save_system_version = 2  # Apply version 2 "seal"
 
-        centered "{b}Migration Complete{/b}\n\nYour character stats have been adjusted to the new system.\nFuture stat changes will use automatic progression rates.\n\nPress any key to continue..."
-
-        $ renpy.pause(hard=True)
+        centered "{b}Migration Complete{/b}\n\nYour character stats have been adjusted to the new system.\nFuture stat changes will use automatic progression rates.\n\n{size=24}Click to continue...{/size}"
 
     return

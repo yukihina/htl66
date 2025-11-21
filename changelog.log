@@ -7,19 +7,22 @@ v0.28 Episode 6 - 1st part
   • 225 new renders
   • 14 new animations
   • 2 new achievements
+  • Walkthrough updated for Episode 6 decisions
+  • Migration of save data for new systems
 
 ~ CHANGED:
   • Some GUI elements updated
   • Animated episode title backgrounds
   • All achievements remade and re-rendered in 8K UHD (so I get rid of AI blending)
   • Paths now properly track character development
+  • All walkthrough points reflect the new point system
 
 ! FIXED:
   • 01 render from version 0.27
   • Achievement screen zoom and drag fixed for 8K UHD
 
 * TECHNICAL:
-  • Updated to Renpy 8.4.2
+  • Updated to Renpy 8.5
   • Changed webm codec to libaom-av1
 
 

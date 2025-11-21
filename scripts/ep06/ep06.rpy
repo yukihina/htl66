@@ -1159,16 +1159,22 @@ label ep06_mornwithamber_love_hold:
     menu:
         "I love you.":
             mc_s "I love you. Always."
-            $ rm.update("amber", "love", 3)
-            $ check_levels("amber", "love", 3)
+            # Milestone decision - love path
+            $ amber_love_choices += 1
+            $ rm.update("amber", "trust", 10)
+            $ check_levels("amber", "trust", 10)
         "You're safe.":
             mc_s "You're safe with me."
-            $ rm.update("amber", "love", 2)
-            $ check_levels("amber", "love", 2)
+            # Milestone decision - love path (moderate)
+            $ amber_love_choices += 1
+            $ rm.update("amber", "trust", 7)
+            $ check_levels("amber", "trust", 7)
         "I'm staying.":
             mc_s "I'm not going anywhere."
-            $ rm.update("amber", "love", 1)
-            $ check_levels("amber", "love", 1)
+            # Milestone decision - love path (subtle)
+            $ amber_love_choices += 1
+            $ rm.update("amber", "trust", 5)
+            $ check_levels("amber", "trust", 5)
     
     jump ep06_mornwithamber_postclimax
 
@@ -1374,7 +1380,7 @@ label ep06_madison_traingame:
                 mc_t "She knows I'm dodging."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "No. I didn't.":
                 mc_s "No. I didn't."
@@ -1386,7 +1392,7 @@ label ep06_madison_traingame:
                 mc_s "How would you know?"
 
                 # 70% chance of detection
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     else:
         # FALSE PATH - Madison asks why MC said no
@@ -1418,7 +1424,7 @@ label ep06_madison_traingame:
                 mad "That's not a reason. That's an excuse."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Because I wasn't attracted to you.":
                 mc_s "Because I wasn't attracted to you."
@@ -1430,7 +1436,7 @@ label ep06_madison_traingame:
                 mad "Right before you said no."
 
                 # 70% chance of detection
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     # ROUND 1 - MC Asks
     show ep06_madisoncamera16
@@ -1501,7 +1507,7 @@ label ep06_madison_traingame:
                 mc_t "I don't know what I should say to her question."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "You were protecting her. Obviously.":
                 mc_s "You were protecting her. Obviously."
@@ -1515,7 +1521,7 @@ label ep06_madison_traingame:
                 mc_t "She has quite an eye for this."
 
                 # 70% chance of detection
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     else:
         # FALSE PATH - Madison asks if it was because she's MC's sister
@@ -1545,7 +1551,7 @@ label ep06_madison_traingame:
                 mc_t "Not a lie. Just incomplete."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Yes. Only because you're my sister.":
                 mc_s "Yes. Only because you're my sister."
@@ -1559,7 +1565,7 @@ label ep06_madison_traingame:
                 mc_t "She caught the tell."
 
                 # 70% chance of detection
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     # ROUND 2 - MC Asks
     show ep06_madisoncamera42
@@ -1692,7 +1698,7 @@ label ep06_madison_traingame:
                 mc_t "Not a lie. Just not the whole truth."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Yes. Absolutely.":
                 mc_s "Yes. Absolutely."
@@ -1706,7 +1712,7 @@ label ep06_madison_traingame:
                 mc_t "Shit. She's right."
 
                 # 70% chance of detection - Check for game over
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     else:
         # FALSE PATH - Madison asks if MC thinks she's broken
@@ -1736,7 +1742,7 @@ label ep06_madison_traingame:
                 mc_t "Philosophical bullshit. Let's hope she buys it."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "No. You're fine. Really.":
                 mc_s "No. You're fine. Really."
@@ -1750,7 +1756,7 @@ label ep06_madison_traingame:
                 mc_t "She knows my worldview too well."
 
                 # 70% chance of detection - Check for game over
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     # ROUND 3 - MC Asks
     show ep06_madisoncamera23
@@ -1848,7 +1854,7 @@ label ep06_madison_traingame:
                 mc_t "Fuck. Would she?"
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Maybe. I don't know.":
                 mc_s "Maybe. I don't know."
@@ -1861,7 +1867,7 @@ label ep06_madison_traingame:
                 mc_t "She's right. Again."
 
                 # 70% chance of detection - Check for game over
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     else:
         # FALSE PATH - Madison asks if MC left because they're damaged
@@ -1892,7 +1898,7 @@ label ep06_madison_traingame:
                 mc_s "From the noise. From this family."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "I left because of career opportunities.":
                 mc_s "I left because of career opportunities."
@@ -1906,7 +1912,7 @@ label ep06_madison_traingame:
                 mc_t "She reads me too well."
 
                 # 70% chance of detection - Check for game over
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
 
     # ROUND 4 - MC Asks
@@ -2047,7 +2053,7 @@ label ep06_madison_traingame:
                 mc_t "She wants certainty. I can't give it."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "If you delete it, it never happened.":
                 mc_s "If you delete it, it never happened."
@@ -2061,7 +2067,7 @@ label ep06_madison_traingame:
                 mc_t "Ah. There it is. The fear of abandonment."
 
                 # 70% chance of detection - Check for game over
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     else:
         # FALSE PATH - Madison asks if MC would have said yes if not related
@@ -2094,7 +2100,7 @@ label ep06_madison_traingame:
                 mc_t "True, but incomplete."
 
                 # 50% chance of detection
-                ep06_detect_lie(50)  # Madison may notice the lie
+                $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Probably yes.":
                 mc_s "Probably yes."
@@ -2110,7 +2116,7 @@ label ep06_madison_traingame:
                 mc_t "Her logic is twisted... but effective."
 
                 # 70% chance of detection - Check for game over
-                ep06_detect_lie(70)  # Madison may notice the lie
+                $ ep06_detect_lie(70)  # Madison may notice the lie
 
     # ROUND 5 - MC Asks
     show ep06_madisoncamera64
@@ -2434,7 +2440,9 @@ label ep06_madison_station_proposal:
     # 1. Lies detected (0, 1-2, 3+)
     # 2. Chosen path (love, corruption, neutral)
     # 3. Whether they had sex in ep05 (ep05_confrontation_peaceful)
-show ep06_madisoncamera71
+
+    show ep06_madisoncamera71
+
     if ep06_mc_lies_detected >= 3:
         # High lies detected - Madison is cold but still makes the proposal
         mc_t "She's been watching me differently since the train."
@@ -2604,24 +2612,24 @@ show ep06_madisoncamera71
 
     # CRITICAL CHOICE - Player decides
     menu:
-    "Let's go.":
-        mc_s "Let's go."
-        if ep06_chosen_path == "corruption":
-            mc_t "I'm walking straight into hell. And I'm smiling."
-        elif ep06_chosen_path == "love":
-            mc_t "I can't leave her like this."
-        else:
-            mc_t "I'm going to regret this."
-            
-        jump ep06_madison_studio
+        "Let's go.":
+            mc_s "Let's go."
+            if ep06_chosen_path == "corruption":
+                mc_t "I'm walking straight into hell. And I'm smiling."
+            elif ep06_chosen_path == "love":
+                mc_t "I can't leave her like this."
+            else:
+                mc_t "I'm going to regret this."
+                
+            jump ep06_madison_studio
 
-    "I'm not doing this.":
-        mc_s "I'm not doing this."
-        mad "Fine."
+        "I'm not doing this.":
+            mc_s "I'm not doing this."
+            mad "Fine."
 
-        if ep06_chosen_path == "love":
-            mc_t "She looks crushed. But she hides it quickly."
-        else:
-            mc_t "She doesn't look surprised. Just... resigned."
+            if ep06_chosen_path == "love":
+                mc_t "She looks crushed. But she hides it quickly."
+            else:
+                mc_t "She doesn't look surprised. Just... resigned."
 
-        jump ep06_madison_rejection
+            jump ep06_madison_rejection
