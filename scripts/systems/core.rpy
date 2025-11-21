@@ -94,10 +94,16 @@ init -900 python:
                     # Ensure value stays between 0 and 100
                     new_value = max(0, min(100, self.rels[char][attr] + val))
                     self.rels[char][attr] = new_value
-                    # Lock integrity if it reaches 0 or 100
-                    if attr == "integrity":
+                    # MC Integrity auto-lock system
+                    if attr == "integrity" and char == "mc":
+                        # Lock if reaches 0 or 100 (pure paths)
                         if new_value == 0 or new_value == 100:
                             self.rels[char]["integrity_locked"] = True
+                            lock_mc_alignment()
+                        # Auto-lock at ep15+ if not already locked
+                        elif hasattr(persistent, 'current_episode') and persistent.current_episode >= 15:
+                            if not self.rels[char].get("integrity_locked"):
+                                lock_mc_alignment()
                 else:  # For boolean attributes, just set the new value
                     self.rels[char][attr] = val
             
@@ -329,6 +335,13 @@ init python:
         4: (65, 80),   # Level 4: Very Close (65-80%)
         5: (81, 100)   # Level 5: Intimate/Best Friend (81-100%)
     }
+
+    # MC Integrity levels - determines moral alignment
+    integrity_levels = {
+        0: (0, 30),    # Rogue: Antihero, ends justify means
+        1: (31, 69),   # Neutral: Pragmatic, case by case
+        2: (70, 100)   # Paragon: Hero, always does what's right
+    }
     
     ############################################################################
     ## CHARACTER CONFIGURATION AND DISPLAY NAMES
@@ -523,6 +536,66 @@ init python:
         """
         counter_name = f"{char}_{choice_type}_choices"
         return renpy.python.py_eval(counter_name)
+
+    ############################################################################
+    ## MC INTEGRITY ALIGNMENT SYSTEM
+    ############################################################################
+
+    def lock_mc_alignment():
+        """
+        Locks MC's moral alignment based on current integrity value.
+        Should be called at the end of Episode 15.
+        Can also be called earlier if integrity reaches 0 or 100 (pure paths).
+
+        Returns:
+            str: The locked alignment ("rogue", "neutral", or "paragon")
+
+        Example usage:
+            # At end of ep15
+            $ alignment = lock_mc_alignment()
+
+            # Or check manually
+            if persistent.mc_alignment == "paragon":
+                jump paragon_route
+        """
+        # Check if already locked
+        if persistent.mc_alignment is not None:
+            return persistent.mc_alignment
+
+        # Get current integrity
+        integrity = rm.get("mc", "integrity")
+
+        # Determine alignment based on ranges
+        if integrity <= 30:
+            alignment = "rogue"
+        elif integrity >= 70:
+            alignment = "paragon"
+        else:
+            alignment = "neutral"
+
+        # Lock the alignment
+        persistent.mc_alignment = alignment
+        rm.rels["mc"]["integrity_locked"] = True
+
+        return alignment
+
+    def get_mc_alignment():
+        """
+        Gets MC's current locked alignment.
+
+        Returns:
+            str or None: The locked alignment ("rogue", "neutral", "paragon") or None if unlocked
+        """
+        return getattr(persistent, 'mc_alignment', None)
+
+    def is_alignment_locked():
+        """
+        Checks if MC's alignment has been locked.
+
+        Returns:
+            bool: True if alignment is locked, False otherwise
+        """
+        return persistent.mc_alignment is not None
 
 ################################################################################
 ## WARDROBE MANAGEMENT SYSTEM
