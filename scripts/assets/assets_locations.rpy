@@ -25,6 +25,9 @@ init:
     image week = Text("1 Week later...", style="minutes")
     image days = Text("Some days later...", style="minutes")
     image days_before = Text("Some days earlier...", style="minutes")
+    image present = Text("Back to the present...", style="minutes")
+    image next_morning = Text("The next morning...", style="minutes")
+
     
     ############################################################################
     ## OSAKA LOCATIONS

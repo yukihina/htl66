@@ -11,24 +11,45 @@ label ep06_start:
 
 
 label ep06_intro:
-    scene eigengrau with clouds_inverse
+    scene eigengrau with lines
     show location_tmpd_m with slowfade
     show tmpd_location zorder 2 with dissolve
-    pause 4
+    pause 5
     hide tmpd_location with dissolve
     jump ep06_ope
 
 
 label ep06_ope:
     scene eigengrau
+    $ config.rollback_enabled = True
+    $ renpy.free_memory()
+    pause 1.0
+
+    show screen stats_button
+    show screen walkthrough_icon
+
+    $ playAudio(japanday_cross, "amb", 1, True, 3.0)
+    $ setChannelVolume("amb", 1, 0.6, 0)
+
     show ep06_opening01
     mc_t "First day."
     mc_t "Nothing in the house is safe to say out loud anymore."
 
-    show ep06_opening02
+    $ stopAudio("amb", 1, 1.0)
+    $ playAudio(policehall, "amb", 2, True, 3.0)
+    $ setChannelVolume("amb", 2, 1, 0)
+    $ playAudio(hallwalkmale, "sfx", 1, True, 3.0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+    $ playAudio(mc_theme, "music", 1, True, 3)
+    $ setChannelVolume("music", 1, 0.5, 1.0)
+
+    show ep06_opening02 with fade
     mc_t "The badge weighs nothing."
     mc_t "Three months since the hospital."
     
+    $ setAllSubchannelsVolume("sfx", 0.0, 1)
+    $ setAllSubchannelsVolume("amb", 0.0, 1)
+
     show ep06_opening03
     mc_t "Mother's wrists. Gauze. Pulse."
     mc_t "Three months of visiting hours."
@@ -37,77 +58,140 @@ label ep06_ope:
     mc_t "She's awake now. Talking. Smiling at the nurses."
     mc_t "That smile. I know that smile."
 
+    $ setAllSubchannelsVolume("sfx", 1.0, 1)
+    $ setAllSubchannelsVolume("amb", 1.0, 1)
+
     show ep06_opening05
     mc_t "Michael calls it 'remarkable progress.'"
     mc_t "Michael says a lot of things."
 
+    $ stopAllAudio(2)
+
+    scene eigengrau with fade
+    $ playAudio(doorclose, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+    pause 1
+
+    $ playAudio(policeoffice, "amb", 1, True, 3.0)
+    $ setChannelVolume("amb", 1, 0.5, 0)
+
     show ep06_opening06
     wat "Ah. Inspector..."
-    wat "...Crawford-san. Yes."
-    wat "Sit, sit. Coffee?"
-    mc_s "I'm fine, thank you."
-    wat "The transfer paperwork mentioned Osaka."
-    wat "Quite a commendation record."
-
-    show ep06_opening07
-    wat "Before the... incident."
-    mc_s "I've recovered."
+    wat "Kuro... Kurōfōdo-han. Yes."
+    mc_t "Crawford..."
 
     show ep06_opening08
-    wat "Of course, of course."
-    wat "Crawford. That's... English?"
-    mc_s "My father's name."
-    wat "I see."
+    wat "Sit. I was just reviewing your... unique demographics."
+    mc_s "Is there a problem with my file, Chief?"
+    wat "Problem? No. It is just... administratively fascinating."
+    wat "Father: British subject. Mother: Italian national."
+    wat "Born in Tokyo. Naturalized citizenship upon joining the force."
+    wat "Technically Japanese. On paper."
+
+    hide ep06_opening08
+    mc_s "I was born here. I speak the language."
+    wat "Right..."
+    wat "But let's move on. The paperwork mentioned the incident."
+
+    $ setAllSubchannelsVolume("amb", 0.0, 1)
+    $ playAudio(gunshots_glock, "sfx", 2, False, 1)
+    $ setChannelVolume("sfx", 2, 1.0, 0)
+    $ playAudio(heartbeatfast, "sfx", 1, True, 1)
+    $ setChannelVolume("sfx", 1, 1.0, 0)
+
+    show ep06_opening07 with slowflash
+    wat "Three months of leave. Psychological evaluation pending."
+    mc_s "I've recovered. I'm ready for duty."
+    
+    $ setAllSubchannelsVolume("amb", 0.5, 1)
+    $ stopAllSubchannels("sfx", 1.0)
+
+    show ep06_opening08
+    wat "Of course. We are short-handed, after all. Even... unconventional assets are useful."
+    wat "Welcome to the First Investigation Division, Sōsa Ikka. We handle homicides."
+
+    $ playAudio(mc_suspense_theme, "music", 1, True, 3)
+    $ setChannelVolume("music", 1, 0.5, 1.0)
 
     show ep06_opening09
-    wat "Detective Yamamoto. Found dead last night. Professional execution - three shots, precise spacing. Very... un-Japanese in its directness."
-    mc_t "Foreign killer. Foreign detective. He's already building a file with me."
-    mc_s "Yakuza work?"
-    wat "That's what you'll determine."
-    wat "Detective Inspector Sato from Organized Crime requested you specifically."
+    wat "Specifically, the homicide of Detective Yamamoto. Found dead last night."
+    wat "Professional execution. Three shots. No wasted movement."
+    wat "It lacks the... emotional messiness typical of domestic crimes. It feels imported."
+    mc_t "Foreign killer. Foreign detective. He's putting the trash together."
+    mc_s "Yakuza?"
+    wat "Because of the context, the Organized Crime Division, Sotai, has jurisdiction on the motive, but we have jurisdiction on the body."
+    wat "Inspector Sato from 'Sotai' requested a liaison from our division. Specifically you."
     mc_s "Why me?"
+
+    $ setAllSubchannelsVolume("amb", 0.0, 1)
+
+    show ep06_opening12
     wat "Osaka connections, perhaps."
-    wat "Sato believes your... **background**... provides unique perspective."
-    wat "Yakuza clans are traditional. Conservative. They don't adapt well to..."
-    wat "...modern Tokyo's 'diversity'."
+    wat "Because Sato thinks you fit in."
+    wat "You understand the Yakuza. Their crude manners. Their... loudness."
+    
+    $ setAllSubchannelsVolume("amb", 0.5, 1)
+
+    hide ep06_opening12
+    wat "The clans are obsessed with tradition. With 'Wa'—Harmony."
+    wat "They react violently to external elements that look different. That don't belong."
+    wat "Sato hopes your... appearance... might provoke a reaction that a Japanese officer could not elicit."
 
     show ep06_opening10
-    mc_t "Diversity. That's what we're calling it now."
-    wat "Of course, **we** value all contributions to the department."
+    mc_t "I'm not a detective to them. I'm bait. Foreign bait."
+    wat "In this department, Inspector, we utilize every tool available."
 
+    $ show_walkthrough("ep06_case_attitude_menu")
     menu:
         "I'll do this right.":
-            mc_t "I'll investigate thoroughly. Professional standards still matter."
+            hide screen walkthrough_screen
+            mc_t "I'll investigate thoroughly. I won't give him a reason to doubt my badge."
             $ rm.update("mc", "integrity", 1)
 
         "I wasn't ready for this.":
-            mc_t "Three months wasn't enough recovery time for this kind of case."
+            hide screen walkthrough_screen
+            mc_t "Dead cop. Yakuza war. Three months wasn't enough recovery time for this."
 
         "Perfect. Time for payback.":
+            hide screen walkthrough_screen
             mc_t "Good. I've got unfinished business with those bastards anyway."
             $ rm.update("mc", "integrity", -1)
 
-    show ep06_opening11
-    wat "He's at the scene. Don't keep him waiting."
+    $ playAudio(door_glass, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1.0, 0)
+    $ playAudio(policeoffice_loud, "amb", 2, False, 4.0)
+    $ setChannelVolume("amb", 2, 0.1, 0)
 
-    show ep06_opening12
+    show ep06_opening11 with fade
+    wat "Inspector Sato is waiting at the crime scene in Asagaya."
+    wat "Try to blend in, Crawford. If that is even possible."
     mc_t "Osaka. It follows me like a bullet I can never hear coming."
+
+    $ stopAllAudio(2)
     jump ep06_operative
 
 
 label ep06_operative:
-    scene eigengrau with clouds_inverse
+    scene eigengrau with lines
     show days_before
     pause 3
     show location_kabuchikotower_n with slowfade
     show kabukicho_night zorder 2 with dissolve
-    pause 4
+    pause 5
     hide kabukicho_night with dissolve
     jump ep06_shadow
 
 
 label ep06_shadow:
     scene eigengrau
+
+    $ playAudio(kudokai_theme, "music", 1, True, 3)
+    $ setChannelVolume("music", 1, 0.5, 1.0)
+    $ playAudio(raining_ext, "amb", 1, True, 3.0)
+    $ setChannelVolume("amb", 1, 0.5, 0)
+    $ playAudio(evening_pool, "amb", 2, True, 3.0)
+    $ setChannelVolume("amb", 2, 0.3, 0)
+
     show ep06_shadowdir01
     hir "The Osaka detective."
     hir "He's in Tokyo now."
@@ -121,6 +205,8 @@ label ep06_shadow:
     hir "Second floor. Apartment 204."
     anto "Security?"
 
+    $ setAllSubchannelsVolume("amb", 0.0, 1)
+
     show ep06_shadowdir03
     hir "None. Lives alone. Works late Thursdays."
     hir "Returns home past midnight. Drunk, usually. Keys in left pocket."
@@ -130,6 +216,8 @@ label ep06_shadow:
     hir "He's connecting dots. Osaka to Tokyo. Surgical modifications, territory shifts, missing women."
     hir "Last week he requested files on Kudo-kai specifically."
 
+    $ setChannelVolume("amb", 2, 0.3, 1)
+    $ setChannelVolume("amb", 1, 0.5, 1)
     show ep06_shadowdir05
     hir "Smart detective. Dangerous detective."
     hir "You play chess, Antonella?"
@@ -151,11 +239,11 @@ label ep06_shadow:
     anto "And after the knight falls?"
     hir "The board shifts. Tokyo Metropolitan loses its best investigator."
 
-    show ep06_shadowdir09
+    show ep06_shadowdir09 with fade
     hir "Yamaguchi-gumi, Sumiyoshi-kai, Inagawa-kai, all the old families - they think this is random violence. Gang war."
     hir "They don't see the pattern. They don't see me moving pieces."
 
-    show ep06_shadowdir10
+    show ep06_shadowdir10 with fade
     anto "And after Yamamoto?"
     hir "Other pieces. Bishops, rooks."
     hir "The game takes time, Antonella. Patience."
@@ -169,43 +257,68 @@ label ep06_shadow:
     anto "Professional spacing."
     hir "Obvious yakuza signature. Impossible to trace to Kudo-kai."
 
-    show ep06_shadowdir12
+    $ stopAllSubchannels("music", 2.0)
+    $ playAudio(heartbeatslow, "amb", 3, True, 3.0)
+    $ setChannelVolume("amb", 3, 1, 5)
+
+    show ep06_shadowdir12 with fade
     anto "Thursday night. Apartment 204."
     anto "Three shots. Professional spacing."
     anto "The knight falls."
 
     show ep06_shadowdir13
     anto "The board shifts."
+
+    $ stopAllAudio(2)
     jump ep06_executiontitle
 
 
 label ep06_executiontitle:
-    scene eigengrau with clouds_inverse
+    scene eigengrau with lines
     show location_asagaya_n with slowfade
     show asagaya zorder 2 with dissolve
-    pause 4
+    pause 5
     hide asagaya with dissolve
     jump ep06_execution
 
 
 label ep06_execution:
     scene eigengrau
+
+    $ playAudio(mc_room_night, "amb", 1, True, 2.0)
+    $ setChannelVolume("amb", 1, 0.4, 2)
+    $ playAudio(raining_ext, "amb", 2, True, 2.0)
+    $ setChannelVolume("amb", 2, 0.3, 2)
+    $ playAudio(tokyo_residential, "amb", 3, True, 2.0)
+    $ setChannelVolume("amb", 3, 0.2, 2)
+
     show ep06_execution01
     yam_t "Seventeen women. Seventeen families asking when I'll find answers."
     yam_t "Surgical chest incisions. Professional precision. Osaka to Tokyo - someone's expanding operations."
 
-    show ep06_execution02
+    show ep06_execution02 with fade
     yam_t "11:43 PM. Miyuki called three hours ago. Sounded tired. I told her two more days in Tokyo."
     yam_t "Lied. Probably four more days. Maybe five."
     yam_t "But I'm close. The connection between Osaka and Tokyo - it's here somewhere in these files."
 
+    $ playAudio(door_knock, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+
     show ep06_execution03
     yam_t "11:47 PM."
-    yam_t "Three knocks. Polite. Soft."
+    yam_t "Five knocks. Polite. Soft."
     yam_t "Neighbor? Building manager?"
     yam_t "This late?"
 
-    show ep06_execution04
+    $ playAudio(antonella_mistery_theme, "music", 1, True, 3)
+    $ setChannelVolume("music", 1, 0.5, 1.0)
+    $ setChannelVolume("amb", 1, 0.2, 2)
+    $ setChannelVolume("amb", 2, 0.1, 2)
+    $ setChannelVolume("amb", 3, 0.05, 2)
+    $ playAudio(heartbeatslow, "sfx", 4, True, 2.0)
+    $ setChannelVolume("sfx", 4, 0.3, 2)
+
+    show ep06_execution04 with fade
     yam_t "Delivery driver."
 
     show ep06_execution05
@@ -219,18 +332,31 @@ label ep06_execution:
 
     show ep06_execution08
     yam_t "Late shift worker. Probably part-time student."
-    yam_t "Delivery for Yamamoto-san. Signature required."
+    anto "Delivery for Yamamoto-san. Signature required."
     yam_t "Light accent. Foreign worker."
     yam_t "Wrong apartment probably. Common mistake with Japanese names."
 
-    show ep06_execution09
+    $ playAudio(door_wood, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.8, 0)
+    
+    show ep06_execution09 with slowfade
     yam "I think you have the wrong—"
     anto "Yamamoto-san? Detective Yamamoto Koji?"
     yam "...Yes?"
-    yam_t "She knows I'm a detective. How?"
-    yam_t "Sender must have specified. Precinct sometimes sends-"
+
+    $ setAllSubchannelsVolume("amb", 0.0, 3)
+    $ setChannelVolume("sfx", 4, 1, 2)
+
+    yam_t "She knows I'm a detective... How?"
+    yam_t "Sender must have specified? Precinct sometimes sends-"
+
+    $ playAudio(guncock9mm, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 0.8, 0)
 
     show ep06_execution10
+
+    $ fadeToAudio(heartbeatfast, "sfx", 4, 2.0, True)
+
     yam_t "European."
 
     show ep06_execution11
@@ -239,230 +365,263 @@ label ep06_execution:
     show ep06_execution12
     yam_t "Miyuk—"
 
-    show ep06_execution13
+    $ playAudio(gunshot_glock_3shots, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 1, 0)
+
+    show ep06_execution13 with flash
+
+    $ stopAudio("sfx", 4, 3.0)
+
     anto_t "Professional spacing."
     anto_t "The knight falls."
 
-    show ep06_execution14
+    $ playAudio(bodyfall_carpet, "sfx", 3, False, 0)
+    $ setChannelVolume("sfx", 3, 1, 0)
+    $ setChannelVolume("amb", 1, 0.2, 2)
+    $ setChannelVolume("amb", 2, 0.1, 2)
+    $ setChannelVolume("amb", 3, 0.05, 2)
+
+    show ep06_execution14 with fade
     anto_t "Wedding ring on his finger."
     anto_t "Doesn't matter."
     anto_t "Package. Take it."
     anto_t "Thirty seconds. Exit clean."
+
+    $ stopAllAudio(2)
     jump ep06_crimescene
 
 
 label ep06_crimescene:
-    scene eigengrau
+    scene eigengrau with lines
+    show present
+    pause 3
+
+    $ playAudio(celldoor, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 1, 0)
+    pause 1
+
+    $ playAudio(tokyo_residential, "amb", 1, True, 2.0)
+    $ setChannelVolume("amb", 1, 0.4, 2)
+    $ playAudio(evenbalcony, "amb", 2, True, 2.0)
+    $ setChannelVolume("amb", 2, 0.4, 2)
+
+    $ playAudio(hallwalkmale, "sfx", 1, True, 2.0)
+    $ setChannelVolume("sfx", 1, 1, 2)
+
     show ep06_crimescene01
     mc_t "First day back. First crime scene in three months."
 
-    show ep06_crimescene02
+    show ep06_crimescene02 with flash
     mc_t "The last crime scene I was at, I was the one bleeding."
 
+    $ setAllSubchannelsVolume("amb", 0.1, 2)
+
     show ep06_crimescene03
-    mc_t "Second floor. Apartment 204."
-    mc_t "Three evidence markers. Must be the shell casings."
-    mc_t "Gray-haired man by the bullets. Wire-rim glasses. That's Detective Inspector Sato."
+    mc_t "Second floor. Apartment 204. Asagaya."
+    mc_t "Three yellow markers on the floor."
+    mc_t "Gray-haired man crouching by the bullets. Wire-rim glasses. Cheap suit."
+    mc_t "That's him. Detective Inspector Sato from Organized Crime."
+
+    $ playAudio(mc_thinking_theme, "music", 1, True, 3)
+    $ setChannelVolume("music", 1, 0.5, 1.0)
+    $ stopAllSubchannels("sfx", 2.0)
 
     show ep06_crimescene04
-    tak "Inspector Crawford? [mc_name]?. I'm..."
-    mc_s "Detective Inspector Sato."
-    tak "Just Takeo. Look at these casings."
-    tak "Nine millimeter. Professional grade ammunition."
-    tak "Three shots. Chest, chest, head."
-    tak "The shooter knew exactly what they were doing."
-    mc_t "No handshake. No pleasantries. Straight to the evidence."
+    tak "Don't step on the chalk, [mc_name]."
+    mc_s "Inspector Sato."
+    tak "Just Takeo. Titles are for reports. Focus is for solving cases."
+    tak "Look at these casings. Tell me what you see."
+    mc_t "No handshake. No 'welcome back'. Straight to the work."
     mc_t "My kind of cop."
-    mc_s "Professional hit?"
-    tak "Yes. But look at the arrangement."
-    tak "Triangular pattern. Even spacing between each casing."
-    tak "Someone positioned these after firing. Why?"
-    mc_s "Signature?"
-    tak "Or they were following very specific instructions."
+    tak "Get down there. Tell me what the floor tells you."
+
+    show ep06_crimescene09
+    mc_s "Ugh!"
+    mc_t "The scar tissue is still tight. It burns like a hot wire against my ribs."
+    tak "Ignore the pain. Focus on the metal."
+    tak "Nine millimeter. What do you see in the arrangement?"
+    mc_s "Triangular pattern. Even spacing between each casing."
+    tak "Physics doesn't do that. Guns eject casings randomly."
+    tak "To get a triangle like this, someone has to pick them up and place them down."
     tak "Three shots. Three decisions. Three certainties."
-    tak "Come. I'll show you where he fell."
+    mc_s "He killed a man, then took five seconds to arrange art on the floor?"
+
+    show ep06_crimescene10
+    tak "Now, here is the lesson regarding our killer."
+    tak "What kind of person executes a cop, then stays to arrange casings in a geometric pattern?"
+    mc_s "That depends on how you look at it."
+
+    $ show_walkthrough("ep06_killer_profile_menu")
+    menu:
+        "They believed in justice.":
+            hide screen walkthrough_screen
+            $ rm.update("mc", "integrity", 2)
+            mc_s "Someone with a code. Distorted, maybe. But they believe they are creating order."
+            tak "Order. Yes. A fanatic creates order out of chaos."
+
+        "Just following orders.":
+            hide screen walkthrough_screen
+            mc_s "Someone doing a job. Following a manual. No emotion involved."
+            tak "A machine made of meat. Possible."
+
+        "They enjoyed the kill.":
+            hide screen walkthrough_screen
+            $ rm.update("mc", "integrity", -2)
+            mc_s "A sadist. Someone who leaves a signature to taunt us."
+            tak "Arrogance. That is a weakness we can exploit."
+
+    tak "Whatever they are, they are disciplined."
+    tak "Precisely. Stand up. Let's look at the victim."
 
     show ep06_crimescene05
-    tak "Yamamoto Koji. Forty-two years old. Fifteen-year veteran. Organized Crime Division."
-    tak "Very careful. Very paranoid. Investigating yakuza operations."
-    tak "He opened his door late at night to a stranger."
+    tak "Yamamoto Koji. Forty-two. Veteran of the Fourth District."
+    tak "Paranoid. Carried a backup piece in his ankle holster. Slept with a chair under the knob."
+    tak "And yet... he opened his door at midnight."
 
     show ep06_crimescene06
-    mc_t "Yamamoto... I saw his personnel file this morning."
-    mc_t "Married. Two kids, studying overseas. From Osaka originally."
+    mc_t "Yamamoto... I saw the file. Wife and kids in Osaka."
+    mc_t "He was supposed to retire next year."
 
     show ep06_crimescene07
-    tak "The question is why. Why would a paranoid detective investigating dangerous criminals open his door after midnight?"
-    mc_s "He saw someone through the peephole who didn't look threatening."
-    tak "Exactly. Someone who fit a safe profile."
-    tak "Delivery worker. Building maintenance. Perhaps a woman."
-    tak "Someone he dismissed as harmless."
+    tak "Why, [mc_name]? Why does a paranoid man lower his shield?"
+    mc_s "He saw someone he trusted."
+    tak "Or someone innocuous. A delivery man. A lost neighbor."
+    tak "Or a woman."
+    tak "Evil doesn't always look like a monster. Sometimes it looks harmless until it pulls the trigger."
     mc_t "I would have opened the door too."
     mc_t "That's the scary part."
 
     show ep06_crimescene08
-    tak "You know why Captain Watanabe assigned you to this case?"
-    mc_s "My experience with yakuza organizational patterns in Osaka."
-    tak "Partially. Also because neither of us belongs here."
-    tak "The department doesn't trust you because you're a gaijin. They don't trust me because I don't follow their rules."
-    tak "That makes us useful for cases like this."
-    mc_t "Useful. That's one way to put it."
-    mc_t "Expendable is another."
-
-    show ep06_crimescene09
-    tak "What do you see?"
-    mc_t "Nine millimeter casings. Three of them."
-    mc_t "Arranged in a perfect triangle. Someone took time to do this."
-    mc_t "Fuck! My wound aches. The scar tissue pulls when I crouch like this."
-    mc_s "Controlled shooting. No panic. The triangular arrangement suggests the killer stayed calm after firing."
-    tak "Yes. Professional methodology."
-    tak "But I want to know something else, Inspector Crawford."
-
-    show ep06_crimescene10
-    tak "What kind of person kills a police officer, then stays at the crime scene to arrange shell casings in a geometric pattern?"
-    mc_s "That depends on how you look at it."
-
-    menu:
-        "They believed in justice.":
-            $ rm.update("mc", "integrity", 2)
-            mc_s "Someone who believes they're serving a higher purpose. Justice, even if it's wrong."
-
-        "Just following orders.":
-            mc_s "Someone doing a job. Following orders. No emotion involved."
-
-        "They enjoyed the kill.":
-            $ rm.update("mc", "integrity", -2)
-            mc_s "Someone who enjoys it. The killing and the art of it."
-
-    tak "We're hunting someone very dangerous."
-    tak "Come. Look at the victim's position."
+    tak "You know why Watanabe gave you to me?"
+    mc_s "Because I'm expendable."
+    tak "We are all expendable. That's part of the job."
+    tak "He gave you to me because we are both 'broken' tools in their eyes."
+    tak "You are a gaijin. I am... inconveniently stubborn."
+    tak "They put the broken tools in the basement so we don't ruin the display case."
+    tak "But broken tools have jagged edges. They cut deeper."
+    mc_t "Useful. He thinks I'm useful."
+    tak "Come. Look at where he fell."
 
     show ep06_crimescene11
-    mc_t "Blood. Dried now. Dark brown against the cheap vinyl."
+    mc_t "Dried blood. Dark brown against the cheap vinyl flooring."
     mc_t "Yamamoto bled out here. On this floor. Alone."
-    mc_t "The smell is still here. Copper and cleaning chemicals."
     tak "No defensive wounds. No signs of struggle."
-    tak "The first shot hit him in the chest while he was standing, facing the door."
-    tak "Never tried to block."
+    tak "First shot: Chest. Standing."
+    tak "Second shot: Chest. Falling."
+    tak "Third shot: Head. Execution."
     mc_s "He didn't have time to react."
     tak "Or he didn't recognize the threat until it was too late."
-    tak "Look at the blood spatter. First shot, he's standing. Second shot, he's falling backward."
-    tak "Third shot hit his head while he was already going down."
-    tak "All three shots within seconds. The shooter fired rapidly."
-    mc_s "Speed over precision. They wanted to finish before he could scream."
-    tak "Yes. Now come look at what Yamamoto was working on when he died."
+    mc_s "All three shots within seconds?"
+    tak "According to the neighbors who heard 'firecrackers', yes."
+    tak "Speed over precision. They wanted to finish before he could scream."
 
     show ep06_crimescene12
-    mc_t "The outline looks too small. Bodies always look smaller after death."
+    mc_t "The chalk outline looks too small. Bodies always look smaller after death."
     mc_t "Yamamoto had a family. A wife in Osaka. Kids."
-    mc_t "Now he's just chalk and dried blood."
-    tak "Time of death was probably around 11:52 PM according to the preliminary coroner's report."
-    tak "A neighbor reported hearing what sounded like firecrackers at 11:47 PM."
-    tak "Five-minute response delay from sound to death."
-    mc_s "Fast kill. Professional execution."
-    tak "Yes. But execution implies punishment. Judgment."
-    tak "Was Yamamoto being punished? Or was he simply eliminated because he knew too much?"
+    mc_t "Now he's just a geometry problem on the floor."
+    tak "Execution implies punishment, [mc_name]. Or containment."
+    tak "Was Yamamoto being punished? Or was he simply eliminated because he opened the wrong door?"
     mc_s "What was he investigating exactly?"
-    tak "That's what I want to show you."
+    tak "Come to the desk. This is what he died for."
 
     show ep06_crimescene13
-    tak "Yamamoto was investigating a series of murders. Seventeen women over three months."
+    tak "Yamamoto was tracking a specific anomaly. Murders."
+    tak "Seventeen women over three months. Osaka to Tokyo pipeline."
     tak "All found with post-mortem surgical incisions in the same location."
-    tak "Breast tissue removed. Look at these photographs."
-
-    show ep06_crimescene14
-    mc_t "Bodies. Female. Surgical cuts."
+    mc_s "Breast tissue removed?"
+    tak "Systematically. Look at the timeline on the laptop."
 
     call screen confirm(
         message="Gore content ahead. Continue?",
-        yes_action=SetVariable("e6_gore", True),
-        no_action=SetVariable("e6_gore", False)
+        yes_action=[SetVariable("e6_gore", True), Return()],
+        no_action=[SetVariable("e6_gore", False), Return()]
     )
 
+    $ playAudio(officechair_sit, "sfx", 5, False, 0)
+    $ setChannelVolume("sfx", 5, 0.3, 0)
+    
+    show ep06_crimescene14
+    mc_t "Bodies. Female. Surgical cuts."
+
     if e6_gore:
-        show ep06_crimescene15
-        tak "Three months ago. First victim. Look at the surgical incision."
-        mc_t "Clean at first..."
-        mc_t "Precise. Professional medical work."
+        $ playAudio(mouseclick, "sfx", 1, False, 0)
+        $ setChannelVolume("sfx", 1, 1, 0)
+        show ep06_crimescene15 with fade
+        tak "Victim one. Three months ago. Look at the incision."
+        mc_t "Clean sutures. Minimal bruising."
+        mc_s "Surgical precision. Looks like a professional augmentation job."
+        tak "Correct. A doctor—or someone very skilled—did this."
 
-        show ep06_crimescene16
-        tak "Two months ago. Third victim."
-        mc_t "Then rougher..."
-        mc_t "Less careful."
+        $ playAudio(mouseclick, "sfx", 2, False, 0)
+        $ setChannelVolume("sfx", 2, 1, 0)
+        show ep06_crimescene16 with fade
+        tak "Victim eight. Two months ago."
+        mc_t "Jagged edges. Bruising."
+        mc_s "Getting sloppy. There's infection around the wound."
+        tak "The hand is shaking. The time is shortening."
 
-        show ep06_crimescene17
-        tak "Last week. Most recent victim."
-        mc_t "Then butchered."
-        mc_t "Hack job. Whoever did this was either in a hurry or didn't care anymore."
-        mc_s "The quality degraded. Surgical precision to crude butchery."
-        mc_t "I've seen bodies before. But these..."
+        $ playAudio(mouseclick, "sfx", 3, False, 0)
+        $ setChannelVolume("sfx", 3, 1, 0)
+        show ep06_crimescene17 with fade
+        tak "Victim seventeen. Last week."
+        mc_t "God... ripped open."
+        mc_s "That's not surgery. That's butchery."
+        mc_t "Whatever was inside was torn out in a panic."
+        tak "Exactly. From surgeon to butcher in ninety days."
 
     else:
-        tak "Three months ago. First victim. Look at the surgical incision."
-        mc_t "Clean cut. Precise. Professional medical work."
-        tak "Two months ago. Third victim."
-        mc_t "Rougher. Less careful."
-        tak "Last week. Most recent victim."
+        tak "Three months ago. First victim."
+        mc_t "Clean cut. Precise medical work."
+        tak "Two months ago. Victim eight."
+        mc_t "Rougher. Less careful. Signs of infection."
+        tak "Last week. Victim seventeen."
         mc_t "Butchered. Hack job. Whoever did this was either in a hurry or didn't care anymore."
-        mc_s "The quality degraded. Surgical precision to crude butchery."
-        mc_t "I've seen bodies before. But these..."
 
     show ep06_crimescene18
     mc_s "You think it's organ harvesting?"
-    tak "That's what I thought initially. But breast tissue has no black market value."
-    tak "No transplant demand. No medical use."
-    tak "So why remove it?"
-    mc_s "Something inside the tissue. The implants."
-    tak "Yes. Modified silicone implants with sealed compartments."
-    tak "These women were human cargo vessels. Contraband surgically implanted in their bodies."
-    tak "Harder to detect than swallowing packages. More permanent. More reliable."
-    mc_s "Seventeen women. Osaka to Tokyo."
-    mc_s "Someone's expanding their smuggling operation."
-    tak "That's what Yamamoto discovered. The connection between Osaka and Tokyo."
-    tak "The expansion pattern. The surgical modifications."
-    mc_t "Osaka. Always Osaka."
-    mc_s "But something doesn't make sense."
-    mc_s "If these women were valuable cargo vessels, why kill them? Why not extract the contraband and use them again?"
-    tak "That's the question that got Yamamoto killed."
-    tak "He was investigating why the organization started murdering their own mules."
-    tak "Look at this timeline."
+    tak "Think, Crawford. Kidneys have value. Livers have value."
+    tak "Does breast tissue have black market value?"
+    mc_s "No. No transplant demand."
+    tak "So if the tissue is worthless, why cut it open?"
+    mc_t "It's not about the flesh. It's about the space."
+    mc_s "Implants."
+    tak "Containers."
+    tak "Sealed silicone compartments. High-grade liquid cocaine? Microchips? Rare earth metals?"
+    tak "We don't know yet. But these women were not humans to the killers."
+    tak "They were walking suitcases."
 
     show ep06_crimescene19
-    tak "Something changed in the operation."
-    tak "More volume. Less time. More pressure."
-    tak "Or perhaps the person in charge is losing control."
-    mc_s "Yamamoto noticed this pattern. Connected the degradation to the Osaka-Tokyo expansion."
-    tak "Yes. And that connection threatened someone important enough to order a police officer's assassination."
-    tak "Someone with resources. Organization. Professional killers."
-    tak "But here's what troubles me most, [mc_name]."
-    mc_t "He's testing me. Seeing how I think."
-    tak "We have seventeen dead women who were valuable assets."
-    tak "We have degrading operational quality suggesting organizational stress."
-    tak "We have a detective murdered for discovering the connection."
-    mc_s "And we have a killer who arranges shell casings in triangles."
-    tak "Yes. So tell me. What kind of organization are we dealing with?"
-    tak "Not tactically. Not structurally."
-    tak "Morally. What kind of people do this?"
+    mc_s "And Yamamoto figured it out."
+    tak "He figured out that the 'surgeon' is losing his mind."
+    tak "Look at the degradation. The panic."
+    mc_s "Why kill the detective now?"
+    tak "Because he found the link between the butcher in Tokyo and the supplier in Osaka."
+    tak "This isn't just murder. This is industry. And industry protects its assets."
+    tak "Tell me, [mc_name]. When you look at seventeen dead women treated like packaging..."
+    tak "What is your instinct? Morally."
 
+    $ show_walkthrough("ep06_criminal_vision_menu")
     menu:
         "Stop them legally.":
+            hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 2)
-            mc_s "People who've lost sight of any moral line. They need to be stopped through proper legal process."
+            mc_s "We build the case. We prosecute. We show them that the law is stronger than their greed."
+            tak "The noble path. Hard. Slow. But necessary for civilization."
 
         "Just catch them.":
-            mc_s "Criminals doing criminal things. The brutality doesn't matter. What matters is catching them."
+            hide screen walkthrough_screen
+            mc_s "We find them and we cage them. I don't care about the philosophy."
+            tak "Pragmatic. Good. Emotion clouds judgment."
 
         "They deserve everything.":
+            hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -2)
-            mc_s "Monsters. The kind who deserve whatever happens to them when we find them."
-    
-    tak "I wanted to hear your answer."
-    tak "Because the way we see them determines how we hunt them."
+            mc_s "People who do this aren't human. I don't care what happens to them when we find them."
+            tak "Be careful. If you hunt monsters with rage, you might forget when to stop."
 
     show ep06_crimescene20
-    tak "The autopsy results will be ready this afternoon."
-    tak "Dr. Hatanaka from forensics. The body will tell us what the crime scene cannot."
-    tak "Ballistics. Trajectory. Exact time of death."
+    tak "The autopsy results will be ready tomorrow. Dr. Hatanaka."
+    tak "She will tell us what was inside the implants."
     tak "Until then, we have three shell casings arranged in a triangle."
     tak "Three rapid shots."
     tak "Seventeen dead women with modified implants."
@@ -473,14 +632,15 @@ label ep06_crimescene:
     tak "We'll ask the same questions."
     tak "But perhaps we'll be more careful about who hears the answers."
     mc_t "Careful. Right."
-    mc_t "Because the person who killed Yamamoto is still out there."
-    mc_t "Calm enough to arrange shell casings after murder."
-    mc_t "Professional enough to kill a cop and walk away."
+
+    $ stopAllAudio(2)
     jump ep06_mornintro
 
 
 label ep06_mornintro:
     scene eigengrau with clouds_inverse
+    show next_morning
+    pause 3
     show location_denenchofu_m with slowfade
     show home_location zorder 2 with dissolve
     pause 4
@@ -510,23 +670,28 @@ label ep06_mornwithamber:
     amb "Shut up and feel this."
     mc_t "I should stop. I can't. God, I can't."
 
+    $ show_walkthrough("ep06_amber_first_decision_menu")
     menu:
         "Show me." if amber_strikes == 0 and rm.get("amber", "cor") >= 25:
+            hide screen walkthrough_screen
             mc_s "Show me what you were doing."
 
             $ e6_amber_path = "corruption"
             jump ep06_mornwithamber_corruption
-        
+
         "You're impossible.":
+            hide screen walkthrough_screen
             mc_s "You're impossible."
 
         "I missed this.":
+            hide screen walkthrough_screen
             mc_s "I missed this too."
-            
+
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
-            
+
         "Not now.":
+            hide screen walkthrough_screen
             mc_s "I can't. Not now."
 
             $ e6_amber_path = "rejection"
@@ -548,20 +713,24 @@ label ep06_mornwithamber:
     amb "It's so fucking hot."
     mc_t "She sees the worst parts and wants them."
 
+    $ show_walkthrough("ep06_amber_intimacy_response_menu")
     menu:
         "You see me." if amber_strikes == 0 and rm.get("amber", "trust") >= 40:
+            hide screen walkthrough_screen
             mc_s "You've always seen me."
 
             $ e6_amber_path = "love"
             jump ep06_mornwithamber_love
 
         "You like broken things?":
+            hide screen walkthrough_screen
             mc_s "You like broken things?"
 
             $ e6_amber_path = "neutral"
             jump ep06_mornwithamber_neutral
 
         "Like the view?":
+            hide screen walkthrough_screen
             mc_s "Like what you see?"
 
             $ rm.update("amber", "cor", 2)
@@ -583,18 +752,22 @@ label ep06_mornwithamber_neutral:
     mc_t "Say it. She needs to hear it."
     amb "Tell me..."
 
+    $ show_walkthrough("ep06_amber_sex_neutral_talk_menu")
     menu:
         "I love you.":
+            hide screen walkthrough_screen
             mc_s "I love you, Amber."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
         "Fucking perfect.":
+            hide screen walkthrough_screen
             mc_s "Your pussy's perfect."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
         "Only you.":
+            hide screen walkthrough_screen
             mc_s "No one else compares."
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
@@ -615,19 +788,23 @@ label ep06_mornwithamber_neutral:
 
 
 label ep06_mornwithamber_neutral_sexmenu:
+    $ show_walkthrough("ep06_mornwithamber_neutral_sexmenu")
     menu:
         amb "Tell me what you want..."
         "Come here." if not e6_amber_neutral_blowjob_seen:
+            hide screen walkthrough_screen
             mc_s "Come here."
             $ e6_amber_neutral_blowjob_seen = True
             jump ep06_mornwithamber_neutral_blowj
-        
+
         "Let me see all of you." if not e6_amber_neutral_boobjob_seen:
+            hide screen walkthrough_screen
             mc_s "Let me see all of you."
             $ e6_amber_neutral_boobjob_seen = True
             jump ep06_mornwithamber_neutralboobj
-        
+
         "Keep going." if e6_amber_neutral_blowjob_seen and e6_amber_neutral_boobjob_seen:
+            hide screen walkthrough_screen
             mc_s "Keep going."
             jump ep06_mornwithamber_neutral_continue
 
@@ -684,18 +861,22 @@ label ep06_mornwithamber_neutral_continue:
     amb "We both are."
     mc_t "God, she's right. We're both fucking insane."
 
+    $ show_walkthrough("ep06_amber_neutral_climax_menu")
     menu:
         "Only you get me.":
+            hide screen walkthrough_screen
             mc_s "You're the only one who understands."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
         "Take it all.":
+            hide screen walkthrough_screen
             mc_s "Then take all of it."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
         "Broken together.":
+            hide screen walkthrough_screen
             mc_s "Maybe we're both exactly as fucked up as we need to be."
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
@@ -734,14 +915,17 @@ label ep06_mornwithamber_postclimax:
         amb "Every time... I worry you'll see me different."
         mc_s "I see you exactly as you are."
         amb "And that doesn't scare you?"
-        
+
+        $ show_walkthrough("ep06_amber_corruption_postclim_menu")
         menu:
             "You don't scare me.":
+                hide screen walkthrough_screen
                 mc_s "Nothing about you scares me."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
             "We fit perfectly.":
+                hide screen walkthrough_screen
                 mc_s "We're both exactly what we need to be."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
@@ -749,6 +933,7 @@ label ep06_mornwithamber_postclimax:
                 $ check_levels("amber", "cor", 1)
 
             "Stop overthinking.":
+                hide screen walkthrough_screen
                 mc_s "You think too much."
                 $ rm.update("amber", "trust", -1)
                 $ check_levels("amber", "trust", -1)
@@ -765,18 +950,22 @@ label ep06_mornwithamber_postclimax:
         amb "Even when I'm..."
         mc_s "Especially then."
 
+        $ show_walkthrough("ep06_amber_love_postclim_menu")
         menu:
             "I mean it.":
+                hide screen walkthrough_screen
                 mc_s "I know exactly what I'm saying."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
             "Test me.":
+                hide screen walkthrough_screen
                 mc_s "Try me. Test it. I'm still here."
                 $ rm.update("amber", "trust", 2)
                 $ check_levels("amber", "trust", 2)
 
             "Help me understand.":
+                hide screen walkthrough_screen
                 mc_s "Then tell me. Help me understand."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
@@ -795,13 +984,16 @@ label ep06_mornwithamber_postclimax:
         show ep06_ambermorn23
         amb "No one else said that. I mean... everyone else just looked at me like I'd—like I'd ruined something."
 
+        $ show_walkthrough("ep06_amber_neutral_postclim_menu")
         menu:
             "Perfect to me.":
+                hide screen walkthrough_screen
                 mc_s "You've always been perfect to me."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
             "Warriors together.":
+                hide screen walkthrough_screen
                 mc_s "We're both warriors now."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
@@ -809,6 +1001,7 @@ label ep06_mornwithamber_postclimax:
                 $ check_levels("amber", "cor", 1)
 
             "Time to go.":
+                hide screen walkthrough_screen
                 mc_s "We should get ready."
                 $ rm.update("amber", "trust", -1)
                 $ check_levels("amber", "trust", -1)
@@ -863,31 +1056,37 @@ label ep06_mornwithamber_corruption:
 
 
 label ep06_mornwithamber_corruption_sexmenu:
+    $ show_walkthrough("ep06_mornwithamber_corruption_sexmenu")
     menu:
         amb "What do you want from me?"
-        
+
         "Use your mouth." if not e6_amber_cor_blowjob_seen:
+            hide screen walkthrough_screen
             mc_s "Use your mouth."
             $ e6_amber_cor_blowjob_seen = True
             jump ep06_mornwithamber_cor_blowjob
-        
+
         "Your tits. Now." if not e6_amber_cor_boobjob_seen:
+            hide screen walkthrough_screen
             mc_s "Your tits. Now."
             $ e6_amber_cor_boobjob_seen = True
             jump ep06_mornwithamber_cor_boobjob
-        
+
         "Turn around." if not e6_amber_cor_assjob_seen:
+            hide screen walkthrough_screen
             mc_s "Turn around."
             $ e6_amber_cor_assjob_seen = True
             jump ep06_mornwithamber_cor_assjob
-        
+
         "On your knees." if not e6_amber_cor_footjob_seen:
+            hide screen walkthrough_screen
             mc_s "On your knees."
             $ e6_amber_cor_footjob_seen = True
             jump ep06_mornwithamber_cor_footjob
-        
-        "Spread your legs." if (e6_amber_cor_blowjob_seen and e6_amber_cor_boobjob_seen and 
+
+        "Spread your legs." if (e6_amber_cor_blowjob_seen and e6_amber_cor_boobjob_seen and
                                 e6_amber_cor_assjob_seen and e6_amber_cor_footjob_seen):
+            hide screen walkthrough_screen
             mc_s "Spread your legs."
             jump ep06_mornwithamber_cor_continue
 
@@ -997,13 +1196,16 @@ label ep06_mornwithamber_cor_continue:
     amb "Inside... yes..."
     mc_s "All of it."
     mc_t "Mine. She's fucking mine."
+    $ show_walkthrough("ep06_amber_corruption_sex_menu")
     menu:
         "You're mine.":
+            hide screen walkthrough_screen
             mc_s "You're mine completely."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
         "Fucking perfect.":
+            hide screen walkthrough_screen
             mc_s "Fucking perfect."
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
@@ -1011,6 +1213,7 @@ label ep06_mornwithamber_cor_continue:
             $ check_levels("amber", "trust", 1)
 
         "Good girl.":
+            hide screen walkthrough_screen
             mc_s "Good girl."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
@@ -1026,6 +1229,8 @@ label ep06_mornwithamber_cor_continue:
     amb "Like I'm... like I'm not broken. Like you don't see all the fucked up—"
     mc_s "I see you."
     amb "That's what scares me."
+
+    $ ep06_ach_ambcor = True
     jump ep06_mornwithamber_postclimax
 
 
@@ -1049,26 +1254,31 @@ label ep06_mornwithamber_love:
 
 
 label ep06_mornwithamber_love_sexmenu:
+    $ show_walkthrough("ep06_mornwithamber_love_sexmenu")
     menu:
         amb "What do you want?"
-        
+
         "Let me show you." if not e6_amber_love_worship_seen:
+            hide screen walkthrough_screen
             mc_s "Let me show you how beautiful you are."
             $ e6_amber_love_worship_seen = True
             jump ep06_mornwithamber_love_worship
-        
+
         "Let me taste you." if not e6_amber_love_oral_seen:
+            hide screen walkthrough_screen
             mc_s "Let me taste you first."
             $ e6_amber_love_oral_seen = True
             jump ep06_mornwithamber_love_oral
-        
+
         "Let me touch you." if not e6_amber_love_assjob_seen:
+            hide screen walkthrough_screen
             mc_s "Let me love you with my hands first."
             $ e6_amber_love_assjob_seen = True
             jump ep06_mornwithamber_love_assjob
-        
-        "Let me hold you." if (e6_amber_love_worship_seen and e6_amber_love_oral_seen and 
+
+        "Let me hold you." if (e6_amber_love_worship_seen and e6_amber_love_oral_seen and
                               e6_amber_love_assjob_seen):
+            hide screen walkthrough_screen
             mc_s "Let me hold you close while we make love."
             jump ep06_mornwithamber_love_hold
 
@@ -1175,25 +1385,30 @@ label ep06_mornwithamber_love_hold:
     amb "Don't... let... go..."
     mc_s "I won't. I'm here."
 
+    $ show_walkthrough("ep06_amber_love_declaration_menu")
     menu:
         "I love you.":
+            hide screen walkthrough_screen
             mc_s "I love you. Always."
-            # Milestone decision - love path
+
             $ rm.update("amber", "trust", 10)
             $ check_levels("amber", "trust", 10)
 
         "You're safe.":
+            hide screen walkthrough_screen
             mc_s "You're safe with me."
-            # Milestone decision - love path (moderate)
+
             $ rm.update("amber", "trust", 7)
             $ check_levels("amber", "trust", 7)
 
         "I'm staying.":
+            hide screen walkthrough_screen
             mc_s "I'm not going anywhere."
-            # Milestone decision - love path (subtle)
+
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
     
+    $ ep06_ach_amblove = True
     jump ep06_mornwithamber_postclimax
 
 
@@ -1374,8 +1589,10 @@ label ep06_madison_traingame:
         show ep06_madisoncamera11
         mad "Did you want me that night?"
 
+        $ show_walkthrough("ep06_madison_deepq_round1_menu")
         menu:
             "I don't know.":
+                hide screen walkthrough_screen
                 mc_s "I don't know."
                 $ rm.update("madison", "trust", 2)
                 $ check_levels("madison", "trust", 2)
@@ -1389,6 +1606,7 @@ label ep06_madison_traingame:
                 mc_s "Both... At the same time."
 
             "Does it matter?":
+                hide screen walkthrough_screen
                 mc_s "Does it matter?"
                 mad "Yes."
                 mc_s "It happened. That's all that matters."
@@ -1405,6 +1623,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "No. I didn't.":
+                hide screen walkthrough_screen
                 mc_s "No. I didn't."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1423,8 +1642,10 @@ label ep06_madison_traingame:
         show ep06_madisoncamera11
         mad "Why did you say no?"
 
+        $ show_walkthrough("ep06_madison_response_round1_menu")
         menu:
             "Because you're irritating.":
+                hide screen walkthrough_screen
                 mc_s "Because you're irritating."
                 mad "Irritating."
                 mc_s "Everything's a war with you. Every interaction."
@@ -1440,6 +1661,7 @@ label ep06_madison_traingame:
                 mc_s "That's enough."
 
             "Because the timing was wrong.":
+                hide screen walkthrough_screen
                 mc_s "Because the timing was wrong."
                 mad "Timing."
                 mc_s "Yeah."
@@ -1455,6 +1677,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Because I wasn't attracted to you.":
+                hide screen walkthrough_screen
                 mc_s "Because I wasn't attracted to you."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1512,8 +1735,10 @@ label ep06_madison_traingame:
         # TRUE PATH - Madison asks if MC was really protecting Nanami
         mad "Was I really protecting Nanami? Or was I using you?"
 
+        $ show_walkthrough("ep06_madison_deepq_round2_menu")
         menu:
             "I don't know. You tell me.":
+                hide screen walkthrough_screen
                 mc_s "I don't know. You tell me."
                 mad "What?"
                 mc_s "You were the one who used that excuse."
@@ -1529,6 +1754,7 @@ label ep06_madison_traingame:
                 mc_t "First honest thing she's said."
 
             "You believed it when you said it.":
+                hide screen walkthrough_screen
                 mc_s "You believed it when you said it."
                 mad "That's not answering my question."
                 mc_s "It's the only answer I have."
@@ -1544,6 +1770,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "You were protecting her. Obviously.":
+                hide screen walkthrough_screen
                 mc_s "You were protecting her. Obviously."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1563,8 +1790,10 @@ label ep06_madison_traingame:
         # FALSE PATH - Madison asks if it was because she's MC's sister
         mad "Was it because I'm your sister?"
 
+        $ show_walkthrough("ep06_madison_response_round2_menu")
         menu:
             "Partially.":
+                hide screen walkthrough_screen
                 mc_s "Partially."
                 mad "Partially?"
                 mc_s "It's more about the way you are. Not who you are."
@@ -1579,6 +1808,7 @@ label ep06_madison_traingame:
                 mc_t "Is she doubting herself?."
 
             "Does it matter?":
+                hide screen walkthrough_screen
                 mc_s "Does it matter?"
                 mad "Yes."
                 mc_s "Well, you could put it that way, and that's enough."
@@ -1594,6 +1824,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Yes. Only because you're my sister.":
+                hide screen walkthrough_screen
                 mc_s "Yes. Only because you're my sister."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1617,8 +1848,10 @@ label ep06_madison_traingame:
     if ep05_confrontation_peaceful:
         # TRUE PATH - MC asks about who Madison was planning to show recording to
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_madison_response_round3_true_menu")
             menu:
                 "Who were you planning on showing it to?":
+                    hide screen walkthrough_screen
                     show ep06_madisoncamera43
                     mad "I already told you. It forces honesty."
                     mc_s "That's not who. That's why."
@@ -1630,6 +1863,7 @@ label ep06_madison_traingame:
                     mc_t "She sees the whole world as hostile."
 
                 "Have you already sent it to someone?":
+                    hide screen walkthrough_screen
                     mc_s "Have you already sent it to someone?"
                     mad "No."
                     mc_s "What stopped you?"
@@ -1660,8 +1894,10 @@ label ep06_madison_traingame:
     else:
         # FALSE PATH - MC asks how many men said yes before
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_madison_response_round3_false_menu")
             menu:
                 "How many men have said yes before me?":
+                    hide screen walkthrough_screen
                     show ep06_madisoncamera45
                     mad "Are you calling me a slut?"
                     mc_s "I'm asking a question."
@@ -1674,6 +1910,7 @@ label ep06_madison_traingame:
                     mad "Enough to know you're the anomaly."
 
                 "Did any of them say no? Or was I the first?":
+                    hide screen walkthrough_screen
                     mc_s "Did any of them say no? Or was I the first?"
                     mad "Most men beg for it. You were the first."
                     mc_s "The first to say no."
@@ -1710,8 +1947,10 @@ label ep06_madison_traingame:
         # TRUE PATH - Madison asks if MC regrets it happened
         mad "Do you regret that it happened?"
 
+        $ show_walkthrough("ep06_madison_deepq_round3_true_menu")
         menu:
             "No. I don't.":
+                hide screen walkthrough_screen
                 mc_s "No. I don't."
                 mad "Why not?"
                 mc_s "The sex wasn't the problem. I wanted it. You wanted it."
@@ -1730,6 +1969,7 @@ label ep06_madison_traingame:
                 mc_t "She's looking for blame. Not giving it."
 
             "Sometimes.":
+                hide screen walkthrough_screen
                 mc_s "Sometimes."
                 mad "Sometimes you regret it."
                 mc_s "Sometimes I think it was a mistake."
@@ -1747,6 +1987,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Yes. Absolutely.":
+                hide screen walkthrough_screen
                 mc_s "Yes. Absolutely."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1766,8 +2007,10 @@ label ep06_madison_traingame:
         # FALSE PATH - Madison asks if MC thinks she's broken
         mad "Do you think I'm broken?"
 
+        $ show_walkthrough("ep06_madison_deepq_round3_false_menu")
         menu:
             "You want me to answer that seriously?":
+                hide screen walkthrough_screen
                 mc_s "You want me to answer that seriously?"
                 mad "Yes."
                 mc_s "I'm not one to judge. I'm hardly a model of mental health myself."
@@ -1782,6 +2025,7 @@ label ep06_madison_traingame:
                 mc_s "It's supposed to make you feel less alone."
 
             "Define \"broken\".":
+                hide screen walkthrough_screen
                 mc_s "Define \"broken\"."
                 mad "You know what I mean."
                 mc_s "Do I? Are we talking about a machine? A toy? A system?"
@@ -1797,6 +2041,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "No. You're fine. Really.":
+                hide screen walkthrough_screen
                 mc_s "No. You're fine. Really."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1881,8 +2126,10 @@ label ep06_madison_traingame:
         # TRUE PATH - Madison asks if Isabella knows
         mad "Does Isabella know what you did with me?"
 
+        $ show_walkthrough("ep06_madison_nanami_knows_true_menu")
         menu:
             "Of course not. Are you insane?":
+                hide screen walkthrough_screen
                 mc_s "Of course not. Are you insane?"
                 mad "Why would that be insane?"
                 mc_s "Because she's too young to understand."
@@ -1899,6 +2146,7 @@ label ep06_madison_traingame:
                 mc_t "She's planting a virus in my head."
 
             "I don't think so.":
+                hide screen walkthrough_screen
                 mc_s "I don't think so."
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
@@ -1915,6 +2163,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Maybe. I don't know.":
+                hide screen walkthrough_screen
                 mc_s "Maybe. I don't know."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1933,8 +2182,10 @@ label ep06_madison_traingame:
         # FALSE PATH - Madison asks if MC left because they're damaged
         mad "Is that why you left us for eight years?"
 
+        $ show_walkthrough("ep06_madison_why_left_false_menu")
         menu:
             "What do you mean?":
+                hide screen walkthrough_screen
                 mc_s "What do you mean?"
                 mad "Did you leave because we're all damaged goods?"
                 mc_s "No."
@@ -1949,6 +2200,7 @@ label ep06_madison_traingame:
                 mc_t "First time I've said it out loud."
 
             "I left for work.":
+                hide screen walkthrough_screen
                 mc_s "I left for work."
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
@@ -1965,6 +2217,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "I left because of career opportunities.":
+                hide screen walkthrough_screen
                 mc_s "I left because of career opportunities."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
@@ -1988,8 +2241,10 @@ label ep06_madison_traingame:
     if ep05_confrontation_peaceful:
         # TRUE PATH - MC asks about Michael
         if ep06_mc_advantage_points >= 2:
+            $ show_walkthrough("ep06_madison_deepq_round4_true_menu")
             menu:
                 "What did Michael do to you the night you stopped being good?":
+                    hide screen walkthrough_screen
                     show ep06_madisoncamera53
                     mad "He didn't do anything. Not physically."
                     mc_s "But?"
@@ -2001,6 +2256,7 @@ label ep06_madison_traingame:
                     mc_t "She doesn't see it as death. She sees it as evolution."
 
                 "Did Michael touch you? Is that why you use sex as a weapon?":
+                    hide screen walkthrough_screen
                     show ep06_madisoncamera54
                     mad "He never touched me. He didn't have to."
                     mc_s "Explain."
@@ -2034,8 +2290,10 @@ label ep06_madison_traingame:
     else:
         # FALSE PATH - MC asks if Michael taught Madison to use sex as leverage
         if ep06_mc_advantage_points >= 2:
+            $ show_walkthrough("ep06_madison_deepq_round4_false_menu")
             menu:
                 "Did Michael teach you to use sex as leverage?":
+                    hide screen walkthrough_screen
                     show ep06_madisoncamera53
                     mad "Not directly."
                     mc_s "Explain."
@@ -2049,6 +2307,7 @@ label ep06_madison_traingame:
                     mc_t "He poisoned her soul."
 
                 "Did you despise Elizabeth for staying? (Costs 2 advantage points)":
+                    hide screen walkthrough_screen
                     mc_s "Did you despise Elizabeth for staying?"
 
                     show ep06_madisoncamera54
@@ -2090,8 +2349,10 @@ label ep06_madison_traingame:
         show ep06_madisoncamera57
         mad "If I delete this, will you pretend it never happened?"
 
+        $ show_walkthrough("ep06_madison_response_round5_true_menu")
         menu:
             "No.":
+                hide screen walkthrough_screen
                 mc_s "No."
 
                 show ep06_madisoncamera58
@@ -2108,6 +2369,7 @@ label ep06_madison_traingame:
                 mc_t "She's testing if I'll erase her the moment the evidence is gone."
 
             "Probably not.":
+                hide screen walkthrough_screen
                 mc_s "Probably not."
                 mad "Probably."
                 mc_s "I'm not in the habit of lying to myself."
@@ -2122,6 +2384,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "If you delete it, it never happened.":
+                hide screen walkthrough_screen
                 mc_s "If you delete it, it never happened."
 
                 show ep06_madisoncamera62
@@ -2140,8 +2403,10 @@ label ep06_madison_traingame:
         show ep06_madisoncamera57
         mad "Would you have said yes if I wasn't related to you?"
 
+        $ show_walkthrough("ep06_madison_response_round5_false_menu")
         menu:
             "I already told you. It's not about being related.":
+                hide screen walkthrough_screen
                 mc_s "I already told you. It's not about being related."
 
                 show ep06_madisoncamera58
@@ -2156,6 +2421,7 @@ label ep06_madison_traingame:
                 mc_t "She wanted the truth. There it is."
 
             "Maybe.":
+                hide screen walkthrough_screen
                 mc_s "Maybe."
                 mad "Maybe?"
                 mc_s "Attraction isn't a science."
@@ -2169,6 +2435,7 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Probably yes.":
+                hide screen walkthrough_screen
                 mc_s "Probably yes."
 
                 show ep06_madisoncamera62
@@ -2239,8 +2506,10 @@ label ep06_madison_traingame:
         mad "If I delete this right now..."
         mad "Would you do it again?"
 
+        $ show_walkthrough("ep06_madison_critical_true_menu")
         menu:
             "Not like that.":
+                hide screen walkthrough_screen
                 mc_s "Not like that."
                 mad "Not like what?"
                 mc_s "Not as a transaction. Not as leverage."
@@ -2259,12 +2528,13 @@ label ep06_madison_traingame:
                 mc_t "She wants to be seen. Really seen."
                 mad "Hmmmm... Okay."
 
-                $ ep06_chosen_path = "love"
+                $ ep06_madison_path = "love"
                 $ madison_love_choices += 1
                 $ rm.update("madison", "trust", 10)
                 $ check_levels("madison", "trust", 10)
 
             "Yes.":
+                hide screen walkthrough_screen
                 mc_s "Yes. God help me, yes."
                 mad "Even knowing who I am?"
                 mc_s "Because of who you are."
@@ -2280,12 +2550,13 @@ label ep06_madison_traingame:
                 mad "Good. Honesty suits you."
                 mc_t "She wants an accomplice, not a savior."
 
-                $ ep06_chosen_path = "corruption"
+                $ ep06_madison_path = "corruption"
                 $ madison_cor_choices += 1
                 $ rm.update("madison", "cor", 10)
                 $ check_levels("madison", "cor", 10)
 
             "No.":
+                hide screen walkthrough_screen
                 mc_s "No."
 
                 show ep06_madisoncamera35
@@ -2299,15 +2570,17 @@ label ep06_madison_traingame:
                 mad "Fine. Be boring."
                 mc_t "A clean rejection. Final."
 
-                $ ep06_chosen_path = "neutral"
+                $ ep06_madison_path = "neutral"
 
     else:
         # FALSE PATH - Madison asks if MC would say yes now
         mad "If I asked again—right now—"
         mad "Would you say yes?"
 
+        $ show_walkthrough("ep06_madison_critical_false_menu")
         menu:
             "Honestly? The dynamic has changed.":
+                hide screen walkthrough_screen
                 mc_s "Honestly? The dynamic has changed."
                 mad "How?"
                 mc_s "Before, you were a threat. Now..."
@@ -2324,12 +2597,13 @@ label ep06_madison_traingame:
                 mc_t "She's looking for hope. I gave her a lifeline."
                 mad "Okay."
 
-                $ ep06_chosen_path = "love"
+                $ ep06_madison_path = "love"
                 $ madison_love_choices += 1
                 $ rm.update("madison", "trust", 10)
                 $ check_levels("madison", "trust", 10)
 
             "Probably. Depends.":
+                hide screen walkthrough_screen
                 mc_s "Probably. The taboo is... tempting."
                 mad "Is it?"
                 mc_s "You know it is."
@@ -2344,12 +2618,13 @@ label ep06_madison_traingame:
                 mad "Good to know."
                 mc_t "She wants me to acknowledge the desire is mutual."
 
-                $ ep06_chosen_path = "corruption"
+                $ ep06_madison_path = "corruption"
                 $ madison_cor_choices += 1
                 $ rm.update("madison", "cor", 10)
                 $ check_levels("madison", "cor", 10)
 
             "No.":
+                hide screen walkthrough_screen
                 mc_s "No."
 
                 show ep06_madisoncamera35
@@ -2363,7 +2638,7 @@ label ep06_madison_traingame:
                 mad "Go to hell."
                 mc_t "A clean rejection. Final."
 
-                $ ep06_chosen_path = "neutral"
+                $ ep06_madison_path = "neutral"
 
     # ROUND 6 - Final MC Question
     show ep06_madisoncamera68
@@ -2372,8 +2647,10 @@ label ep06_madison_traingame:
     if ep05_confrontation_peaceful:
         # TRUE PATH - MC asks about the good girl
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_madison_finalq_round6_true_menu")
             menu:
                 "Do you miss the good girl?":
+                    hide screen walkthrough_screen
                     mc_s "Do you miss the good girl?"
                     mad "No."
                     mc_s "Just no?"
@@ -2391,6 +2668,7 @@ label ep06_madison_traingame:
                     mc_t "The good girl isn't gone. She's just armored."
 
                 "If you could kill Michael and get away with it, would you?":
+                    hide screen walkthrough_screen
                     mc_s "If you could kill Dad and get away with it, would you?"
                     mad "Are you serious?"
                     mc_s "Dead serious. Would you end him?"
@@ -2431,8 +2709,10 @@ label ep06_madison_traingame:
     else:
         # FALSE PATH - MC asks if stopping being good was her choice
         if ep06_mc_advantage_points >= 1:
+            $ show_walkthrough("ep06_madison_finalq_round6_false_menu")
             menu:
                 "When you stopped being the good girl, was it your choice?":
+                    hide screen walkthrough_screen
                     mc_s "When you stopped being the good girl, was it your choice?"
                     mad "Yes."
                     mc_s "You're sure."
@@ -2448,6 +2728,7 @@ label ep06_madison_traingame:
                     mc_t "She wears the villainy like a shield."
 
                 "Do you think you can ever go back?":
+                    hide screen walkthrough_screen
                     mc_s "Do you think you can ever go back?"
                     mad "To what?"
                     mc_s "To before the bitterness. To being whole."
@@ -2488,13 +2769,13 @@ label ep06_madison_traingame:
     mad "I know. Everyone knows the famous Osaka detective's schedule."
     mc_t "\"Famous.\" She's mocking me."
 
-    if ep06_chosen_path == "love":
+    if ep06_madison_path == "love":
         mad "Ten minutes—just help me carry equipment?"
         mc_s "Is that really what you need?"
         mad "I don't know what I need."
         mc_t "That sounded... honest."
 
-    elif ep06_chosen_path == "corruption":
+    elif ep06_madison_path == "corruption":
         mad "Ten minutes—unless you're scared."
         mc_s "Of you?"
         mad "Of what happens when we're alone."
@@ -2526,7 +2807,7 @@ label ep06_madison_station_proposal:
         mc_t "She's been watching me differently since the train."
         mc_t "Colder. Like she's dissecting a frog."
 
-        if ep06_chosen_path == "love":
+        if ep06_madison_path == "love":
             if ep05_confrontation_peaceful:
                 # They had sex in ep05, MC lied 3+ times, love path
                 mad "You said you wanted to know me."
@@ -2544,7 +2825,7 @@ label ep06_madison_station_proposal:
                 mad "I'm still making the offer. My studio. Ten minutes."
                 mad "But don't expect me to trust a word you say."
 
-        elif ep06_chosen_path == "corruption":
+        elif ep06_madison_path == "corruption":
             if ep05_confrontation_peaceful:
                 # They had sex in ep05, MC lied 3+ times, corruption path
                 mad "You lied. Over and over."
@@ -2581,7 +2862,7 @@ label ep06_madison_station_proposal:
         mc_t "She caught me in at least one lie."
         mc_t "But she's still here. She hasn't left."
 
-        if ep06_chosen_path == "love":
+        if ep06_madison_path == "love":
             if ep05_confrontation_peaceful:
                 # They had sex in ep05, MC lied 1-2 times, love path
                 mad "You weren't completely honest with me."
@@ -2595,7 +2876,7 @@ label ep06_madison_station_proposal:
                 mad "My studio. Ten minutes."
                 mad "Let's start over."
 
-        elif ep06_chosen_path == "corruption":
+        elif ep06_madison_path == "corruption":
             if ep05_confrontation_peaceful:
                 # They had sex in ep05, MC lied 1-2 times, corruption path
                 mad "You lied. I lied too, probably."
@@ -2630,7 +2911,7 @@ label ep06_madison_station_proposal:
         mc_t "Thirty minutes of brutal honesty."
         mc_t "And she's looking at me differently now. Like the armor is cracked."
 
-        if ep06_chosen_path == "love":
+        if ep06_madison_path == "love":
             if ep05_confrontation_peaceful:
                 # They had sex in ep05, MC lied 0 times, love path
                 mad "You were honest with me. Even when it was ugly."
@@ -2647,7 +2928,7 @@ label ep06_madison_station_proposal:
                 mad "My studio's two blocks away. Come with me?"
                 mad "Just ten minutes. Please."
 
-        elif ep06_chosen_path == "corruption":
+        elif ep06_madison_path == "corruption":
             if ep05_confrontation_peaceful:
                 # They had sex in ep05, MC lied 0 times, corruption path
                 mad "We both know what we are now."
@@ -2703,23 +2984,26 @@ label ep06_madison_station_proposal:
 
 
     # CRITICAL CHOICE - Player decides
+    $ show_walkthrough("ep06_madison_studio_decision_menu")
     menu:
         "Let's go.":
+            hide screen walkthrough_screen
             mc_s "Let's go."
-            if ep06_chosen_path == "corruption":
+            if ep06_madison_path == "corruption":
                 mc_t "I'm walking straight into hell. And I'm smiling."
-            elif ep06_chosen_path == "love":
+            elif ep06_madison_path == "love":
                 mc_t "I can't leave her like this."
             else:
                 mc_t "I'm going to regret this."
-                
+
             jump ep06_madison_studio
 
         "I'm not doing this.":
+            hide screen walkthrough_screen
             mc_s "I'm not doing this."
             mad "Fine."
 
-            if ep06_chosen_path == "love":
+            if ep06_madison_path == "love":
                 mc_t "She looks crushed. But she hides it quickly."
             else:
                 mc_t "She doesn't look surprised. Just... resigned."

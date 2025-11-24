@@ -543,22 +543,6 @@ image eigengrau = Solid("#16161D")
 image vignette = "common/blacktrans.webp"
 
 ################################################################################
-## OVERLAY EFFECTS
-################################################################################
-
-# Fog overlay effects
-image fog_00 = "images/overlay/fog_00.webp"
-image fog_01 = "images/overlay/fog_01.webp"
-image fog_02 = "images/overlay/fog_02.webp"
-image fog_03 = "images/overlay/fog_03.webp"
-
-# Noise overlay effects
-image noise_00 = "images/overlay/noise00.webp"
-image noise_01 = "images/overlay/noise01.webp"
-image noise_02 = "images/overlay/noise02.webp"
-image noise_03 = "images/overlay/noise03.webp"
-
-################################################################################
 ## LOGO AND BRANDING ELEMENTS
 ################################################################################
 

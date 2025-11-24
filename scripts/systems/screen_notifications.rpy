@@ -127,7 +127,7 @@ init python:
         },
         "emotional_lock": {
             "title": "Emotional Shutdown",
-            "message": "You feel nothing for her anymore. Trust: 0. Corruption: 0. This cannot be undone.",
+            "message": "You feel nothing for her anymore. Love: 0. Corruption: 0. This cannot be undone.",
             "icon": "strike"
         },
 

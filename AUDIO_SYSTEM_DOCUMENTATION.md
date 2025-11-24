@@ -1,7 +1,7 @@
 # Audio System Documentation
 
-**Version:** 1.0  
-**Language:** English  
+**Version:** 1.1
+**Language:** English
 **Last Updated:** November 2024
 
 ---
@@ -120,6 +120,48 @@ $ playAudio("audio/thunder.opus", "amb", 2, False)
 # SFX with both fades
 $ playAudio("audio/whoosh.opus", "sfx", 1, False, 0.5, 0.5)
 ```
+
+### Auto-Detection of SFX_ Prefix (NEW in v1.1)
+
+For backward compatibility with older save games and scripts, the `playAudio()` function now automatically detects and applies the `sfx_` prefix for ambient and SFX channels.
+
+**How it works:**
+- Only applies to `"amb"` and `"sfx"` channels (NOT music)
+- Automatically looks up variables with `sfx_` prefix
+- Prevents duplicate prefixes if already present
+- Falls back to original name if variable not found
+
+**All three methods work:**
+
+```renpy
+# Method 1: Using the variable directly (original method)
+$ playAudio(sfx_japanday_cross, "amb", 1, True, 3.0)
+
+# Method 2: String without prefix (auto-detects and finds sfx_japanday_cross)
+$ playAudio("japanday_cross", "amb", 1, True, 3.0)
+
+# Method 3: String with prefix (won't duplicate)
+$ playAudio("sfx_japanday_cross", "amb", 1, True, 3.0)
+```
+
+**More examples:**
+
+```renpy
+# These all work the same for SFX:
+$ playAudio(sfx_dooropen, "sfx", 1, False)
+$ playAudio("dooropen", "sfx", 1, False)
+$ playAudio("sfx_dooropen", "sfx", 1, False)
+
+# Music channels are NOT affected (no auto-prefixing)
+$ playAudio(antonella_theme, "music", 1, True, 2.0)
+$ playAudio("music/antonella_theme.opus", "music", 1, True, 2.0)
+```
+
+**Why this is useful:**
+- **Backward compatibility**: Old scripts using raw names still work
+- **Flexibility**: Choose the style you prefer
+- **Error prevention**: Automatically prevents `sfx_sfx_` duplicates
+- **Save game compatibility**: Old saves with different audio call styles continue working
 
 ### Multiple Audio Layers
 

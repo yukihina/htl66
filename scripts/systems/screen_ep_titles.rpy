@@ -73,8 +73,8 @@ init python:
 label show_episode_title(episode_number):
     # Hide UI elements we don't want to see
     window hide
-    hide screen stats_button
-    hide screen walkthrough_icon
+    hide screen stats_button onlayer notifications
+    hide screen walkthrough_icon onlayer notifications
 
     # Disable menus and rollback during the sequence
     $ store.quick_menu = False
@@ -85,11 +85,12 @@ label show_episode_title(episode_number):
     $ store.playAudio(title_theme, "music", 1, True, 0.5, 0)
 
     # Show the main title screen, passing it the necessary data
+    # Show on notifications layer with high zorder to ensure it's above stats_button/walkthrough_icon
     show screen episode_title_main(
         ep_num=episode_number,
         ep_name=episode_data.get(episode_number, "Unknown Episode"),
         target_label="ep{:02d}_start".format(episode_number)
-    )
+    ) onlayer notifications
 
     # Pause the game and wait for the player to click
     $ renpy.ui.interact()
@@ -109,6 +110,7 @@ label show_episode_title(episode_number):
 # ------------------------------------------------------------------------------
 screen episode_title_main(ep_num, ep_name, target_label):
     modal True
+    zorder 10000  # Higher than stats_button (999) and walkthrough_icon (999)
     default show_avif = False  # Controls when to show AVIF
 
     # Video Background - plays for 10 seconds
@@ -129,9 +131,7 @@ screen episode_title_main(ep_num, ep_name, target_label):
         xpos 622
         # KEY ACTION: On click, it only shows the controller screen.
         # This is the only action, which makes it simple and robust.
-        action Show("ep_title_transition_controller", target_label=target_label)
-        hovered Show("vignette_overlay")
-        unhovered Hide("vignette_overlay")
+        action Show("ep_title_transition_controller", target_label=target_label, _layer="notifications")
 
     # Title Texts
     text "episode {}".format(ep_num).upper() style "title_ep_num" xalign 0.5 ypos 238
@@ -143,7 +143,7 @@ screen episode_title_main(ep_num, ep_name, target_label):
 # ------------------------------------------------------------------------------
 screen ep_title_transition_controller(target_label):
     modal True
-    zorder 200 # Ensures it is on top of everything
+    zorder 10001 # Ensures it is on top of episode_title_main
 
     # 1. On show, its FIRST action is to stop the video.
     on "show" action Stop("ep_bg")
@@ -154,18 +154,17 @@ screen ep_title_transition_controller(target_label):
     # 3. A timer waits for the fade animation to finish (0.5s).
     timer 0.5 action [
         # 4. Once the screen is black, it cleans everything up...
-        Hide("episode_title_main"),
-        Hide("vignette_overlay"),
-        Hide("ep_title_transition_controller"),
+        Hide("episode_title_main", _layer="notifications"),
+        Hide("ep_title_transition_controller", _layer="notifications"),
         # 5. ...and finally, jumps to the correct destination.
         Jump(target_label)
     ]
 
 # ------------------------------------------------------------------------------
-# Vignette screen for the hover effect
+# Vignette screen for the hover effect (DISABLED - not needed)
 # ------------------------------------------------------------------------------
-screen vignette_overlay():
-    add "vignette" xalign 0.5 yalign 0.5 at heartbeat(1,1.4,0.7), igm_appear_nowait
+# screen vignette_overlay():
+#     add "vignette" xalign 0.5 yalign 0.5 at heartbeat(1,1.4,0.7), igm_appear_nowait
 
 
 ################################################################################

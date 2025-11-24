@@ -437,8 +437,8 @@ init python:
             "thumb_off": "achievements/ach_ep05_final2_thumb_off.webp"
 },
         "ach_ep06_amber1": {
-            "title": "Uninhibited Exploration",
-            "text": "Your curiosity knows no bounds, leading you to embrace desires without shame. In tranquil waters, true feelings surface naturally.",
+            "title": "Gothic Temptation",
+            "text": "Amber embraces her darkest allure, wrapped in fishnet and temptation. In her sanctuary, she reveals everything.",
             "persistent_var": "ep06_ach1",
             "notified_var": "ep06_ach1_notified",
             "thumb_on": "achievements/ach_ep06_amber1_thumb_on.webp",
@@ -446,8 +446,8 @@ init python:
             "thumb_off": "achievements/ach_ep06_amber1_thumb_off.webp"
 },
         "ach_ep06_amber2": {
-            "title": "Uninhibited Exploration",
-            "text": "Your curiosity knows no bounds, leading you to embrace desires without shame. In tranquil waters, true feelings surface naturally.",
+            "title": "Schoolgirl's Secret",
+            "text": "Beneath the plaid skirt and sweet smile lies Amber's true nature. Some lessons are best taught after hours.",
             "persistent_var": "ep06_ach2",
             "notified_var": "ep06_ach2_notified",
             "thumb_on": "achievements/ach_ep06_amber2_thumb_on.webp",
@@ -626,13 +626,13 @@ init python:
             "ach_ep05_final2"
         ),
         create_achievement_condition(
-            lambda: ep06_ach_amblove,
+            lambda: ep06_ach_amblove and e6_amber_path == "love",
             "ep06_ach1",
             "ep06_ach1_notified",
             "ach_ep06_amber1"
         ),
         create_achievement_condition(
-            lambda: ep06_ach_ambcor,
+            lambda: ep06_ach_ambcor and e6_amber_path == "corruption",
             "ep06_ach2",
             "ep06_ach2_notified",
             "ach_ep06_amber2"

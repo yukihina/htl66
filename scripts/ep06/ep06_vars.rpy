@@ -2,7 +2,7 @@
 init:
 
     # AMBER TRACKING
-    default e6_amber_path = "none"
+    default e6_amber_path = "none"  # "love", "corruption", "neutral"
     default e6_amber_neutral_blowjob_seen = False
     default e6_amber_neutral_boobjob_seen = False
     default e6_amber_cor_blowjob_seen = False
@@ -16,7 +16,7 @@ init:
     # MADISON TRAIN GAME
     default ep06_mc_lies_detected = 0
     default ep06_mc_advantage_points = 0
-    default ep06_chosen_path = "none"  # "love", "corruption", "neutral"
+    default ep06_madison_path = "none"  # "love", "corruption", "neutral"
     
     # SCENE TRACKING
     default e6_gore = False

@@ -7,7 +7,6 @@ label ep02_start:
     scene eigengrau with watercolor
     $ stopAllSubchannels(channel="music", fadeout=1)
     pause 0.5
-    call showNoise(0.1, 0.15, transition=dissolve)
     $ quick_menu = True
     $ renpy.block_rollback()
 ## -- INTRO SCENE HOME
@@ -1693,7 +1692,7 @@ label ep02_arle_hell:
     $ playAudio(sfx_room_noise3, "amb", 1, True, 2.5, 0)
 
     show ep02_escort04 with ccirclewipe
-    $ playAudio(yakuza_theme, "music", 1, True, 2.5, 0)
+    $ playAudio(kobeyamaguchi_theme, "music", 1, True, 2.5, 0)
     yas "Welcome ladies..."
     rin "Thank you, baby."
     yaw "Alright, let's get down to business."
@@ -3200,7 +3199,6 @@ label ep02_arlette_breakup:
     $ stopAllSubchannels(channel="sfx", fadeout=1)
     $ stopAllSubchannels(channel="music", fadeout=1)
     $ update_htl_episodes()
-    call hideNoise(transition=dissolve)
     #-- End Episode 2
     if htl_episodes == 2:
         return

@@ -2628,7 +2628,7 @@ label ep05_end:
     $ stopAllSubchannels("amb", 2)
     scene eigengrau with slowfade
     $ setChannelVolume("music", 2, 0.3, 0)
-    $ playAudio(yakuza_theme, "music", 2, True, 4, 0)
+    $ playAudio(kudokai_theme, "music", 2, True, 4, 0)
     $ setChannelVolume("amb", 2, 0.3, 0)
     $ playAudio(sfx_eveningtraffic, "amb", 2, True, 2, 0)
 

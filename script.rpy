@@ -1,5 +1,4 @@
 ﻿init:
-    default persistent.effectsOn = True
     define _scene_show_hide_transition = Dissolve(0.35)
     default mc_name = ""
     default walkthrough_enabled = False
@@ -149,7 +148,6 @@ label start:
     scene black with smoke
     pause 0.5
     $ playAudio(sfx_hospital_hall, "amb", 1, True, 1, 0)
-    call showNoise(0.1, 0.15, transition=dissolve)
     show namechg01 with bubbles
     "Nurse" "Good morning!"
     "Nurse" "I hope you're feeling better today. We've got most of the boring paperwork out of the way, thanks to that gorgeous companion of yours."
@@ -168,12 +166,10 @@ label start:
     scene black with watercolor
     $ stopAllSubchannels(channel="amb", fadeout=1)
     pause 1
-    call hideNoise(transition=dissolve)
     jump ep01_title
     return
 
 label after_load:
-    call hideNoise(transition=dissolve)
     $ update_htl_episodes()
 
     python:

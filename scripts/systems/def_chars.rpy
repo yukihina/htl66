@@ -164,12 +164,13 @@ init -999 python:
         characters["kit"] = create_character("Kitsune", "#00A86B", "#F5B8D4")
         characters["rin"] = create_character("Rina", "#d18376", "#B8F5F0")
         characters["surg"] = create_character("The Surgeon", "#4169E1", "#F5E6B8")
-        characters["tak"] = create_character("Takeo Sato", "#DC143C", "#B8F5E6")
+        characters["tak"] = create_character("Takeo Sato", "#B22222", "#F5E4D5")
+        characters["tak_t"] = create_thinking_character("Takeo Sato", "#B22222", "#C7B299")
         characters["yaw"] = create_character("Yakuza Wakagashira", "#8bf5f0", "#F5C2B8")
         characters["yas"] = create_character("Yakuza Shatei", "#837c5e", "#E6B8F5")
-        characters["yam"] = create_character("Koji Yamamoto", "#837c5e", "#E6B8F5")
-        characters["yam_t"] = create_thinking_character("Koji Yamamoto", "#837c5e", "#E6B8F5")
-        characters["wat"] = create_character("Kazuhiro Watanabe", "#9966CC", "#E8F5B8")
+        characters["yam"] = create_character("Koji Yamamoto", "#647C99", "#E1EFF5")
+        characters["yam_t"] = create_thinking_character("Koji Yamamoto", "#647C99", "#A8C4CC")
+        characters["wat"] = create_character("Chief Watanabe", "#9966CC", "#E8F5B8")
 
         return characters
 

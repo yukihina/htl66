@@ -18,7 +18,6 @@ label ep03_start:
 
 
 label ep03_isatalk:
-    call showNoise(0.1, 0.15, transition=dissolve)
     show ep03_backtohome01 with slowfade
     $ config.rollback_enabled = True
     show screen stats_button
@@ -2713,7 +2712,6 @@ label ep03_boxes:
     $ stopAllSubchannels(channel="amb", fadeout=1.5)
     $ stopAllSubchannels(channel="music", fadeout=2)
     $ update_htl_episodes()
-    call hideNoise(transition=dissolve)
 #-- End Episode 3
     if htl_episodes == 3:
         return

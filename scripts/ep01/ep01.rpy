@@ -7,7 +7,6 @@ label ep01_start:
     scene eigengrau with watercolor
     $ stopAllSubchannels(channel="music", fadeout=1)
     pause 0.5
-    call showNoise(0.1, 0.15, transition=dissolve)
     $ quick_menu = True
     show screen stats_button
     show screen walkthrough_icon
@@ -4408,7 +4407,6 @@ label ep01_newhome:
     scene eigengrau with rose
     pause 2
 #-- End Episode 1
-    call hideNoise(transition=dissolve)
     jump ep02_title
 
 

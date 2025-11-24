@@ -115,6 +115,9 @@ init -5 python:
             "park2": "es_park-1-sfx-producer",
             "parking": "es_parking-structure-sfx-producer",
             "public_bath": "es_fan-public-bathroom-sfx-producer",
+            "policehall": "empty-police-station-hallway_-japan_-early-morning-ambience_-quiet-room-tone",
+            "policeoffice": "private-office-room-tone_-high-rise-building_-tokyo-police-hq_-muffled-busy-offic",
+            "policeoffice_loud": "busy-japanese-police-station-office-walla_-large-room_-indistinct-japanese-male",
             "quietnite": "this-is-tokyo-quiet-neighborhood,-vehicles-passing-b",
             "quietnite2": "city-living-apartment-room-tone,-hum,-distant-bird-by-daniel-vasquez",
             "raining_ext": "nature-of-japan-rain-on-village-street-by-omnibit-sound",
@@ -254,6 +257,7 @@ init -5 python:
             "guncock9mm": "es_gun-handgun-731-sfx-producer",
             "gunshots_glock": "marine-pistols-glock-19,-two-shots-by-dfmg-signature-series",
             "gunshot_beretta": "top-gun-beretta-pistol-single-shot-by-bjorn-lynne",
+            "gunshot_glock_3shots": "glock_3shots",
             "garageopen": "around-the-house-garage-door,-opening-by-stuart-duffield",
             "glass_knock": "es_glass-knock-3-sfx-producer",
             "glass_ontable": "glass_-_leave_bottle_on_table",
@@ -281,6 +285,7 @@ init -5 python:
             "magic": "es_magical-shimmer-sfx-producer",
             "monster": "es_monster-demon-sfx-producer",
             "mug": "es_mug-sfx-producer",
+            "mouseclick": "mouseclick",
             "phone": "es_cell-phone-vibrate-11-sfx-producer",
             "phone_typing": "phone_typing",
             "phone_eli": "es_mobile-phone-vibrate-sfx-producer",
@@ -422,7 +427,12 @@ init -5 python:
         })
     }
 
+
     # Create global variables for each SFX
+    # Creates BOTH versions: sfx_name AND name (for backward compatibility)
     for category, sfx_dict in sfx_categories.items():
         for sfx_name, sfx_path in sfx_dict.items():
+            # Create variable with sfx_ prefix (standard)
             globals()[f"sfx_{sfx_name}"] = sfx_path
+            # Create variable without prefix (backward compatibility alias)
+            globals()[sfx_name] = sfx_path

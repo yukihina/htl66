@@ -22,7 +22,6 @@ label ep04_intro:
     pause 1.0
     $ renpy.free_memory()
     pause 1.0
-    call showNoise(0.1, 0.15, transition=dissolve)
     $ config.rollback_enabled = True
     $ setChannelVolume(channel="amb", subchannel=1, volume=0.4)
     $ playAudio(sfx_windyprairie, "amb", 1, True, 1, 0)
@@ -2378,7 +2377,6 @@ label ep04_pazosaka:
     if htl_episodes == 4.1:
         pause 2
         scene eigengrau
-        call hideNoise(transition=dissolve)
         return
 
 
@@ -2405,7 +2403,6 @@ label ep04_mcnananight:
         $ show_custom_notification("bugfix")
 #####
 #opening scene
-    call hideNoise(transition=dissolve)
     scene eigengrau with clouds_inverse
     $ setChannelVolume(channel="amb", subchannel=2, volume=0.3)
     $ playAudio(sfx_mc_room_night, "amb", 2, True, 1.5, 0)
@@ -7358,7 +7355,6 @@ label ep04_elizabeth_kiss:
 
 
 label ep04_isabella_mcroom:
-    call hideNoise(transition=dissolve)
     scene eigengrau with slowfade
     pause 1.0
     $ renpy.free_memory()
@@ -8517,7 +8513,6 @@ label ep04_antonella_return:
     $ stopAllSubchannels(channel="amb", fadeout=1.5)
     $ stopAllSubchannels(channel="music", fadeout=2)
     $ update_htl_episodes()
-    call hideNoise(transition=dissolve)
     pause 2.0
     if htl_episodes == 4.2:
         return

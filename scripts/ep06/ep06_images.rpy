@@ -140,7 +140,7 @@ init:
     image ep06_shadowdir09:
         "e6_shadow_04_fb1"
         pause 1.0
-        "e6_shadow_04_fb2" with Dissolve(0.5)
+        "e6_shadow_04_fb2" with Dissolve(2.5)
     image ep06_shadowdir10 = "e6_shadow_5"
     image ep06_shadowdir11 = "e6_shadow_5b"
     image ep06_shadowdir12 = "e6_shadow_6"
