@@ -261,6 +261,8 @@ init -900 python:
                     "assjob": 0,
                     "blowjob": 0,
                     "creampie": 0,
+                    "footjob": 0,
+                    "oral": 0,
                     "pussyjob": 0,
                     "sex": 0,
                     "titjob": 0,

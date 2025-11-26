@@ -170,6 +170,7 @@ label start:
     return
 
 label after_load:
+    hide imgNoise
     $ update_htl_episodes()
 
     python:

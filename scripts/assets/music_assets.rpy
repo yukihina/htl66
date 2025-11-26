@@ -87,6 +87,12 @@ init -6 python:
         "amber_sexy_theme": "sin-silence",#Sin & Silence
         "amber_sexy_theme2": "shadow-waltz",#Shadow Waltz
         "amber_theme": "frost-ashes",#Frost & Ashes
+        "amber2_love_theme": "in-ewiger-umarmung",#In ewiger Umarmung
+        #"amber2_action_theme": "mein-besitz-mein-schutz",#Mein Besitz, mein Schutz
+        #"amber2_past_theme": "unvergessliche-jahre",#Unvergessliche Jahre
+        #"amber2_happy_theme": "tanz-ins-licht",#Tanz ins Licht
+        "amber2_theme": "unvergessliche-jahre",#Unvergessliche Jahre
+        #"amber2_lost_theme": "schwarzestes-herz",#Schwärzestes Herz
 
         # Arlette themes
         "arlette_love_theme": "un-dernier-espoir",#Un dernier espoir

@@ -227,6 +227,8 @@ init -5 python:
             "bathtub_sink2": "bathtub2",
             "clic1": "clic1",
             "clic2": "clic2",
+            "clockalarm": "clockalarm",
+            "clockalarm_stop": "clockalarm_stop",
             "celldoor": "doors-101-prison-cell-door,-metallic,-slammed",
             "clothes": "take-off_clothes",
             "coffee_mkr": "coffeemaker",

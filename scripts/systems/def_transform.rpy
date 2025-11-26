@@ -506,22 +506,3 @@ init -1:
             zoom 1.05
         ease 0.2:
             zoom 1.0
-
-    transform noise_animation:
-        "noise_00" with Dissolve(0.1)
-        alpha 0.4
-        pause 0.1
-        "noise_01" with Dissolve(0.1)
-        alpha 0.4
-        pause 0.1
-        "noise_02" with Dissolve(0.1)
-        alpha 0.4
-        pause 0.1
-        "noise_03" with Dissolve(0.1)
-        alpha 0.4
-        pause 0.1
-        repeat
-
-    image noise_00_alpha:
-        "noise_00"
-        alpha 0.4

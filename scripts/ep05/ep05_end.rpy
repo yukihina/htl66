@@ -277,12 +277,11 @@ label ep05_elisuicide:
             $ rm.update("nanami", "trust", -2)
             $ check_levels("nanami", "trust", -2)
             $ ss.add("nanami", "strike")
-            $ nanami_strikes = ss.get("nanami", "strike")
-            if nanami_strikes == 1:
+            if ss.get("nanami", "strike") == 1:
                 $ show_custom_notification("strike1")
-            elif nanami_strikes == 2:
+            elif ss.get("nanami", "strike") == 2:
                 $ show_custom_notification("strike2")
-            elif nanami_strikes >= 3:
+            elif ss.get("nanami", "strike") >= 3:
                 $ show_custom_notification("strike3")
         "This should be the last time":
             hide screen walkthrough_screen
@@ -749,12 +748,11 @@ label ep05_hosmadison:
             $ rm.update("madison", "trust", -2)
             $ check_levels("madison", "trust", -2)
             $ ss.add("madison", "strike")
-            $ madison_strikes = ss.get("madison", "strike")
-            if madison_strikes == 1:
+            if ss.get("madison", "strike") == 1:
                 $ show_custom_notification("strike1")
-            elif madison_strikes == 2:
+            elif ss.get("madison", "strike") == 2:
                 $ show_custom_notification("strike2")
-            elif madison_strikes >= 3:
+            elif ss.get("madison", "strike") >= 3:
                 $ show_custom_notification("strike3")
     if ep05_stance_surrender:
         mad "Smart choice. I'll keep sacrificing myself to keep her pure."
@@ -1275,12 +1273,11 @@ label ep05_hosamber:
             amb "Save it. I'm going home to stream. Have fun with Elizabeth."
             amb "At least she's too drugged up to reject you."
             $ ss.add("amber", "strike")
-            $ amber_strikes = ss.get("amber", "strike")
-            if amber_strikes == 1:
+            if ss.get("amber", "strike") == 1:
                 $ show_custom_notification("strike1")
-            elif amber_strikes == 2:
+            elif ss.get("amber", "strike") == 2:
                 $ show_custom_notification("strike2")
-            elif amber_strikes >= 3:
+            elif ss.get("amber", "strike") >= 3:
                 $ show_custom_notification("strike3")
             $ rm.update("amber", "trust", -6)
             $ check_levels("amber", "trust", -6)

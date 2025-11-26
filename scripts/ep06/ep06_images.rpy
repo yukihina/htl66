@@ -125,7 +125,7 @@ init:
     image ep06_opening07 = "e6_opening_02_fb1"
     image ep06_opening08 = "e6_opening_03"
     image ep06_opening09 = "e6_opening_04"
-    image ep06_opening10 = "e6_opening_04_b"
+    image ep06_opening10 = "e6_opening_04b"
     image ep06_opening11 = "e6_opening_05"
     image ep06_opening12 = "e6_opening_04_fb1"
 
@@ -232,3 +232,6 @@ init:
     image ep06_anim12 = Movie(play="images/ep6/e6_amb_anim12.webm", loop=True)
     image ep06_anim13 = Movie(play="images/ep6/e6_amb_anim13.webm", loop=True)
     image ep06_anim14 = Movie(play="images/ep6/e6_amb_anim14.webm", loop=True)
+
+    #bug fix:
+    image imgNoise = Null()

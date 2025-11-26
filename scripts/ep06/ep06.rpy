@@ -527,7 +527,7 @@ label ep06_crimescene:
     show ep06_crimescene13
     tak "Yamamoto was tracking a specific anomaly. Murders."
     tak "Seventeen women over three months. Osaka to Tokyo pipeline."
-    tak "All found with post-mortem surgical incisions in the same location."
+    tak "All found with surgical incisions."
     mc_s "Breast tissue removed?"
     tak "Systematically. Look at the timeline on the laptop."
 
@@ -546,7 +546,7 @@ label ep06_crimescene:
     if e6_gore:
         $ playAudio(mouseclick, "sfx", 1, False, 0)
         $ setChannelVolume("sfx", 1, 1, 0)
-        show ep06_crimescene15 with fade
+        show ep06_crimescene15 at animated_glitch with fade
         tak "Victim one. Three months ago. Look at the incision."
         mc_t "Clean sutures. Minimal bruising."
         mc_s "Surgical precision. Looks like a professional augmentation job."
@@ -554,7 +554,7 @@ label ep06_crimescene:
 
         $ playAudio(mouseclick, "sfx", 2, False, 0)
         $ setChannelVolume("sfx", 2, 1, 0)
-        show ep06_crimescene16 with fade
+        show ep06_crimescene16 at animated_glitch with fade
         tak "Victim eight. Two months ago."
         mc_t "Jagged edges. Bruising."
         mc_s "Getting sloppy. There's infection around the wound."
@@ -562,7 +562,7 @@ label ep06_crimescene:
 
         $ playAudio(mouseclick, "sfx", 3, False, 0)
         $ setChannelVolume("sfx", 3, 1, 0)
-        show ep06_crimescene17 with fade
+        show ep06_crimescene17 at animated_glitch with fade
         tak "Victim seventeen. Last week."
         mc_t "God... ripped open."
         mc_s "That's not surgery. That's butchery."
@@ -577,7 +577,7 @@ label ep06_crimescene:
         tak "Last week. Victim seventeen."
         mc_t "Butchered. Hack job. Whoever did this was either in a hurry or didn't care anymore."
 
-    show ep06_crimescene18
+    show ep06_crimescene18 with fade
     mc_s "You think it's organ harvesting?"
     tak "Think, Crawford. Kidneys have value. Livers have value."
     tak "Does breast tissue have black market value?"
@@ -620,7 +620,7 @@ label ep06_crimescene:
             tak "Be careful. If you hunt monsters with rage, you might forget when to stop."
 
     show ep06_crimescene20
-    tak "The autopsy results will be ready tomorrow. Dr. Hatanaka."
+    tak "The autopsy results will be ready tomorrow... Dr. Hatanaka."
     tak "She will tell us what was inside the implants."
     tak "Until then, we have three shell casings arranged in a triangle."
     tak "Three rapid shots."
@@ -638,41 +638,71 @@ label ep06_crimescene:
 
 
 label ep06_mornintro:
-    scene eigengrau with clouds_inverse
+    scene eigengrau with lines
     show next_morning
     pause 3
     show location_denenchofu_m with slowfade
     show home_location zorder 2 with dissolve
-    pause 4
+    pause 5
     hide home_location with dissolve
     jump ep06_mornwithamber
 
 
 label ep06_mornwithamber:
     scene eigengrau
+
+    $ playAudio(earlymor, "amb", 1, True, 2.0)
+    $ setChannelVolume("amb", 1, 0.4, 2)
+    $ playAudio(mc_room_night, "amb", 2, True, 2.0)
+    $ setChannelVolume("amb", 2, 0.2, 2)
+    $ playAudio(clockalarm, "sfx", 1, True, 5.0)
+    $ setChannelVolume("sfx", 1, 0.8, 5)
+
     show ep06_ambermorn01
     pause
 
-    show ep06_ambermorn02
-    mc_s "Shit..."
+    $ stopAudio("sfx", 1, 1.0)
+    $ playAudio(clockalarm_stop, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 1, 0)
 
-    show ep06_ambermorn03
+    show ep06_ambermorn02
+    mc_s "Shit... late again."
+    mc_t "Ugh. Stuck. Something heavy is pinning the blanket down."
+    mc_t "Warm. Too warm. And soft."
+    mc_t "Wait. Skin?"
+
+    show ep06_ambermorn03 with fade
     amb "No."
-    mc_s "Amber, I have—"
-    mc_t "That look. Fuck."
+    mc_s "Wh— Amber?!"
+    mc_s "What are you doi—"
     amb "I said no. You're not going anywhere."
 
-    show ep06_ambermorn04
+    show ep06_ambermorn04 with vpunch
     amb "Haah..."
+    mc_t "Naked. She's completely naked straddling me."
+    mc_t "But that look... soft. Like she's looking at a puppy, not a man."
+
+    if ss.get("amber", "strike") == 1:
+        mc_s "Amber, we talked about this..."
+        amb "We talked. You ran. I'm just holding you here."
+
+    elif ss.get("amber", "strike") == 2:
+        mc_s "You're pushing your luck..."
+        amb "I'm pushing you. Don't look away from me."
+
+    else:
+        mc_s "Amber, when did you— Nevermind!"
+        mc_s "I gotta get up..."
 
     show ep06_ambermorn05
-    mc_s "The case—"
     amb "Shut up and feel this."
-    mc_t "I should stop. I can't. God, I can't."
+    mc_t "Her skin is burning against mine. Hell."
+    mc_t "Wet. She's already wet."
+    mc_t "I need to push her off, but my hands aren't listening."
 
     $ show_walkthrough("ep06_amber_first_decision_menu")
     menu:
-        "Show me." if amber_strikes == 0 and rm.get("amber", "cor") >= 25:
+        "Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 10:
             hide screen walkthrough_screen
             mc_s "Show me what you were doing."
 
@@ -692,30 +722,31 @@ label ep06_mornwithamber:
 
         "Not now.":
             hide screen walkthrough_screen
-            mc_s "I can't. Not now."
+            mc_t "No. Not today. I can't get pulled into this vortex today."
 
             $ e6_amber_path = "rejection"
             $ ss.add("amber", "strike")
-            $ amber_strikes = ss.get("amber", "strike")
-            if amber_strikes == 1:
+
+            if ss.get("amber", "strike") == 1:
                 $ show_custom_notification("strike1")
-            elif amber_strikes == 2:
+            elif ss.get("amber", "strike") == 2:
                 $ show_custom_notification("strike2")
-            elif nanami_strikes >= 3:
+            elif ss.get("amber", "strike") >= 3:
                 $ show_custom_notification("strike3")
             jump ep06_mornwithamber_rejection
 
     show ep06_ambermorn06
+    mc_t "She stopped moving. Her eyes dropped."
     amb "This scar..."
     mc_s "What about it?"
 
     show ep06_ambermorn07
     amb "It's so fucking hot."
-    mc_t "She sees the worst parts and wants them."
+    mc_t "That look... the sweetness is gone. Just hunger now."
 
     $ show_walkthrough("ep06_amber_intimacy_response_menu")
     menu:
-        "You see me." if amber_strikes == 0 and rm.get("amber", "trust") >= 40:
+        "You see me." if ss.get("amber", "strike") == 0 and rm.get("amber", "trust") >= 35:
             hide screen walkthrough_screen
             mc_s "You've always seen me."
 
@@ -744,13 +775,14 @@ label ep06_mornwithamber_neutral:
     amb "God... wait—"
     mc_s "Too much?"
     amb "No. Just... slow at first."
-    mc_s "Like this?"
-    amb "Yeah. Fuck, yeah. Now don't stop."
+    mc_s "You're so tight, Amber."
+    amb "Shh. Just breathe. Let me take it in."
 
     show ep06_ambermorn09
-    amb "Mmm..."
-    mc_t "Say it. She needs to hear it."
-    amb "Tell me..."
+    amb "Yeah. Fuck, yeah. There it is."
+    amb "Mmm... fuuuuck."
+    mc_s "Mmmm..."
+    amb "Don't just make noises. Tell me. Use your words."
 
     $ show_walkthrough("ep06_amber_sex_neutral_talk_menu")
     menu:
@@ -775,16 +807,25 @@ label ep06_mornwithamber_neutral:
             $ check_levels("amber", "trust", 1)
 
     show ep06_ambermorn10
-    amb "Look at me."
-    mc_s "I am."
-    amb "No one else gets this."
+    amb "Mmm... can you feel that?"
+    amb "Deeper... I need it deeper."
+    mc_s "You look... lost."
+    amb "What the fuck are you talking about? I'm not lost. Just yours."
 
     show ep06_ambermorn11
-    amb "You watching?"
-    mc_s "Can't look away."
-    amb "Good. Now what do you want? And don't say 'whatever you want'—that's such a cop-out."
-    mc_s "Since when do you give me choices?"
-    amb "Since I'm feeling generous. Don't waste it."
+    amb "You feeling how wet I am?"
+    mc_s "Yeah... I can't stop myself."
+    amb "Good."
+    amb "Now... what do you want?"
+    mc_s "I get a choice?"
+    amb "Don't waste it."
+    mc_s "But..."
+    
+    show ep06_ambermorn14
+    amb "Shh..."
+    mc_s "Amber?"
+    amb "Not inside right now. I want to play with you first."
+    amb "Tell me where you want me."
 
 
 label ep06_mornwithamber_neutral_sexmenu:
@@ -811,122 +852,153 @@ label ep06_mornwithamber_neutral_sexmenu:
 
 label ep06_mornwithamber_neutral_blowj:
     $ ss.add("amber", "blowjob")
-    show ep06_ambermorn12
-    mc_s "Open your mouth."
-    amb "Mmm..."
-    amb "I want to taste us."
+    scene eigengrau
+    show ep06_ambermorn12 with fade
+    mc_s "You look hungry."
+    amb "Starving."
+    amb "I want to taste every drop of you."
 
     show ep06_anim01
-    mc_s "That's it..."
-    amb "Mmph..."
+    mc_s "Jesus— Amber! Slow down!"
+    amb "Mmph... Gawk.... Nnh..."
+    mc_s "Fuck... you're so eager."
+    amb "Mmph!"
 
     show ep06_anim02
-    mc_s "Just like that..."
-    amb "Mmm..."
+    amb "Mmm... better?"
+    mc_s "Yeah. Just like that. Use your tongue."
+    amb "I can hear your breath hitching... You like this view?"
+    mc_s "I love watching you serve me."
 
     show ep06_ambermorn13
-    amb "More?"
-    mc_t "If she keeps going, I'll lose it."
-    mc_s "Enough. Get up here."
+    mc_s "Wait. Hold it."
+    amb "Mmph?"
+    mc_s "Too close. If you keep sucking like that, I'm finishing right now."
+    amb "Mmm... then choose. What comes next?"
     jump ep06_mornwithamber_neutral_sexmenu
 
 
 label ep06_mornwithamber_neutralboobj:
     $ ss.add("amber", "titjob")
-    show ep06_ambermorn14
-    amb "Shh..."
-
-    show ep06_ambermorn15
-    mc_s "Look at you..."
-    amb "Use them."
+    scene eigengrau
+    show ep06_ambermorn15 with fade
+    mc_s "Look at you... all spread out."
+    amb "Don't just look. Use them."
+    amb "Slide it right here. Make them heavy."
 
     show ep06_anim03
-    amb "Mmm..."
+    mc_s "Fuck... so soft."
+    amb "Mmm... yeah? Slippery?"
+    amb "Ah... ah... keep going."
 
     show ep06_anim04
-    mc_s "Fuck..."
+    mc_s "That tongue..."
+    amb "I want to taste it on my skin. Coat me."
+    mc_s "You're squeezing so hard..."
+    amb "Because you're mine."
 
     show ep06_ambermorn16
     mc_s "Amber, I'm—"
     amb "Not yet."
+    amb "I'm enjoying the view too much. What's next?"
     jump ep06_mornwithamber_neutral_sexmenu
 
 
 label ep06_mornwithamber_neutral_continue:
-    show ep06_ambermorn17
-    amb "You know why this works?"
+    scene eigengrau
+    show ep06_ambermorn17 with fade
+    amb "You know why we fit?"
     mc_s "Why?"
-    amb "Because I know your darkness, [mc_name]."
-    mc_s "And you're insane."
+    amb "Your darkness... matches mine."
+    mc_s "You're crazy."
     amb "We both are."
-    mc_t "God, she's right. We're both fucking insane."
 
     $ show_walkthrough("ep06_amber_neutral_climax_menu")
     menu:
         "Only you get me.":
             hide screen walkthrough_screen
-            mc_s "You're the only one who understands."
+            mc_s "Only you understand."
+            amb "Never letting go."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
         "Take it all.":
             hide screen walkthrough_screen
-            mc_s "Then take all of it."
+            mc_s "Take everything."
+            amb "Gladly."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
         "Broken together.":
             hide screen walkthrough_screen
-            mc_s "Maybe we're both exactly as fucked up as we need to be."
+            mc_s "We're both fucked up."
+            amb "Perfect fit."
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
 
     show ep06_ambermorn18
     $ ss.add("amber", "sex")
-    amb "Yes..."
-    mc_s "Like this?"
-    amb "Don't stop."
+    mc_s "On your back."
+    amb "Ah!"
+    mc_s "Better?"
+    amb "Yes! Harder!"
 
     show ep06_anim06
-    amb "Fuck... fuck... fuck..."
+    mc_s "Look at you... gone."
+    amb "Fuck... [mc_name]!"
+    mc_s "Taking it all?"
+    amb "Deep! Too deep!"
 
     show ep06_anim05
     amb "Ah... ah... ah..."
+    amb "Need it... don't stop!"
 
     show ep06_ambermorn19
-    amb "Inside... I want—"
-    mc_s "We don't have to—"
-    amb "I want to. Please."
-    mc_s "Tell me if—"
-    amb "I will. Now fuck me."
+    mc_s "Amber... I'm close."
+    amb "Inside."
+    mc_s "Sure?"
+    amb "Fill me."
+    mc_s "Mouth. Open."
 
-    show ep06_ambermorn20
+    show white zorder 1.0 at ejaculation_flash
+    show ep06_ambermorn20 at vpunch with flash
     $ ss.add("amber", "creampie")
-    amb "Mmm..."
+    amb "Mmph! Gawk!"
+    mc_s "Cumming!"
+    amb "Nghhh!"
     jump ep06_mornwithamber_postclimax
 
 
 label ep06_mornwithamber_postclimax:
-    show ep06_ambermorn21
+    scene eigengrau
+    show ep06_ambermorn21 with fade
     if e6_amber_path == "corruption":
-        amb "You think I'm fucked up?"
-        mc_s "For wanting that?"
-        amb "For needing it."
-        amb "Every time... I worry you'll see me different."
-        mc_s "I see you exactly as you are."
-        amb "And that doesn't scare you?"
+        amb "You made a mess of me..."
+        mc_s "You asked for it."
+        amb "I did. I always do."
+        amb "It reminds me of that day... you remember?"
+        
+        show ep06_ambermorn22 with clouds_inverse
+        amb "When I butchered my hair. I wanted to kill the 'perfect daughter'."
+        amb "Everyone looked at me with horror. Like I was a freak."
+        mc_s "I didn't."
+        amb "No. You looked at me like I was... interesting."
+
+        show ep06_ambermorn23 with fade
+        amb "You saw the cracks in me, and instead of fixing them, you touched them."
+        amb "That's why I let you do this to me. Because you like the damage."
 
         $ show_walkthrough("ep06_amber_corruption_postclim_menu")
         menu:
             "You don't scare me.":
                 hide screen walkthrough_screen
-                mc_s "Nothing about you scares me."
+                mc_s "Your cracks don't scare me. They let me in."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
             "We fit perfectly.":
                 hide screen walkthrough_screen
-                mc_s "We're both exactly what we need to be."
+                c_s "We're both broken. That's why we fit."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
                 $ rm.update("amber", "cor", 1)
@@ -934,67 +1006,76 @@ label ep06_mornwithamber_postclimax:
 
             "Stop overthinking.":
                 hide screen walkthrough_screen
-                mc_s "You think too much."
+                mc_s "Stop analyzing. You're just a toy I like to play with."
                 $ rm.update("amber", "trust", -1)
                 $ check_levels("amber", "trust", -1)
         
         jump ep06_mornwithamber_ending
 
     elif e6_amber_path == "love":
-        amb "I'm scared."
-        mc_s "Of what?"
-        amb "Losing this."
-        mc_s "You won't."
-        amb "How do you know?"
-        mc_s "Because I choose you. Every day."
-        amb "Even when I'm..."
-        mc_s "Especially then."
+        amb "I feel..."
+        mc_s "How?"
+        amb "Safe. I feel safe."
+        amb "It takes me back... to the living room floor."
+
+        show ep06_ambermorn22 with clouds_inverse
+        amb "Mom wouldn't even look at me. She told Dad I looked like a monster. That I was unlovable."
+        mc_s "I found you sitting on the floor in the dark."
+        amb "You didn't tell me to fix it. You crawled in there with me and kissed my jagged hair."
+
+        show ep06_ambermorn23 with fade
+        amb "You told me you liked it short... because you could finally see my eyes clearly."
+        amb "You turned my shame into something beautiful. Just like you did right now."
+        amb "I love you so much it hurts."
 
         $ show_walkthrough("ep06_amber_love_postclim_menu")
         menu:
             "I mean it.":
                 hide screen walkthrough_screen
-                mc_s "I know exactly what I'm saying."
+                mc_s "I meant it then, and I mean it now. I love seeing you."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
             "Test me.":
                 hide screen walkthrough_screen
-                mc_s "Try me. Test it. I'm still here."
+                mc_s "I'm not going anywhere. You can lean on me forever."
                 $ rm.update("amber", "trust", 2)
                 $ check_levels("amber", "trust", 2)
 
             "Help me understand.":
                 hide screen walkthrough_screen
-                mc_s "Then tell me. Help me understand."
+                mc_s "Let me help you believe it. Every day."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
         
         jump ep06_mornwithamber_ending
 
     elif e6_amber_path == "neutral":
-        amb "You remember... when I cut and dyed my hair?" 
+        amb "This... us... it works."
+        mc_s "Yeah. It does."
+        amb "You've always had my back. Even back then."
         
-        show ep06_ambermorn22
-        mc_s "Yeah."
-        mc_t "I still remember she looked like a boy."
-        amb "You said I looked like a warrior."
-        mc_s "You did."
+        show ep06_ambermorn22 with clouds_inverse
+        mb "When I cut it all off... Mom screamed. Dad left the room."
+        mc_s "I remember. You looked like a boy."
+        amb "You didn't laugh though. You said I looked like a warrior."
 
-        show ep06_ambermorn23
-        amb "No one else said that. I mean... everyone else just looked at me like I'd—like I'd ruined something."
+        show ep06_ambermorn23 with fade
+        amb "No one else said that. Everyone else just saw a mistake."
+        amb "But you saw strength. Even when I was crying."
+        amb "That's why I trust you with my body."
 
         $ show_walkthrough("ep06_amber_neutral_postclim_menu")
         menu:
             "Perfect to me.":
                 hide screen walkthrough_screen
-                mc_s "You've always been perfect to me."
+                mc_s "You've always been perfect to me. Warrior or not."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
             "Warriors together.":
                 hide screen walkthrough_screen
-                mc_s "We're both warriors now."
+                mc_s "We're a team. Two warriors against the world."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
                 $ rm.update("amber", "cor", 1)
@@ -1010,13 +1091,38 @@ label ep06_mornwithamber_postclimax:
 
 
 label ep06_mornwithamber_ending:
-    show ep06_ambermorn24
-    amb "This pussy owns you."
-    mc_s "Pretty sure that's not how ownership works."
-    amb "It is now. Any objections, Detective?"
-    mc_s "...No ma'am."
-    amb "That's what I thought."
-    mc_t "She always needs the last word. I'm not complaining."
+    scene eigengreau 
+    show ep06_ambermorn24 with fade
+    if e6_amber_path == "corruption":
+        amb "You going to the station like that?"
+        mc_s "Like what?"
+        amb "Smelling like your favorite toy."
+        mc_s "I should shower."
+        amb "Don't. Keep it on you."
+        amb "Let everyone know exactly who owns that cock."
+        mc_t "She wants to mark her territory. Fine by me."
+
+    elif e6_amber_path == "love":
+        amb "Do you really have to put that on?"
+        mc_s "It's work, Amber. Shirt and tie."
+        amb "I hate it. It covers up all my favorite parts."
+        amb "Go ahead, play Detective. But remember who this body belongs to when you come home."
+        mc_s "I think I know."
+        amb "Good. Because I'm not sharing the best parts of you with anyone."
+        mc_t "Strange... No insults. No sharp edges."
+        mc_t "Usually she's sour. Foul-mouthed. Always looking for a fight."
+        mc_t "But this... she's actually softening."
+        mc_t "Territorial and sweet. I really like it."
+    
+    else:
+        amb "You know the truth now, right?"
+        mc_s "What truth?"
+        amb "This pussy owns you."
+        mc_s "Pretty sure that's not how ownership works."
+        amb "It is now. Any objections, Detective?"
+        mc_s "...No ma'am."
+        amb "That's what I thought."
+        mc_t "She always needs the last word. I'm not complaining."
     jump ep06_madisonintro
 
 
@@ -1024,35 +1130,48 @@ label ep06_mornwithamber_corruption:
     $ amber_cor_choices += 1
     $ rm.update("amber", "cor", 10)
     $ check_levels("amber", "cor", 10)
+    
+    scene eigengrau with fade
     show ep06_ambermorn25
-    amb "You want a show?"
-    mc_s "Every detail."
-    amb "Pervert."
+    amb "I was getting impatient..."
+    mc_s "So you started without me?"
+    amb "I couldn't wait. Look at me... open for you."
+    mc_s "Spread them wider. I want to see everything."
+    amb "Like this? You pervert... staring right inside."
 
     show ep06_ambermorn26
-    amb "Started here..."
-    mc_s "Keep going."
-    amb "Thinking about your tongue."
+    amb "I was touching myself... imagining your hands..."
+    mc_s "And?"
+    amb "Imagining you using me. Like a toy. However you want."
+    mc_s "Show me. Show me how a toy touches itself."
+    amb "Mmm... just circling... getting it wet for you."
 
     show ep06_ambermorn27
-    amb "Then deeper..."
-    mc_s "Show me."
-    amb "Like this..."
+    amb "See? I'm soaking."
+    mc_s "Filthy. You're leaking everywhere."
+    amb "Touch it. Check if I'm ready."
 
     show ep06_ambermorn28
-    mc_s "What were you imagining?"
-    amb "You... using me..."
-    mc_s "How?"
-    amb "However you want."
-    mc_t "Look at her. She fucking loves this."
+    mc_s "Enough watching."
+    amb "Ah! You're rough..."
+    mc_s "You said you wanted to be used. So I'm taking what's mine."
+    amb "Yes... please... break me."
 
     show ep06_ambermorn29
-    amb "Fuck..."
+    mc_s "Tight. Relax."
+    amb "Fuck... your fingers..."
+    mc_s "Stretching you out. Making room."
+    amb "Deeper... ruin me."
 
     show ep06_ambermorn30
-    amb "Please..."
-    mc_s "Please what?"
-    amb "Fuck me."
+    mc_s "You like being forced open?"
+    amb "I love it... I love belonging to you."
+    mc_s "Then beg for it."
+    amb "Please... fuck me hard. Don't hold back."
+    mc_s "Good. But toys don't get to demand things. They get chosen."
+    mc_s "You're just a collection of parts waiting for me."
+    amb "Yes... use me... mouth, tits, ass... anything."
+    mc_s "Hold still. Let me decide where I want to start."
 
 
 label ep06_mornwithamber_corruption_sexmenu:
@@ -1092,121 +1211,164 @@ label ep06_mornwithamber_corruption_sexmenu:
 
 
 label ep06_mornwithamber_cor_blowjob:
-    show ep06_ambermorn31
-    mc_s "All the way."
-    amb "Mmph..."
-    mc_s "Take it."
+    $ ss.add("amber", "blowjob")
+
+    show ep06_ambermorn31 with fade
+    mc_s "Ass up. Face down. That's a good view."
+    amb "Mmph! Gawk!"
+    mc_s "I've got you. Don't pull back. Take it deeper."
+    amb "Glk... Mmph...!"
 
     show ep06_anim07
-    mc_s "Good girl."
+    mc_s "Look at that mess... slobbering all over me."
+    amb "Slurp... Mmph! Gulp!"
+    mc_s "That's it. Be a good little slut. Make it wet."
+    amb "Mmm... Gawk!"
 
     show ep06_ambermorn32
-    mc_s "Look at you..."
-    amb "Mmph..."
-    mc_s "Fucking perfect."
+    mc_s "Stop."
+    amb "Mmph? ...Gulp."
+    mc_s "Look at your face. Covered in spit. Desperate."
+    amb "More... please... use my throat."
+    mc_s "Not yet. Hold that pose while I decide what to use next."
     jump ep06_mornwithamber_corruption_sexmenu
 
 
 label ep06_mornwithamber_cor_boobjob:
+    $ ss.add("amber", "titjob")
+
     show ep06_ambermorn33
-    mc_s "Keep that tongue out."
-    amb "Mmm..."
-    mc_s "Just like that."
+    mc_s "Tongue out."
+    amb "Aah... Mmm..."
+    mc_s "Don't lick. Just stay there and look desperate."
+    amb "So close... please... let me taste..."
+    mc_s "Actually... no. Changed my mind."
 
     show ep06_ambermorn34
-    mc_s "Squeeze harder."
-    amb "Like this?"
-    mc_s "Perfect."
+    amb "Ah!"
+    mc_s "I don't want a show anymore. I want to fuck them."
+    mc_s "On your back. Squeeze them together."
+    amb "Like... this? You want to use them?"
+    mc_s "Tighter. Make a hole for me. I'm going to ruin them."
+    amb "Yes... break me..."
+    mc_s "Hold still. I haven't decided how to finish you yet."
     jump ep06_mornwithamber_corruption_sexmenu
 
 
 label ep06_mornwithamber_cor_assjob:
+    $ ss.add("amber", "assjob")
+
     show ep06_ambermorn35
-    amb "You want this ass?"
-    mc_s "Keep moving."
-    amb "Someday?"
-    mc_s "Maybe."
-    mc_t "Not yet. But she wants it."
-    amb "I'd let you. If you wanted."
+    amb "You want this ass? It's right here."
+    mc_s "Look at you. Rubbing against me like a bitch in heat."
+    mc_s "Is that all you are? Just a piece of meat looking for a pole?"
+    amb "Yes... Mmm... Just meat... rubbing against you..."
+    mc_s "Disgusting. Grind harder. Earn it."
+    amb "God... please... stop teasing... wreck me."
 
     show ep06_anim08
-    mc_s "Slower."
-    amb "Mmm..."
+    mc_s "Beg. Show me how desperate you are to be used."
+    amb "Ah... ah... I'm just a hole... please..."
+    mc_s "A hole for what? Say it."
+    amb "For your cock... fuck me... make me regret it!"
 
     show ep06_ambermorn36
-    amb "One day... will you?"
-    mc_s "Soon..."
+    mc_s "Pathetic. Get on your knees."
+    amb "Ah! You're going to do it?"
+    mc_s "Spread them. Wide. I want to inspect the merchandise before I break it."
+    amb "Look... pink and gaping... waiting for you..."
+    mc_s "Hold it open. Let me see if you're loose enough to take me."
+    amb "Ruin it... turn me inside out..."
+    mc_s "Stay right there. I'm deciding which hole deserves to be punished."
     jump ep06_mornwithamber_corruption_sexmenu
 
 
 label ep06_mornwithamber_cor_footjob:
+    $ ss.add("amber", "footjob")
+
     show ep06_ambermorn37
-    mc_s "Keep going."
-    amb "You like this?"
-    mc_s "Don't stop."
+    mc_s "Look at you. You're better with your feet than most whores are with their hands."
+    amb "Mmm... wrapping them around... do you like it?"
+    mc_s "Yeah, good girl. Know your place. Squeeze harder."
     show ep06_ambermorn38
-    amb "Should I stop?"
-    mc_s "No."
+    mc_s "Just the toes. Tease it."
+    amb "Right here? Mmm..."
+    mc_s "Look at that focus. Desperate to please me even with your toes."
+    mc_s "Pathetic. And fucking hot."
+    amb "I want to make it twitch... make it leak for me..."
+    mc_s "Enough playing with your food. Hold it there."
+    mc_s "I need to decide which part of you I'm going to break next."
     jump ep06_mornwithamber_corruption_sexmenu
 
 
 label ep06_mornwithamber_cor_continue:
+    $ ss.add("amber", "oral")
+
     show ep06_ambermorn39
-    amb "Please fuck me."
-    mc_s "Beg better."
-    amb "I need your cock. Please."
+    mc_s "Face down. Ass up."
+    amb "Ah... your tongue..."
+    mc_s "Let me taste everything."
+    amb "Yes... right there... eat me."
 
     show ep06_ambermorn40
-    mc_s "This what you wanted?"
-    amb "Yes... yes..."
-    mc_s "Say it."
-    amb "Use me... fuck..."
+    $ ss.add("amber", "sex")
+    
+    mc_s "Mine. Every inch of this skin is mine."
+    amb "OH! Fuck... yes! Own me!"
+    mc_s "You don't even fight back. You just take it."
+    amb "Use me... break me... I'm yours!"
 
     show ep06_ambermorn41
-    mc_s "Look at you..."
-    amb "I'm yours..."
-    mc_s "Say it again."
-    amb "Yours. All yours."
+    mc_s "On your back. Now!"
+    amb "Look... gaping for you..."
+    mc_s "Look at yourself. Just a hole waiting to be filled."
+    amb "Fill it... stretch it until it hurts!"
 
     show ep06_ambermorn42
-    mc_s "Too much?"
-    mc_t "Her pulse is racing. She's not stopping me."
-    amb "More..."
+    mc_s "Choking on it? Good."
+    amb "Ghk... harder... squeeze..."
+    mc_s "Your life is in my hands right now. And you're smiling."
+    amb "Yes... kill me with it... [mc_name]!"
 
     show ep06_ambermorn43
-    amb "Fuck... you're so strong..."
-    mc_s "Hold on."
-    amb "Don't stop..."
+    amb "Fuck... too deep... hitting the bottom!"
+    mc_s "You're just a ragdoll. I can toss you wherever I want."
+    amb "Mmm... yes... toss me around... wreck me..."
 
     show ep06_ambermorn44
-    amb "Watch..."
-    mc_s "I am."
-    amb "You love this ass."
+    mc_s "Bounce. Earn your keep."
+    amb "Is it good? Am I doing it right?"
+    mc_s "Doesn't matter. You're just a warm sleeve keeping my cock happy."
+    amb "Yes... just a sleeve... use it..."
 
     show ep06_ambermorn45
-    amb "Mmm... fuck..."
+    amb "Can't... think... brain... empty..."
+    mc_s "Perfect. Mindless little slut. That's all you need to be."
 
     show ep06_ambermorn46
-    mc_s "You close?"
-    amb "So close..."
-    mc_t "Right there. Almost."
-    mc_s "Then cum for me."
+    amb "Ah! Ah! You're splitting me!"
+    mc_s "Taking my load. That's your only job right now."
+    amb "Cum! Ruin me! Fill your slut up!"
 
-    show ep06_ambermorn47
-    amb "Inside... yes..."
-    mc_s "All of it."
-    mc_t "Mine. She's fucking mine."
+    show white zorder 1.0 at ejaculation_flash
+    show ep06_ambermorn47 at vpunch with flash
+    $ ss.add("amber", "creampie")
+
+    mc_s "Take it!"
+    amb_y "AAAAH! YES! WARM!"
+    mc_s "Look at that. Leaking my mess. Like a used trash can."
+
     $ show_walkthrough("ep06_amber_corruption_sex_menu")
     menu:
         "You're mine.":
             hide screen walkthrough_screen
-            mc_s "You're mine completely."
+            mc_s "You're mine completely. Marked inside and out."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
         "Fucking perfect.":
             hide screen walkthrough_screen
-            mc_s "Fucking perfect."
+            mc_s "Fucking perfect. A perfect cumdump."
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
             $ rm.update("amber", "trust", 1)
@@ -1214,21 +1376,25 @@ label ep06_mornwithamber_cor_continue:
 
         "Good girl.":
             hide screen walkthrough_screen
-            mc_s "Good girl."
+            mc_s "Good girl. You took it all."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
-    show ep06_ambermorn48
-    amb "Mmm..."
-    mc_s "Dirty girl."
-    amb "Your dirty girl."
+    show ep06_ambermorn48 with fade
+    mc_s "Jesus... Amber..."
+    amb "Mmm... so warm... leaking out..."
+    amb "I can't lose it. It's mine."
+    mc_s "You're... cleaning it up?"
+    amb "Slurp... every drop... delicious..."
 
     show ep06_ambermorn49
+    amb "Mmm... All gone."
+    mc_s ". . ."
     amb "Don't look at me like that."
     mc_s "Like what?"
-    amb "Like I'm... like I'm not broken. Like you don't see all the fucked up—"
-    mc_s "I see you."
-    amb "That's what scares me."
+    amb "Like I'm... like I'm broken. Like—"
+    mc_s "It's okay, Amber."
+    amb "This is where I belong, [mc_name]. Right here."
 
     $ ep06_ach_ambcor = True
     jump ep06_mornwithamber_postclimax
@@ -1239,40 +1405,41 @@ label ep06_mornwithamber_love:
     $ rm.update("amber", "trust", 10)
     $ check_levels("amber", "trust", 10)
     show ep06_ambermorn50
-    amb "Say that again."
-    mc_s "You're the only good thing."
-    amb "I..."
-    amb "I don't know how to do this."
+    amb "You really see me?"
+    mc_s "I do. I see the only person who never gave up on me."
+    amb "God... say that again. Please."
+    mc_s "You're the best thing in my life, Amber."
+    amb "I... I don't know how to do this. I don't know how to be..."
+    mc_s "You don't have to do anything."
     show ep06_ambermorn51
-    mc_s "Do what?"
-    amb "Let someone... I mean, when you look at me like that, it's like you're..."
-    mc_t "She's terrified?"
-    mc_s "Like I'm what?"
-    amb "Seeing all the parts I try to hide. And I don't... I can't..."
-    mc_s "Can't what?"
-    amb "I can't keep pretending I don't need this. Need you."
+    mc_s "Come here. Let me show you."
+    amb "Ah... gentle... you're being so gentle..."
+    mc_s "Because you deserve it."
+    amb "Mmm... [mc_name]..."
+    mc_s "Don't hide from me. Open up."
+    amb "I can't hide... not when you kiss me like that. I'm yours."
 
 
 label ep06_mornwithamber_love_sexmenu:
     $ show_walkthrough("ep06_mornwithamber_love_sexmenu")
     menu:
-        amb "What do you want?"
+        amb "How? How do you want to love me?"
 
         "Let me show you." if not e6_amber_love_worship_seen:
             hide screen walkthrough_screen
-            mc_s "Let me show you how beautiful you are."
+            mc_s "Let me show you exactly how beautiful you are."
             $ e6_amber_love_worship_seen = True
             jump ep06_mornwithamber_love_worship
 
         "Let me taste you." if not e6_amber_love_oral_seen:
             hide screen walkthrough_screen
-            mc_s "Let me taste you first."
+            mc_s "Let me taste you first. I want to memorize you."
             $ e6_amber_love_oral_seen = True
             jump ep06_mornwithamber_love_oral
 
         "Let me touch you." if not e6_amber_love_assjob_seen:
             hide screen walkthrough_screen
-            mc_s "Let me love you with my hands first."
+            mc_s "Let me love every inch of you with my hands."
             $ e6_amber_love_assjob_seen = True
             jump ep06_mornwithamber_love_assjob
 
@@ -1285,105 +1452,120 @@ label ep06_mornwithamber_love_sexmenu:
 
 label ep06_mornwithamber_love_worship:
     show ep06_ambermorn52
-    mc_s "Every inch of you..."
-    amb "Don't..."
-    mc_s "Don't what?"
-    amb "Don't make me cry."
+    mc_s "Every inch of you... so soft."
+    amb "Mmm... [mc_name]..."
+    mc_s "I want to memorize this skin. Worship it."
+    amb "Don't... you're going to make me cry."
+    mc_s "Why?"
+    amb "Because no one touches me like this. With so much care."
+    mc_s "Come here. Sit on me."
 
     show ep06_anim09
-    amb "Fuck..."
-    mc_s "What?"
-    amb "You're making me feel things."
+    amb "Ah... yes... right there..."
+    mc_s "Your heartbeat is racing."
+    amb "Because of you. I love feeling your hair... holding you close."
 
     show ep06_anim10
-    amb "God... yes..."
-    mc_s "You're perfect."
-    amb "I'm not."
-    mc_s "To me you are."
-    mc_t "I'll show you. Every day."
+    amb "God... it feels so good..."
+    mc_s "You're beautiful, Amber. Perfect."
+    amb "I'm not perfect. I'm a mess."
+    mc_s "To me, you're perfect. And I'm going to prove it to you."
+    amb "Okay... show me more. Don't stop."
     jump ep06_mornwithamber_love_sexmenu
 
 
 label ep06_mornwithamber_love_oral:
+    $ ss.add("amber", "oral")
+
     show ep06_ambermorn53
-    mc_s "Relax..."
-    amb "I can't..."
-    mc_s "Why not?"
-    amb "Because you're... because this is..."
-    mc_t "Stop thinking..."
-    amb "Fuck..."
+    mc_s "Relax... let your legs fall open."
+    amb "I can't... I'm shaking."
+    mc_s "Why? You're safe with me."
+    amb "Because this is... it's so weird. Looking at me like that..."
+    mc_s "Shhh... Stop thinking. Just feel my tongue."
+    amb "Okay... yes... just you..."
 
     show ep06_anim11
-    amb "There... right there..."
-    mc_s "Mmm..."
-    amb "Don't stop... please don't stop..."
+    mc_s "Mmm... you taste so sweet, Amber."
+    amb "Oh god... [mc_name]..."
+    amb "There... right there... don't stop..."
+    mc_s "I'm not stopping. I wanna make you feel good."
+    amb "You are... you're making me feel everything."
     jump ep06_mornwithamber_love_sexmenu
 
 
 label ep06_mornwithamber_love_assjob:
+    $ ss.add("amber", "assjob")
+
     show ep06_ambermorn54
-    amb "I want to pleasure you..."
-    mc_s "You don't have to—"
-    amb "I want to. Let me."
+    amb "I want to make you feel good... using my body."
+    mc_s "Amber, you don't have to prove anything."
+    amb "I know. That's why I want to do it. Just... feel how soft I am for you."
 
     show ep06_anim12
-    mc_s "You're so beautiful..."
-    amb "You make me feel it."
+    mc_s "God... you feel amazing against me."
+    amb "Mmm... you like it? Just my skin?"
+    mc_s "Yeah. I can't look away..."
+    amb "When you touch me... I actually believe it."
     jump ep06_mornwithamber_love_sexmenu
 
 
 label ep06_mornwithamber_love_hold:
-    show ep06_ambermorn55
-    amb "I love you."
+    show ep06_ambermorn55 with fade
+    amb "I love you... haa..."
     mc_s "I know."
-    amb "Do you love me?"
+    amb "Please... stop waiting. Make me yours."
 
     show ep06_ambermorn56
-    mc_s "I love you too."
-    amb "Then show me."
-    mc_s "How?"
-    amb "Slowly."
+    mc_s "Not yet... look at us."
+    amb "Kiss me... nnh... please..."
+    mc_s "Just a second. Feel how close we are."
+    amb "Mmm... you're teasing me..."
 
     show ep06_ambermorn57
-    amb "Oh god..."
-    mc_s "Look at me."
-    amb "I can't..."
-    mc_s "Why not?"
-    amb "Too much..."
+    $ ss.add("amber", "sex")
+
+    amb "Ah... let me..."
+    mc_s "Slowly... relaxing for me..."
+    amb "Haa... ah... God... [mc_name]..."
+    mc_s "That's it. All the way in."
 
     show ep06_ambermorn58
-    mc_s "Open your eyes."
-    amb "I can't..."
-    mc_s "Please."
-    mc_t "Let me see you. Please."
+    amb "So deep... I have to close my eyes."
+    mc_s "It's okay. I've got you."
+    amb "Mmm... your hand... feels so safe..."
+    mc_s "Let go, Amber. Just feel it."
 
     show ep06_ambermorn59
-    amb "I see you too."
-    mc_s "What do you see?"
-    amb "Someone who..."
-    amb "Someone who stays."
+    mc_s "Look at me. Right here."
+    amb "Nnh... I see you..."
+    mc_s "Who am I?"
+    amb "Mine. Just mine."
 
-    show e06_anim13
-    amb "Mmm... fuck... mmm..."
+    show ep06_anim13
+    amb "Mmph... [mc_name]... kiss me!"
+    mc_s "Mmph..."
+    amb "Haa... yes... just like that... don't stop..."
 
     show ep06_ambermorn60
-    amb "Faster... I need..."
-    mc_s "Tell me."
-    amb "I need you... deeper... harder..."
-    mc_s "Like this?"
-    amb "Yes... fuck yes..."
+    mc_s "Look at you... touching yourself."
+    amb "Ah... ah... can't help it... feels too good!"
+    mc_s "Beautiful. You're absolutely beautiful."
+    amb "Deeper! Please... hit that spot!"
 
-    show e06_anim14
-    amb "Don't let go..."
-    mc_s "Never."
-    amb "Promise..."
-    mc_s "I promise."
+    show ep06_anim14
+    mc_s "Hands. Give me your hands."
+    amb "Haa... holding tight...!"
+    mc_s "I'm close. Coming with you."
+    amb "Yes! Fill me! I love you!"
 
-    show ep06_ambermorn61
-    amb "I'm... fuck... I'm..."
-    mc_s "I've got you."
-    amb "Don't... let... go..."
-    mc_s "I won't. I'm here."
+    show white zorder 1.0 at ejaculation_flash
+    show ep06_ambermorn61 at vpunch with flash
+    $ ss.add("amber", "creampie")
+
+    amb "Ahhh! Warm! So warm!"
+    mc_s "Amber!"
+    amb "Haa... haa... inside me..."
 
     $ show_walkthrough("ep06_amber_love_declaration_menu")
     menu:
@@ -1396,14 +1578,14 @@ label ep06_mornwithamber_love_hold:
 
         "You're safe.":
             hide screen walkthrough_screen
-            mc_s "You're safe with me."
+            mc_s "You're safe with me. I promise."
 
             $ rm.update("amber", "trust", 7)
             $ check_levels("amber", "trust", 7)
 
         "I'm staying.":
             hide screen walkthrough_screen
-            mc_s "I'm not going anywhere."
+            mc_s "I'm not going anywhere. I'm staying right here."
 
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
@@ -1413,106 +1595,360 @@ label ep06_mornwithamber_love_hold:
 
 
 label ep06_mornwithamber_rejection:
-    show ep06_ambermorn62
+    $ playAudio(bodyfall_carpet, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.6, 0)
+
+    show ep06_ambermorn62 with vpunch
     mc_s "Amber, I can't do this right now."
-    amb "What the fuck do you mean you can't?"
+    amb "What the fuck do you think you're doing?"
+    mc_s "Look, I gotta..."
+    amb "Get off me."
+    mc_s "Huh?"
 
-    show ep06_ambermorn63
-    mc_s "The case from yesterday... my head isn't right. I need to focus."
-    mc_t "It's a lie. And she knows it."
-    amb "Bullshit. This is about something else."
+    $ playAudio(bodyfall, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 0.6, 0)
 
+    show ep06_ambermorn63 with hpunch
+    amb_y "I said get off me!"
+    mc_s "Amber... relax. I just wanna tell you-"
+    amb_y "Don't you ever fucking touch me like that again!"
+    mc_s "I didn't mean to... it was a reflex."
+    amb "You better hope it was."
+
+    $ playAudio(bed_creaking, "sfx", 3, False, 0)
+    $ setChannelVolume("sfx", 3, 0.6, 0)
+    
     show ep06_ambermorn64
-    amb "You're shutting me out. Just like everyone else does."
-    mc_s "It's not about shutting you out—"
-    amb "Don't fucking lie to me! I can see it in your eyes. You're already pulling away."
+    amb_y "You seriously don't get why I'm here!"
+    mc_s "Calm down, Amber! Let go of my arms!"
+    amb_y "Ugh! God dammit, why do you have to be like this?!"
+    if ss.get("amber", "strike") <= 2:
+        amb_y "I can't! I just... I can't figure you out!"
+    
+    else:
+        amb_y "I tried to! I really tried to! And you just... pushed me away!"
 
     show ep06_ambermorn65
     amb "You know what? Fuck it. You want to push me away? Fine."
-    mc_t "I'm losing her. Right now."
+    if ss.get("amber", "strike") == 1:
+        mc_s "Listen, it's just bad timing. Don't be so dramatic."
+        amb "Bad timing, huh?"
+        mc_s "I really don't have time for this right now. I gotta work."
+    
+    else:
+        mc_s "Listen, I thought I made it very clear that I wanted some space."
+        amb "Space, huh?"
+        mc_s "I really can't waste time on this right now."
 
-    show ep06_ambermorn66
-    amb "You want to know why I need you to stay exactly as fucked up as you are?"
+    $ playAudio(bodyfall_carpet, "sfx", 4, False, 0)
+    $ setChannelVolume("sfx", 4, 0.6, 0)
+
+    show ep06_ambermorn66 with vpunch
+    amb "Alright..."
+    mc_t "Huh? She changed her mood all of a sudden."
     mc_s "Amber..."
-    mc_t "Here it comes."
-    amb "No, you're going to hear this. Since you're so fucking determined to become the perfect cop."
+
+    $ playAudio(amber2_theme, "music", 1, True, 10)
+    $ setChannelVolume("music", 1, 0.3, 0)
+
+    amb "Do you know why I keep trying? Why I keep looking for you? Why I keep trying to touch you?"
+    mc_s "Please, can we talk about this later?"
+    if ss.get("amber", "strike") == 1:
+        amb "No. You're going to listen. Since you're becoming just like everyone else."
+    
+    else:
+        amb "No. You're going to listen. Since you're so fucking dead set on pushing me away."
 
     show ep06_ambermorn67
-    amb "When we were kids, before everything went to shit with this family..."
-    mc_t "She's going all the way back."
+    amb "When we were younger, before everything went to shit with this family..."
+    mc_s "What about it?"
+    amb "You were the only one who actually {i}saw{/i} me."
+    amb "Not just Mom's perfect blonde doll to parade around."
+    amb "Just... me."
 
-    show ep06_ambermorn68
-    amb "You were the only one who actually saw me. Not Mom's perfect blonde doll she wanted to parade around. Just... me."
-    amb "When I cut and dyed my hair, destroyed her precious image, Dad called me a disappointment."
+    show ep06_ambermorn22 with clouds_inverse
+    amb "When I cut and dyed my hair... ruined her 'precious image'... She called me a disappointment."
     mc_s "I remember."
+    amb "But you were standing right there. Trying to protect me with your words... with just being there."
+    amb "Like this giant shield around me that I didn't ask for, but needed so damn much."
+    mc_s "I remember... though I can't say I did it on purpose."
+    amb "But you did it."
 
-    show ep06_ambermorn69
-    amb "Mom just... looked through me like I didn't exist. Like I'd..."
-    mc_t "God, she's breaking."
-    amb "Like I'd become invisible."
+    show ep06_ambermorn68 with fade
+    mc_s "Why is it so important to bring this up now? Like this?"
+    amb "See? You still don't get it... You're looking at the logic, not at me."
+    amb "I'm not talking about when we were younger anymore."
+    amb "I'm saying that... since then, you became the only real thing in my world."
+    if ss.get("amber", "strike") == 1:
+        amb "I came here hoping..."
+        amb "Hell, you could have tried to kiss me. Or just hold me."
+        amb "Instead, you tossed me aside like I was nothing."
+    
+    else:
+        amb "But it's just a one-way street with you, isn't it?"
+        amb "I bleed myself dry for you, and you don't even care."
 
-    show ep06_ambermorn70
-    amb "But you? You said I looked like a warrior."
-    mc_s "Because you did. You do."
-    amb "You saw something worth protecting when everyone else saw a problem to fix."
+    $ playAudio(bodyfall_carpet, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.6, 0)
 
-    show ep06_ambermorn71
-    amb "That's why I need you damaged. Because damaged people understand each other."
+    show ep06_ambermorn69 with vpunch
+    amb "Ugh..."
 
-    show ep06_ambermorn72
-    amb "But go ahead. Become the perfect detective. Let this fucking job fix you."
-    mc_s "It's not about fixing—"
-    amb "Whatever. Point is, don't let this fucking job change you. I need you exactly this damaged."
+    $ setChannelVolume("music", 1, 0.0, 10)
 
-    show ep06_ambermorn73
-    amb "Because once you're fixed, once you're the shining hero cop..."
-    mc_t "She's leaving. This is it."
+    if ss.get("amber", "strike") == 1:
+        amb "I'm sorry... I shouldn't have dumped all this on you."
+        mc_s "It's okay... but I honestly don't know what to say anymore."
+        mc_s "I feel like anything I say right now is just going to make it worse."
+        amb "Yeah... I'm sorry. I'm just not thinking straight."
+    
+    else:
+        amb "I'm sorry... I shouldn't have wasted your time with my emotional crap."
+        amb "It's just that... God, it hurts."
+        mc_s "I think you're making a scene out of nothing, Amber."
+        amb "A scene...?"
+        amb "Where did he go? The brother from my memories... where the hell did he go?"
+    
+    mc_t "She's spiraling. I can't deal with this loop."
+    mc_t "Twenty minutes to get to the station. If I don't leave now, Watanabe is going to kill me."
 
-    show ep06_ambermorn74
-    amb "You'll look at me the same way they all do. Like I'm the problem that needs solving."
-    mc_s "That's not true."
-    amb "Isn't it? You're already starting to reject me."
+    show ep06_ambermorn70 with vpunch
+    if ss.get("amber", "strike") == 1:
+        amb "Look at me. Forget the badge for one second and just look at me."
+        mc_s "Amber, I really have to be at the station in twenty minutes."
+        amb "Twenty minutes... Is that all I'm worth now?"
+    
+    elif ss.get("amber", "strike") == 2:
+        amb "You're checking the time? Seriously?"
+        amb "Work. That's your new shield, isn't it?"
+        mc_s "It's not a shield, it's a job. People are dying out there."
+        amb "And I'm dying right here! Doesn't that matter to you at all?!"
+    
+    else:
+        amb "You're looking right through me. Like I'm just another suspect."
+        mc_s "I'm looking at the time. I really have to go."
+        amb "My God... you actually mean it. You really don't feel a thing for me anymore."
+
+    $ playAudio(bodyfall, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.6, 0)
+    $ playAudio(bed_laying, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 0.6, 0)
+
+    show ep06_ambermorn71 with hpunch
+    if ss.get("amber", "strike") == 1:
+        amb_y "Stop looking through me! I'm the one who is alive! Not her!"
+        mc_s "Amber, you're heavy. Please, let me get up."
+        amb "Heavy...? I'm begging you to feel something and I'm just... dead weight to you?"
+    
+    elif ss.get("amber", "strike") == 2:
+        amb_y "You think that badge is going to love you back?! It won't!"
+        mc_s "At least the job makes sense! Unlike this! Now get off me!"
+        amb "Unlike me... right?"
+    
+    else:
+        amb "I'm staring right into your eyes... and it's like looking at a wall."
+        mc_s "I need to shower. Move."
+        amb "Gone. You're actually gone."
+
+    $ setChannelVolume("music", 1, 0.3, 10)
+
+    show ep06_ambermorn72 with fade
+    if ss.get("amber", "strike") ==1:
+        mc_t "Fuck... I didn't mean to call her dead weight."
+        mc_t "She looks so small curling up like that."
+        mc_s "Amber... look, I just meant physically heavy. I'm sore, okay?"
+        amb "Just stop. Don't try to fix it with logic. You just make it uglier."
+    
+    elif ss.get("amber", "strike") ==2:
+        mc_t "Great. Now she's shut down. If I touch her, she explodes. If I speak, she explodes."
+        mc_s "Are we done screaming? Because I really need to get ready."
+        amb "You call this screaming? I'm holding myself together so I don't break your damn windows."
+    
+    else:
+        mc_t "She's doing the victim pose. Curled up, eyes closed. Waiting for me to cave."
+        mc_t "I don't have time for this performance."
+        mc_s "If you're going to sit there and cry, can you do it in the living room?"
+        amb "..."
+
+    show ep06_ambermorn73 with vpunch
+    mc_t "Watching the curve of her hips as she bends over... God."
+    mc_t "It's almost a shame. All that passion, all that heat... wasted on a conversation like this."
+    if ss.get("amber", "strike") == 1:
+        amb "You know what's funny? You're a total mess, [mc_name]. Obsessed with a dead woman."
+        amb "You chase ghosts. And I never judged you for it."
+        mc_s "Amber, don't start..."
+        amb "I took all your baggage because it was yours. I just thought... maybe you could handle mine."
+    
+    elif ss.get("amber", "strike") == 2:
+        amb "I put up with so much bullshit from you! Your drama! Your obsession with HER!"
+        amb "I lived in second place for years because I loved the real you, fucked up as you are!"
+        mc_s "That's different."
+        amb "It's not different! You're just a hypocrite who wants a silent doll to fuck, not a real person!"
+    
+    else:
+        amb "I always loved how damaged you were. I thought it made you deep."
+        mc_s "Amber, spare me the poetry."
+        amb "I was wrong. You're not deep, [mc_name]..."
+        amb "You're just hollow. And I'm done throwing myself into a black hole."
+
+    show ep06_ambermorn74 with fade
+    if ss.get("amber", "strike") == 1:
+        amb "You know... I used to hate her. I hated how much space she took up in your head."
+        amb "But look at me now. Crying over a guy who won't even look at me properly."
+        amb "I guess I'm no better. You have your ghost... and I have... you."
+
+    elif ss.get("amber", "strike") == 2:
+        amb "She wins. She always fucking wins."
+        amb "I spent my entire youth trying to be brighter than a ghost. Trying to make you look at me."
+        amb "But you walked right past the living to bury yourself with the dead. You idiot."
+
+    else:
+        amb "I used to wonder why you couldn't let her go. Why you loved a memory more than real life."
+        amb "But I get it now. I finally get it."
+        amb "Because I'm doing the exact same thing right now. You are my Antonella, [mc_name]..."
+        amb "Dead to the world, but alive in my head. And just as impossible to reach."
 
     show ep06_ambermorn75
-    amb "You know what the difference is between you and every other man in my life?"
-    mc_t "Don't say it. Please."
+    mc_t "She's not looking at me with love anymore. She's looking at me with... clarity."
+    if ss.get("amber", "strike") == 1:
+        amb "Don't look at me like that. Like you are the victim."
+        mc_s "I never meant to hurt you, Amber. I swear."
+        amb "I know. That's the worst part."
+        amb "You destroyed me by accident. You didn't even care enough to do it on purpose."
 
-    show ep06_ambermorn76
-    amb "You actually made me believe someone could want the real me. Not the fantasy, not the rebellion, not the shock value."
-    mc_s "I do want the real you."
-    amb "Sure you do. That's why you're pushing me away the moment things get ... Forget it!"
+    elif ss.get("amber", "strike") == 2:
+        amb "Take a good look, [mc_name]. Memorize it."
+        mc_s "Amber, stop..."
+        amb "No. You look."
+        amb "You wanted the past so bad? You got it."
+        amb "But this? Me? Warm, alive, right here? ...This is the future you just killed."
 
-    show ep06_ambermorn77
-    amb "Here's some free advice, Detective: I'm the only one who's ever seen the real you and didn't flinch."
-    mc_t "She's right. Fuck, she's right."
+    else:
+        amb "You look surprised. Did you think I'd stay a foolish little girl forever?"
+        mc_s "..."
+        amb "The girl who chased you is gone, [mc_name]."
+        amb "Congratulations. You buried her right next to Antonella."
 
-    show ep06_ambermorn78
-    amb "So when you're lying in bed tonight, being the perfect cop with the clean conscience..."
-    mc_s "Amber, wait—"
-    amb "Remember that I'm the only one who loved you when you were broken. And I was the only one honest enough to stay broken with you."
+    $ playAudio(footsteps_bare, "sfx", 1, True, 0)
+    $ setChannelVolume("sfx", 1, 0.6, 0)
 
+    show ep06_ambermorn76 with fade
+    if ss.get("amber", "strike") == 1:
+        mc_t "Am I following her? Why the hell am I doing that?"
+        mc_t "I just crushed her because I was tired and sore. Why try to fix it now?"
+        amb "Just keep walking, Amber. One foot in front of the other."
+        amb "Don't turn around. Don't beg. Just... get to the door."
+        mc_s "Amber, wait..."
+
+    elif ss.get("amber", "strike") == 2:
+        mc_t "Why do I want to call her name? Why?"
+        mc_t "I just told her she's suffocating me. Why am I terrified of the silence she's leaving behind?"
+        amb "Stupid... you are so stupid."
+        amb "He chose the corpse. He actually chose the corpse. God, I'm such an idiot for believing in him."
+        mc_s "Don't walk away from me!"
+
+    else:
+        mc_t "What the fuck? I almost went after her. Pure muscle memory."
+        mc_t "Why bother? I just told her she means nothing. Chasing her now would just be... stupid."
+        amb "There's nothing there. I was screaming at a wall."
+        amb "No heart. No brother. Just... empty space."
+        mc_s "Amber."
+
+    $ stopAudio("sfx", 1, 1)
+
+    show ep06_ambermorn77 with hpunch
+    if ss.get("amber", "strike") == 1:
+        amb "Don't. Don't you dare apologize."
+        amb "If you say 'I'm sorry' right now, I'm going to scream."
+        amb "Your apologies are worthless, [mc_name]. They're just noises you make to feel better."
+
+    elif ss.get("amber", "strike") == 2:
+        amb "Shut up! Just... shut the fuck up!"
+        amb "I don't want to hear your logic! I don't want to hear your excuses!"
+        amb "You want silence? You want space? Then start by keeping your mouth shut!"
+
+    else:
+        amb "Shhh. Save it."
+        amb "Don't speak. Don't pretend you have anything human left to say."
+        amb "You made your choice. Now live with the quiet."
+
+    $ playAudio(footsteps_bare, "sfx", 1, True, 0)
+    $ setChannelVolume("sfx", 1, 0.6, 0)
+    $ setChannelVolume("music", 1, 0.5, 10)
+
+    show ep06_ambermorn78 with fade
+    mc_t "Damn. Look at that."
+    mc_t "She's walking out of my life, and I'm just standing here staring at her ass in that white lace."
+    mc_t "Everything is going to shit... but hell, at least I get a good view."
+    if ss.get("amber", "strike") == 1:
+        amb "You're staring, aren't you?"
+        amb "That's your problem, [mc_name]. You always watch life happen from a distance."
+        amb "You never grab it. You just... watch it leave."
+
+    elif ss.get("amber", "strike") == 2:
+        amb "Enjoy the view. Take a picture if you want."
+        amb "Because this?"
+        amb "This is the only part of me you ever really gave a shit about."
+
+    else:
+        amb "I can feel your eyes. Burning a hole in my back."
+        amb "But it doesn't matter anymore."
+        amb "Ghosts can't touch the living."
+    
     show ep06_ambermorn79
-    mc_s ". . ."
+    if ss.get("amber", "strike") == 1:
+        amb "You're letting me walk out. Again."
+        amb "I hope the view was worth it, [mc_name]."
+        amb "Because one of these days... I'm going to walk out and I won't look back."
 
-    show ep06_ambermorn80
-    mc_s "Fuck."
-    mc_t "I lost her."
-    mc_s "This is the right choice."
-    mc_t "...Isn't it?"
+    elif ss.get("amber", "strike") == 2:
+        amb "Keep staring. Fill your eyes."
+        amb "That's all you get. Just the shell. Just the ass. Just the 'chaos'."
+        amb "I gave you another chance, and you used it to push me away. Don't expect a third one."
+
+    else:
+        amb "And just like that... the cord is cut."
+        amb "No more pain. No more trying to wake up a corpse."
+        amb "Rest in peace, [mc_name]. I'm finally done visiting your grave."
+
+    $ stopAllSubchannels("music", 1.5)
+    $ stopAudio("sfx", 1, 1)
+    $ playAudio(doorclose, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 1, 0)
+
+    show ep06_ambermorn80 with slowfade
+    mc_t "6:30. Shit. I wasted too much time on this."
+    if ss.get("amber", "strike") == 1:
+        mc_t "She's gone. I got my schedule back."
+        mc_t "So why am I staring at nothing expecting her to walk back in?"
+        mc_t "Dammit. This feels wrong."
+
+    elif ss.get("amber", "strike") == 2:
+        mc_t "Quiet. Finally."
+        mc_t "I thought she was never going to shut up."
+        mc_t "I need coffee. A lot of it."
+
+    else:
+        mc_t "Problem solved. Door shut."
+        mc_t "Now I can actually hear myself think."
+        mc_t "Where did I put my keys?"
+    
+    $ stopAllAudio(2.0)
     jump ep06_madisonintro
 
 
 label ep06_madisonintro:
     scene eigengrau
     show ep06_madisoncamera01
-    mad "Oh!"
-    mad "You're actually awake."
+    mad "Oh! Look who's finally awake."
+    mad "I was starting to think you were going to sleep through the whole commute."
     mc_s "Work starts at eight."
     mad "Right... Your detective job."
     mc_t "Three months of silence. Now small talk."
 
     show ep06_madisoncamera02
-    mad "I have a photoshoot. Near Sakuradamon station."
+    mad "I have a photoshoot today! Near Sakuradamon."
+    mad "That's right next to your HQ, isn't it? I checked the map."
     mc_s "That's not close to my office."
     mad "Oh. I thought it was."
     mc_s "Thirty-minute train ride."
@@ -1520,15 +1956,15 @@ label ep06_madisonintro:
     mc_t "She looked up the route."
 
     show ep06_madisoncamera03
-    mad "Could we take the same train?"
+    mad "We're taking the same train."
     mc_s "Why?"
-    mad "I want to play a game with you."
-    mc_s "A game..."
-    mad "On the train. Thirty minutes."
+    mad "Because I want to play a game with you."
+    mc_s "I'm not in the mood for games."
+    mad "You're going to play this one. Thirty minutes."
 
     show ep06_madisoncamera04
     mc_s "What kind of game?"
-    mad "The confession kind."
+    mad "The truth kind."
     mc_s "Pass."
     mad "Even if I make it worth your while?"
 
@@ -1539,40 +1975,41 @@ label ep06_madisonintro:
         mc_s "What do you want for it?"
         mad "Honesty. Six questions worth."
         mc_s "And if I lie?"
-        mad "I keep it forever."
+        mad "Then I keep it. Maybe I'll even upload it to the cloud. Just for safekeeping."
 
         show ep06_madisoncamera06
         mc_s "That's blackmail."
-        mad "That's negotiation."
+        mad "Please. 'Blackmail' is such an ugly word. Let's call it... leverage."
         mc_s "What makes you think I care if you keep it?"
-        mad "Because you haven't asked me to delete it in three months."
+        mad "Because I know you. You like to pretend you're the hero. Heroes don't have sex tapes with their sisters."
+        mad "Besides, you haven't asked me to delete it in three months. You like knowing I have it."
 
         show ep06_madisoncamera09
-        mc_t "She's been waiting for me to beg."
-        mc_s "Fine."
+        mc_t "She's been waiting three months to use this trap."
+        mc_s "Fine. Six questions."
     else:
-        mad "I need to understand why you said no."
+        mad "I need to understand why the machine didn't work."
+        mc_s "What machine?"
+        mad "You. Us. That night."
         mc_s "Ask someone else."
-        mad "I can't ask in this house."
-        mc_s "Why not?"
-        mad "Because if Michael hears what I'm asking, he'll know."
-        mc_s "Know what?"
-        mad "That I'm questioning what he taught me."
-        mc_s "What did he teach you?"
+        mad "I can't. You're the only variable that doesn't fit the equation."
+        mc_s "Why does it matter?"
+        mad "Because Michael taught me how the world works. And you broke the rules."
+        mc_s "What rules?"
 
         show ep06_madisoncamera07
-        mad "That all men want the same thing. That I should use it."
-        mc_t "Michael taught her to weaponize sexuality."
+        mad "That men are simple. That if you offer them the candy, they eat it."
+        mc_t "She sees sex as a transaction she's supposed to win."
 
         show ep06_madisoncamera08
-        mc_s "And you believed him."
-        mad "Everyone proved him right. Except you."
-        mc_s "So this is about proving Father wrong."
-        mad "This is about finding out if he was."
+        mc_s "And I didn't eat."
+        mad "Everyone else proved him right. You're the only glitch."
+        mc_s "So this is about your ego."
+        mad "This is about quality control. I need to know if my radar is broken or if you're just... defective."
 
         show ep06_madisoncamera09
-        mc_t "She's testing whether Michael lied to her."
-        mc_s "Six questions. Then we're done."
+        mc_t "She's not hurt. She's annoyed that her calculations were off."
+        mc_s "Fine. Six questions. Then you leave it alone."
     
     mad "Let's go."
     jump ep06_madison_traingame
@@ -1608,16 +2045,16 @@ label ep06_madison_traingame:
             "Does it matter?":
                 hide screen walkthrough_screen
                 mc_s "Does it matter?"
-                mad "Yes."
+                mad "It matters to my ego."
                 mc_s "It happened. That's all that matters."
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera13
-                mad "Bullshit."
-                mc_s "You asked. I'm saying it's complicated."
-                mad "That's not an answer."
-                mc_t "She knows I'm dodging."
+                mad "Boring answer."
+                mc_s "Practical answer."
+                mad "You're dodging. You wanted me, but you hate admitting it."
+                mc_t "She wants me to confess I was weak."
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
@@ -1629,10 +2066,9 @@ label ep06_madison_traingame:
                 $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera14
-                mad "Then why did you--?"
-                mc_s "You were there. You know why."
-                mad "You're lying."
-                mc_s "How would you know?"
+                mad "Liar."
+                mc_s "You forced the situation."
+                mad "I offered. You took. Don't rewrite history to feel cleaner."
 
                 # 70% chance of detection
                 $ ep06_detect_lie(70)  # Madison may notice the lie
@@ -1647,31 +2083,27 @@ label ep06_madison_traingame:
             "Because you're irritating.":
                 hide screen walkthrough_screen
                 mc_s "Because you're irritating."
-                mad "Irritating."
+                mad "Excuse me?"
                 mc_s "Everything's a war with you. Every interaction."
                 $ rm.update("madison", "trust", -2)
                 $ check_levels("madison", "trust", -2)
 
                 show ep06_madisoncamera15
-                mad "That's not a reason."
-                mc_s "You think sex is a tool. That everyone has to say yes."
-                mad "So?"
-                mc_s "So I'm not a pawn in your games."
-                mad "That's it?"
-                mc_s "That's enough."
+                mad "So you prefer dumb girls who just smile."
+                mc_s "I prefer genuine ones. You're exhausting."
+                mad "Hmph. At least I'm not boring."
 
             "Because the timing was wrong.":
                 hide screen walkthrough_screen
                 mc_s "Because the timing was wrong."
-                mad "Timing."
-                mc_s "Yeah."
+                mad "Timing is an excuse for cowards."
+                mc_s "Or for people with self-control."
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera13
-                mad "Bullshit."
-                mc_s "Believe what you want."
-                mad "That's not a reason. That's an excuse."
+                mad "Bullshit. You were scared."
+                mc_s "Maybe."
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
@@ -1684,46 +2116,37 @@ label ep06_madison_traingame:
 
                 show ep06_madisoncamera14
                 mad "Liar."
-                mc_s "How would you know?"
-                mad "Because you looked at me like I was exactly what you wanted."
-                mad "Right before you said no."
+                mc_s "Think what you want."
+                mad "I saw your eyes. You wanted to ruin me."
 
                 # 70% chance of detection
                 $ ep06_detect_lie(70)  # Madison may notice the lie
 
     # ROUND 1 - MC Asks
     show ep06_madisoncamera16
-    mad "My turn to answer."
-    mc_s "I haven't asked yet."
-    mad "Then ask."
+    mad "My turn to answer. Go ahead."
 
     if ep05_confrontation_peaceful:
         # TRUE PATH - MC asks about recording
         mc_s "Why did you record it?"
 
         show ep06_madisoncamera17
-        mad "I never trust anyone."
-        mc_s "That's not a reason."
-        mad "It's the closest thing to forcing honesty I have."
-        mc_s "By creating leverage."
-        mad "By creating insurance."
+        mad "Insurance."
         mc_s "Against what?"
-        mad "Against you pretending it never happened."
-        mc_t "She's afraid I'd deny her... but why does she care?"
+        mad "Against you waking up the next day and pretending you're a saint."
+        mad "I needed proof that the 'perfect detective' is just as dirty as the rest of us."
+        mc_t "She wants to drag me down to her level."
 
     else:
         # FALSE PATH - MC asks why Madison offered herself
         mc_s "Why did you offer yourself?"
 
         show ep06_madisoncamera18
-        mad "I wanted to test you."
-        mc_s "Test me."
-        mad "See if you're like the others. See if you're man enough."
+        mad "I wanted to see if you'd break."
         mc_s "And?"
-        mad "And I was wrong."
-        mc_s "Wrong how?"
-        mad "I thought you'd say yes."
-        mc_t "So I'm not man enough for her… should I take that as a blessing or a curse?"
+        mad "You didn't. It... annoyed me."
+        mc_s "Just annoyed?"
+        mad "And fascinated me. A dog that doesn't eat the steak? That's a rare breed."
 
     mad "Round two."
 
@@ -1733,31 +2156,33 @@ label ep06_madison_traingame:
 
     if ep05_confrontation_peaceful:
         # TRUE PATH - Madison asks if MC was really protecting Nanami
-        mad "Was I really protecting Nanami? Or was I using you?"
+        mad "I told you I was doing it to protect Nanami."
+        mad "I gave you my body so you wouldn't chase her."
+        mad "Tell me, [mc_name]..."
+        mad "Was I really protecting her? Or was I just using that as an excuse to use you?"
 
         $ show_walkthrough("ep06_madison_deepq_round2_menu")
         menu:
             "I don't know. You tell me.":
                 hide screen walkthrough_screen
                 mc_s "I don't know. You tell me."
-                mad "What?"
-                mc_s "You were the one who used that excuse."
-                mad "I... I wasn't—"
-                mc_s "You said it was to protect her purity. Your words."
+                mad "I'm asking you."
+                mc_s "It sounded convincing at the time."
+                mad "Of course it did. I'm a good liar."
+                mc_s "So you were lying?"
                 $ rm.update("madison", "trust", 2)
                 $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera38
-                mad "It was true! But--"
-                mc_s "Then why are you asking me?"
-                mad "Because I don't know if I was lying to myself."
-                mc_t "First honest thing she's said."
+                mad "I... I don't know."
+                mad "I wanted to save her. But I think I wanted to destroy you more."
+                mc_t "She's actually confused. The mask is slipping."
 
             "You believed it when you said it.":
                 hide screen walkthrough_screen
                 mc_s "You believed it when you said it."
-                mad "That's not answering my question."
-                mc_s "It's the only answer I have."
+                mad "Does that make it true?"
+                mc_s "It makes it honest in the moment."
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
 
@@ -1776,49 +2201,44 @@ label ep06_madison_traingame:
                 $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera40
-                mad "Liar. You don't really believe that."
-                mc_s "You asked for my opinion."
-                mad "I asked for truth. That's not it."
-                mc_s "How would you know?"
-                mad "Because I'm certain you don't believe in noble sacrifices, especially when it comes to me"
-                mc_t "She has quite an eye for this."
+                mad "Don't be naive. It's insulting."
+                mc_s "You love her."
+                mad "That doesn't mean I'm noble."
+                mad "I used her safety as currency to buy your cock."
 
                 # 70% chance of detection
                 $ ep06_detect_lie(70)  # Madison may notice the lie
 
     else:
         # FALSE PATH - Madison asks if it was because she's MC's sister
-        mad "Was it because I'm your sister?"
+        mad "Was it because I'm your sister? Is that the only reason you stopped?"
 
         $ show_walkthrough("ep06_madison_response_round2_menu")
         menu:
             "Partially.":
                 hide screen walkthrough_screen
                 mc_s "Partially."
-                mad "Partially?"
-                mc_s "It's more about the way you are. Not who you are."
-                mad "The way I am?"
-                mc_s "Yeah."
+                mad "Only partially?"
+                mc_s "The blood matters. But your personality matters more."
+                mad "Ouch."
                 $ rm.update("madison", "trust", 2)
                 $ check_levels("madison", "trust", 2)
 
                 show ep06_madisoncamera41
-                mad "So if I were different, you'd have said yes."
-                mc_s "Maybe. I don't know."
-                mc_t "Is she doubting herself?."
+                mad "So if I were a stranger... you might have?"
+                mc_s "Maybe. If you weren't so... you."
+                mc_t "She looks almost disappointed."
 
             "Does it matter?":
                 hide screen walkthrough_screen
-                mc_s "Does it matter?"
-                mad "Yes."
-                mc_s "Well, you could put it that way, and that's enough."
+                mc_s "Does it matter? The answer was no."
+                mad "Details matter."
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera39
-                mad "But that's not all, right?"
-                mc_s "It's all I'm giving you."
-                mc_t "Not a lie. Just incomplete."
+                mad "But that's not all, right? You're holding back."
+                mc_s "It's all I'm giving you"
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
@@ -1830,12 +2250,9 @@ label ep06_madison_traingame:
                 $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera40
-                mad "I know you're lying."
-                mc_s "How would you know?"
-                mad "Because I've seen you with everyone else, and that wouldn't stop you."
-                mc_s "That doesn't mean—"
-                mad "It means exactly that."
-                mc_t "She caught the tell."
+                mad "Liar. I've seen the way you look at Amber."
+                mc_s "That's differ—"
+                mad "It's exactly the same. You just don't want me."
 
                 # 70% chance of detection
                 $ ep06_detect_lie(70)  # Madison may notice the lie
@@ -1853,7 +2270,7 @@ label ep06_madison_traingame:
                 "Who were you planning on showing it to?":
                     hide screen walkthrough_screen
                     show ep06_madisoncamera43
-                    mad "I already told you. It forces honesty."
+                    mad "It forces honesty."
                     mc_s "That's not who. That's why."
                     mad "Whether I use it depends on whether you're honest with me."
                     mc_s "You mean, when you need to force me to be."
@@ -1865,17 +2282,12 @@ label ep06_madison_traingame:
                 "Have you already sent it to someone?":
                     hide screen walkthrough_screen
                     mc_s "Have you already sent it to someone?"
-                    mad "No."
-                    mc_s "What stopped you?"
+                    mad "Paranoid? Good."
 
                     show ep06_madisoncamera44
-                    mad "I didn't need to. Yet."
-                    mc_s "Yet."
-                    mad "Besides, a threat only works if you know I have it."
-                    mc_t "She's holding it over my head."
-                    mad "But the situation has changed."
-                    mc_s "Meaning?"
-                    mad "Meaning this game changes everything."
+                    mad "No. Once I send it, I lose my leverage."
+                    mc_s "So I'm safe as long as I'm useful."
+                    mad "Exactly."
 
                     $ ep06_mc_advantage_points -= 1
         else:
@@ -1896,48 +2308,27 @@ label ep06_madison_traingame:
         if ep06_mc_advantage_points >= 1:
             $ show_walkthrough("ep06_madison_response_round3_false_menu")
             menu:
-                "How many men have said yes before me?":
+                "How many men have said yes?":
                     hide screen walkthrough_screen
                     show ep06_madisoncamera45
                     mad "Are you calling me a slut?"
-                    mc_s "I'm asking a question."
-                    mad "That shouldn't matter to you."
-                    mc_s "Answer it anyway."
-                    mad "For your information, no one's ever been inside me."
-                    mc_s "But you tested them, didn't you?"
-                    mad "That's different."
-                    mc_s "How many?"
-                    mad "Enough to know you're the anomaly."
+                    mc_s "I'm asking for data."
+                    mad "None. I tease them until they beg, then I leave."
 
                 "Did any of them say no? Or was I the first?":
                     hide screen walkthrough_screen
-                    mc_s "Did any of them say no? Or was I the first?"
-                    mad "Most men beg for it. You were the first."
-                    mc_s "The first to say no."
+                    mc_s "Did any say no?"
+                    mad "You're the first."
 
                     show ep06_madisoncamera44
-                    mad "But don't get arrogant. It's not like I ask just anyone."
-                    mc_s "Just how selective are you?"
-                    mad "I've played with men. Teased them. But I never let it get to... that."
-                    mc_s "To sex?"
-                    mad "To losing control."
-                    mc_s "So I'm the first one you actually offered yourself to."
-                    mad "Yes."
+                    mad "Most men are pathetic. A little skin and they forget their names."
 
                     $ ep06_mc_advantage_points -= 1
         else:
             mc_s "How many men said yes before me?"
 
             show ep06_madisoncamera45
-            mad "Are you calling me a slut?"
-            mc_s "I'm asking a question."
-            mad "That shouldn't matter to you."
-            mc_s "Answer it anyway."
-            mad "For your information, no one's ever been inside me."
-            mc_s "But you tested them, didn't you?"
-            mad "That's different."
-            mc_s "How many?"
-            mad "Enough to know you're the anomaly."
+            mad "Zero. I never let it get that far. You were the exception."
 
 
     # ROUND 3 - Madison Asks
@@ -1945,7 +2336,7 @@ label ep06_madison_traingame:
 
     if ep05_confrontation_peaceful:
         # TRUE PATH - Madison asks if MC regrets it happened
-        mad "Do you regret that it happened?"
+        mad "Do you regret fucking me?"
 
         $ show_walkthrough("ep06_madison_deepq_round3_true_menu")
         menu:
@@ -1966,39 +2357,29 @@ label ep06_madison_traingame:
                 mc_s "It makes me question if the headache is worth it."
                 mad "So I'm the problem."
                 mc_s "You make things complicated. That's not the same thing."
-                mc_t "She's looking for blame. Not giving it."
 
             "Sometimes.":
                 hide screen walkthrough_screen
-                mc_s "Sometimes."
-                mad "Sometimes you regret it."
-                mc_s "Sometimes I think it was a mistake."
+                mc_s "Sometimes. When you act like this."
+                mad "Like what? In control?"
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera21
-                mad "Which times?"
-                mc_s "When you're like this."
-                mad "Like what?"
-                mc_s "Like you're at war with the world."
-                mc_t "Not a lie. Just not the whole truth."
+                mc_s "Like a sociopath."
+                mad "Flattery won't work on me."
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
             "Yes. Absolutely.":
                 hide screen walkthrough_screen
-                mc_s "Yes. Absolutely."
+                mc_s "Yes. It was a mistake."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
 
                 show ep06_madisoncamera22
-                mad "You're lying again."
-                mc_s "Am I?"
-                mad "Yes."
-                mc_s "Prove it."
-                mad "You wouldn't be here if you regretted it."
-                mc_t "Shit. She's right."
+                mad "Liar. Your body said otherwise."
 
                 # 70% chance of detection - Check for game over
                 $ ep06_detect_lie(70)  # Madison may notice the lie
@@ -2020,22 +2401,20 @@ label ep06_madison_traingame:
                 show ep06_madisoncamera20
                 mad "That's not an answer."
                 mc_s "Fine. Yes. You're broken."
-                mc_s "But so am I. And so is everyone else in our goddamn house."
-                mad "That's supposed to make me feel better?"
-                mc_s "It's supposed to make you feel less alone."
+                mad "Wow. Blunt."
+                mc_s "But so am I. So is everyone."
+                mad "That doesn't make me feel better."
 
             "Define \"broken\".":
                 hide screen walkthrough_screen
                 mc_s "Define \"broken\"."
-                mad "You know what I mean."
-                mc_s "Do I? Are we talking about a machine? A toy? A system?"
+                mad "Don't play semantics with me."
                 $ rm.update("madison", "cor", 1)
                 $ check_levels("madison", "cor", 1)
 
                 show ep06_madisoncamera21
                 mad "You're dodging."
-                mc_s "I'm saying people aren't objects. You can't be 'broken' if you were never whole to begin with."
-                mc_t "Philosophical bullshit. Let's hope she buys it."
+                mc_s "I'm saying you're functional. Just... twisted."
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
@@ -2051,8 +2430,7 @@ label ep06_madison_traingame:
                 mc_s "You asked my opinion."
                 mad "I asked for truth."
                 mc_s "Why is it so hard to believe I think you're normal?"
-                mad "Because you don't believe anyone is normal."
-                mc_t "She knows my worldview too well."
+                mad "Don't patronize me. I know what I am."
 
                 # 70% chance of detection - Check for game over
                 $ ep06_detect_lie(70)  # Madison may notice the lie
@@ -2070,27 +2448,24 @@ label ep06_madison_traingame:
 
         show ep06_madisoncamera24
         mad "The core of it? Men are parasites. They don't want connection, they want access."
-        mc_s "So you're teaching her to trust women."
-        mad "No. Women are snakes too. I'm teaching her to trust ME."
+        mc_s "So you're teaching her to hate."
+        mad "I'm teaching her to trust ME."
 
         show ep06_madisoncamera25
-        mc_s "So it's about control."
-        mad "It's about protection."
+        mc_s "That's isolation."
+        mad "It's protection."
         mc_s "Protection from what?"
 
         show ep06_madisoncamera26
-        mad "From being used until she breaks."
-        mad "From ending up like Mom."
-        mc_t "And there's the wound."
+        mad "I won't let her end up like Mom. Used up. Discarded."
 
     else:
         # FALSE PATH - MC asks if Nanami knows Madison loves her
-        mc_s "Does Nanami know you love her?"
-        mad "No."
-        mc_s "Why not?"
+        mc_s "Do you love Nanami?"
+        mad "..."
 
         show ep06_madisoncamera27
-        mad "Because if she knew the extent of it... she'd run."
+        mad "If she knew the extent of it... she'd run."
         mc_s "You're sure of that."
         mad "I know it. My love is... heavy."
         mc_s "Have you ever considered telling her anyway?"
@@ -2143,7 +2518,6 @@ label ep06_madison_traingame:
                 mad "You're a hypocrite."
                 mad "Don't worry, I won't tell her."
                 mad "I don't have to. Every time you look at her face now... you'll remember my moan."
-                mc_t "She's planting a virus in my head."
 
             "I don't think so.":
                 hide screen walkthrough_screen
@@ -2180,7 +2554,7 @@ label ep06_madison_traingame:
 
     else:
         # FALSE PATH - Madison asks if MC left because they're damaged
-        mad "Is that why you left us for eight years?"
+        mad "Is that why you left us for so many years?"
 
         $ show_walkthrough("ep06_madison_why_left_false_menu")
         menu:
@@ -2225,10 +2599,9 @@ label ep06_madison_traingame:
                 show ep06_madisoncamera50
                 mad "You're lying."
                 mc_s "How do you—"
-                mad "Because you've never cared about climbing the ladder."
+                mad "You don't care about money."
                 mc_s "People change."
-                mad "Not you. You care about truth, not rank."
-                mc_t "She reads me too well."
+                mad "Not you."
 
                 # 70% chance of detection - Check for game over
                 $ ep06_detect_lie(70)  # Madison may notice the lie
@@ -2246,46 +2619,35 @@ label ep06_madison_traingame:
                 "What did Michael do to you the night you stopped being good?":
                     hide screen walkthrough_screen
                     show ep06_madisoncamera53
-                    mad "He didn't do anything. Not physically."
-                    mc_s "But?"
-                    mad "But he peeled back the curtain. He and Mom."
-                    mc_s "What did you see?"
-                    mad "That there is no love. Only leverage."
+                    mad "Physically? Nothing. He turned on the lights."
+                    mad "He showed me the machinery behind the marriage."
+                    mad "Love is a scam to control women."
                     mc_s "That's when the good girl died."
-                    mad "That's when the good girl got smarter."
-                    mc_t "She doesn't see it as death. She sees it as evolution."
+                    mad "No. That's when she woke up."
 
                 "Did Michael touch you? Is that why you use sex as a weapon?":
                     hide screen walkthrough_screen
                     show ep06_madisoncamera54
-                    mad "He never touched me. He didn't have to."
+                    mad "He never touched me. That would be too simple."
                     mc_s "Explain."
-                    mad "He didn't need to touch me to fuck up my head."
-                    mad "He pointed at Mom. Laying there, broken, fading."
-                    mad "He told me: 'Look at her. She was a queen. Now she's just furniture.'"
-                    mc_s "God..."
+                    mad "He destroyed Mom without lifting a finger. He just... stopped looking at her."
+                    mad "He pointed at her one night. Laying there, crying, fading."
+                    mad "He told me: 'Look at her, Madison. She used to be a luxury import. Now she's just used furniture.'"
+                    mc_s "Jesus..."
 
                     show ep06_madisoncamera55
-                    mad "He taught me that a woman's beauty is a leasing contract."
-                    mad "It has an expiration date. And once the skin sags, men stop paying rent."
-                    mc_s "So you decided to become the landlord."
-                    mad "I decided I would never give it away for free. Not like her."
-                    mad "If I'm going to be consumed, I'm going to name the price."
-                    mc_t "Michael didn't rape her body. He raped her worldview."
+                    mad "He taught me basic economics, brother."
+                    mad "Mom was a depreciating asset. Once her beauty faded, her value dropped to zero."
+                    mc_s "That's horrible."
+                    mad "That's reality. Michael didn't invent the market, he just stopped paying rent."
+                    mad "I decided I'd never be a tenant, not for you, not for anyone."
 
                     $ ep06_mc_advantage_points -= 2
         else:
             mc_s "What did Michael do to you the night you stopped being good?"
 
             show ep06_madisoncamera53
-            mad "He didn't do anything. Not physically."
-            mc_s "But?"
-            mad "But he peeled back the curtain. He and Mom."
-            mc_s "What did you see?"
-            mad "That there is no love. Only leverage."
-            mc_s "That's when the good girl died."
-            mad "That's when the good girl got smarter."
-            mc_t "She doesn't see it as death. She sees it as evolution."
+            mad "He showed me that Mom was disposable. And that I would be too."
 
     else:
         # FALSE PATH - MC asks if Michael taught Madison to use sex as leverage
@@ -2295,18 +2657,12 @@ label ep06_madison_traingame:
                 "Did Michael teach you to use sex as leverage?":
                     hide screen walkthrough_screen
                     show ep06_madisoncamera53
-                    mad "Not directly."
+                    mad "Not directly. But through Mom."
                     mc_s "Explain."
-                    mad "He never laid a hand on me."
-                    mc_s "But?"
-                    mad "But in how he treated Mom. What he said about her."
                     mad "He made me see that women have an expiration date."
-                    mad "The moment that men's desire fades, you're just... trash."
-                    mc_s "And you believed him."
-                    mad "I looked at Mom. Crying. Waiting for him. And I knew he was right."
-                    mc_t "He poisoned her soul."
+                    mad "Once desire fades, you're trash. I decided never to be trash."
 
-                "Did you despise Elizabeth for staying? (Costs 2 advantage points)":
+                "Did you despise Elizabeth for staying?":
                     hide screen walkthrough_screen
                     mc_s "Did you despise Elizabeth for staying?"
 
@@ -2319,23 +2675,13 @@ label ep06_madison_traingame:
                     mad "I vowed to never kneel."
                     mad "Mom gave her power to a man. I take power FROM men."
                     mad "It's the only way to ensure I don't end up discarded in the corner."
-                    mc_t "She attacks men preemptively so she never becomes Mom."
 
                     $ ep06_mc_advantage_points -= 2
         else:
             mc_s "Did Michael teach you to use sex as leverage?"
 
             show ep06_madisoncamera53
-            mad "Not directly."
-            mc_s "Explain."
-            mad "He never laid a hand on me."
-            mc_s "But?"
-            mad "But in how he treated Mom. What he said about her."
-            mad "He made me see that women have an expiration date."
-            mad "The moment that men's desire fades, you're just... trash."
-            mc_s "And you believed him."
-            mad "I looked at Mom. Crying. Waiting for him. And I knew he was right."
-            mc_t "He poisoned her soul."
+            mad "He taught me that once men stop wanting you, you disappear."
 
 
     # ROUND 5 - Madison Asks
@@ -2357,16 +2703,15 @@ label ep06_madison_traingame:
 
                 show ep06_madisoncamera58
                 mad "No?"
-                mc_s "I don't deny what's been done."
-                mad "Even if you regret it later?"
-                mc_s "Regret isn't amnesia."
+                mc_s "No. I don't erase history."
+                mad "Most men would."
+                mc_s "I own my choices."
 
                 show ep06_madisoncamera59
                 mad "Explain."
                 mc_s "I can hate that we did it, and still admit that we did."
-                mad "Most people would wash their hands of it."
-                mc_s "I'm not most people."
-                mc_t "She's testing if I'll erase her the moment the evidence is gone."
+                mad "So I'm not just a dirty secret?"
+                mc_s "You're a secret. But you're real."
 
             "Probably not.":
                 hide screen walkthrough_screen
@@ -2378,7 +2723,6 @@ label ep06_madison_traingame:
                 mad "That's not a promise."
                 mc_s "It's a probability."
                 mad "It's evasive. It means you MIGHT."
-                mc_t "She wants certainty. I can't give it."
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
@@ -2462,12 +2806,12 @@ label ep06_madison_traingame:
         mc_s "That's the rule."
 
         show ep06_madisoncamera66
-        mad "I think so. I don't know."
-        mc_s "You don't know."
-        mad "I want to lock her away. I want her to only look at me."
-        mad "I want to breathe the same air she breathes."
+        mad "Love? That's a weak word for it."
+        mc_s "Then what is it?"
+        mad "Ownership. Salvation."
+        mad "I want to carve my name into her ribs so she never forgets who saved her."
         mc_s "That sounds like obsession."
-        mad "She doesn't see the filth in the world. She's clean."
+        mad "She doesn't see the filth in the world because I stand in front of it. And..."
         mc_s "And?"
 
         show ep06_madisoncamera65
@@ -2770,10 +3114,10 @@ label ep06_madison_traingame:
     mc_t "\"Famous.\" She's mocking me."
 
     if ep06_madison_path == "love":
-        mad "Ten minutes—just help me carry equipment?"
+        mad "Just ten minutes... My equipment is heavy."
         mc_s "Is that really what you need?"
-        mad "I don't know what I need."
-        mc_t "That sounded... honest."
+        mad "And... I don't want to be alone in that studio today. Please, Big Brother?"
+        mc_t "There it is. The weaponized innocence."
 
     elif ep06_madison_path == "corruption":
         mad "Ten minutes—unless you're scared."

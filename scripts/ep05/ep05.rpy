@@ -2680,12 +2680,11 @@ label ep05_intromn:
             $ rm.update("nanami", "trust", -3)
             $ check_levels("nanami", "trust", -3)
             $ ss.add("nanami", "strike")
-            $ nanami_strikes = ss.get("nanami", "strike")
-            if nanami_strikes == 1:
+            if ss.get("nanami", "strike") == 1:
                 $ show_custom_notification("strike1")
-            elif nanami_strikes == 2:
+            elif ss.get("nanami", "strike") == 2:
                 $ show_custom_notification("strike2")
-            elif nanami_strikes >= 3:
+            elif ss.get("nanami", "strike") >= 3:
                 $ show_custom_notification("strike3")
 
             mc_s "Fine, I'll show you how men touch women."
