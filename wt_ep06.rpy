@@ -168,76 +168,88 @@ init python:
         # Madison Camera Scene - Round 1
         "ep06_madison_deepq_round1_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
+                {"option_num": 0, "char_name": "Lie Detection", "extra_text": "Lies give Advantage pts if undetected. Use Advantage to ask deeper questions"},
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         "ep06_madison_response_round1_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - safe choice"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might detect it"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely catch this"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         # Madison Camera Scene - Round 2
         "ep06_madison_deepq_round2_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
+                {"option_num": 0, "char_name": "Lie Detection", "extra_text": "Lies give Advantage pts if undetected. Use Advantage to ask deeper questions"},
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         "ep06_madison_response_round2_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - builds trust"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might sense it"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely see through it"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         # Madison Camera Scene - Round 3 (Peaceful path from Episode 5)
         "ep06_madison_deepq_round3_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
+                {"option_num": 0, "char_name": "Lie Detection", "extra_text": "Lies give Advantage pts if undetected. Use Advantage to ask deeper questions"},
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         # Madison Camera Scene - Round 3 (Conflict path from Episode 5)
         "ep06_madison_deepq_round3_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
+                {"option_num": 0, "char_name": "Lie Detection", "extra_text": "Lies give Advantage pts if undetected. Use Advantage to ask deeper questions"},
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         "ep06_madison_response_round3_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - honest about feelings"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might notice"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely realize"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         "ep06_madison_response_round3_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - direct response"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might suspect"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely catch this"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         "ep06_madison_nanami_knows_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - direct answer"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might sense it"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely detect this"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         "ep06_madison_why_left_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - honest about past"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might notice"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely see through it"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
@@ -259,17 +271,17 @@ init python:
         # Madison Camera Scene - Round 5
         "ep06_madison_response_round5_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "extra_text": "Truth - safest choice"},
-                {"option_num": 2, "char_name": "Madison", "extra_text": "Lie for points - she might catch it"},
-                {"option_num": 3, "char_name": "Madison", "extra_text": "Lie for points - she'll likely realize"}
+                {"option_num": 1, "char_name": "Madison", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 
         "ep06_madison_response_round5_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "extra_text": "Truth - direct answer"},
-                {"option_num": 2, "char_name": "Madison", "extra_text": "Lie for points - she might sense it"},
-                {"option_num": 3, "char_name": "Madison", "extra_text": "Lie for points - she'll likely detect this"}
+                {"option_num": 1, "char_name": "Madison", "extra_text": "Truth - no Advantage"},
+                {"option_num": 2, "char_name": "Madison", "extra_text": "+Advantage if undetected (50%)"},
+                {"option_num": 3, "char_name": "Madison", "extra_text": "+Advantage if undetected (30%)"}
             ])
         },
 

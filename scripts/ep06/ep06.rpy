@@ -2596,7 +2596,7 @@ label ep06_madison_traingame:
         mad "It's protection."
         mc_s "Protection from what?"
 
-        show ep06_madisoncamera26
+        show ep06_madisoncamera26 at ken_burns_corner_to_corner4 with clouds_inverse
         mad "I won't let her end up like Mom. Used up. Discarded."
 
     else:
@@ -2618,7 +2618,7 @@ label ep06_madison_traingame:
         mc_s "I believe you."
 
     # ROUND 4 - Train Lurch / Madison Falls
-    show ep06_madisoncamera46
+    show ep06_madisoncamera46 with vpunch
     mc_s "..."
     mad "..."
     mc_s "You okay?"
@@ -3035,7 +3035,7 @@ label ep06_madison_traingame:
                 mad "Just no?"
                 mc_s "The answer will always be no."
                 mad "Why?"
-                mmc_s "Because you don't want me. You want a puppet."
+                mc_s "Because you don't want me. You want a puppet."
                 mc_s "And I'm done dancing on your strings."
 
                 show ep06_madisoncamera36
