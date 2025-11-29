@@ -506,3 +506,20 @@ init -1:
             zoom 1.05
         ease 0.2:
             zoom 1.0
+
+    # Blood overlay that slowly covers the screen (James Bond style)
+    # This creates the iconic blood dripping down effect
+    transform blood_cover:
+        subpixel True
+        alpha 0.0
+        yalign -1.0  # Start above screen
+        zoom 1.0
+        # Flash impact
+        parallel:
+            ease 0.1 alpha 1.0  # Quick fade in
+            pause 0.2
+            ease 0.7 alpha 0.9  # Slight fade as it drips
+        # Drip down motion
+        parallel:
+            pause 0.05
+            ease 0.8 yalign 0.0  # Smooth drip down to cover screen

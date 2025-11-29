@@ -168,76 +168,76 @@ init python:
         # Madison Camera Scene - Round 1
         "ep06_madison_deepq_round1_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Both options", "extra_text": "require points to ask deeper questions. Save them for important questions"}
+                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
             ])
         },
 
         "ep06_madison_response_round1_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Honest and direct answer"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "She might catch you lying"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Very likely she'll detect this lie"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - safe choice"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might detect it"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely catch this"}
             ])
         },
 
         # Madison Camera Scene - Round 2
         "ep06_madison_deepq_round2_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Both options", "extra_text": "require points to ask. Choose wisely which questions matter most to you"}
+                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
             ])
         },
 
         "ep06_madison_response_round2_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Honest response, builds trust"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "She might sense you're hiding something"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Very likely she'll see through this answer"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - builds trust"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might sense it"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely see through it"}
             ])
         },
 
         # Madison Camera Scene - Round 3 (Peaceful path from Episode 5)
         "ep06_madison_deepq_round3_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Both questions", "extra_text": "require points. Ask what matters most about your relationship"}
+                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
             ])
         },
 
         # Madison Camera Scene - Round 3 (Conflict path from Episode 5)
         "ep06_madison_deepq_round3_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 0, "char_name": "Both questions", "extra_text": "require points. Choose questions that address your concerns"}
+                {"option_num": 0, "char_name": "Info", "extra_text": "First option is truth. Options 2-3 give points but she can detect lies"}
             ])
         },
 
         "ep06_madison_response_round3_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Honest answer about your feelings"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "She might notice you're not being fully honest"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "She'll probably realize you're deflecting"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - honest about feelings"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might notice"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely realize"}
             ])
         },
 
         "ep06_madison_response_round3_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truthful and direct response"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "She might suspect you're avoiding the truth"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "She'll likely catch you in this lie"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - direct response"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might suspect"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely catch this"}
             ])
         },
 
         "ep06_madison_nanami_knows_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Direct and truthful answer"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "She might sense uncertainty in your answer"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "She'll probably detect you're not being honest"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - direct answer"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might sense it"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely detect this"}
             ])
         },
 
         "ep06_madison_why_left_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Honest response about your past"},
-                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "She might notice you're hiding something"},
-                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "She'll likely see you're not telling the full truth"}
+                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love", "extra_text": "Truth - honest about past"},
+                {"option_num": 2, "char_name": "Madison", "points": 1, "type": "Corruption", "extra_text": "Lie for points - she might notice"},
+                {"option_num": 3, "char_name": "Madison", "points": 2, "type": "Corruption", "extra_text": "Lie for points - she'll likely see through it"}
             ])
         },
 
@@ -259,17 +259,17 @@ init python:
         # Madison Camera Scene - Round 5
         "ep06_madison_response_round5_true_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "extra_text": "Honest answer, safest choice"},
-                {"option_num": 2, "char_name": "Madison", "extra_text": "She might catch you being dishonest"},
-                {"option_num": 3, "char_name": "Madison", "extra_text": "She'll probably realize you're lying"}
+                {"option_num": 1, "char_name": "Madison", "extra_text": "Truth - safest choice"},
+                {"option_num": 2, "char_name": "Madison", "extra_text": "Lie for points - she might catch it"},
+                {"option_num": 3, "char_name": "Madison", "extra_text": "Lie for points - she'll likely realize"}
             ])
         },
 
         "ep06_madison_response_round5_false_menu": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "extra_text": "Direct and truthful answer"},
-                {"option_num": 2, "char_name": "Madison", "extra_text": "She might sense you're avoiding honesty"},
-                {"option_num": 3, "char_name": "Madison", "extra_text": "She'll likely detect this isn't truthful"}
+                {"option_num": 1, "char_name": "Madison", "extra_text": "Truth - direct answer"},
+                {"option_num": 2, "char_name": "Madison", "extra_text": "Lie for points - she might sense it"},
+                {"option_num": 3, "char_name": "Madison", "extra_text": "Lie for points - she'll likely detect this"}
             ])
         },
 

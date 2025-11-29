@@ -542,6 +542,12 @@ image eigengrau = Solid("#16161D")
 # Overlay effects
 image vignette = "common/blacktrans.webp"
 
+# Blood overlay effect (James Bond 007 style)
+# If you have a blood splatter image, replace the Solid with your image path
+# Example: image blood_overlay = "effects/blood_splatter.webp"
+image blood_overlay = "blood"  # Dark red blood color
+image bloodbg = Solid("#4d0007", xysize=(1920, 1080))  # Dark red blood color
+
 ################################################################################
 ## LOGO AND BRANDING ELEMENTS
 ################################################################################

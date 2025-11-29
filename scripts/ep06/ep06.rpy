@@ -12,6 +12,7 @@ label ep06_start:
 
 label ep06_intro:
     scene eigengrau with lines
+    $ renpy.free_memory()
     show location_tmpd_m with slowfade
     show tmpd_location zorder 2 with dissolve
     pause 5
@@ -22,7 +23,6 @@ label ep06_intro:
 label ep06_ope:
     scene eigengrau
     $ config.rollback_enabled = True
-    $ renpy.free_memory()
     pause 1.0
 
     show screen stats_button
@@ -31,7 +31,7 @@ label ep06_ope:
     $ playAudio(japanday_cross, "amb", 1, True, 3.0)
     $ setChannelVolume("amb", 1, 0.6, 0)
 
-    show ep06_opening01
+    show ep06_opening01 at ken_burns_bottom_to_top
     mc_t "First day."
     mc_t "Nothing in the house is safe to say out loud anymore."
 
@@ -50,7 +50,7 @@ label ep06_ope:
     $ setAllSubchannelsVolume("sfx", 0.0, 1)
     $ setAllSubchannelsVolume("amb", 0.0, 1)
 
-    show ep06_opening03
+    show ep06_opening03 at ken_burns_left_to_right with clouds_inverse
     mc_t "Mother's wrists. Gauze. Pulse."
     mc_t "Three months of visiting hours."
 
@@ -61,7 +61,7 @@ label ep06_ope:
     $ setAllSubchannelsVolume("sfx", 1.0, 1)
     $ setAllSubchannelsVolume("amb", 1.0, 1)
 
-    show ep06_opening05
+    show ep06_opening05 at ken_burns_right_to_left with fade
     mc_t "Michael calls it 'remarkable progress.'"
     mc_t "Michael says a lot of things."
 
@@ -106,14 +106,14 @@ label ep06_ope:
     $ setAllSubchannelsVolume("amb", 0.5, 1)
     $ stopAllSubchannels("sfx", 1.0)
 
-    show ep06_opening08
+    show ep06_opening08 with fade
     wat "Of course. We are short-handed, after all. Even... unconventional assets are useful."
     wat "Welcome to the First Investigation Division, Sōsa Ikka. We handle homicides."
 
     $ playAudio(mc_suspense_theme, "music", 1, True, 3)
     $ setChannelVolume("music", 1, 0.5, 1.0)
 
-    show ep06_opening09
+    show ep06_opening09 at ken_burns_corner_to_corner3
     wat "Specifically, the homicide of Detective Yamamoto. Found dead last night."
     wat "Professional execution. Three shots. No wasted movement."
     wat "It lacks the... emotional messiness typical of domestic crimes. It feels imported."
@@ -125,14 +125,14 @@ label ep06_ope:
 
     $ setAllSubchannelsVolume("amb", 0.0, 1)
 
-    show ep06_opening12
+    show ep06_opening12 at dramatic_focus_out
     wat "Osaka connections, perhaps."
     wat "Because Sato thinks you fit in."
     wat "You understand the Yakuza. Their crude manners. Their... loudness."
     
     $ setAllSubchannelsVolume("amb", 0.5, 1)
 
-    hide ep06_opening12
+    hide ep06_opening12 with fade
     wat "The clans are obsessed with tradition. With 'Wa'—Harmony."
     wat "They react violently to external elements that look different. That don't belong."
     wat "Sato hopes your... appearance... might provoke a reaction that a Japanese officer could not elicit."
@@ -192,7 +192,7 @@ label ep06_shadow:
     $ playAudio(evening_pool, "amb", 2, True, 3.0)
     $ setChannelVolume("amb", 2, 0.3, 0)
 
-    show ep06_shadowdir01
+    show ep06_shadowdir01 at ken_burns_left_to_right with fade
     hir "The Osaka detective."
     hir "He's in Tokyo now."
     anto "I know."
@@ -207,7 +207,7 @@ label ep06_shadow:
 
     $ setAllSubchannelsVolume("amb", 0.0, 1)
 
-    show ep06_shadowdir03
+    show ep06_shadowdir03 with fade
     hir "None. Lives alone. Works late Thursdays."
     hir "Returns home past midnight. Drunk, usually. Keys in left pocket."
     anto "Why him?"
@@ -218,28 +218,29 @@ label ep06_shadow:
 
     $ setChannelVolume("amb", 2, 0.3, 1)
     $ setChannelVolume("amb", 1, 0.5, 1)
-    show ep06_shadowdir05
+
+    show ep06_shadowdir05 at ken_burns_left_to_right with fade
     hir "Smart detective. Dangerous detective."
     hir "You play chess, Antonella?"
 
-    show ep06_shadowdir06
+    show ep06_shadowdir06 with fade
     anto "No."
     hir "You should learn."
     hir "Chess teaches you how to win wars."
 
-    show ep06_shadowdir07
+    show ep06_shadowdir07 at ken_burns_bottom_to_top
     hir "You don't attack the king directly. Too obvious. Too defended."
     hir "You remove his pieces. One by one."
     hir "First the knights. Then the bishops. Then the rooks."
     hir "When the king is alone and blind..."
 
-    show ep06_shadowdir08
+    show ep06_shadowdir08 at dramatic_focus_out
     hir "...he falls without a fight."
     hir "Yamamoto is a knight. Intelligent. Mobile. Dangerous."
     anto "And after the knight falls?"
     hir "The board shifts. Tokyo Metropolitan loses its best investigator."
 
-    show ep06_shadowdir09 with fade
+    show ep06_shadowdir09 at slow_reveal with fade
     hir "Yamaguchi-gumi, Sumiyoshi-kai, Inagawa-kai, all the old families - they think this is random violence. Gang war."
     hir "They don't see the pattern. They don't see me moving pieces."
 
@@ -261,12 +262,12 @@ label ep06_shadow:
     $ playAudio(heartbeatslow, "amb", 3, True, 3.0)
     $ setChannelVolume("amb", 3, 1, 5)
 
-    show ep06_shadowdir12 with fade
+    show ep06_shadowdir12 at ken_burns_right_to_left with fade
     anto "Thursday night. Apartment 204."
     anto "Three shots. Professional spacing."
     anto "The knight falls."
 
-    show ep06_shadowdir13
+    show ep06_shadowdir13 at dramatic_focus_out
     anto "The board shifts."
 
     $ stopAllAudio(2)
@@ -292,11 +293,11 @@ label ep06_execution:
     $ playAudio(tokyo_residential, "amb", 3, True, 2.0)
     $ setChannelVolume("amb", 3, 0.2, 2)
 
-    show ep06_execution01
+    show ep06_execution01 at ken_burns_left_to_right
     yam_t "Seventeen women. Seventeen families asking when I'll find answers."
     yam_t "Surgical chest incisions. Professional precision. Osaka to Tokyo - someone's expanding operations."
 
-    show ep06_execution02 with fade
+    show ep06_execution02 with clouds
     yam_t "11:43 PM. Miyuki called three hours ago. Sounded tired. I told her two more days in Tokyo."
     yam_t "Lied. Probably four more days. Maybe five."
     yam_t "But I'm close. The connection between Osaka and Tokyo - it's here somewhere in these files."
@@ -304,7 +305,7 @@ label ep06_execution:
     $ playAudio(door_knock, "sfx", 1, False, 0)
     $ setChannelVolume("sfx", 1, 1, 0)
 
-    show ep06_execution03
+    show ep06_execution03 with hpunch
     yam_t "11:47 PM."
     yam_t "Five knocks. Polite. Soft."
     yam_t "Neighbor? Building manager?"
@@ -318,8 +319,9 @@ label ep06_execution:
     $ playAudio(heartbeatslow, "sfx", 4, True, 2.0)
     $ setChannelVolume("sfx", 4, 0.3, 2)
 
-    show ep06_execution04 with fade
-    yam_t "Delivery driver."
+    show ep06_execution04 at focus_shift with fade
+    yam_t "Uhm..."
+    yam_t "Delivery person?"
 
     show ep06_execution05
     yam_t "Young."
@@ -330,7 +332,7 @@ label ep06_execution:
     show ep06_execution07
     yam_t "Curves straining fabric. Wrong size. Abdomen scar visible. Work accident, maybe."
 
-    show ep06_execution08
+    show ep06_execution08 with fade
     yam_t "Late shift worker. Probably part-time student."
     anto "Delivery for Yamamoto-san. Signature required."
     yam_t "Light accent. Foreign worker."
@@ -339,7 +341,7 @@ label ep06_execution:
     $ playAudio(door_wood, "sfx", 1, False, 0)
     $ setChannelVolume("sfx", 1, 0.8, 0)
     
-    show ep06_execution09 with slowfade
+    show ep06_execution09 at ken_burns_bottom_to_top with slowfade
     yam "I think you have the wrong—"
     anto "Yamamoto-san? Detective Yamamoto Koji?"
     yam "...Yes?"
@@ -353,22 +355,27 @@ label ep06_execution:
     $ playAudio(guncock9mm, "sfx", 2, False, 0)
     $ setChannelVolume("sfx", 2, 0.8, 0)
 
-    show ep06_execution10
+    show ep06_execution10 with vpunch
 
     $ fadeToAudio(heartbeatfast, "sfx", 4, 2.0, True)
 
     yam_t "European."
 
-    show ep06_execution11
+    show ep06_execution11 with hpunch
     yam_t "Osaka."
 
-    show ep06_execution12
+    show ep06_execution12 at slow_reveal with slowflash
     yam_t "Miyuk—"
 
     $ playAudio(gunshot_glock_3shots, "sfx", 2, False, 0)
     $ setChannelVolume("sfx", 2, 1, 0)
 
-    show ep06_execution13 with flash
+    scene bloodbg
+    show blood_overlay at blood_cover zorder 100
+    show ep06_execution13 at impact_shake with shot
+    pause 0.6  # Let the blood drip animation complete
+    hide blood_overlay
+
 
     $ stopAudio("sfx", 4, 3.0)
 
@@ -381,7 +388,7 @@ label ep06_execution:
     $ setChannelVolume("amb", 2, 0.1, 2)
     $ setChannelVolume("amb", 3, 0.05, 2)
 
-    show ep06_execution14 with fade
+    show ep06_execution14 at ken_burns_right_to_left with fade
     anto_t "Wedding ring on his finger."
     anto_t "Doesn't matter."
     anto_t "Package. Take it."
@@ -408,15 +415,17 @@ label ep06_crimescene:
     $ playAudio(hallwalkmale, "sfx", 1, True, 2.0)
     $ setChannelVolume("sfx", 1, 1, 2)
 
-    show ep06_crimescene01
-    mc_t "First day back. First crime scene in three months."
+    show ep06_crimescene01 at ken_burns_left_to_right
+    mc_t "First day back."
+    mc_t "First crime scene in three months."
 
-    show ep06_crimescene02 with flash
-    mc_t "The last crime scene I was at, I was the one bleeding."
+    show ep06_crimescene02 at animated_glitch with flash
+    mc_t "The last crime scene I was at..."
+    mc_t "I was the one bleeding."
 
     $ setAllSubchannelsVolume("amb", 0.1, 2)
 
-    show ep06_crimescene03
+    show ep06_crimescene03 with fade
     mc_t "Second floor. Apartment 204. Asagaya."
     mc_t "Three yellow markers on the floor."
     mc_t "Gray-haired man crouching by the bullets. Wire-rim glasses. Cheap suit."
@@ -426,7 +435,7 @@ label ep06_crimescene:
     $ setChannelVolume("music", 1, 0.5, 1.0)
     $ stopAllSubchannels("sfx", 2.0)
 
-    show ep06_crimescene04
+    show ep06_crimescene04 at ken_burns_left_to_right with fade
     tak "Don't step on the chalk, [mc_name]."
     mc_s "Inspector Sato."
     tak "Just Takeo. Titles are for reports. Focus is for solving cases."
@@ -446,7 +455,7 @@ label ep06_crimescene:
     tak "Three shots. Three decisions. Three certainties."
     mc_s "He killed a man, then took five seconds to arrange art on the floor?"
 
-    show ep06_crimescene10
+    show ep06_crimescene10 at subtle_zoom_out
     tak "Now, here is the lesson regarding our killer."
     tak "What kind of person executes a cop, then stays to arrange casings in a geometric pattern?"
     mc_s "That depends on how you look at it."
@@ -473,7 +482,7 @@ label ep06_crimescene:
     tak "Whatever they are, they are disciplined."
     tak "Precisely. Stand up. Let's look at the victim."
 
-    show ep06_crimescene05
+    show ep06_crimescene05 with fade
     tak "Yamamoto Koji. Forty-two. Veteran of the Fourth District."
     tak "Paranoid. Carried a backup piece in his ankle holster. Slept with a chair under the knob."
     tak "And yet... he opened his door at midnight."
@@ -491,7 +500,7 @@ label ep06_crimescene:
     mc_t "I would have opened the door too."
     mc_t "That's the scary part."
 
-    show ep06_crimescene08
+    show ep06_crimescene08 at ken_burns_left_to_right
     tak "You know why Watanabe gave you to me?"
     mc_s "Because I'm expendable."
     tak "We are all expendable. That's part of the job."
@@ -502,7 +511,7 @@ label ep06_crimescene:
     mc_t "Useful. He thinks I'm useful."
     tak "Come. Look at where he fell."
 
-    show ep06_crimescene11
+    show ep06_crimescene11 with fade
     mc_t "Dried blood. Dark brown against the cheap vinyl flooring."
     mc_t "Yamamoto bled out here. On this floor. Alone."
     tak "No defensive wounds. No signs of struggle."
@@ -524,7 +533,7 @@ label ep06_crimescene:
     mc_s "What was he investigating exactly?"
     tak "Come to the desk. This is what he died for."
 
-    show ep06_crimescene13
+    show ep06_crimescene13 with fade
     tak "Yamamoto was tracking a specific anomaly. Murders."
     tak "Seventeen women over three months. Osaka to Tokyo pipeline."
     tak "All found with surgical incisions."
@@ -540,13 +549,13 @@ label ep06_crimescene:
     $ playAudio(officechair_sit, "sfx", 5, False, 0)
     $ setChannelVolume("sfx", 5, 0.3, 0)
     
-    show ep06_crimescene14
+    show ep06_crimescene14 with vpunch
     mc_t "Bodies. Female. Surgical cuts."
 
     if e6_gore:
         $ playAudio(mouseclick, "sfx", 1, False, 0)
         $ setChannelVolume("sfx", 1, 1, 0)
-        show ep06_crimescene15 at animated_glitch with fade
+        show ep06_crimescene15 at animated_glitch, concentrate with fade
         tak "Victim one. Three months ago. Look at the incision."
         mc_t "Clean sutures. Minimal bruising."
         mc_s "Surgical precision. Looks like a professional augmentation job."
@@ -554,7 +563,7 @@ label ep06_crimescene:
 
         $ playAudio(mouseclick, "sfx", 2, False, 0)
         $ setChannelVolume("sfx", 2, 1, 0)
-        show ep06_crimescene16 at animated_glitch with fade
+        show ep06_crimescene16 at animated_glitch, concentrate with fade
         tak "Victim eight. Two months ago."
         mc_t "Jagged edges. Bruising."
         mc_s "Getting sloppy. There's infection around the wound."
@@ -562,7 +571,7 @@ label ep06_crimescene:
 
         $ playAudio(mouseclick, "sfx", 3, False, 0)
         $ setChannelVolume("sfx", 3, 1, 0)
-        show ep06_crimescene17 at animated_glitch with fade
+        show ep06_crimescene17 at animated_glitch, concentrate with fade
         tak "Victim seventeen. Last week."
         mc_t "God... ripped open."
         mc_s "That's not surgery. That's butchery."
@@ -658,20 +667,20 @@ label ep06_mornwithamber:
     $ playAudio(clockalarm, "sfx", 1, True, 5.0)
     $ setChannelVolume("sfx", 1, 0.8, 5)
 
-    show ep06_ambermorn01
+    show ep06_ambermorn01 at ken_burns_right_to_left
     pause
 
     $ stopAudio("sfx", 1, 1.0)
     $ playAudio(clockalarm_stop, "sfx", 2, False, 0)
     $ setChannelVolume("sfx", 2, 1, 0)
 
-    show ep06_ambermorn02
+    show ep06_ambermorn02 with vpunch
     mc_s "Shit... late again."
     mc_t "Ugh. Stuck. Something heavy is pinning the blanket down."
     mc_t "Warm. Too warm. And soft."
     mc_t "Wait. Skin?"
 
-    show ep06_ambermorn03 with fade
+    show ep06_ambermorn03 at ken_burns_left_to_right with hpunch
     amb "No."
     mc_s "Wh— Amber?!"
     mc_s "What are you doi—"
@@ -694,7 +703,7 @@ label ep06_mornwithamber:
         mc_s "Amber, when did you— Nevermind!"
         mc_s "I gotta get up..."
 
-    show ep06_ambermorn05
+    show ep06_ambermorn05 at subtle_zoom_out
     amb "Shut up and feel this."
     mc_t "Her skin is burning against mine. Hell."
     mc_t "Wet. She's already wet."
@@ -735,12 +744,15 @@ label ep06_mornwithamber:
                 $ show_custom_notification("strike3")
             jump ep06_mornwithamber_rejection
 
-    show ep06_ambermorn06
+    $ playAudio(amber2_love_theme, "music", 2, True, 5.0)
+    $ setChannelVolume("music", 2, 0.5, 0)
+
+    show ep06_ambermorn06 at subtle_zoom_in
     mc_t "She stopped moving. Her eyes dropped."
     amb "This scar..."
     mc_s "What about it?"
 
-    show ep06_ambermorn07
+    show ep06_ambermorn07 with vpunch
     amb "It's so fucking hot."
     mc_t "That look... the sweetness is gone. Just hunger now."
 
@@ -756,6 +768,7 @@ label ep06_mornwithamber:
         "You like broken things?":
             hide screen walkthrough_screen
             mc_s "You like broken things?"
+            amb "You'll see..."
 
             $ e6_amber_path = "neutral"
             jump ep06_mornwithamber_neutral
@@ -763,6 +776,7 @@ label ep06_mornwithamber:
         "Like the view?":
             hide screen walkthrough_screen
             mc_s "Like what you see?"
+            amb "Oh... I'm looking at something that really turns me on."
 
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
@@ -771,14 +785,22 @@ label ep06_mornwithamber:
 
 
 label ep06_mornwithamber_neutral:
-    show ep06_ambermorn08
+    scene eigengrau with fade
+    $ stopAudio("music", 2, 2.0)
+    $ playAudio(moan_breath3, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+
+    show ep06_ambermorn08 with vpunch
     amb "God... wait—"
     mc_s "Too much?"
     amb "No. Just... slow at first."
     mc_s "You're so tight, Amber."
     amb "Shh. Just breathe. Let me take it in."
 
-    show ep06_ambermorn09
+    $ playAudio(moan_breath, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 1, 0)
+
+    show ep06_ambermorn09 at ken_burns_left_to_right
     amb "Yeah. Fuck, yeah. There it is."
     amb "Mmm... fuuuuck."
     mc_s "Mmmm..."
@@ -806,13 +828,16 @@ label ep06_mornwithamber_neutral:
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
 
-    show ep06_ambermorn10
+    $ playAudio(moan_breath2, "sfx", 3, False, 0)
+    $ setChannelVolume("sfx", 3, 1, 0)
+
+    show ep06_ambermorn10 with vpunch
     amb "Mmm... can you feel that?"
     amb "Deeper... I need it deeper."
     mc_s "You look... lost."
     amb "What the fuck are you talking about? I'm not lost. Just yours."
 
-    show ep06_ambermorn11
+    show ep06_ambermorn11 at ken_burns_right_to_left
     amb "You feeling how wet I am?"
     mc_s "Yeah... I can't stop myself."
     amb "Good."
@@ -821,7 +846,7 @@ label ep06_mornwithamber_neutral:
     amb "Don't waste it."
     mc_s "But..."
     
-    show ep06_ambermorn14
+    show ep06_ambermorn14 with hpunch
     amb "Shh..."
     mc_s "Amber?"
     amb "Not inside right now. I want to play with you first."
@@ -853,24 +878,28 @@ label ep06_mornwithamber_neutral_sexmenu:
 label ep06_mornwithamber_neutral_blowj:
     $ ss.add("amber", "blowjob")
     scene eigengrau
-    show ep06_ambermorn12 with fade
+    show ep06_ambermorn12 at ken_burns_bottom_to_top with fade
     mc_s "You look hungry."
     amb "Starving."
     amb "I want to taste every drop of you."
 
-    show ep06_anim01
+    $ playAudio(fellatio1, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+    
+    show ep06_anim01 at focus_shift, dizzyness
     mc_s "Jesus— Amber! Slow down!"
     amb "Mmph... Gawk.... Nnh..."
     mc_s "Fuck... you're so eager."
     amb "Mmph!"
 
-    show ep06_anim02
+    show ep06_anim02 at focus_shift, dizzyness
     amb "Mmm... better?"
     mc_s "Yeah. Just like that. Use your tongue."
     amb "I can hear your breath hitching... You like this view?"
     mc_s "I love watching you serve me."
 
-    show ep06_ambermorn13
+    $ stopAudio("sfx", 1, 2)
+    show ep06_ambermorn13 with fade
     mc_s "Wait. Hold it."
     amb "Mmph?"
     mc_s "Too close. If you keep sucking like that, I'm finishing right now."
@@ -881,23 +910,23 @@ label ep06_mornwithamber_neutral_blowj:
 label ep06_mornwithamber_neutralboobj:
     $ ss.add("amber", "titjob")
     scene eigengrau
-    show ep06_ambermorn15 with fade
+    show ep06_ambermorn15 at ken_burns_left_to_right with fade
     mc_s "Look at you... all spread out."
     amb "Don't just look. Use them."
     amb "Slide it right here. Make them heavy."
 
-    show ep06_anim03
+    show ep06_anim03 at focus_shift, dizzyness
     mc_s "Fuck... so soft."
     amb "Mmm... yeah? Slippery?"
     amb "Ah... ah... keep going."
 
-    show ep06_anim04
+    show ep06_anim04 at focus_shift, dizzyness
     mc_s "That tongue..."
     amb "I want to taste it on my skin. Coat me."
     mc_s "You're squeezing so hard..."
     amb "Because you're mine."
 
-    show ep06_ambermorn16
+    show ep06_ambermorn16 with fade
     mc_s "Amber, I'm—"
     amb "Not yet."
     amb "I'm enjoying the view too much. What's next?"
@@ -936,20 +965,23 @@ label ep06_mornwithamber_neutral_continue:
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
 
-    show ep06_ambermorn18
+    show ep06_ambermorn18 with vpunch
     $ ss.add("amber", "sex")
     mc_s "On your back."
     amb "Ah!"
     mc_s "Better?"
     amb "Yes! Harder!"
 
-    show ep06_anim06
+    $ playAudio(moan_generic, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+
+    show ep06_anim06 at focus_shift, dizzyness
     mc_s "Look at you... gone."
     amb "Fuck... [mc_name]!"
     mc_s "Taking it all?"
     amb "Deep! Too deep!"
 
-    show ep06_anim05
+    show ep06_anim05 at focus_shift, dizzyness
     amb "Ah... ah... ah..."
     amb "Need it... don't stop!"
 
@@ -961,6 +993,10 @@ label ep06_mornwithamber_neutral_continue:
     mc_s "Mouth. Open."
 
     show white zorder 1.0 at ejaculation_flash
+
+    $ playAudio(moan_cum_generic, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 1, 0)
+
     show ep06_ambermorn20 at vpunch with flash
     $ ss.add("amber", "creampie")
     amb "Mmph! Gawk!"
@@ -971,11 +1007,14 @@ label ep06_mornwithamber_neutral_continue:
 
 label ep06_mornwithamber_postclimax:
     scene eigengrau
-    show ep06_ambermorn21 with fade
+    show ep06_ambermorn21 at ken_burns_top_to_bottom with vpunch
     if e6_amber_path == "corruption":
         amb "You made a mess of me..."
         mc_s "You asked for it."
         amb "I did. I always do."
+        $ playAudio(amber2_love_theme, "music", 2, True, 5.0)
+        $ setChannelVolume("music", 2, 0.5, 0)
+
         amb "It reminds me of that day... you remember?"
         
         show ep06_ambermorn22 with clouds_inverse
@@ -1010,12 +1049,16 @@ label ep06_mornwithamber_postclimax:
                 $ rm.update("amber", "trust", -1)
                 $ check_levels("amber", "trust", -1)
         
+        $ stopAudio("music", 2, 2.0)
         jump ep06_mornwithamber_ending
 
     elif e6_amber_path == "love":
         amb "I feel..."
         mc_s "How?"
         amb "Safe. I feel safe."
+
+        $ playAudio(amber2_love_theme, "music", 2, True, 5.0)
+        $ setChannelVolume("music", 2, 0.5, 0)
         amb "It takes me back... to the living room floor."
 
         show ep06_ambermorn22 with clouds_inverse
@@ -1048,15 +1091,19 @@ label ep06_mornwithamber_postclimax:
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
         
+        $ stopAudio("music", 2, 2.0)
         jump ep06_mornwithamber_ending
 
     elif e6_amber_path == "neutral":
         amb "This... us... it works."
         mc_s "Yeah. It does."
+
+        $ playAudio(amber2_love_theme, "music", 2, True, 5.0)
+        $ setChannelVolume("music", 2, 0.5, 0)
         amb "You've always had my back. Even back then."
         
         show ep06_ambermorn22 with clouds_inverse
-        mb "When I cut it all off... Mom screamed. Dad left the room."
+        amb "When I cut it all off... Mom screamed. Dad left the room."
         mc_s "I remember. You looked like a boy."
         amb "You didn't laugh though. You said I looked like a warrior."
 
@@ -1087,12 +1134,13 @@ label ep06_mornwithamber_postclimax:
                 $ rm.update("amber", "trust", -1)
                 $ check_levels("amber", "trust", -1)
         
+        $ stopAudio("music", 2, 2.0)
         jump ep06_mornwithamber_ending
 
 
 label ep06_mornwithamber_ending:
     scene eigengreau 
-    show ep06_ambermorn24 with fade
+    show ep06_ambermorn24 at ken_burns_right_to_left with fade
     if e6_amber_path == "corruption":
         amb "You going to the station like that?"
         mc_s "Like what?"
@@ -1123,6 +1171,8 @@ label ep06_mornwithamber_ending:
         mc_s "...No ma'am."
         amb "That's what I thought."
         mc_t "She always needs the last word. I'm not complaining."
+    
+    $ stopAllAudio(2.0)
     jump ep06_madisonintro
 
 
@@ -1130,9 +1180,12 @@ label ep06_mornwithamber_corruption:
     $ amber_cor_choices += 1
     $ rm.update("amber", "cor", 10)
     $ check_levels("amber", "cor", 10)
+
+    $ playAudio(amber_sexy_theme, "music", 1, True, 10)
+    $ setChannelVolume("music", 1, 0.5, 0)
     
     scene eigengrau with fade
-    show ep06_ambermorn25
+    show ep06_ambermorn25 at subtle_zoom_in with vpunch
     amb "I was getting impatient..."
     mc_s "So you started without me?"
     amb "I couldn't wait. Look at me... open for you."
@@ -1146,18 +1199,25 @@ label ep06_mornwithamber_corruption:
     mc_s "Show me. Show me how a toy touches itself."
     amb "Mmm... just circling... getting it wet for you."
 
-    show ep06_ambermorn27
+    show ep06_ambermorn27 at subtle_zoom_in
     amb "See? I'm soaking."
     mc_s "Filthy. You're leaking everywhere."
     amb "Touch it. Check if I'm ready."
 
-    show ep06_ambermorn28
+    $ playAudio(bodyfall_carpet, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.8, 0)
+    $ setChannelVolume("music", 1, 0.1, 8)
+
+    show ep06_ambermorn28 at ken_burns_left_to_right with vpunch
     mc_s "Enough watching."
     amb "Ah! You're rough..."
     mc_s "You said you wanted to be used. So I'm taking what's mine."
     amb "Yes... please... break me."
 
-    show ep06_ambermorn29
+    $ playAudio(moan_breath, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 0.8, 0)
+
+    show ep06_ambermorn29 at subtle_zoom_out
     mc_s "Tight. Relax."
     amb "Fuck... your fingers..."
     mc_s "Stretching you out. Making room."
@@ -1211,22 +1271,32 @@ label ep06_mornwithamber_corruption_sexmenu:
 
 
 label ep06_mornwithamber_cor_blowjob:
+    scene eigengrau
     $ ss.add("amber", "blowjob")
 
-    show ep06_ambermorn31 with fade
+    $ playAudio(licklolli, "sfx", 3, False, 0)
+    $ setChannelVolume("sfx", 3, 0.8, 0)
+
+    show ep06_ambermorn31 at ken_burns_bottom_to_top with fade
     mc_s "Ass up. Face down. That's a good view."
     amb "Mmph! Gawk!"
     mc_s "I've got you. Don't pull back. Take it deeper."
     amb "Glk... Mmph...!"
 
-    show ep06_anim07
+    $ stopAudio("sfx", 3, 1)
+
+    show ep06_anim07 at focus_shift, dizzyness
     mc_s "Look at that mess... slobbering all over me."
     amb "Slurp... Mmph! Gulp!"
     mc_s "That's it. Be a good little slut. Make it wet."
     amb "Mmm... Gawk!"
 
-    show ep06_ambermorn32
+    show ep06_ambermorn32 at impact_shake with fade
     mc_s "Stop."
+
+    $ playAudio(moan_breath2, "sfx", 4, False, 0)
+    $ setChannelVolume("sfx", 4, 1, 0)
+
     amb "Mmph? ...Gulp."
     mc_s "Look at your face. Covered in spit. Desperate."
     amb "More... please... use my throat."
@@ -1235,16 +1305,17 @@ label ep06_mornwithamber_cor_blowjob:
 
 
 label ep06_mornwithamber_cor_boobjob:
+    scene eigengrau
     $ ss.add("amber", "titjob")
 
-    show ep06_ambermorn33
+    show ep06_ambermorn33 at ken_burns_bottom_to_top with fade
     mc_s "Tongue out."
     amb "Aah... Mmm..."
     mc_s "Don't lick. Just stay there and look desperate."
     amb "So close... please... let me taste..."
     mc_s "Actually... no. Changed my mind."
 
-    show ep06_ambermorn34
+    show ep06_ambermorn34 at ken_burns_left_to_right with hpunch
     amb "Ah!"
     mc_s "I don't want a show anymore. I want to fuck them."
     mc_s "On your back. Squeeze them together."
@@ -1256,9 +1327,10 @@ label ep06_mornwithamber_cor_boobjob:
 
 
 label ep06_mornwithamber_cor_assjob:
+    scene eigengrau
     $ ss.add("amber", "assjob")
 
-    show ep06_ambermorn35
+    show ep06_ambermorn35 with vpunch
     amb "You want this ass? It's right here."
     mc_s "Look at you. Rubbing against me like a bitch in heat."
     mc_s "Is that all you are? Just a piece of meat looking for a pole?"
@@ -1266,14 +1338,16 @@ label ep06_mornwithamber_cor_assjob:
     mc_s "Disgusting. Grind harder. Earn it."
     amb "God... please... stop teasing... wreck me."
 
-    show ep06_anim08
+    show ep06_anim08 at focus_shift, dizzyness
     mc_s "Beg. Show me how desperate you are to be used."
     amb "Ah... ah... I'm just a hole... please..."
     mc_s "A hole for what? Say it."
     amb "For your cock... fuck me... make me regret it!"
 
-    show ep06_ambermorn36
-    mc_s "Pathetic. Get on your knees."
+    $ playAudio(femexhale, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+
+    show ep06_ambermorn36 at subtle_zoom_in with hpunch
     amb "Ah! You're going to do it?"
     mc_s "Spread them. Wide. I want to inspect the merchandise before I break it."
     amb "Look... pink and gaping... waiting for you..."
@@ -1284,12 +1358,18 @@ label ep06_mornwithamber_cor_assjob:
 
 
 label ep06_mornwithamber_cor_footjob:
+    scene eigengrau
     $ ss.add("amber", "footjob")
 
-    show ep06_ambermorn37
+    show ep06_ambermorn37 at ken_burns_left_to_right
     mc_s "Look at you. You're better with your feet than most whores are with their hands."
+
+    $ playAudio(moan_breath, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 1, 0)
+
     amb "Mmm... wrapping them around... do you like it?"
     mc_s "Yeah, good girl. Know your place. Squeeze harder."
+
     show ep06_ambermorn38
     mc_s "Just the toes. Tease it."
     amb "Right here? Mmm..."
@@ -1302,40 +1382,47 @@ label ep06_mornwithamber_cor_footjob:
 
 
 label ep06_mornwithamber_cor_continue:
+    scene eigengrau
     $ ss.add("amber", "oral")
 
-    show ep06_ambermorn39
+    $ playAudio(bed_laying, "sfx", 3, False, 0)
+    $ setChannelVolume("sfx", 3, 0.8, 0)
+
+    show ep06_ambermorn39 with vpunch
     mc_s "Face down. Ass up."
     amb "Ah... your tongue..."
     mc_s "Let me taste everything."
     amb "Yes... right there... eat me."
 
-    show ep06_ambermorn40
+    show ep06_ambermorn40 with hpunch
     $ ss.add("amber", "sex")
     
     mc_s "Mine. Every inch of this skin is mine."
+
+    $ playAudio(moan_breath2, "sfx", 4, False, 0)
+    $ setChannelVolume("sfx", 4, 1, 0)
     amb "OH! Fuck... yes! Own me!"
     mc_s "You don't even fight back. You just take it."
     amb "Use me... break me... I'm yours!"
 
-    show ep06_ambermorn41
+    show ep06_ambermorn41 with vpunch
     mc_s "On your back. Now!"
     amb "Look... gaping for you..."
     mc_s "Look at yourself. Just a hole waiting to be filled."
     amb "Fill it... stretch it until it hurts!"
 
-    show ep06_ambermorn42
+    show ep06_ambermorn42 at ken_burns_top_to_bottom
     mc_s "Choking on it? Good."
     amb "Ghk... harder... squeeze..."
     mc_s "Your life is in my hands right now. And you're smiling."
     amb "Yes... kill me with it... [mc_name]!"
 
-    show ep06_ambermorn43
+    show ep06_ambermorn43 at ken_burns_right_to_left with hpunch
     amb "Fuck... too deep... hitting the bottom!"
     mc_s "You're just a ragdoll. I can toss you wherever I want."
     amb "Mmm... yes... toss me around... wreck me..."
 
-    show ep06_ambermorn44
+    show ep06_ambermorn44 with fade
     mc_s "Bounce. Earn your keep."
     amb "Is it good? Am I doing it right?"
     mc_s "Doesn't matter. You're just a warm sleeve keeping my cock happy."
@@ -1345,7 +1432,7 @@ label ep06_mornwithamber_cor_continue:
     amb "Can't... think... brain... empty..."
     mc_s "Perfect. Mindless little slut. That's all you need to be."
 
-    show ep06_ambermorn46
+    show ep06_ambermorn46 with hpunch
     amb "Ah! Ah! You're splitting me!"
     mc_s "Taking my load. That's your only job right now."
     amb "Cum! Ruin me! Fill your slut up!"
@@ -1380,7 +1467,9 @@ label ep06_mornwithamber_cor_continue:
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
-    show ep06_ambermorn48 with fade
+    $ stopAllSubchannels("music", 2.0)
+
+    show ep06_ambermorn48 at ken_burns_left_to_right with slowfade
     mc_s "Jesus... Amber..."
     amb "Mmm... so warm... leaking out..."
     amb "I can't lose it. It's mine."
@@ -1404,14 +1493,19 @@ label ep06_mornwithamber_love:
     $ amber_love_choices += 1
     $ rm.update("amber", "trust", 10)
     $ check_levels("amber", "trust", 10)
-    show ep06_ambermorn50
+    
+    show ep06_ambermorn50 at ken_burns_bottom_to_top with vpunch
     amb "You really see me?"
     mc_s "I do. I see the only person who never gave up on me."
     amb "God... say that again. Please."
     mc_s "You're the best thing in my life, Amber."
     amb "I... I don't know how to do this. I don't know how to be..."
     mc_s "You don't have to do anything."
-    show ep06_ambermorn51
+
+    $ playAudio(shortmakeout, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.8, 0)
+
+    show ep06_ambermorn51 at zoom_out with vpunch
     mc_s "Come here. Let me show you."
     amb "Ah... gentle... you're being so gentle..."
     mc_s "Because you deserve it."
@@ -1451,7 +1545,9 @@ label ep06_mornwithamber_love_sexmenu:
 
 
 label ep06_mornwithamber_love_worship:
-    show ep06_ambermorn52
+    scene eigengrau
+
+    show ep06_ambermorn52 at ken_burns_corner_to_corner3 with fade
     mc_s "Every inch of you... so soft."
     amb "Mmm... [mc_name]..."
     mc_s "I want to memorize this skin. Worship it."
@@ -1460,12 +1556,13 @@ label ep06_mornwithamber_love_worship:
     amb "Because no one touches me like this. With so much care."
     mc_s "Come here. Sit on me."
 
-    show ep06_anim09
+    $ setAllSubchannelsVolume("music", 0.2, 2.0)
+    show ep06_anim09  at focus_shift, dizzyness
     amb "Ah... yes... right there..."
     mc_s "Your heartbeat is racing."
     amb "Because of you. I love feeling your hair... holding you close."
 
-    show ep06_anim10
+    show ep06_anim10 at focus_shift, dizzyness
     amb "God... it feels so good..."
     mc_s "You're beautiful, Amber. Perfect."
     amb "I'm not perfect. I'm a mess."
@@ -1475,9 +1572,11 @@ label ep06_mornwithamber_love_worship:
 
 
 label ep06_mornwithamber_love_oral:
+    scene eigengrau
     $ ss.add("amber", "oral")
 
-    show ep06_ambermorn53
+    $ setAllSubchannelsVolume("music", 0.5, 2.0)
+    show ep06_ambermorn53 at ken_burns_right_to_left with fade
     mc_s "Relax... let your legs fall open."
     amb "I can't... I'm shaking."
     mc_s "Why? You're safe with me."
@@ -1485,7 +1584,11 @@ label ep06_mornwithamber_love_oral:
     mc_s "Shhh... Stop thinking. Just feel my tongue."
     amb "Okay... yes... just you..."
 
-    show ep06_anim11
+    $ setAllSubchannelsVolume("music", 0.2, 2.0)
+    $ playAudio(moan_generic, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.5, 0)
+
+    show ep06_anim11 at focus_shift, dizzyness
     mc_s "Mmm... you taste so sweet, Amber."
     amb "Oh god... [mc_name]..."
     amb "There... right there... don't stop..."
@@ -1495,14 +1598,17 @@ label ep06_mornwithamber_love_oral:
 
 
 label ep06_mornwithamber_love_assjob:
+    scene eigengrau
     $ ss.add("amber", "assjob")
 
-    show ep06_ambermorn54
+    $ setAllSubchannelsVolume("music", 0.2, 2.0)
+    show ep06_ambermorn54 at ken_burns_bottom_to_top with fade
     amb "I want to make you feel good... using my body."
     mc_s "Amber, you don't have to prove anything."
     amb "I know. That's why I want to do it. Just... feel how soft I am for you."
 
-    show ep06_anim12
+    $ setAllSubchannelsVolume("music", 0.2, 2.0)
+    show ep06_anim12 at focus_shift, dizzyness
     mc_s "God... you feel amazing against me."
     amb "Mmm... you like it? Just my skin?"
     mc_s "Yeah. I can't look away..."
@@ -1511,10 +1617,19 @@ label ep06_mornwithamber_love_assjob:
 
 
 label ep06_mornwithamber_love_hold:
-    show ep06_ambermorn55 with fade
+    scene eigengrau
+
+    $ playAudio(female_hmm2, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.5, 0)
+    $ playAudio(bed_laying, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 0.9, 0)
+
+    show ep06_ambermorn55 at ken_burns_left_to_right with hpunch
     amb "I love you... haa..."
     mc_s "I know."
     amb "Please... stop waiting. Make me yours."
+    
+    $ stopAllSubchannels("music", 2.0)
 
     show ep06_ambermorn56
     mc_s "Not yet... look at us."
@@ -1522,7 +1637,7 @@ label ep06_mornwithamber_love_hold:
     mc_s "Just a second. Feel how close we are."
     amb "Mmm... you're teasing me..."
 
-    show ep06_ambermorn57
+    show ep06_ambermorn57 with hpunch
     $ ss.add("amber", "sex")
 
     amb "Ah... let me..."
@@ -1530,7 +1645,10 @@ label ep06_mornwithamber_love_hold:
     amb "Haa... ah... God... [mc_name]..."
     mc_s "That's it. All the way in."
 
-    show ep06_ambermorn58
+    $ playAudio(femexhale, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+
+    show ep06_ambermorn58 with hpunch
     amb "So deep... I have to close my eyes."
     mc_s "It's okay. I've got you."
     amb "Mmm... your hand... feels so safe..."
@@ -1542,18 +1660,24 @@ label ep06_mornwithamber_love_hold:
     mc_s "Who am I?"
     amb "Mine. Just mine."
 
-    show ep06_anim13
+    $ playAudio(shortmakeout, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+
+    show ep06_anim13 at focus_shift, dizzyness
     amb "Mmph... [mc_name]... kiss me!"
     mc_s "Mmph..."
     amb "Haa... yes... just like that... don't stop..."
 
-    show ep06_ambermorn60
+    show ep06_ambermorn60 at concentrate
     mc_s "Look at you... touching yourself."
     amb "Ah... ah... can't help it... feels too good!"
     mc_s "Beautiful. You're absolutely beautiful."
     amb "Deeper! Please... hit that spot!"
 
-    show ep06_anim14
+    $ playAudio(moan_generic, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 1, 0)
+
+    show ep06_anim14 at focus_shift, ken_burns_right_to_left
     mc_s "Hands. Give me your hands."
     amb "Haa... holding tight...!"
     mc_s "I'm close. Coming with you."
@@ -1770,7 +1894,7 @@ label ep06_mornwithamber_rejection:
         mc_s "If you're going to sit there and cry, can you do it in the living room?"
         amb "..."
 
-    show ep06_ambermorn73 with vpunch
+    show ep06_ambermorn73 at ken_burns_bottom_to_top with vpunch
     mc_t "Watching the curve of her hips as she bends over... God."
     mc_t "It's almost a shame. All that passion, all that heat... wasted on a conversation like this."
     if ss.get("amber", "strike") == 1:
@@ -1876,7 +2000,7 @@ label ep06_mornwithamber_rejection:
     $ setChannelVolume("sfx", 1, 0.6, 0)
     $ setChannelVolume("music", 1, 0.5, 10)
 
-    show ep06_ambermorn78 with fade
+    show ep06_ambermorn78 at subtle_zoom_in with fade
     mc_t "Damn. Look at that."
     mc_t "She's walking out of my life, and I'm just standing here staring at her ass in that white lace."
     mc_t "Everything is going to shit... but hell, at least I get a good view."
@@ -1916,7 +2040,7 @@ label ep06_mornwithamber_rejection:
     $ playAudio(doorclose, "sfx", 2, False, 0)
     $ setChannelVolume("sfx", 2, 1, 0)
 
-    show ep06_ambermorn80 with slowfade
+    show ep06_ambermorn80 at ken_burns_right_to_left with slowfade
     mc_t "6:30. Shit. I wasted too much time on this."
     if ss.get("amber", "strike") == 1:
         mc_t "She's gone. I got my schedule back."
@@ -1938,13 +2062,20 @@ label ep06_mornwithamber_rejection:
 
 
 label ep06_madisonintro:
-    scene eigengrau
-    show ep06_madisoncamera01
+    scene eigengrau with slowfade
+    $ playAudio(stairs_up, "sfx", 1, False)
+    $ setChannelVolume("sfx", 1, 1, 0)
+    $ playAudio(earlypast, "amb", 1, True)
+    $ setChannelVolume("amb", 1, 0.2, 0)
+
+    show ep06_madisoncamera01 at ken_burns_bottom_to_top
     mad "Oh! Look who's finally awake."
-    mad "I was starting to think you were going to sleep through the whole commute."
+    mad "I was starting to think you were going to sleep in."
     mc_s "Work starts at eight."
     mad "Right... Your detective job."
     mc_t "Three months of silence. Now small talk."
+
+    $ stopAudio("sfx", 1, 1)
 
     show ep06_madisoncamera02
     mad "I have a photoshoot today! Near Sakuradamon."
@@ -2012,11 +2143,20 @@ label ep06_madisonintro:
         mc_s "Fine. Six questions. Then you leave it alone."
     
     mad "Let's go."
+
+    $ stopAllAudio (2.0)
     jump ep06_madison_traingame
 
 label ep06_madison_traingame:
     # TRAIN SEQUENCE - ROUND 1 SETUP
-    show ep06_madisoncamera10
+    scene eigengrau with slowfade
+
+    $ playAudio(traininterior, "amb", 1, True, 5)
+    $ setChannelVolume("amb", 1, 0.3)
+    $ playAudio(train_ext, "amb", 2, True, 5)
+    $ setChannelVolume("amb", 2, 0.2)
+
+    show ep06_madisoncamera10 at ken_burns_left_to_right
     mc_t "Not an accident. She positioned herself for this angle."
     mad "Round one."
 
@@ -2729,15 +2869,11 @@ label ep06_madison_traingame:
 
             "If you delete it, it never happened.":
                 hide screen walkthrough_screen
-                mc_s "If you delete it, it never happened."
+                mc_s "If it's gone, it's gone."
 
                 show ep06_madisoncamera62
-                mad "You're lying."
-                mc_s "That's what you want, isn't it?"
-                mad "I want to know if I'm disposable to you."
-                mc_s "If the file is gone, we go back to normal."
-                mad "So I AM disposable."
-                mc_t "Ah. There it is. The fear of abandonment."
+                mad "Liar. You're praying I delete it."
+                mad "Typical. Men always bury the evidence."
 
                 # 70% chance of detection - Check for game over
                 $ ep06_detect_lie(70)  # Madison may notice the lie
@@ -2773,7 +2909,6 @@ label ep06_madison_traingame:
                 show ep06_madisoncamera63
                 mad "That's a non-answer."
                 mc_s "It's the only one I've got. Without the taboos... who knows?"
-                mc_t "True, but incomplete."
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
@@ -2790,7 +2925,6 @@ label ep06_madison_traingame:
                 mad "If you really wanted to fuck me, a little thing like 'family' wouldn't have stopped you."
                 mad "Men break rules for lust. You didn't."
                 mad "So you don't want me. At all."
-                mc_t "Her logic is twisted... but effective."
 
                 # 70% chance of detection - Check for game over
                 $ ep06_detect_lie(70)  # Madison may notice the lie
@@ -2827,17 +2961,11 @@ label ep06_madison_traingame:
         mc_s "That's honest."
 
         show ep06_madisoncamera66
-        mad "I don't feel like I need saving. I feel like I'm seeing clearly."
-        mc_s "But?"
-        mad "But if I'm going to be this... monster..."
-        mad "I want it to serve a purpose."
-        mc_s "Protecting Nanami."
-        mad "Yeah. If I'm the monster, she can be the princess."
-        mc_s "So you want your damage to be a shield."
+        mad "'Saved' means 'weak'."
+        mad "I'd rather be the monster that survives."
 
         show ep06_madisoncamera67
-        mad "I guess so."
-        mc_t "She sacrifices her own humanity to justify her existence."
+        mad "Monsters don't need anyone."
 
 
     # ROUND 6 - Final Question / Path Choice
@@ -3352,4 +3480,5 @@ label ep06_madison_station_proposal:
             else:
                 mc_t "She doesn't look surprised. Just... resigned."
 
+            jump ep06_madison_rejection
             jump ep06_madison_rejection

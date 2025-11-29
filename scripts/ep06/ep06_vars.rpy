@@ -36,11 +36,15 @@ init python:
                                    70 = Lie
 
         Returns:
-            None - Only increments the lie counter, doesn't trigger game over.
-                   The lie count will affect Madison's attitude in later scenes.
+            None - Increments lie counter if detected, or grants advantage point if not.
+                   Successfully deceiving Madison gives MC an advantage in later interactions.
         """
         import renpy.exports as renpy
 
         # Roll for detection
         if renpy.random.randint(1, 100) <= detection_chance:
+            # Madison detected the lie
             store.ep06_mc_lies_detected += 1
+        else:
+            # MC successfully deceived Madison, gains advantage
+            store.ep06_mc_advantage_points += 1

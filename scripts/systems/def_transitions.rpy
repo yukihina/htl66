@@ -146,7 +146,7 @@ init:
     define ripple = create_layer_transition(ImageDissolve("images/wipes/ripple.webp", 4.0, reverse=True, ramplen=256))
     define watercolor = create_layer_transition(ImageDissolve("images/wipes/watercolor.webp", 3, reverse=True, ramplen=256))
     define shatter = create_layer_transition(ImageDissolve("images/wipes/shatter.webp", 1.0, ramplen=8))
-    define shot = create_layer_transition(ImageDissolve("images/wipes/shot.webp", 1.0, ramplen=8))
+    define shot = create_layer_transition(ImageDissolve("images/wipes/shot.webp", 2.0, reverse=True, ramplen=128))
 
     # Directional wipes - now exclude notifications layer automatically
     define cwside = create_layer_transition(ImageDissolve("images/wipes/cw-side.webp", 1.0, 8))
