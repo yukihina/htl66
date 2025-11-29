@@ -48,3 +48,5 @@ init python:
         else:
             # MC successfully deceived Madison, gains advantage
             store.ep06_mc_advantage_points += 1
+            # Show notification for advantage gained
+            show_custom_notification("advantage_point")

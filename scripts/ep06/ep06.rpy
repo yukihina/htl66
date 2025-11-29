@@ -1037,7 +1037,7 @@ label ep06_mornwithamber_postclimax:
 
             "We fit perfectly.":
                 hide screen walkthrough_screen
-                c_s "We're both broken. That's why we fit."
+                mc_s "We're both broken. That's why we fit."
                 $ rm.update("amber", "trust", 1)
                 $ check_levels("amber", "trust", 1)
                 $ rm.update("amber", "cor", 1)
@@ -3135,7 +3135,7 @@ label ep06_madison_traingame:
                     mad "Being good got me nothing. Being bad... at least I get control."
                     mc_s "Control over what?"
 
-                    show ep06_madisoncamera69
+                    show ep06_madisoncamera69 with fade
                     mad "Over not being hurt again."
                     mc_t "The good girl isn't gone. She's just armored."
 
@@ -3155,7 +3155,7 @@ label ep06_madison_traingame:
                     mc_s "So you wouldn't kill him?"
                     mad "Only if he hurt Nanami."
 
-                    show ep06_madisoncamera69
+                    show ep06_madisoncamera69 with fade
                     mc_s "Not for yourself—for Nanami."
                     mad "I told you. I don't feel anything for him."
                     mc_t "She wouldn't kill him out of rage. Just for Nanami."
@@ -3174,7 +3174,7 @@ label ep06_madison_traingame:
             mad "Being good got me nothing. Being bad... at least I get control."
             mc_s "Control over what?"
 
-            show ep06_madisoncamera69
+            show ep06_madisoncamera69 with fade
             mad "Over not being hurt again."
             mc_t "The good girl isn't gone. She's just armored."
 
@@ -3195,7 +3195,7 @@ label ep06_madison_traingame:
                     mad "Calling it a reflex makes me a victim. Choosing it makes me the villain."
                     mc_s "And you prefer being the villain."
 
-                    show ep06_madisoncamera69
+                    show ep06_madisoncamera69 with fade
                     mad "Villains have more fun. And they live longer."
                     mc_t "She wears the villainy like a shield."
 
@@ -3212,7 +3212,7 @@ label ep06_madison_traingame:
                     mad "It IS me. If I take it off, there's no skin underneath."
                     mad "Just raw nerves."
 
-                    show ep06_madisoncamera69
+                    show ep06_madisoncamera69 with fade
                     mc_s "That sounds lonely."
                     mad "It's safe."
                     mc_t "She believes she has mutated into this. Irreversibly."
@@ -3229,13 +3229,13 @@ label ep06_madison_traingame:
             mad "Calling it a reflex makes me a victim. Choosing it makes me the villain."
             mc_s "And you prefer being the villain."
 
-            show ep06_madisoncamera69
+            show ep06_madisoncamera69 with fade
             mad "Villains have more fun. And they live longer."
             mc_t "She wears the villainy like a shield."
 
 
     # Platform Scene - Final Choice
-    show ep06_madisoncamera70
+    show ep06_madisoncamera70 with fade
     mad "My studio's just two blocks from here. Second floor, above a convenience store."
     mc_s "I have a briefing."
     mad "I know. Everyone knows the famous Osaka detective's schedule."
@@ -3432,9 +3432,11 @@ label ep06_madison_station_proposal:
             mad "My studio. Ten minutes."
             mad "The door will be unlocked."
 
-    # FINAL SCENE - Madison's pleading proposal (e6_madisonintro_16)
-    # Image ep06_madisoncamera71 is already showing from start of this label
 
+    if htl_episodes == 6.1:
+        $ show_custom_notification("save_tip")
+    else:
+        pass
     mad "Ten minutes."
     mad "Then you can go play hero."
 
@@ -3443,9 +3445,7 @@ label ep06_madison_station_proposal:
 
     #-- End Update
     if htl_episodes == 6.1:
-        $ stopAllSubchannels(channel="sfx", fadeout=1)
-        $ stopAllSubchannels(channel="amb", fadeout=1.5)
-        $ stopAllSubchannels(channel="music", fadeout=2)
+        $ stopAllAudio(3.0)
         scene eigengrau with rose
         pause 2.0
         $ resetAllVolumes()

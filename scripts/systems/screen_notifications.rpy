@@ -165,6 +165,13 @@ init python:
             "icon": "corr"
         },
         
+        # Advantage points notification
+        "advantage_point": {
+            "title": "Advantage Gained!",
+            "message": "Madison didn't detect your deception. You gain the upper hand.",
+            "icon": "info"
+        },
+
         # Trust/Love level notifications
         "trust_level_up": {
             "title": "Love Level Up!",
