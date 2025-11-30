@@ -83,7 +83,7 @@ init python:
 
         "ep01_amberconfess_menu2": {
             "elizabeth": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "extra_text": "Accept Amber's romantic feelings. Will skip Elizabeth's scene and open Amber's intimate scene"}
+                {"option_num": 1, "char_name": "Amber", "extra_text": "Accept Amber's romantic feelings. Will skip Elizabeth's scene and open Amber's intimate scene. ACHIEVEMENT: Unlocks 'Forbidden Love'"}
             ]),
             "amber": create_wt_text([
                 {"option_num": 2, "char_name": "Amber", "extra_text": "Reject Amber's confession. Will skip Amber's intimate scene"}
@@ -92,7 +92,7 @@ init python:
 
         "ep01_amberconfess_menu2b": {
             "elizabeth": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "extra_text": "Accept Amber's romantic feelings. Opens Amber's intimate scene"}
+                {"option_num": 1, "char_name": "Amber", "extra_text": "Accept Amber's romantic feelings. Opens Amber's intimate scene. ACHIEVEMENT: Unlocks 'Forbidden Love'"}
             ]),
             "amber": create_wt_text([
                 {"option_num": 2, "char_name": "Amber", "extra_text": "Reject Amber's confession. Will skip Amber's intimate scene"}
@@ -101,7 +101,7 @@ init python:
 
         "ep01_amberconfess_menu3": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "points": 5, "type": "Corruption", "extra_text": "Allow her to continue. Both of you will lose your virginity. This choice will be important in episode 3"}  # Base 3 × 1.5 = 5 (rounded)
+                {"option_num": 1, "char_name": "Amber", "points": 5, "type": "Corruption", "extra_text": "Allow her to continue. Both of you will lose your virginity. This choice will be important in episode 3. ACHIEVEMENT: Unlocks 'Turning Point'"}  # Base 3 × 1.5 = 5 (rounded)
             ])
         },
 
@@ -114,7 +114,7 @@ init python:
 
         "ep01_antobd_menu2": {
             "antonella": create_wt_text([
-                {"option_num": 1, "char_name": "Antonella", "extra_text": "Look at the girl. This opens Antonella's birthday flashback and explains the necklace connection"},
+                {"option_num": 1, "char_name": "Antonella", "extra_text": "Look at the girl. This opens Antonella's birthday flashback and explains the necklace connection. ACHIEVEMENT: Unlocks 'Timeless Bond'"},
                 {"option_num": 2, "char_name": "Antonella", "extra_text": "Don't look at her. Will skip Antonella's birthday flashback"}
             ])
         },
@@ -142,10 +142,9 @@ init python:
         },
 
         # Minigame correct answers
-        # ACHIEVEMENT TIP: Answer all 6 questions correctly for a perfect win (Antonella strips completely, you keep your clothes)
         "ep01_game_menu1": {
             "minigames": create_wt_text([
-                {"option_num": 0, "char_name": "Correct Answer", "extra_text": "is \"Ask about an Argentine writer\". WIN TIP: Get all 6 correct for the best outcome"}
+                {"option_num": 0, "char_name": "Correct Answer", "extra_text": "is \"Ask about an Argentine writer\". ACHIEVEMENT: Answer all 6 correctly to unlock 'The Grand Prize'"}
             ])
         },
 
