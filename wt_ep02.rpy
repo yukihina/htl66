@@ -113,8 +113,8 @@ init python:
 
         "ep02_aftermath_menu3": {
             "mc": create_wt_text([
-                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Light"},
-                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Darkness"}
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Light"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Darkness"}
             ])
         },
 
@@ -125,8 +125,8 @@ init python:
                 {"option_num": 2, "char_name": "Arlette", "points": 2, "type": "Love"}  # Arlette trust: 1 × 1.5 = 2
             ]),
             "mc": create_wt_text([
-                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Light"},
-                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Darkness"}
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Light"},
+                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Darkness"}
             ])
         },
 

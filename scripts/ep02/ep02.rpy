@@ -2909,7 +2909,7 @@ label ep02_consequences:
         "I couldn't let her stay":
             hide screen walkthrough_screen
             $ ep02_distraction = False
-            $ rm.update("mc", "integrity", 1)
+            $ rm.update("mc", "integrity", 2)
 
             mc_t "I couldn't let her stay. Couldn't let her risk her life for my mistakes."
             mc_t "I had to get her out of there."
@@ -2918,7 +2918,7 @@ label ep02_consequences:
         "I needed a distraction":
             hide screen walkthrough_screen
             $ ep02_distraction = True
-            $ rm.update("mc", "integrity", -1)
+            $ rm.update("mc", "integrity", -2)
 
             mc_t "I needed a distraction. Something to draw Hideo's attention..."
             mc_t "And Paz... she was the perfect bait."
@@ -3142,7 +3142,7 @@ label ep02_arlette_breakup:
             hide screen walkthrough_screen
             $ rm.update("arlette", "trust", 1)
             $ check_levels("arlette", "trust", 1)
-            $ rm.update("mc", "integrity", 1)
+            $ rm.update("mc", "integrity", 2)
 
             mc_s "I did it to protect you, Arlette. That's all that matters to me."
             mc_s "I care about you deeply. I couldn't just stand by and let them hurt you."
