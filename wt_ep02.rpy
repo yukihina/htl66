@@ -4,7 +4,7 @@ init python:
         # Initial Paz Fight Scene
         "ep02_mc_paz_fight_menu1": {
             "paz": create_wt_text([
-                {"option_num": 1, "char_name": "Paz", "points": 1, "type": "Love"}
+                {"option_num": 1, "char_name": "Paz", "points": 2, "type": "Love"}  # Paz trust: 2 × 1.0 = 2
             ])
         },
 
@@ -106,8 +106,8 @@ init python:
 
         "ep02_aftermath_menu2": {
             "paz": create_wt_text([
-                {"option_num": 1, "char_name": "Paz", "points": 1, "type": "Love"},
-                {"option_num": 2, "char_name": "Paz", "points": -1, "type": "Love"}
+                {"option_num": 1, "char_name": "Paz", "points": 2, "type": "Love"},  # Paz trust: 2 × 1.0 = 2
+                {"option_num": 2, "char_name": "Paz", "points": -2, "type": "Love"}  # Paz trust: -2 × 1.0 = -2
             ])
         },
 

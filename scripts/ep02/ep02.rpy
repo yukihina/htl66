@@ -375,8 +375,8 @@ label ep02_mc_paz_fight:
         mc_t "What a hassle... now what do I tell her?"
         "I'll talk to them":
             hide screen walkthrough_screen
-            $ rm.update("paz", "trust", 1)
-            $ check_levels("paz", "trust", 1)
+            $ rm.update("paz", "trust", 2)
+            $ check_levels("paz", "trust", 2)
 
             mc_s "Yeah, yeah... I hear you. I'll talk to the guys at the station."
             pa_s "That's all I want, [mc_name]. Take this seriously and don't throw away your future."
@@ -2813,16 +2813,16 @@ label ep02_consequences:
             mc_t "But I knew Paz. She was stubborn as a mule and twice as determined. She wouldn't let this go."
         "I need you, Paz.":
             hide screen walkthrough_screen
-            $ rm.update("paz", "trust", 1)
-            $ check_levels("paz", "trust", 1)
+            $ rm.update("paz", "trust", 2)
+            $ check_levels("paz", "trust", 2)
 
             mc_s "I... I need you, Paz. But I don't want you to see me like this."
             mc_s "I'm a fucking mess."
             mc_t "I hated admitting it, but I needed her. I needed her strength, her support."
         "I said stay away!":
             hide screen walkthrough_screen
-            $ rm.update("paz", "trust", -1)
-            $ check_levels("paz", "trust", -1)
+            $ rm.update("paz", "trust", -2)
+            $ check_levels("paz", "trust", -2)
 
             mc_s "I said stay the fuck away, Paz! I don't need your help."
             mc_s "I can handle this on my own. I don't want you involved."
