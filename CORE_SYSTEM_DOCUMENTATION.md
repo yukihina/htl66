@@ -16,9 +16,10 @@
 6. [Level System](#level-system)
 7. [Milestone Decision System](#milestone-decision-system)
 8. [MC Integrity & Alignment System](#mc-integrity--alignment-system)
-9. [Practical Examples](#practical-examples)
-10. [Character Reference](#character-reference)
-11. [Troubleshooting](#troubleshooting)
+9. [Dialogue & Choice System (Tagging)](#dialogue--choice-system-tagging)
+10. [Practical Examples](#practical-examples)
+11. [Character Reference](#character-reference)
+12. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -208,8 +209,10 @@ For each love interest, the system tracks:
 
 - `anal` - Anal sex encounters
 - `assjob` - Assjob encounters
-- `blowjob` - Oral sex encounters
+- `blowjob` - Oral sex (Blowjob) encounters
 - `creampie` - Creampie finishes
+- `footjob` - Footjob encounters
+- `oral` - Oral sex (Cunnilingus) encounters
 - `pussyjob` - Pussyjob encounters
 - `sex` - Vaginal sex encounters
 - `titjob` - Titjob encounters
@@ -782,6 +785,72 @@ label ep16_scene:
             mc "I believe in doing what's right... mostly."
 ```
 
+## Dialogue & Choice System (Tagging)
+
+The game utilizes a visual tagging system to clarify the intent and mechanical consequences of player choices. This system prioritizes **Outcome-Based Tagging** over tonal descriptions.
+
+### Tagging Philosophy
+
+1.  **Clarity:** The player should understand the mechanical effect (e.g., gaining corruption vs. love) before clicking.
+2.  **Intent:** Tags define the *purpose* of the line (e.g., a Lie), not just the emotion.
+3.  **Visual Silence:** Not every choice requires a tag. Absence of a tag is a deliberate design choice.
+
+### The "Visual Silence" Rule (Detective Mode)
+
+**Do NOT use tags** for standard information gathering, interrogation hubs, or neutral questions.
+
+* **When to use Silence:** When the player has a list of questions to ask a suspect (e.g., *"Where were you?"*, *"Who is he?"*).
+* **Why:** It signals to the player that these options are **safe** and free of negative consequences. It creates a strategic contrast when a tagged option (like `[Lie]` or `[Reject]`) suddenly appears among them, highlighting the risk.
+
+### Tag Reference Guide
+
+These tags are automatically colored by the system in `def_styles.rpy`.
+
+#### MC Integrity (Moral Compass)
+Used when the choice affects the Main Character's alignment points.
+
+| Tag | Meaning | Context |
+|---|---|---|
+| **`[Light]`** | **Paragon/Hero.** Actions that uphold the law, protect the innocent, or show mercy. (+Integrity) | *Moral Dilemmas* |
+| **`[Darkness]`** | **Rogue/Anti-hero.** Actions that are ruthless, illegal, or self-serving. (-Integrity) | *Moral Dilemmas* |
+| **`[Balance]`** | **Pragmatic/Professional.** Actions that are logical and detached. No moral shift. | *Professional policing* |
+
+#### Relationship Dynamics (Love Interests)
+Used when the choice affects a specific Love Interest's stats (Trust/Corruption).
+
+| Tag | Meaning | Context |
+|---|---|---|
+| **`[Love]`** | **Romance/Connection.** Builds emotional intimacy and Trust. | *Dates, comfort, romance* |
+| **`[Corruption]`** | **Lust/Taboo.** Pushes boundaries and increases Corruption. | *Sexual encounters, teasing* |
+| **`[Reject]`** | **Negative Outcome.** Harsh rejection or failure. Often results in a **Strike** or stat loss. | *Arguments, breaking up* |
+| **`[Neutral]`** | **Casual/Indifferent.** Standard response with no significant stat changes. | *Fillers, polite rejection* |
+
+#### Conversation Tactics
+Used for strategic dialogue options, especially during investigations or tense moments.
+
+| Tag | Meaning | Context |
+|---|---|---|
+| **`[Truth]`** | **Honesty.** Telling the hard truth. May build trust or cause conflict. | *Interrogations, confessions* |
+| **`[Lie]`** | **Deception.** Risk of being caught, but can bypass obstacles. | *Undercover work, hiding secrets* |
+| **`[Deflect]`** | **Evasion.** Changing the subject to avoid answering. A safe middle ground. | *Avoiding self-incrimination* |
+| **`[Accept]`** | **Commitment.** A Point of No Return. Accepting a mission, a deal, or locking a route. | *Critical plot decisions* |
+
+### Implementation
+
+Write the tag explicitly at the start of the choice string.
+
+**Correct Usage:**
+```renpy
+menu:
+    # Detective Mode (Visual Silence)
+    "Where were you last night?":
+        pass
+
+    # Strategic Choice (Tagged)
+    "[Lie] We found your fingerprints at the scene.":
+        $ rm.update("suspect", "stress", 10)
+```
+
 ### Practical Decision Examples
 
 #### Paragon Choices
@@ -1272,8 +1341,10 @@ All love interests track these statistics:
 |-----------|---------|--------------------------------|
 | anal      | Integer | Number of anal sex encounters  |
 | assjob    | Integer | Number of assjob encounters    |
-| blowjob   | Integer | Number of oral sex encounters  |
+| blowjob   | Integer | Number of oral sex (blowjob) encounters |
 | creampie  | Integer | Number of creampie finishes    |
+| footjob   | Integer | Number of footjob encounters   |
+| oral      | Integer | Number of oral sex (cunnilingus) encounters |
 | pussyjob  | Integer | Number of pussyjob encounters  |
 | sex       | Integer | Number of vaginal sex encounters |
 | titjob    | Integer | Number of titjob encounters    |

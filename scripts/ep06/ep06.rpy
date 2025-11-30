@@ -143,16 +143,16 @@ label ep06_ope:
 
     $ show_walkthrough("ep06_case_attitude_menu")
     menu:
-        "I'll do this right.":
+        "[Light] I'll do this right.":
             hide screen walkthrough_screen
             mc_t "I'll investigate thoroughly. I won't give him a reason to doubt my badge."
             $ rm.update("mc", "integrity", 1)
 
-        "I wasn't ready for this.":
+        "[Balance] I wasn't ready for this.":
             hide screen walkthrough_screen
             mc_t "Dead cop. Yakuza war. Three months wasn't enough recovery time for this."
 
-        "Perfect. Time for payback.":
+        "[Darkness] Perfect. Time for payback.":
             hide screen walkthrough_screen
             mc_t "Good. I've got unfinished business with those bastards anyway."
             $ rm.update("mc", "integrity", -1)
@@ -462,18 +462,18 @@ label ep06_crimescene:
 
     $ show_walkthrough("ep06_killer_profile_menu")
     menu:
-        "They believed in justice.":
+        "[Light] They believed in justice.":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 2)
             mc_s "Someone with a code. Distorted, maybe. But they believe they are creating order."
             tak "Order. Yes. A fanatic creates order out of chaos."
 
-        "Just following orders.":
+        "[Balance] Just following orders.":
             hide screen walkthrough_screen
             mc_s "Someone doing a job. Following a manual. No emotion involved."
             tak "A machine made of meat. Possible."
 
-        "They enjoyed the kill.":
+        "[Darkness] They enjoyed the kill.":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -2)
             mc_s "A sadist. Someone who leaves a signature to taunt us."
@@ -611,18 +611,18 @@ label ep06_crimescene:
 
     $ show_walkthrough("ep06_criminal_vision_menu")
     menu:
-        "Stop them legally.":
+        "[Light] Stop them legally.":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 2)
             mc_s "We build the case. We prosecute. We show them that the law is stronger than their greed."
             tak "The noble path. Hard. Slow. But necessary for civilization."
 
-        "Just catch them.":
+        "[Balance] Just catch them.":
             hide screen walkthrough_screen
             mc_s "We find them and we cage them. I don't care about the philosophy."
             tak "Pragmatic. Good. Emotion clouds judgment."
 
-        "They deserve everything.":
+        "[Darkness] They deserve everything.":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -2)
             mc_s "People who do this aren't human. I don't care what happens to them when we find them."
@@ -711,25 +711,25 @@ label ep06_mornwithamber:
 
     $ show_walkthrough("ep06_amber_first_decision_menu")
     menu:
-        "Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 10:
+        "[Corruption] Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 10:
             hide screen walkthrough_screen
             mc_s "Show me what you were doing."
 
             $ e6_amber_path = "corruption"
             jump ep06_mornwithamber_corruption
 
-        "You're impossible.":
+        "[Neutral] You're impossible.":
             hide screen walkthrough_screen
             mc_s "You're impossible."
 
-        "I missed this.":
+        "[Love] I missed this.":
             hide screen walkthrough_screen
             mc_s "I missed this too."
 
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
-        "Not now.":
+        "[Reject] Not now.":
             hide screen walkthrough_screen
             mc_t "No. Not today. I can't get pulled into this vortex today."
 
@@ -758,14 +758,14 @@ label ep06_mornwithamber:
 
     $ show_walkthrough("ep06_amber_intimacy_response_menu")
     menu:
-        "You see me." if ss.get("amber", "strike") == 0 and rm.get("amber", "trust") >= 35:
+        "[Love] You see me." if ss.get("amber", "strike") == 0 and rm.get("amber", "trust") >= 35:
             hide screen walkthrough_screen
             mc_s "You've always seen me."
 
             $ e6_amber_path = "love"
             jump ep06_mornwithamber_love
 
-        "You like broken things?":
+        "[Neutral] You like broken things?":
             hide screen walkthrough_screen
             mc_s "You like broken things?"
             amb "You'll see..."
@@ -773,7 +773,7 @@ label ep06_mornwithamber:
             $ e6_amber_path = "neutral"
             jump ep06_mornwithamber_neutral
 
-        "Like the view?":
+        "[Corruption] Like the view?":
             hide screen walkthrough_screen
             mc_s "Like what you see?"
             amb "Oh... I'm looking at something that really turns me on."
@@ -808,19 +808,19 @@ label ep06_mornwithamber_neutral:
 
     $ show_walkthrough("ep06_amber_sex_neutral_talk_menu")
     menu:
-        "I love you.":
+        "[Love] I love you.":
             hide screen walkthrough_screen
             mc_s "I love you, Amber."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
-        "Fucking perfect.":
+        "[Corruption] Fucking perfect.":
             hide screen walkthrough_screen
             mc_s "Your pussy's perfect."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
-        "Only you.":
+        "[Passion]Only you.":
             hide screen walkthrough_screen
             mc_s "No one else compares."
             $ rm.update("amber", "cor", 1)
@@ -2169,7 +2169,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_deepq_round1_menu")
         menu:
-            "I don't know.":
+            "[Truth] I don't know.":
                 hide screen walkthrough_screen
                 mc_s "I don't know."
                 $ rm.update("madison", "trust", 2)
@@ -2183,7 +2183,7 @@ label ep06_madison_traingame:
                 mad "Which was it that night?"
                 mc_s "Both... At the same time."
 
-            "Does it matter?":
+            "[Deflect] Does it matter?":
                 hide screen walkthrough_screen
                 mc_s "Does it matter?"
                 mad "It matters to my ego."
@@ -2200,7 +2200,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "No. I didn't.":
+            "[Lie] No. I didn't.":
                 hide screen walkthrough_screen
                 mc_s "No. I didn't."
                 $ rm.update("madison", "cor", 2)
@@ -2221,7 +2221,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_response_round1_menu")
         menu:
-            "Because you're irritating.":
+            "[Truth] Because you're irritating.":
                 hide screen walkthrough_screen
                 mc_s "Because you're irritating."
                 mad "Excuse me?"
@@ -2234,7 +2234,7 @@ label ep06_madison_traingame:
                 mc_s "I prefer genuine ones. You're exhausting."
                 mad "Hmph. At least I'm not boring."
 
-            "Because the timing was wrong.":
+            "[Deflect] Because the timing was wrong.":
                 hide screen walkthrough_screen
                 mc_s "Because the timing was wrong."
                 mad "Timing is an excuse for cowards."
@@ -2249,7 +2249,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "Because I wasn't attracted to you.":
+            "[Lie] Because I wasn't attracted to you.":
                 hide screen walkthrough_screen
                 mc_s "Because I wasn't attracted to you."
                 $ rm.update("madison", "cor", 2)
@@ -2304,7 +2304,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_deepq_round2_menu")
         menu:
-            "I don't know. You tell me.":
+            "[Truth] I don't know. You tell me.":
                 hide screen walkthrough_screen
                 mc_s "I don't know. You tell me."
                 mad "I'm asking you."
@@ -2319,7 +2319,7 @@ label ep06_madison_traingame:
                 mad "I wanted to save her. But I think I wanted to destroy you more."
                 mc_t "She's actually confused. The mask is slipping."
 
-            "You believed it when you said it.":
+            "[Deflect] You believed it when you said it.":
                 hide screen walkthrough_screen
                 mc_s "You believed it when you said it."
                 mad "Does that make it true?"
@@ -2335,7 +2335,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "You were protecting her. Obviously.":
+            "[Lie] You were protecting her. Obviously.":
                 hide screen walkthrough_screen
                 mc_s "You were protecting her. Obviously."
                 $ rm.update("madison", "cor", 2)
@@ -2356,7 +2356,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_response_round2_menu")
         menu:
-            "Partially.":
+            "[Truth] Partially.":
                 hide screen walkthrough_screen
                 mc_s "Partially."
                 mad "Only partially?"
@@ -2370,7 +2370,7 @@ label ep06_madison_traingame:
                 mc_s "Maybe. If you weren't so... you."
                 mc_t "She looks almost disappointed."
 
-            "Does it matter?":
+            "[Deflect] Does it matter?":
                 hide screen walkthrough_screen
                 mc_s "Does it matter? The answer was no."
                 mad "Details matter."
@@ -2384,7 +2384,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "Yes. Only because you're my sister.":
+            "[Lie] Yes. Only because you're my sister.":
                 hide screen walkthrough_screen
                 mc_s "Yes. Only because you're my sister."
                 $ rm.update("madison", "cor", 2)
@@ -2481,7 +2481,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_deepq_round3_true_menu")
         menu:
-            "No. I don't.":
+            "[Truth] No. I don't.":
                 hide screen walkthrough_screen
                 mc_s "No. I don't."
                 mad "Why not?"
@@ -2499,7 +2499,7 @@ label ep06_madison_traingame:
                 mad "So I'm the problem."
                 mc_s "You make things complicated. That's not the same thing."
 
-            "Sometimes.":
+            "[Deflect] Sometimes.":
                 hide screen walkthrough_screen
                 mc_s "Sometimes. When you act like this."
                 mad "Like what? In control?"
@@ -2513,7 +2513,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "Yes. Absolutely.":
+            "[Lie] Yes. Absolutely.":
                 hide screen walkthrough_screen
                 mc_s "Yes. It was a mistake."
                 $ rm.update("madison", "cor", 2)
@@ -2531,7 +2531,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_deepq_round3_false_menu")
         menu:
-            "You want me to answer that seriously?":
+            "[Truth] You want me to answer that seriously?":
                 hide screen walkthrough_screen
                 mc_s "You want me to answer that seriously?"
                 mad "Yes."
@@ -2546,7 +2546,7 @@ label ep06_madison_traingame:
                 mc_s "But so am I. So is everyone."
                 mad "That doesn't make me feel better."
 
-            "Define \"broken\".":
+            "[Deflect] Define \"broken\".":
                 hide screen walkthrough_screen
                 mc_s "Define \"broken\"."
                 mad "Don't play semantics with me."
@@ -2560,7 +2560,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "No. You're fine. Really.":
+            "[Lie] No. You're fine. Really.":
                 hide screen walkthrough_screen
                 mc_s "No. You're fine. Really."
                 $ rm.update("madison", "cor", 2)
@@ -2644,7 +2644,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_nanami_knows_true_menu")
         menu:
-            "Of course not. Are you insane?":
+            "[Truth] Of course not. Are you insane?":
                 hide screen walkthrough_screen
                 mc_s "Of course not. Are you insane?"
                 mad "Why would that be insane?"
@@ -2660,7 +2660,7 @@ label ep06_madison_traingame:
                 mad "Don't worry, I won't tell her."
                 mad "I don't have to. Every time you look at her face now... you'll remember my moan."
 
-            "I don't think so.":
+            "[Deflect] I don't think so.":
                 hide screen walkthrough_screen
                 mc_s "I don't think so."
                 $ rm.update("madison", "cor", 1)
@@ -2677,7 +2677,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "Maybe. I don't know.":
+            "[Truth] Maybe. I don't know.":
                 hide screen walkthrough_screen
                 mc_s "Maybe. I don't know."
                 $ rm.update("madison", "cor", 2)
@@ -2699,7 +2699,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_why_left_false_menu")
         menu:
-            "What do you mean?":
+            "[Truth] What do you mean?":
                 hide screen walkthrough_screen
                 mc_s "What do you mean?"
                 mad "Did you leave because we're all damaged goods?"
@@ -2714,7 +2714,7 @@ label ep06_madison_traingame:
                 mc_s "A hope that never dies, though I've wished it would more times than I can count."
                 mc_t "First time I've said it out loud."
 
-            "I left for work.":
+            "[Deflect] I left for work.":
                 hide screen walkthrough_screen
                 mc_s "I left for work."
                 $ rm.update("madison", "cor", 1)
@@ -2731,7 +2731,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "I left because of career opportunities.":
+            "[Lie] I left because of career opportunities.":
                 hide screen walkthrough_screen
                 mc_s "I left because of career opportunities."
                 $ rm.update("madison", "cor", 2)
@@ -2838,7 +2838,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_response_round5_true_menu")
         menu:
-            "No.":
+            "[Truth] No.":
                 hide screen walkthrough_screen
                 mc_s "No."
 
@@ -2854,7 +2854,7 @@ label ep06_madison_traingame:
                 mad "So I'm not just a dirty secret?"
                 mc_s "You're a secret. But you're real."
 
-            "Probably not.":
+            "[Deflect] Probably not.":
                 hide screen walkthrough_screen
                 mc_s "Probably not."
                 mad "Probably."
@@ -2868,7 +2868,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "If you delete it, it never happened.":
+            "[Lie] If you delete it, it never happened.":
                 hide screen walkthrough_screen
                 mc_s "If it's gone, it's gone."
 
@@ -2886,7 +2886,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_response_round5_false_menu")
         menu:
-            "I already told you. It's not about being related.":
+            "[Truth] I already told you. It's not about being related.":
                 hide screen walkthrough_screen
                 mc_s "I already told you. It's not about being related."
 
@@ -2901,7 +2901,7 @@ label ep06_madison_traingame:
                 mc_s "Yeah. The hatred in you... it's suffocating."
                 mc_t "She wanted the truth. There it is."
 
-            "Maybe.":
+            "[Deflect] Maybe.":
                 hide screen walkthrough_screen
                 mc_s "Maybe."
                 mad "Maybe?"
@@ -2914,7 +2914,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "Probably yes.":
+            "[Lie] Probably yes.":
                 hide screen walkthrough_screen
                 mc_s "Probably yes."
 
@@ -2981,7 +2981,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_critical_true_menu")
         menu:
-            "Not like that.":
+            "[Love] Not like that.":
                 hide screen walkthrough_screen
                 mc_s "Not like that."
                 mad "Not like what?"
@@ -3006,7 +3006,7 @@ label ep06_madison_traingame:
                 $ rm.update("madison", "trust", 10)
                 $ check_levels("madison", "trust", 10)
 
-            "Yes.":
+            "[Corruption] Yes.":
                 hide screen walkthrough_screen
                 mc_s "Yes. God help me, yes."
                 mad "Even knowing who I am?"
@@ -3028,7 +3028,7 @@ label ep06_madison_traingame:
                 $ rm.update("madison", "cor", 10)
                 $ check_levels("madison", "cor", 10)
 
-            "No.":
+            "[Neutral] No.":
                 hide screen walkthrough_screen
                 mc_s "No."
 
@@ -3052,7 +3052,7 @@ label ep06_madison_traingame:
 
         $ show_walkthrough("ep06_madison_critical_false_menu")
         menu:
-            "Honestly? The dynamic has changed.":
+            "[Love] Honestly? The dynamic has changed.":
                 hide screen walkthrough_screen
                 mc_s "Honestly? The dynamic has changed."
                 mad "How?"
@@ -3075,7 +3075,7 @@ label ep06_madison_traingame:
                 $ rm.update("madison", "trust", 10)
                 $ check_levels("madison", "trust", 10)
 
-            "Probably. Depends.":
+            "[Corruption] Probably. Depends.":
                 hide screen walkthrough_screen
                 mc_s "Probably. The taboo is... tempting."
                 mad "Is it?"
@@ -3096,7 +3096,7 @@ label ep06_madison_traingame:
                 $ rm.update("madison", "cor", 10)
                 $ check_levels("madison", "cor", 10)
 
-            "No.":
+            "[Neutral] No.":
                 hide screen walkthrough_screen
                 mc_s "No."
 

@@ -62,7 +62,7 @@ label ep05_elisuicide:
 
         $ show_walkthrough("ep05_hosnan_m1")
         menu:
-            "Madison gave you bad advice":
+            "[Truth] Madison gave you bad advice":
                 hide screen walkthrough_screen
                 $ ep05_mc_blame_madison = True
 
@@ -72,7 +72,7 @@ label ep05_elisuicide:
 
                 $ rm.update("madison", "trust", -2)
                 $ check_levels("madison", "trust", -2)
-            "You didn't do anything wrong":
+            "[Deflect] You didn't do anything wrong":
                 hide screen walkthrough_screen
                 $ ep05_mc_blame_madison = False
 
@@ -99,7 +99,7 @@ label ep05_elisuicide:
         show ep05_hosd1_nan07
         $ show_walkthrough("ep05_hosnan_m2")
         menu:
-            "I should have protected you":
+            "[Love] I should have protected you":
                 hide screen walkthrough_screen
                 $ ep05_mc_takes_responsibility = True
 
@@ -110,7 +110,7 @@ label ep05_elisuicide:
 
                 $ rm.update("nanami", "trust", 2)
                 $ check_levels("nanami", "trust", 2)
-            "We were both confused":
+            "[Deflect] We were both confused":
                 hide screen walkthrough_screen
                 $ ep05_mc_takes_responsibility = False
 
@@ -160,7 +160,7 @@ label ep05_elisuicide:
     nana "It makes me feel weird but not... not bad weird. Is that normal?"
     $ show_walkthrough("ep05_hosnan_m3")
     menu:
-        "We shouldn't talk about this":
+        "[Reject] We shouldn't talk about this":
             hide screen walkthrough_screen
             $ ep05_nanami_sex_education = False
 
@@ -171,7 +171,7 @@ label ep05_elisuicide:
             nana "But you're the only older person I feel okay asking!"
             $ rm.update("nanami", "cor", -2)
             $ check_levels("nanami", "cor", -2)
-        "Those feelings are normal":
+        "[Corruption] Those feelings are normal":
             hide screen walkthrough_screen
             $ ep05_nanami_sex_education = True
 
@@ -203,7 +203,7 @@ label ep05_elisuicide:
     nana "So Madison's a bad person?"
     $ show_walkthrough("ep05_hosnan_m4")
     menu:
-        "Madison cares but she's confused":
+        "[Deflect] Madison cares but she's confused":
             hide screen walkthrough_screen
             $ ep05_madison_is_bad = False
 
@@ -215,7 +215,7 @@ label ep05_elisuicide:
 
             $ rm.update("madison", "trust", 4)
             $ check_levels("madison", "trust", 4)
-        "What Madison does isn't okay":
+        "[Truth] What Madison does isn't okay":
             hide screen walkthrough_screen
             $ ep05_madison_is_bad = True
 
@@ -259,7 +259,7 @@ label ep05_elisuicide:
 
     $ show_walkthrough("ep05_hosnan_m5")
     menu:
-        "Get off me right now":
+        "[Reject] Get off me right now":
             hide screen walkthrough_screen
 
             mc_s "Nanami, you need to get off my lap. Now."
@@ -283,7 +283,7 @@ label ep05_elisuicide:
                 $ show_custom_notification("strike2")
             elif ss.get("nanami", "strike") >= 3:
                 $ show_custom_notification("strike3")
-        "This should be the last time":
+        "[Neutral] This should be the last time":
             hide screen walkthrough_screen
 
             mc_s "Nanami, while that was nice, sitting on my lap isn't something we should do regularly."
@@ -301,7 +301,7 @@ label ep05_elisuicide:
 
             $ rm.update("nanami", "trust", -1)
             $ check_levels("nanami", "trust", -1)
-        "Just enjoy the moment":
+        "[Love] Just enjoy the moment":
             hide screen walkthrough_screen
 
             mc_s "There. Twenty seconds exactly."
@@ -369,7 +369,7 @@ label ep05_hosmadison:
 
     $ show_walkthrough("ep05_hosmad_m1")
     menu:
-        "Try to defuse the situation":
+        "[Love] Try to defuse the situation":
             hide screen walkthrough_screen
             $ ep05_confrontation_peaceful = True
 
@@ -379,7 +379,7 @@ label ep05_hosmadison:
             mad "Is there? Because from where I'm standing, you're just another predator."
             $ rm.update("madison", "trust", 2)
             $ check_levels("madison", "trust", 2)
-        "Put her in her place":
+        "[Reject] Put her in her place":
             hide screen walkthrough_screen
             $ ep05_confrontation_peaceful = False
 
@@ -414,7 +414,7 @@ label ep05_hosmadison:
         mad "With what proof? Your word against mine?"
         $ show_walkthrough("ep05_hosmad_m2")
         menu:
-            "Make a direct threat":
+            "[Reject] Make a direct threat":
                 hide screen walkthrough_screen
                 $ ep05_threat_direct = True
 
@@ -424,7 +424,7 @@ label ep05_hosmadison:
 
                 $ rm.update("madison", "trust", -4)
                 $ check_levels("madison", "trust", -4)
-            "Hint at consequences":
+            "[Neutral] Hint at consequences":
                 hide screen walkthrough_screen
                 $ ep05_threat_direct = False
 
@@ -2296,20 +2296,22 @@ label ep05_hosfinal:
 
     $ show_walkthrough("ep05_mcmic_m1")
     menu:
-        "Demand the truth about her medication":
+        "[Darkness] Demand the truth about her medication":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -5)
 
             mc_s "Cut the bullshit, Michael. What are you really giving her?"
             mic "Such hostility. And here I thought police training taught discipline."
             mic "But then again, you've always been more emotion than intellect, haven't you?"
-        "Ask for specifics about her treatment":
+
+        "[Balance] Ask for specifics about her treatment":
             hide screen walkthrough_screen
 
             mc_s "I need to know exactly what medications she's been taking."
             mic "Your investigative instincts showing, [mc_name]? How... predictable."
             mic "Like a dog chasing cars, you bark loudly but comprehend nothing."
-        "Assert your right to know as her son":
+
+        "[Light] Assert your right to know as her son":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 5)
 
@@ -2343,20 +2345,22 @@ label ep05_hosfinal:
 
     $ show_walkthrough("ep05_mcmic_m2")
     menu:
-        "Accuse him of hiding something":
+        "[Darkness] Accuse him of hiding something":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -8)
 
             mc_s "You're hiding something, and I'm going to find out what."
             mic "Such determination. Such... futility."
             mic "You couldn't even stay conscious during a simple arrest. What makes you think you can solve this?"
-        "Challenge his medical practices":
+
+        "[Balance] Challenge his medical practices":
             hide screen walkthrough_screen
 
             mc_s "I don't need to be a doctor to recognize malpractice."
             mic "Malpractice? From someone who let criminals put a bullet in him?"
             mic "Your judgment has proven... questionable at best."
-        "Threaten to involve medical authorities":
+
+        "[Light] Threaten to involve medical authorities":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 8)
 
@@ -2374,20 +2378,22 @@ label ep05_hosfinal:
     mic "Far beyond your comprehension, naturally."
     $ show_walkthrough("ep05_mcmic_m3")
     menu:
-        "Angrily accuse him of experimenting":
+        "[Darkness] Angrily accuse him of experimenting":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -10)
 
             mc_s "You're fucking experimenting on her!"
             mic "Such language. Such... impotence."
             mic "Emotional volatility. Perhaps you inherited more from your [mo_full_r_low] than I hoped."
-        "Question Elizabeth's knowledge of the treatment":
+        
+        "[Balance] Question Elizabeth's knowledge of the treatment":
             hide screen walkthrough_screen
 
             mc_s "Does she know what these pills actually do?"
             mic "Informed consent is a luxury Elizabeth cannot afford in her current state."
             mic "But I wouldn't expect you to understand such nuances."
-        "Point out the legal and ethical violations":
+        
+        "[Light] Point out the legal and ethical violations":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 10)
 
@@ -2421,20 +2427,21 @@ label ep05_hosfinal:
     mic "Your opinion, as always, is irrelevant."
     $ show_walkthrough("ep05_mcmic_m4")
     menu:
-        "Threaten to take matters into your own hands":
+        "[Darkness] Threaten to take matters into your own hands":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -12)
 
             mc_s "I'll handle this myself. You won't get away with this."
             mic "Handle it yourself? Like you handled that arrest in Osaka?"
             mic "Your track record for 'handling' things is rather... unimpressive."
-        "Promise to investigate officially":
+        "[Balance] Promise to investigate officially":
             hide screen walkthrough_screen
 
             mc_s "I'll investigate this through proper channels."
             mic "With what evidence? Your detective's intuition?"
             mic "You have nothing. You are nothing. You can do nothing."
-        "Threaten to file a formal report":
+
+        "[Light] Threaten to file a formal report":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 8)
 

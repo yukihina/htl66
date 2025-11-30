@@ -259,3 +259,41 @@ init:
         yalign 0.92
         text_align 0.5
         kerning 12
+
+init python:
+    # -----------------------------------------------------------
+    # Automatic Intent Coloring System
+    # -----------------------------------------------------------
+    
+    # 1. Define the dictionary mapping tags to Hex Color Codes
+    intent_colors = {
+        # --- MC Integrity (Moral Compass) ---
+        "[Light]":      "#4BCFFA",  # Cyan (Paragon/Hero)
+        "[Darkness]":   "#ff4757",  # Red (Renegade/Antihero)
+        "[Balance]":    "#a29bfe",  # Lavender/Purple (Pragmatic/Neutral Integrity)
+
+        # --- Love Interests (Relationships) ---
+        "[Love]":       "#4BCFFA",  # Cyan (Romance/Trust)
+        "[Corruption]": "#ff7675",  # Soft Red (Corruption/Lust)
+        "[Neutral]":    "#dfe6e9",  # White Smoke (Casual/Standard)
+        "[Reject]":     "#b2bec3",  # Grey (Rejection/Loss of Trust)
+        
+        # --- Conversation Dynamics ---
+        "[Truth]":      "#55efc4",  # Turquoise (Honesty)
+        "[Lie]":        "#ff9f43",  # Orange (Deception)
+        "[Deflect]":    "#ffeaa7",  # Yellow (Evasion)
+        "[Accept]":     "#ff4757",  # Intense Red (Critical Action)
+    }
+
+    # 2. Function to search and replace tags with their colored versions
+    def colorize_intents(text):
+        for tag, color in intent_colors.items():
+            # Check if the tag exists in the text
+            if tag in text:
+                # Wrap the tag in Ren'Py color tags: {color=#...}[Tag]{/color}
+                replacement = "{{outlinecolor=#000000}}{{color={}}}{}{{/color}}{{/outlinecolor}}".format(color, tag)
+                text = text.replace(tag, replacement)
+        return text
+
+    # 3. Apply this filter automatically to all menu choices
+    config.say_menu_text_filter = colorize_intents

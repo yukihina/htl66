@@ -18,6 +18,7 @@ v0.28 Episode 6 - 1st part
   • Character relationship tracking system enhanced
   • All walkthrough points updated to reflect new point system
   • Audio management system updated
+  • Choice menus now display Tone/Intent tags (e.g., [Lie], [Love]) for better clarity
 
 ! FIXED:
   • 01 render corrected from version 0.27

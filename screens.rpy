@@ -239,7 +239,9 @@ screen choice(items):
 
     if not choice_hovered:
         add "achtung" at igm_appear_fg:
-            align (0.1, 0.4)
+            yalign 0.5
+            xpos 190
+            xanchor 1.0
 
     on "show" action SetVariable("choice_hovered", False)
 
