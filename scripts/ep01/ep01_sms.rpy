@@ -189,8 +189,8 @@ label ep01_sms01_joke:
 
 
 label ep01_sms01_flirt:
-    $ rm.update("paz", "trust", 2)
-    $ check_levels("paz", "trust", 2)
+    $ rm.update("paz", "cor", 2)
+    $ check_levels("paz", "cor", 2)
 
     hide screen walkthrough_screen
 
@@ -203,9 +203,6 @@ label ep01_sms01_flirt:
     paz_nvl "But for real... get better soon, ok? {outlinecolor=#ffffff00}😊{/outlinecolor}"
     mc_nvl "Whoa, hey now..."
     paz_nvl "{a=show:picview_ep01_sms6}{image=thumb_ep01_sms6}"
-
-    $ rm.update("paz", "cor", 1)
-    $ check_levels("paz", "cor", 1)
     if not sawpic_ep01_sms6:
         show screen picview_ep01_sms6
 
