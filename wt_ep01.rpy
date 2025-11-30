@@ -76,7 +76,7 @@ init python:
         # Amber confession scenes
         "ep01_amberconfess_menu": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "points": 1, "type": "Love"},
+                {"option_num": 1, "char_name": "Amber", "points": 1, "type": "Love", "extra_text": "Stay to hear Amber's confession. Required to access romantic scenes"},
                 {"option_num": 2, "char_name": "Amber", "points": -1, "type": "Love"}
             ])
         },
@@ -137,7 +137,7 @@ init python:
         "ep01_sms01_wt2": {
             "paz": create_wt_text([
                 {"option_num": 1, "char_name": "Paz", "points": 1, "type": "Love"},
-                {"option_num": 2, "char_name": "Paz", "points": 2, "type": "Corruption"}  # Base 2 × 1.0 = 2
+                {"option_num": 2, "char_name": "Paz", "points": 2, "type": "Corruption", "extra_text": "Flirt back to receive an extra spicy photo"}  # Base 2 × 1.0 = 2
             ])
         },
 
