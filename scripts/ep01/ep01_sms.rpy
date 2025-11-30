@@ -154,7 +154,7 @@ label ep01_sms01:
     #MENU
     $ show_walkthrough("ep01_sms01_wt1")
     # MENU SHOULD BE ALWAYS WITH A DIALOGUE AFTER.
-    show screen menu_button ("1. [Love] Joke about it", "ep01_sms01_joke", "2. [Love] Get serious", "ep01_sms01_serious")
+    show screen menu_button ("Joke about it", "ep01_sms01_joke", "Get serious", "ep01_sms01_serious")
 
     paz_nvl "It's an old pic, don't even worry about it! {outlinecolor=#ffffff00}😬 😬{/outlinecolor}"    
 
@@ -181,7 +181,7 @@ label ep01_sms01_joke:
     paz_nvl "{outlinecolor=#ffffff00}😵‍💫{/outlinecolor}"
     #MENU
     $ show_walkthrough("ep01_sms01_wt2")
-    show screen menu_button ("1. [Love] Say sorry", "ep01_sms01_sorry", "2. [Corruption] Flirt", "ep01_sms01_flirt")
+    show screen menu_button ("Say sorry", "ep01_sms01_sorry", "Flirt", "ep01_sms01_flirt")
 
     paz_nvl "[mc_name]! You perv! {outlinecolor=#ffffff00}😒😒😒{/outlinecolor}"
 
@@ -189,8 +189,8 @@ label ep01_sms01_joke:
 
 
 label ep01_sms01_flirt:
-    $ rm.update("paz", "trust", 2)
-    $ check_levels("paz", "trust", 2)
+    $ rm.update("paz", "cor", 2)
+    $ check_levels("paz", "cor", 2)
 
     hide screen walkthrough_screen
 
@@ -203,9 +203,6 @@ label ep01_sms01_flirt:
     paz_nvl "But for real... get better soon, ok? {outlinecolor=#ffffff00}😊{/outlinecolor}"
     mc_nvl "Whoa, hey now..."
     paz_nvl "{a=show:picview_ep01_sms6}{image=thumb_ep01_sms6}"
-
-    $ rm.update("paz", "cor", 1)
-    $ check_levels("paz", "cor", 1)
     if not sawpic_ep01_sms6:
         show screen picview_ep01_sms6
 

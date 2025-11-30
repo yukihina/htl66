@@ -4,7 +4,7 @@ init python:
         # Initial Paz Fight Scene
         "ep02_mc_paz_fight_menu1": {
             "paz": create_wt_text([
-                {"option_num": 1, "char_name": "Paz", "points": 1, "type": "Love"}
+                {"option_num": 1, "char_name": "Paz", "points": 2, "type": "Love"}  # Paz trust: 2 × 1.0 = 2
             ])
         },
 
@@ -27,7 +27,7 @@ init python:
         "ep02_arlehotel_menu1": {
             "arlette": create_wt_text([
                 {"option_num": 2, "char_name": "Arlette", "points": 2, "type": "Corruption"},  # Arlette cor: 1 × 1.5 = 2
-                {"option_num": 3, "char_name": "Arlette", "points": 6, "type": "Corruption"}  # Arlette cor: 3 calls × 2 = 6
+                {"option_num": 3, "char_name": "Arlette", "points": 2, "type": "Corruption"}  # Arlette cor: 1 × 1.5 = 2
             ])
         },
 
@@ -40,7 +40,7 @@ init python:
 
         "ep02_arlehotel_menu3": {
             "arlette": create_wt_text([
-                {"option_num": 1, "char_name": "Arlette", "points": 1, "type": "Corruption"},
+                {"option_num": 1, "char_name": "Arlette", "points": 2, "type": "Corruption"},  # Arlette cor: 1 × 1.5 = 2
                 {"option_num": 2, "char_name": "Arlette", "points": 2, "type": "Corruption"},
                 {"option_num": 3, "char_name": "Arlette", "points": 2, "type": "Love"}  # Arlette trust: 1 × 1.5 = 2
             ])
@@ -49,7 +49,7 @@ init python:
         # Arlette Sex Scenes
         "ep02_arlesex_menu1": {
             "arlette": create_wt_text([
-                {"option_num": 1, "char_name": "Arlette", "points": 5, "type": "Corruption"}
+                {"option_num": 1, "char_name": "Arlette", "points": 5, "type": "Corruption", "extra_text": "Agree to anal sex with Arlette. Denying will skip the intimate scene"}
             ])
         },
 
@@ -84,14 +84,14 @@ init python:
         # Revenge Choices
         "ep02_revenge_menu1": {
             "mc": create_wt_text([
-                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+5 Integrity to Light"},
-                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+5 Integrity to Darkness"}
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+5 Integrity to Light. Walk away peacefully, avoiding the shootout"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+5 Integrity to Darkness. Attack Hideo and trigger an intense shootout scene"}
             ])
         },
 
         "ep02_revenge_menu2": {
             "mc": create_wt_text([
-                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Darkness"},
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Darkness. ACHIEVEMENT: Unlocks 'Payback Time'"},
                 {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Light"}
             ])
         },
@@ -106,15 +106,15 @@ init python:
 
         "ep02_aftermath_menu2": {
             "paz": create_wt_text([
-                {"option_num": 1, "char_name": "Paz", "points": 1, "type": "Love"},
-                {"option_num": 2, "char_name": "Paz", "points": -1, "type": "Love"}
+                {"option_num": 1, "char_name": "Paz", "points": 2, "type": "Love"},  # Paz trust: 2 × 1.0 = 2
+                {"option_num": 2, "char_name": "Paz", "points": -2, "type": "Love"}  # Paz trust: -2 × 1.0 = -2
             ])
         },
 
         "ep02_aftermath_menu3": {
             "mc": create_wt_text([
-                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Light"},
-                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Darkness"}
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Light"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Darkness"}
             ])
         },
 
@@ -122,11 +122,11 @@ init python:
         "ep02_breakup_menu1": {
             "arlette": create_wt_text([
                 {"option_num": 1, "char_name": "Arlette", "points": 2, "type": "Love"},  # Arlette trust: 1 × 1.5 = 2
-                {"option_num": 2, "char_name": "Arlette", "points": 3, "type": "Love"}  # Arlette trust: 2 × 1.5 = 3
+                {"option_num": 2, "char_name": "Arlette", "points": 2, "type": "Love"}  # Arlette trust: 1 × 1.5 = 2
             ]),
             "mc": create_wt_text([
-                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Light"},
-                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+1 Integrity to Darkness"}
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Light"},
+                {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+2 Integrity to Darkness"}
             ])
         },
 
