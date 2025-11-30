@@ -373,7 +373,7 @@ label ep02_mc_paz_fight:
     $ show_walkthrough("ep02_mc_paz_fight_menu1")
     menu:
         mc_t "What a hassle... now what do I tell her?"
-        "I'll talk to them":
+        "[Love] I'll talk to them":
             hide screen walkthrough_screen
             $ rm.update("paz", "trust", 1)
             $ check_levels("paz", "trust", 1)
@@ -482,13 +482,13 @@ label ep02_tobita_sinchi:
     $ show_walkthrough("ep02_whore_menu1")
     menu:
         mc_t "What should I say to her?"
-        "Got it, thanks":
+        "[Light] Got it, thanks":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 1)
             jump ep02_tobita_sinchi_good
 
 
-        "Fuck off":
+        "[Darkness] Fuck off":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -1)
             jump ep02_tobita_sinchi_bad
@@ -1180,7 +1180,7 @@ label ep02_mc_meet_arle:
     $ show_walkthrough("ep02_arlehost_menu1")
     menu:
         mc_t "Should I be straight with her? Or just bail on this situation?"
-        "Tell the truth":
+        "[Love] Tell the truth":
             hide screen walkthrough_screen
             $ rm.update("arlette", "trust", 1)
             $ check_levels("arlette", "trust", 1)
@@ -1389,14 +1389,14 @@ label ep02_arle_mc_sex:
 
             mc_s "I... I mean, yeah, I thought about it a few times. But I didn't want to pressure you or anything."
             arl "That's very sweet of you, [mc_name]. But you don't have to hold back anymore."
-        "Yeah, I was...":
+        "[Corruption] Yeah, I was...":
             hide screen walkthrough_screen
             $ rm.update("arlette", "cor", 1)
             $ check_levels("arlette", "cor", 1)
 
             mc_s "Y-Yeah, I was..."
             arl "I made you wait quite a while, didn't I? Did you fantasize about me like this often?"
-        "I've jerked off thinking about you.":
+        "[Corruption] I've jerked off thinking about you.":
             hide screen walkthrough_screen
             $ rm.update("arlette", "cor", 1)
             $ check_levels("arlette", "cor", 1)
@@ -1488,7 +1488,7 @@ label ep02_arle_mc_sex:
     arl "[mc_name], may I stay like this a little longer?"
     $ show_walkthrough("ep02_arlehotel_menu3")
     menu:
-        "You mean in lingerie?":
+        "[Corruption] You mean in lingerie?":
             hide screen walkthrough_screen
             $ rm.update("arlette", "cor", 1)
             $ check_levels("arlette", "cor", 1)
@@ -1496,7 +1496,7 @@ label ep02_arle_mc_sex:
             mc_s "You mean in lingerie?"
             arl "No, silly. Just with you."
             mc_s "I won't stop you."
-        "I wouldn't mind if you stayed in less":
+        "[Corruption] I wouldn't mind if you stayed in less":
             hide screen walkthrough_screen
             $ rm.update("arlette", "cor", 1)
             $ check_levels("arlette", "cor", 1)
@@ -1504,7 +1504,7 @@ label ep02_arle_mc_sex:
             mc_s "I wouldn't mind if you stayed in even less clothing, or none at all."
             arl "Oh, [mc_name], tu es un vilain garçon. I like that about you."
             mc_s "What? I guess you liked what I said, since you're not mad at me."
-        "Stay as long as you like.":
+        "[Love] Stay as long as you like.":
             hide screen walkthrough_screen
             $ rm.update("arlette", "trust", 1)
             $ check_levels("arlette", "trust", 1)
@@ -1908,7 +1908,7 @@ label ep02_lovemaking:
     arl "I know it sounds crazy, but... I don't know, maybe you could just do it for me?"
     $ show_walkthrough("ep02_arlesex_menu1")
     menu:
-        "Agree":
+        "[Corruption] Agree":
             hide screen walkthrough_screen
             $ ep02_anal = True
             $ rm.update("arlette", "cor", 3)
@@ -1969,7 +1969,7 @@ label ep02_lovemaking:
     arl "Treat me like a real bitch, [mc_name]! Take out all your dirty thoughts and tell me!"
     $ show_walkthrough("ep02_arlesex_menu2")
     menu:
-        "Talk dirty":
+        "[Corruption] Talk dirty":
             hide screen walkthrough_screen
             $ rm.update("arlette", "cor", 1)
             $ check_levels("arlette", "cor", 1)
@@ -1977,7 +1977,7 @@ label ep02_lovemaking:
 
             mc_s "You want me to take out my thoughts on you?"
             mc_s "Fine! You wanna feel like a real bitch, do you? I'm gonna treat you like one, Arlette!"
-        "Talk with love":
+        "[Love] Talk with love":
             hide screen walkthrough_screen
             $ rm.update("arlette", "trust", 1)
             $ check_levels("arlette", "trust", 1)
@@ -2001,7 +2001,7 @@ label ep02_lovemaking:
         $ ep02_talkdirty = False
         $ show_walkthrough("ep02_arlesex_menu3")
         menu:
-            "Keep talking dirty":
+            "[Corruption] Keep talking dirty":
                 hide screen walkthrough_screen
                 $ rm.update("arlette", "cor", 1)
                 $ check_levels("arlette", "cor", 1)
@@ -2009,7 +2009,7 @@ label ep02_lovemaking:
 
                 mc_s "What sort of a slut does something like that, huh?"
                 arl "Ooh, pardonne-moi! S'il vous plaît, pardonne-moi!"
-            "Talk with love":
+            "[Love] Talk with love":
                 hide screen walkthrough_screen
                 $ rm.update("arlette", "trust", 1)
                 $ check_levels("arlette", "trust", 1)
@@ -2017,7 +2017,7 @@ label ep02_lovemaking:
     else:
         $ show_walkthrough("ep02_arlesex_menu4")
         menu:
-            "Talk dirty":
+            "[Corruption] Talk dirty":
                 hide screen walkthrough_screen
                 $ rm.update("arlette", "cor", 1)
                 $ check_levels("arlette", "cor", 1)
@@ -2025,7 +2025,7 @@ label ep02_lovemaking:
 
                 mc_s "What sort of a slut does something like that, huh?"
                 arl "Ooh, pardonne-moi! S'il vous plaît, pardonne-moi!"
-            "Keep talking with love":
+            "[Love] Keep talking with love":
                 hide screen walkthrough_screen
                 $ rm.update("arlette", "trust", 1)
                 $ check_levels("arlette", "trust", 1)
@@ -2537,7 +2537,7 @@ label ep02_revenge_night:
     $ show_walkthrough("ep02_revenge_menu1")
     menu:
         mc_t "What do I do? What the fuck do I do?"
-        "Walk away":
+        "[Light] Walk away":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 5)
 
@@ -2551,7 +2551,7 @@ label ep02_revenge_night:
             mc_s "Just know that if you or any of your men touch Arlette, I'll come for you."
             mc_s "Every single one of you. And not even this fucking building will be enough to hide you from me."
             hid "I'd like to see you try. Now get the fuck out."
-        "Attack him": 
+        "[Darkness] Attack him": 
             hide screen walkthrough_screen
             $ ep02_shootout = True
             $ rm.update("mc", "integrity", -5)
@@ -2661,7 +2661,7 @@ label ep02_revenge_night:
 
     $ show_walkthrough("ep02_revenge_menu2")
     menu:
-        "Threaten her":
+        "[Darkness] Threaten her":
             hide screen walkthrough_screen
             $ ep02_hitrina = True
             $ rm.update("mc", "integrity", -2)
@@ -2694,7 +2694,7 @@ label ep02_revenge_night:
 
             $ stopAllSubchannels(channel="music", fadeout=1.5)
             $ stopAllSubchannels(channel="amb", fadeout=1.5)
-        "Let her go":
+        "[Light] Let her go":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 2)
 
@@ -2768,7 +2768,7 @@ label ep02_consequences:
 
     $ show_walkthrough("ep02_aftermath_menu1")
     menu:
-        "Everything's over...":
+        "[Love] Everything's over...":
             hide screen walkthrough_screen
             $ rm.update("paz", "trust", 2)
             $ check_levels("paz", "trust", 2)
@@ -2776,7 +2776,7 @@ label ep02_consequences:
             mc_s "It's just... it's just over. Everything..."
             mc_s "And I don't know what the fuck to do anymore."
             mc_s "I hate myself, Paz. I'm a fucking failure."
-        "I screwed up bad":
+        "[Love]I screwed up bad":
             hide screen walkthrough_screen
             $ rm.update("paz", "trust", 1)
             $ check_levels("paz", "trust", 1)
@@ -2805,13 +2805,13 @@ label ep02_consequences:
 
     $ show_walkthrough("ep02_aftermath_menu2")
     menu:
-        "Don't--":
+        "[Neutral] Don't--":
             hide screen walkthrough_screen
 
             mc_s "Don't--"
             mc_t "I didn't want her to see me like this. Broken... a fucking shell of a man."
             mc_t "But I knew Paz. She was stubborn as a mule and twice as determined. She wouldn't let this go."
-        "I need you, Paz.":
+        "[Love] I need you, Paz.":
             hide screen walkthrough_screen
             $ rm.update("paz", "trust", 1)
             $ check_levels("paz", "trust", 1)
@@ -2819,7 +2819,7 @@ label ep02_consequences:
             mc_s "I... I need you, Paz. But I don't want you to see me like this."
             mc_s "I'm a fucking mess."
             mc_t "I hated admitting it, but I needed her. I needed her strength, her support."
-        "I said stay away!":
+        "[Reject] I said stay away!":
             hide screen walkthrough_screen
             $ rm.update("paz", "trust", -1)
             $ check_levels("paz", "trust", -1)
@@ -2906,7 +2906,7 @@ label ep02_consequences:
     show ep02_aftermath13
     $ show_walkthrough("ep02_aftermath_menu3")
     menu:
-        "I couldn't let her stay":
+        "[Light] I couldn't let her stay":
             hide screen walkthrough_screen
             $ ep02_distraction = False
             $ rm.update("mc", "integrity", 1)
@@ -2915,7 +2915,7 @@ label ep02_consequences:
             mc_t "I had to get her out of there."
             mc_s "You need to go. Right fucking now."
             pa_s "Uh? What? Why?"
-        "I needed a distraction":
+        "[Darkness]I needed a distraction":
             hide screen walkthrough_screen
             $ ep02_distraction = True
             $ rm.update("mc", "integrity", -1)
@@ -3005,14 +3005,14 @@ label ep02_consequences:
     hid "A tight cunt that wasn't worth dyin' over?"
     $ show_walkthrough("ep02_aftermath_menu3")
     menu:
-        "I did what was right.":
+        "[Light] I did what was right.":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", 1)
 
             mc_s "I did what was right, Hideo. What any decent man would do."
             mc_s "Protecting the innocent, standing up to scum like you - that's what being a cop is about."
             hid "Hah! Listen to yourself, you self-righteous white fuck."
-        "Yeah, I'm a fucking idiot.":
+        "[Darkness] Yeah, I'm a fucking idiot.":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -1)
 
@@ -3129,7 +3129,7 @@ label ep02_arlette_breakup:
     arl "You did all this for me?"
     $ show_walkthrough("ep02_breakup_menu1")
     menu:
-        "I'd do anything for you.":
+        "[Love] I'd do anything for you.":
             hide screen walkthrough_screen
             $ rm.update("arlette", "trust", 1)
             $ check_levels("arlette", "trust", 1)
@@ -3138,7 +3138,7 @@ label ep02_arlette_breakup:
             mc_s "I love you more than life itself. I couldn't bear the thought of losing you."
             mc_s "You're everything to me. I'd go to the ends of the earth to keep you safe."
             arl "[mc_name]..."
-        "I had to protect you.":
+        "[Light] I had to protect you.":
             hide screen walkthrough_screen
             $ rm.update("arlette", "trust", 1)
             $ check_levels("arlette", "trust", 1)
@@ -3148,7 +3148,7 @@ label ep02_arlette_breakup:
             mc_s "I care about you deeply. I couldn't just stand by and let them hurt you."
             mc_s "Your safety is my top priority. I'll always do whatever it takes to keep you out of harm's way."
             arl "[mc_name], I..."
-        "It needed to be done.":
+        "[Darkness] It needed to be done.":
             hide screen walkthrough_screen
             $ rm.update("mc", "integrity", -2)
 

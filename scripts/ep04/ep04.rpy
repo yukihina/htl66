@@ -1275,7 +1275,7 @@ label ep04_nantowel2:
     $ show_walkthrough("ep04_nana_m3")
     menu:
         mc_t "This is... unexpected. How do I handle this?"
-        "Accept her request":
+        "[Love] Accept her request":
             hide screen walkthrough_screen
             $ rm.update("nanami", "trust", 4)
             $ check_levels("nanami", "trust", 4)
@@ -1284,7 +1284,7 @@ label ep04_nantowel2:
             mc_s "I would be honored."
             nana "Really?! This is... I don't know what to say!"
             mc_s "Let's give it a shot. No harm in trying, right?"
-        "Deny her request":
+        "[Reject] Deny her request":
             hide screen walkthrough_screen
             $ rm.update("nanami", "trust", -2)
             $ check_levels("nanami", "trust", -2)
@@ -1846,14 +1846,14 @@ label ep04_isajelously:
     $ show_walkthrough("ep04_isa_m1")
     menu:
         mc_t "Truth or lie? What if she's bluffing? I need to gauge how much she knows."
-        "Tell her the truth":
+        "[Love] Tell her the truth":
             hide screen walkthrough_screen
             $ ep04_isatruth = True
             $ rm.update("isabella", "trust", 5)
             $ check_levels("isabella", "trust", 5)
 
             mc_s "Sorry, honey, I didn't know you were here. Well, your friend--"
-        "Try to investigate":
+        "[Reject] Try to investigate":
             hide screen walkthrough_screen
             $ rm.update("isabella", "trust", -2)
             $ check_levels("isabella", "trust", -2)
@@ -1924,13 +1924,13 @@ label ep04_isajelously:
     isa "Where is it? Where is it? Oh, the things I do for you, [da_r]..."
     $ show_walkthrough("ep04_isa_m2")
     menu:
-        "Help her":
+        "[Love] Help her":
             hide screen walkthrough_screen
             $ rm.update("isabella", "trust", 2)
             $ check_levels("isabella", "trust", 2)
 
             mc_s "Baby, what are you looking for? I can help you if you tell me."
-        "Leave her alone":
+        "[Reject] Leave her alone":
             hide screen walkthrough_screen
             $ rm.update("isabella", "trust", -2)
             $ check_levels("isabella", "trust", -2)
@@ -2136,7 +2136,7 @@ label ep04_isajelously:
     $ show_walkthrough("ep04_isa_m3")
     menu:
         mc_t "What should I do? This is getting out of hand..."
-        "Give her your cheeks":
+        "[Love] Give her your cheeks":
             hide screen walkthrough_screen
             $ setChannelVolume(channel="sfx", subchannel=3, volume=1)
             $ playAudio(sfx_kiss_one, "sfx", 3, False, 0, 0)
@@ -2172,7 +2172,7 @@ label ep04_isajelously:
             isa "The kind of little girl that is going to make sure you don't get seduced by any other slut."
             mc_s "..."
             isa "Bye, [daddy_r]! Think of me!"
-        "Give her your lips":
+        "[Corruption] Give her your lips":
             hide screen walkthrough_screen
             $ ep04_isabellakiss = True
             $ setChannelVolume(channel="sfx", subchannel=4, volume=0.81)
@@ -2394,14 +2394,6 @@ label ep04_pazosaka:
 
 
 label ep04_mcnananight:
-##episode 3 bug fix (delete on final version)
-    if rm.get("elizabeth", "cor") > 2:
-        $ rm.update("amber", "cor", 1)
-        $ show_custom_notification("bugfix")
-    if rm.get("elizabeth", "trust") > 2:
-        $ rm.update("amber", "trust", 2)
-        $ show_custom_notification("bugfix")
-#####
 #opening scene
     scene eigengrau with clouds_inverse
     $ setChannelVolume(channel="amb", subchannel=2, volume=0.3)
@@ -2634,7 +2626,7 @@ label ep04_nanameet:
     $ show_walkthrough("ep04_nanameetmenu")
     menu:
         mc_t "... I don't know what to do..."
-        "Let her try the beer":
+        "[Corruption] Let her try the beer":
             hide screen walkthrough_screen
 
             mc_s "Alright, sweetie. You can have some. But if you don't like it, stop right away."
@@ -2645,7 +2637,7 @@ label ep04_nanameet:
             jump ep04_nanabooze #to beer scene (condition have points on corruption)
 
 
-        "Keep it innocent":
+        "[Love] Keep it innocent":
             hide screen walkthrough_screen
 
             mc_s "I'm sorry sweetie, but no beer tonight. Let's stick with your milk, okay?"
@@ -2844,7 +2836,7 @@ label ep04_nanamilk:
     $ show_walkthrough("ep04_nanamilkmenu")
     menu:
         mc_t "Should I keep her here with me? She already told me she's feeling sleepy."
-        "Make her stay":
+        "[Love] Make her stay":
             hide screen walkthrough_screen
 
             mc_s "Yeah, sure honey. If that's not a problem for you."
@@ -2852,7 +2844,7 @@ label ep04_nanamilk:
             jump ep04_nana_askkiss
 
 
-        "Send her to bed":
+        "[Love] Send her to bed":
             hide screen walkthrough_screen
 
             mc_s "No sweetie, you're going to bed if you're tired. Don't worry about that."
@@ -3534,7 +3526,7 @@ label ep04_nanabooze:
 
     $ show_walkthrough("ep04_nanaboozmenu")
     menu:
-        "Give her more beer":
+        "[Corruption] Give her more beer":
             hide screen walkthrough_screen
             if ep04_nanadad:
                 mc_s "Alright sweetie. But just one more, ok?"
@@ -4030,7 +4022,7 @@ label ep04_nanadrunkawake:
     $ show_walkthrough("ep04_nanadrumcmenu_2")
     menu:
         mc_t "There's no going back now..."
-        "Give her a peck":
+        "[Love] Give her a peck":
             hide screen walkthrough_screen
             show ep04_nanamcroom12 at subtle_zoom_in with hpunch
             $ rm.update("nanami", "trust", 1)
@@ -4043,7 +4035,7 @@ label ep04_nanadrunkawake:
             else:
                 mc_t "Such soft lips... Better not take this further..."
                 nana "Mhmmmm... Mr. [mc_name]..."
-        "French kiss her":
+        "[Love] French kiss her":
             hide screen walkthrough_screen
             show ep04_nanamcroom12 at subtle_zoom_in with hpunch
             $ rm.update("nanami", "trust", 2)
@@ -4461,13 +4453,13 @@ label ep04_nanami_success_path:
     $ show_walkthrough("ep04_nanasucpathmenu")
     menu:
         mc_t "Fuck! She's about to pass out and I'm rock hard... Wake her or let her sleep?"
-        "Try to wake her":
+        "[Corruption] Try to wake her":
             hide screen walkthrough_screen
             # +2x cor @ end label
             jump ep04_nanalicking
 
 
-        "Let her rest":
+        "[Love] Let her rest":
             $ ep04_nanastay = True
             hide screen walkthrough_screen
             # +1x love @ end label
@@ -5230,7 +5222,7 @@ label ep04_ambroom_intro:
     amb "What do you think is the most impressive thing in this room right now?"
     $ show_walkthrough("ep04_ambroommenu")
     menu:
-        "You?":
+        "[Corruption] You?":
             hide screen walkthrough_screen
 
             mc_s "You?"
@@ -5252,7 +5244,7 @@ label ep04_ambroom_intro:
             jump ep04_amber_dancing
 
 
-        "LEDs?":
+        "[Reject] LEDs?":
             hide screen walkthrough_screen
 
             mc_s "Um... the amount of leds...?"
@@ -6461,7 +6453,7 @@ label ep04_mad_assjob:
     $ show_walkthrough("ep04_madajmenu_3")
     menu:
         mc_t "Fuck, what do I do?"
-        "Cum inside her":
+        "[Corruption] Cum inside her":
             hide screen walkthrough_screen
 
             mc_t "Fuck it."
@@ -6528,7 +6520,7 @@ label ep04_mad_assjob:
             mc_t "Every woman in this house is like a walking fantasy. And they're all [fm_r_low]."
             mc_t "Not all of them, but still... I'm going to hell for this."
             mc_t "I need sleep."
-        "Hold it":
+        "[Corruption] Hold it":
             hide screen walkthrough_screen
 
             mc_t "I need to feel her... God help me."
@@ -6783,12 +6775,12 @@ label ep04_elimeet_intro:
 
     $ show_walkthrough("ep04_elimeetmenu_2")
     menu:
-        "Get the glasses":
+        "[Corruption] Get the glasses":
             hide screen walkthrough_screen
 
             mc_s "Just one glass."
             pass
-        "Refuse":
+        "[Love] Refuse":
             hide screen walkthrough_screen
 
             mc_s "No, [mo_r]. You've had enough."
@@ -7064,7 +7056,7 @@ label ep04_elimeet_intro:
     $ show_walkthrough("ep04_elimeetmenu_3")
     menu:
         mc_t "Help her or leave?"
-        "Stay and watch":
+        "[Corruption] Stay and watch":
             hide screen walkthrough_screen
 
             mc_s "Alright, [mo_r]. Let's just finish this as soon as possible."
@@ -7084,7 +7076,7 @@ label ep04_elimeet_intro:
             jump ep04_elizabeth_gold
 
 
-        "Stay but look away":
+        "[Love] Stay but look away":
             hide screen walkthrough_screen
 
             mc_s "I'll help, but I'm not looking..."
@@ -7101,7 +7093,7 @@ label ep04_elimeet_intro:
             jump ep04_elizabeth_gold
 
 
-        "Leave":
+        "[Reject] Leave":
             hide screen walkthrough_screen
 
             mc_s "Handle this yourself, [mo_r]. Hold the wall..."

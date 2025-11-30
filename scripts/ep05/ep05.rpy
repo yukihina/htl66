@@ -498,7 +498,7 @@ label ep05_ambercof:
     $ show_walkthrough("ep05_ambsexmenu")
     menu:
         mc_t "This is crazy... but..."
-        "Accept her advances":
+        "[Corruption] Accept her advances":
             hide screen walkthrough_screen
 
             mc_s "Alright."
@@ -508,7 +508,7 @@ label ep05_ambercof:
             $ rm.update("amber", "cor", 3)
             $ check_levels("amber", "cor", 3)
             pass
-        "Reject her":
+        "[Reject] Reject her":
             hide screen walkthrough_screen
             show ep05_amberintro18
             mc_t "We really shouldn't..."
@@ -817,7 +817,7 @@ label ep05_isacos:
     $ show_walkthrough("ep05_isacheckmenu")
     menu:
         mc_t "She's waiting for an answer... what should I do?"
-        "Let me check your outfit":
+        "[Love] Let me check your outfit":
             hide screen walkthrough_screen
             scene eigengrau with slowfade
             show ep05_isaintro18 with hpunch
@@ -872,7 +872,7 @@ label ep05_isacos:
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
-        "Let me check you":
+        "[Corruption] Let me check you":
             hide screen walkthrough_screen
             scene eigengrau with slowfade
             show ep05_isaintro26 with vpunch
@@ -920,7 +920,7 @@ label ep05_isacos:
     $ show_walkthrough("ep05_isacheckmenu2")
     menu:
         mc_t "How should I help with this..."
-        "Hold still":
+        "[Love] Hold still":
             hide screen walkthrough_screen
             show ep05_isaintro33
             isa "Hold it open for me... it's pretty stiff..."
@@ -940,7 +940,7 @@ label ep05_isacos:
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
-        "Let me adjust it":
+        "[Corruption] Let me adjust it":
             hide screen walkthrough_screen
             show ep05_isaintro36 with vpunch
             isa "D-[daddy_r_low]... your hands..."
@@ -983,7 +983,7 @@ label ep05_isacos:
     $ show_walkthrough("ep05_isacheckmenu3")
     menu:
         mc_t "These do look complicated..."
-        "Let me help with the buckles":
+        "[Love] Let me help with the buckles":
             hide screen walkthrough_screen
             scene eigengrau with slowfade
             show ep05_isaintro43 at ken_burns_left_to_right
@@ -996,7 +996,7 @@ label ep05_isacos:
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
-        "Show me exactly how":
+        "[Corruption] Show me exactly how":
             hide screen walkthrough_screen
             scene eigengrau with slowfade
             $ setChannelVolume("sfx", 5, 1, 0)
@@ -1025,7 +1025,7 @@ label ep05_isacos:
     $ show_walkthrough("ep05_isacheckmenu4")
     menu:
         mc_t "Final piece..."
-        "Let's finish the costume":
+        "[Love] Let's finish the costume":
             hide screen walkthrough_screen
             scene eigengrau with slowfade
             $ setChannelVolume("sfx", 5, 1, 0)
@@ -1046,7 +1046,7 @@ label ep05_isacos:
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
-        "Stand still":
+        "[Corruption] Stand still":
             hide screen walkthrough_screen
             scene eigengrau with slowfade
             $ setChannelVolume("sfx", 5, 1, 0)

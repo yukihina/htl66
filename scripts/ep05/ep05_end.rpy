@@ -727,7 +727,7 @@ label ep05_hosmadison:
     mad "We understand each other now, right? Nanami is mine. You stay away from her."
     $ show_walkthrough("ep05_hosmad_m4")
     menu:
-        "Accept defeat":
+        "[Love] Accept defeat":
             hide screen walkthrough_screen
             $ ep05_stance_surrender = True
 
@@ -737,7 +737,7 @@ label ep05_hosmadison:
             mad "Hurt her? I just sacrificed my body to protect her."
             $ rm.update("madison", "trust", 10)
             $ check_levels("madison", "trust", 10)
-        "Challenge Madison":
+        "[Reject] Challenge Madison":
             hide screen walkthrough_screen
             $ ep05_stance_surrender = False
 
@@ -912,7 +912,7 @@ label ep05_hospaz_vc:
 
     $ show_walkthrough("ep05_hospaz_m1")
     menu:
-        "Help her learn":
+        "[Corruption] Help her learn":
             $ ep05_paz_choice = 1
             hide screen walkthrough_screen
             show ep05_hosd2_paz14 at scale_down
@@ -950,7 +950,7 @@ label ep05_hospaz_vc:
             mc_s "Part of it. The physical stuff is easy."
             pa_s "I think I'm starting to get it."
             mc_t "Yeah, me too."
-        "This isn't a good idea":
+        "[Reject] This isn't a good idea":
             $ ep05_paz_choice = 2
             hide screen walkthrough_screen
             $ stopAudio("music", 1, 2)
@@ -973,7 +973,7 @@ label ep05_hospaz_vc:
             pa_s "Same fucking difference."
             mc_s "If he keeps pushing, we'll deal with it together."
             pa_s "Right. Partners."
-        "You don't need to change":
+        "[Love] You don't need to change":
             $ ep05_paz_choice = 3
             hide screen walkthrough_screen
             show ep05_hosd2_paz16 at scale_down

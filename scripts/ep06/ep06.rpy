@@ -820,7 +820,7 @@ label ep06_mornwithamber_neutral:
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
-        "[Passion]Only you.":
+        "[Neutral] Only you.":
             hide screen walkthrough_screen
             mc_s "No one else compares."
             $ rm.update("amber", "cor", 1)
@@ -944,21 +944,21 @@ label ep06_mornwithamber_neutral_continue:
 
     $ show_walkthrough("ep06_amber_neutral_climax_menu")
     menu:
-        "Only you get me.":
+        "[Love] Only you get me.":
             hide screen walkthrough_screen
             mc_s "Only you understand."
             amb "Never letting go."
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
 
-        "Take it all.":
+        "[Corruption] Take it all.":
             hide screen walkthrough_screen
             mc_s "Take everything."
             amb "Gladly."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
-        "Broken together.":
+        "[Corruption] Broken together.":
             hide screen walkthrough_screen
             mc_s "We're both fucked up."
             amb "Perfect fit."
@@ -1029,13 +1029,13 @@ label ep06_mornwithamber_postclimax:
 
         $ show_walkthrough("ep06_amber_corruption_postclim_menu")
         menu:
-            "You don't scare me.":
+            "[Love] You don't scare me.":
                 hide screen walkthrough_screen
                 mc_s "Your cracks don't scare me. They let me in."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
-            "We fit perfectly.":
+            "[Neutral] We fit perfectly.":
                 hide screen walkthrough_screen
                 mc_s "We're both broken. That's why we fit."
                 $ rm.update("amber", "trust", 1)
@@ -1043,7 +1043,7 @@ label ep06_mornwithamber_postclimax:
                 $ rm.update("amber", "cor", 1)
                 $ check_levels("amber", "cor", 1)
 
-            "Stop overthinking.":
+            "[Reject] Stop overthinking.":
                 hide screen walkthrough_screen
                 mc_s "Stop analyzing. You're just a toy I like to play with."
                 $ rm.update("amber", "trust", -1)
@@ -1073,19 +1073,19 @@ label ep06_mornwithamber_postclimax:
 
         $ show_walkthrough("ep06_amber_love_postclim_menu")
         menu:
-            "I mean it.":
+            "[Love] I mean it.":
                 hide screen walkthrough_screen
                 mc_s "I meant it then, and I mean it now. I love seeing you."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
-            "Test me.":
+            "[Love] Test me.":
                 hide screen walkthrough_screen
                 mc_s "I'm not going anywhere. You can lean on me forever."
                 $ rm.update("amber", "trust", 2)
                 $ check_levels("amber", "trust", 2)
 
-            "Help me understand.":
+            "[Love] Help me understand.":
                 hide screen walkthrough_screen
                 mc_s "Let me help you believe it. Every day."
                 $ rm.update("amber", "trust", 1)
@@ -1114,13 +1114,13 @@ label ep06_mornwithamber_postclimax:
 
         $ show_walkthrough("ep06_amber_neutral_postclim_menu")
         menu:
-            "Perfect to me.":
+            "[Love] Perfect to me.":
                 hide screen walkthrough_screen
                 mc_s "You've always been perfect to me. Warrior or not."
                 $ rm.update("amber", "trust", 3)
                 $ check_levels("amber", "trust", 3)
 
-            "Warriors together.":
+            "[Neutral] Warriors together.":
                 hide screen walkthrough_screen
                 mc_s "We're a team. Two warriors against the world."
                 $ rm.update("amber", "trust", 1)
@@ -1128,7 +1128,7 @@ label ep06_mornwithamber_postclimax:
                 $ rm.update("amber", "cor", 1)
                 $ check_levels("amber", "cor", 1)
 
-            "Time to go.":
+            "[Reject] Time to go.":
                 hide screen walkthrough_screen
                 mc_s "We should get ready."
                 $ rm.update("amber", "trust", -1)
@@ -1447,13 +1447,13 @@ label ep06_mornwithamber_cor_continue:
 
     $ show_walkthrough("ep06_amber_corruption_sex_menu")
     menu:
-        "You're mine.":
+        "[Corruption] You're mine.":
             hide screen walkthrough_screen
             mc_s "You're mine completely. Marked inside and out."
             $ rm.update("amber", "cor", 2)
             $ check_levels("amber", "cor", 2)
 
-        "Fucking perfect.":
+        "[Neutral] Fucking perfect.":
             hide screen walkthrough_screen
             mc_s "Fucking perfect. A perfect cumdump."
             $ rm.update("amber", "cor", 1)
@@ -1461,7 +1461,7 @@ label ep06_mornwithamber_cor_continue:
             $ rm.update("amber", "trust", 1)
             $ check_levels("amber", "trust", 1)
 
-        "Good girl.":
+        "[Love] Good girl.":
             hide screen walkthrough_screen
             mc_s "Good girl. You took it all."
             $ rm.update("amber", "trust", 2)

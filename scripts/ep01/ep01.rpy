@@ -200,7 +200,7 @@ label ep01_dream1:
     $ show_walkthrough("ep01_dream1_menu")
     menu:
         mc_t "How should I respond?"
-        "Honest":
+        "[Love] Honest":
             $ rm.update("antonella", "trust", 4)
             $ check_levels("antonella", "trust", 4)
 
@@ -213,7 +213,7 @@ label ep01_dream1:
             mc_s "Aha, true. Well, you got me there."
             "Girl" "Or they never realize they are jerks. So maybe you are one, and you're just being polite."
             "Girl" "{fii}\"Why can't I shut up??? Why can't I just compliment him???\"{/fii}"
-        "Joke about it":
+        "[Love] Joke about it":
             $ rm.update("antonella", "trust", 8)
             $ check_levels("antonella", "trust", 8)
 
@@ -377,7 +377,7 @@ label ep01_2nddream:
     $ show_walkthrough("ep01_2nddream_menu")
     menu:
         mc_t "What do I think of her?"
-        "Odd but charming":
+        "[Love] Odd but charming":
             $ rm.update("antonella", "trust", 8)
             $ check_levels("antonella", "trust", 8)
 
@@ -385,7 +385,7 @@ label ep01_2nddream:
 
             mc_s "You're... a bit strange, but I guess that's just part of your charm."
             anto "Charm, huh? That's a new one."
-        "Mysterious":
+        "[Love]Mysterious":
             $ rm.update("antonella", "trust", 4)
             $ check_levels("antonella", "trust", 4)
 
@@ -393,7 +393,7 @@ label ep01_2nddream:
 
             mc_s "You're mysterious. Like there's a lot you're not telling me."
             anto "Mysterious? Well, aren't we all?"
-        "You make me uncomfortable":
+        "[Neutral] You make me uncomfortable":
             mc_s "To be honest, you're making me uncomfortable."
             anto "I'm sorry, that's not my intention. I just really need to talk to you about something serious. Can we continue?"
             mc_s "Fine, but let's make it quick, okay?"
@@ -968,7 +968,7 @@ label ep01_pregame:
     anto "Just kidding hahaha, we're best buddies now, right?"
     $ show_walkthrough("ep01_pregame_menu")
     menu:
-        "Hug tenderly":
+        "[Love] Hug tenderly":
             $ rm.update("antonella", "trust", 4)
             $ check_levels("antonella", "trust", 4)
             $ ep01_hug = True
@@ -980,7 +980,7 @@ label ep01_pregame:
             show ep01_pregame32
             anto "Let's stay like this for a bit."
             mc_t "I can't imagine what it's like to live her life with so little trust. I will show her she can rely on me no matter what. "
-        "Hesitate awkwardly":
+        "[Neutral] Hesitate awkwardly":
             hide screen walkthrough_screen
             show ep01_pregame33 with vpunch
             mc_t "Goddammit. We were having a moment! Why couldn't I just hug her? Ughhh."
@@ -2144,7 +2144,7 @@ label q3_date:
     $ show_walkthrough("ep01_clothing_menu")
     menu:
         mc_t "Fuck, what do I do? Chat up the goth girl or stay focused on Antonella?"
-        "Chat with goth girl":
+        "[Reject] Chat with goth girl":
             hide screen walkthrough_screen
 
             mc_t "Screw it, I'm gonna say hi to her."
@@ -2585,12 +2585,12 @@ label ep01_chaseamb:
             $ show_walkthrough("ep01_thepark_menu3")
             menu:
                 mc_t "Is she angry?"
-                "Make excuses":
+                "[Reject] Make excuses":
                     hide screen walkthrough_screen
                     $ ep01_losttrust = True
 
                     mc_s "Antonella, I know lying was wrong, but I panicked. Can you blame me? I couldn't stand the thought of losing my [si_full_r_low] over something so trivial."
-                "Be honest and apologize":
+                "[Love] Be honest and apologize":
                     hide screen walkthrough_screen
 
                     mc_s "Antonella, I lied to protect you from Amber's anger. Don't get upset. I didn't mean to hurt you."
@@ -3118,7 +3118,7 @@ label ep01_bath:
     eli "Unless... you do remember those things?"
     $ show_walkthrough("ep01_elidress_menu")
     menu:
-        "Play along":
+        "[Love] Play along":
             hide screen walkthrough_screen
             $ ep01_elimemories = True
             $ rm.update("elizabeth", "trust", 1)
@@ -3212,7 +3212,7 @@ label ep01_bath:
         $ show_walkthrough("ep01_elidress_menu2")
         menu:
             eli "What? Aren't you afraid that your naughty bits will get even more excited? Hurry up and turn around, darling!"
-            "Check her":
+            "[Corruption] Check her":
                 hide screen walkthrough_screen
                 $ rm.update("elizabeth", "cor", 1)
                 $ check_levels("elizabeth", "cor", 1)
@@ -3231,7 +3231,7 @@ label ep01_bath:
                 mc_s "Sorry, [mo_r]! I couldn't help it... I swear."
                 eli "Alright, alright, sweetie... Let's just forget about it and move on... For now anyway."
                 eli "Okay, I'm ready, darling... You can turn back now."
-            "Turn around":
+            "[Love] Turn around":
                 hide screen walkthrough_screen
                 $ rm.update("elizabeth", "trust", 1)
                 $ check_levels("elizabeth", "trust", 1)
@@ -3446,7 +3446,7 @@ label ep01_home:
     amb "It's not like you actually give a shit anyway..."
     $ show_walkthrough("ep01_amberconfess_menu")
     menu:
-        "Stay":
+        "[Love] Stay":
             hide screen walkthrough_screen
             $ ep01_ambtalk = True
             $ rm.update("amber", "trust", 1)
@@ -3458,7 +3458,7 @@ label ep01_home:
             mc_s "Hey! If you need to talk, I'm here for you, okay? It's all good!"
             mc_t "I can't just leave her like this... Even if she's a pain in the ass sometimes, she's still my [si_full_r_low]."
             amb "...Thanks, [bro_r]. I... I appreciate it."
-        "Leave":
+        "[Reject] Leave":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", -1)
             $ check_levels("amber", "trust", -1)
@@ -3713,7 +3713,7 @@ label ep01_home:
     amb "Now don't look at me like that, okay!? I'm only gonna say this once, so pay attention!"
     $ show_walkthrough("ep01_amberconfess_menu3")
     menu:
-        amb "Do you want me to continue or not?!"
+        amb "[Corruption] Do you want me to continue or not?!"
         "Yes":
             hide screen walkthrough_screen
             $ rm.update("amber", "cor", 1)
@@ -3821,7 +3821,7 @@ label ep01_home:
             jump ep01_station
 
 
-        "No":
+        "[Neutral] No":
             hide screen walkthrough_screen
 
             mc_s "No! What the fuck, Amber!"

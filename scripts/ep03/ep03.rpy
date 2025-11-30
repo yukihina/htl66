@@ -104,7 +104,7 @@ label ep03_isatalk:
     $ show_walkthrough("ep03_isahug_menu")
     menu:
         mc_t "Should I hug her? Maybe I shouldn't..."
-        "Comfort Isabella with a hug":
+        "[Love] Comfort Isabella with a hug":
             hide screen walkthrough_screen
             $ ep03_isahug = True
             $ rm.update("isabella", "trust", 5)
@@ -115,7 +115,7 @@ label ep03_isatalk:
             jump ep03_isatalk_hug
 
 
-        "Give Isabella a reassuring pat on the head":
+        "[Neutral] Give Isabella a reassuring pat on the head":
             hide screen walkthrough_screen
             $ rm.update("isabella", "trust", 1)
             $ check_levels("isabella", "trust", 1)
@@ -380,7 +380,7 @@ label ep03_madtalk:
     $ show_walkthrough("ep03_maddie_menu")
     menu:
         mc_t "What should I say? She's my [si_full_r_low], but, I just can't tear my eyes away from her body."
-        "Admit that Madison is attractive":
+        "[Love] Admit that Madison is attractive":
             hide screen walkthrough_screen
             $ ep03_madtalk = True
             $ rm.update("madison", "trust", 10)
@@ -407,7 +407,7 @@ label ep03_madtalk:
             mad "Alright. You can go to sleep, then."
             mc_s "Yeah. Yeah, I'm gonna go to sleep. Good night, Madison."
             mad "Night."
-        "Deny finding Madison attractive":
+        "[Reject] Deny finding Madison attractive":
             hide screen walkthrough_screen
 
             mc_s "Why are you asking me that? Where is this coming from?"
@@ -521,7 +521,7 @@ label ep03_reunion:
     amb "Oh, you know..."
     $ show_walkthrough("ep03_ambertits_menu")
     menu:
-        "Focus on Amber's breasts":
+        "[Corruption] Focus on Amber's breasts":
             hide screen walkthrough_screen
             $ rm.update("amber", "cor", 1)
             $ check_levels("amber", "cor", 1)
@@ -532,7 +532,7 @@ label ep03_reunion:
             mc_t "She wasn't nearly this busty as a teen, and I doubt her cleavage has always been so enticing."
             amb "Enjoying the view, [mc_name]?"
             mc_s "No... no, of course not! I-I was just distracted by your-your..."
-        "Listen to what Amber is saying":
+        "[Love] Listen to what Amber is saying":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", 2)
             $ check_levels("amber", "trust", 2)
@@ -596,7 +596,7 @@ label ep03_reunion:
     $ show_walkthrough("ep03_amberfeels_menu")
     menu:
         mc_t "Should I give her a chance? Should I listen to her pour her heart out?"
-        "Listen to Amber's feelings":
+        "[Love] Listen to Amber's feelings":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
@@ -609,7 +609,7 @@ label ep03_reunion:
             jump ep03_reunion_stay1
 
 
-        "Refuse to hear Amber out":
+        "[Reject] Refuse to hear Amber out":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", -5)
             $ check_levels("amber", "trust", -5)
@@ -728,7 +728,7 @@ label ep03_reunion_stay1:
     $ show_walkthrough("ep03_amberstaygo_menu")
     menu:
         mc_t "Should I say anything else to her?"
-        "Tell her to stay":
+        "[Love] Tell her to stay":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
@@ -740,7 +740,7 @@ label ep03_reunion_stay1:
             jump ep03_reunion_stay2
 
 
-        "Tell her to leave":
+        "[Reject] Tell her to leave":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", -5)
             $ check_levels("amber", "trust", -5)
@@ -867,7 +867,7 @@ label ep03_reunion_stay2:
     amb "Say nothing, then. And come with me... let's go talk outside under the stars.  It's not gonna be as awkward as you think I promise."
     $ show_walkthrough("ep03_amberinvpool_menu")
     menu:
-        "Accompany Amber to the pool":
+        "[Love] Accompany Amber to the pool":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
@@ -881,7 +881,7 @@ label ep03_reunion_stay2:
             jump ep03_poolnight
 
 
-        "Decline Amber's invitation to the pool":
+        "[Reject]Decline Amber's invitation to the pool":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", -15)
             $ check_levels("amber", "trust", -15)
@@ -1408,7 +1408,7 @@ label ep03_amberclothes:
 
     $ show_walkthrough("ep03_maddiebod_menu")
     menu:
-        "Check out Madison's body":
+        "[Corruption] Check out Madison's body":
             hide screen walkthrough_screen
             $ rm.update("madison", "cor", 1)
             $ check_levels("madison", "cor", 1)
@@ -1423,7 +1423,7 @@ label ep03_amberclothes:
             mad "Or... are you gonna keep checking me out?"
             mc_s "Uh, sorry, what?"
             mad "I saw you staring at me, [mc_name]. You thought I didn't see it, huh? You're an idiot."
-        "Avert your gaze":
+        "[Neutral] Avert your gaze":
             hide screen walkthrough_screen
 
             mc_t "No. Not now. I need to focus. Besides, she's being annoying."
@@ -1443,7 +1443,7 @@ label ep03_amberclothes:
 
     $ show_walkthrough("ep03_maddieass_menu")
     menu:
-        "Stare at Madison's ass as she leaves":
+        "[Corruption] Stare at Madison's ass as she leaves":
             hide screen walkthrough_screen
             $ rm.update("madison", "cor", 3)
             $ check_levels("madison", "cor", 3)
@@ -1458,7 +1458,7 @@ label ep03_amberclothes:
             mc_s "Yes, sorry! I'm going upstairs, don't worry."
             mad "You're pathetic... Men."
             $ unlock_memory("m_ep03_green")
-        "Resist the temptation to ogle Madison":
+        "[Neutral] Resist the temptation to ogle Madison":
             hide screen walkthrough_screen
 
             mc_t "My sisters are fucking crazy."
@@ -1481,7 +1481,7 @@ label ep03_amberclothes:
     $ show_walkthrough("ep03_amberroom_menu")
     menu:
         mc_t "Hm... Should I 'forget' about the sweater and come back with her underwear instead?"
-        "Get the sweater":
+        "[Love] Get the sweater":
             hide screen walkthrough_screen
             $ ep03_ambclothes += 2
             $ rm.update("amber", "trust", 5)
@@ -1489,7 +1489,7 @@ label ep03_amberclothes:
 
             mc_t "Nah, better not. I'm an asshole, but not THAT much of an asshole."
             mc_t "Anyway, I better hurry or else she's gonna kill me."
-        "Forget about the sweater":
+        "[Corruption] Forget about the sweater":
             hide screen walkthrough_screen
             $ ep03_ambclothes += 1
             $ rm.update("amber", "cor", 3)
@@ -1595,7 +1595,7 @@ label ep03_ambernite:
     $ show_walkthrough("ep03_ambersleep_menu")
     menu:
         mc_t "Huh? Does she want me to ask her to stay here?"
-        "Invite Amber to spend the night":
+        "[Love] Invite Amber to spend the night":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
@@ -1611,7 +1611,7 @@ label ep03_ambernite:
             jump ep03_ambernite_sleep
 
 
-        "Let Amber leave without inviting her to stay":
+        "[Reject] Let Amber leave without inviting her to stay":
             hide screen walkthrough_screen
 
             mc_s ". . ."
@@ -2027,7 +2027,7 @@ label ep03_morningwithamber_grope_sex:
     amb "What? What are you thinking?"
     $ show_walkthrough("ep03_ambersex_menu")
     menu:
-        "Insist on having sex":
+        "[Reject] Insist on having sex":
             hide screen walkthrough_screen
             $ rm.update("amber", "cor", -1)
             $ check_levels("amber", "cor", -1)
@@ -2043,7 +2043,7 @@ label ep03_morningwithamber_grope_sex:
             jump ep03_morningwithamber_grope_sex_ruined
 
 
-        "Respect Amber's wishes":
+        "[Love] Respect Amber's wishes":
             hide screen walkthrough_screen
             $ rm.update("amber", "cor", 3)
             $ check_levels("amber", "cor", 3)
@@ -2199,7 +2199,7 @@ label ep03_morningwithamber_grope_sex_pj:
     $ show_walkthrough("ep03_ambersex_menu3")
     menu:
         mc_t "Should I fuck her or not? Hmmm..."
-        "Penetrate her":
+        "[Reject] Penetrate her":
             hide screen walkthrough_screen
             amb "Stop teasing me! It's not funny anymore!"
             $ ep03_amberpenetrate = True
@@ -2208,7 +2208,7 @@ label ep03_morningwithamber_grope_sex_pj:
             jump ep03_morningwithamber_grope_sex_inside
 
 
-        "Respect her boundaries":
+        "[Love] Respect her boundaries":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
@@ -2444,7 +2444,7 @@ label ep03_morningwithamber_grope_sex_pj_cont:
     $ show_walkthrough("ep03_ambersex_menu4")
     menu:
         amb "Let's just do this another day. Please."
-        "Ignore Amber's pleas and fuck her":
+        "[Reject] Ignore Amber's pleas and fuck her":
             hide screen walkthrough_screen
             $ ep03_amberpenetrate = True
             $ rm.update("amber", "trust", -5)
@@ -2472,7 +2472,7 @@ label ep03_morningwithamber_grope_sex_pj_cont:
             jump ep03_morningwithamber_grope_sex_ruined
 
 
-        "Listen to Amber and stop":
+        "[Love] Listen to Amber and stop":
             hide screen walkthrough_screen
             $ rm.update("amber", "trust", 5)
             $ check_levels("amber", "trust", 5)
