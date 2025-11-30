@@ -1546,6 +1546,7 @@ label ep06_mornwithamber_love_sexmenu:
 
 label ep06_mornwithamber_love_worship:
     scene eigengrau
+    $ ss.add("amber", "pussyjob")
 
     show ep06_ambermorn52 at ken_burns_corner_to_corner3 with fade
     mc_s "Every inch of you... so soft."
