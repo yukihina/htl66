@@ -3195,9 +3195,7 @@ label ep02_arlette_breakup:
     mc_t "Love... it was a beautiful thing. But it was also messy, complicated, and so fucking hard."
     mc_t "Maybe, just maybe, it was time for me to step back. To focus on healing, on rebuilding, on finding a purpose that didn't revolve around another person."
 
-    $ stopAllSubchannels(channel="amb", fadeout=1)
-    $ stopAllSubchannels(channel="sfx", fadeout=1)
-    $ stopAllSubchannels(channel="music", fadeout=1)
+    $ stopAllAudio(3.0)
     $ update_htl_episodes()
     #-- End Episode 2
     if htl_episodes == 2:

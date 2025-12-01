@@ -2708,9 +2708,7 @@ label ep03_boxes:
     show ep03_antoback26
     mc_t "The only one who could have had this picture would be...  Antonella."
 
-    $ stopAllSubchannels(channel="sfx", fadeout=1)
-    $ stopAllSubchannels(channel="amb", fadeout=1.5)
-    $ stopAllSubchannels(channel="music", fadeout=2)
+    $ stopAllAudio(3.0)
     $ update_htl_episodes()
 #-- End Episode 3
     if htl_episodes == 3:

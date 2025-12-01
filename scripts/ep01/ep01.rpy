@@ -4401,9 +4401,7 @@ label ep01_newhome:
     amb "What the fuck did you do, [mc_name]...!? What the hell were you thinking!?"
     mc_s "I... I don't know, Amber. I'm sorry. I'm so fucking sorry..."
 
-    $ stopAllSubchannels(channel="amb", fadeout=1.5)
-    $ stopAllSubchannels(channel="sfx", fadeout=1.5)
-    $ stopAllSubchannels(channel="music", fadeout=1.5)
+    $ stopAllAudio(3.0)
     $ resetAllVolumes()
     scene eigengrau with rose
     pause 2

@@ -2975,9 +2975,7 @@ label ep05_elibdown:
     amb "[mo_r]... what did you do?"
     #-- End Update
     if htl_episodes == 5.2:
-        $ stopAllSubchannels(channel="sfx", fadeout=1)
-        $ stopAllSubchannels(channel="amb", fadeout=1.5)
-        $ stopAllSubchannels(channel="music", fadeout=2)
+        $ stopAllAudio(3.0)
         scene eigengrau with rose
         pause 2.0
         $ resetAllVolumes()

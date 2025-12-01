@@ -8509,9 +8509,7 @@ label ep04_antonella_return:
     hir "Board the plane. We'll discuss details in the air."
     anto "Yes, sir."
     #-- End Episode 4
-    $ stopAllSubchannels(channel="sfx", fadeout=1)
-    $ stopAllSubchannels(channel="amb", fadeout=1.5)
-    $ stopAllSubchannels(channel="music", fadeout=2)
+    $ stopAllAudio(3.0)
     $ update_htl_episodes()
     pause 2.0
     if htl_episodes == 4.2:

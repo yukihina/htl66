@@ -130,6 +130,7 @@ init -6 python:
         "madison_sad_theme": "residue-of-me",#Residue of Me
         "madison_sexy_theme": "undress-the-night",#Undress the Night
         "madison_theme": "sugartrap",#Sugartrap
+        "madison_suspense_theme": "dior-s-poison-kiss",#Dior's Poison Kiss
 
         # Nanami themes
         "nanami_chill_theme": "fuwari-yume",#Fuwari Yume - ふわり夢

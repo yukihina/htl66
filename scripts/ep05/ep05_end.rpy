@@ -2754,9 +2754,7 @@ label act1_ending:
     hide the_end_text with dissolve
     pause 1.5
     #-- End Episode 5
-    $ stopAllSubchannels(channel="sfx", fadeout=1)
-    $ stopAllSubchannels(channel="amb", fadeout=1.5)
-    $ stopAllSubchannels(channel="music", fadeout=2)
+    $ stopAllAudio(3.0)
     $ update_htl_episodes()
     pause 2.0
     if htl_episodes == 5.3:

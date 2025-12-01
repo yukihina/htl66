@@ -51,7 +51,7 @@ label ep06_ope:
     $ setAllSubchannelsVolume("amb", 0.0, 1)
 
     show ep06_opening03 at ken_burns_left_to_right with clouds_inverse
-    mc_t "Mother's wrists. Gauze. Pulse."
+    mc_t "[mo_full_r]'s wrists. Gauze. Pulse."
     mc_t "Three months of visiting hours."
 
     show ep06_opening04
@@ -84,7 +84,7 @@ label ep06_ope:
     wat "Sit. I was just reviewing your... unique demographics."
     mc_s "Is there a problem with my file, Chief?"
     wat "Problem? No. It is just... administratively fascinating."
-    wat "Father: British subject. Mother: Italian national."
+    wat "[da_full_r]: British subject. [mo_full_r]: Italian national."
     wat "Born in Tokyo. Naturalized citizenship upon joining the force."
     wat "Technically Japanese. On paper."
 
@@ -711,7 +711,7 @@ label ep06_mornwithamber:
 
     $ show_walkthrough("ep06_amber_first_decision_menu")
     menu:
-        "[Corruption] Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 10:
+        "[Corruption] Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 20:
             hide screen walkthrough_screen
             mc_s "Show me what you were doing."
 
@@ -1018,7 +1018,7 @@ label ep06_mornwithamber_postclimax:
         amb "It reminds me of that day... you remember?"
         
         show ep06_ambermorn22 with clouds_inverse
-        amb "When I butchered my hair. I wanted to kill the 'perfect daughter'."
+        amb "When I butchered my hair. I wanted to kill the 'perfect [dau_r_low]'."
         amb "Everyone looked at me with horror. Like I was a freak."
         mc_s "I didn't."
         amb "No. You looked at me like I was... interesting."
@@ -1062,7 +1062,7 @@ label ep06_mornwithamber_postclimax:
         amb "It takes me back... to the living room floor."
 
         show ep06_ambermorn22 with clouds_inverse
-        amb "Mom wouldn't even look at me. She told Dad I looked like a monster. That I was unlovable."
+        amb "[mo_r] wouldn't even look at me. She told [da_r] I looked like a monster. That I was unlovable."
         mc_s "I found you sitting on the floor in the dark."
         amb "You didn't tell me to fix it. You crawled in there with me and kissed my jagged hair."
 
@@ -1103,7 +1103,7 @@ label ep06_mornwithamber_postclimax:
         amb "You've always had my back. Even back then."
         
         show ep06_ambermorn22 with clouds_inverse
-        amb "When I cut it all off... Mom screamed. Dad left the room."
+        amb "When I cut it all off... [mo_r] screamed. [da_r] left the room."
         mc_s "I remember. You looked like a boy."
         amb "You didn't laugh though. You said I looked like a warrior."
 
@@ -1785,10 +1785,10 @@ label ep06_mornwithamber_rejection:
         amb "No. You're going to listen. Since you're so fucking dead set on pushing me away."
 
     show ep06_ambermorn67
-    amb "When we were younger, before everything went to shit with this family..."
+    amb "When we were younger, before everything went to shit with this [fm_r_low]..."
     mc_s "What about it?"
     amb "You were the only one who actually {i}saw{/i} me."
-    amb "Not just Mom's perfect blonde doll to parade around."
+    amb "Not just [mo_r]'s perfect blonde doll to parade around."
     amb "Just... me."
 
     show ep06_ambermorn22 with clouds_inverse
@@ -1832,7 +1832,7 @@ label ep06_mornwithamber_rejection:
         amb "It's just that... God, it hurts."
         mc_s "I think you're making a scene out of nothing, Amber."
         amb "A scene...?"
-        amb "Where did he go? The brother from my memories... where the hell did he go?"
+        amb "Where did he go? The [br_full_r_low] from my memories... where the hell did he go?"
     
     mc_t "She's spiraling. I can't deal with this loop."
     mc_t "Twenty minutes to get to the station. If I don't leave now, Watanabe is going to kill me."
@@ -1976,7 +1976,7 @@ label ep06_mornwithamber_rejection:
         mc_t "What the fuck? I almost went after her. Pure muscle memory."
         mc_t "Why bother? I just told her she means nothing. Chasing her now would just be... stupid."
         amb "There's nothing there. I was screaming at a wall."
-        amb "No heart. No brother. Just... empty space."
+        amb "No heart. No [br_full_r_low]. Just... empty space."
         mc_s "Amber."
 
     $ stopAudio("sfx", 1, 1)
@@ -2161,10 +2161,13 @@ label ep06_madison_traingame:
     mc_t "Not an accident. She positioned herself for this angle."
     mad "Round one."
 
+    $ playAudio(madison_suspense_theme, "music", 1, True, 2)
+    $ setChannelVolume("music", 1, 0.3)
+
     # ROUND 1 - Madison Asks
     if ep05_confrontation_peaceful:
         # TRUE PATH - Madison asks about wanting her
-        show ep06_madisoncamera11
+        show ep06_madisoncamera11 with fade
         mad "Did you want me that night?"
 
         $ show_walkthrough("ep06_madison_deepq_round1_menu")
@@ -2216,7 +2219,7 @@ label ep06_madison_traingame:
 
     else:
         # FALSE PATH - Madison asks why MC said no
-        show ep06_madisoncamera11
+        show ep06_madisoncamera11 with fade
         mad "Why did you say no?"
 
         $ show_walkthrough("ep06_madison_response_round1_menu")
@@ -2351,8 +2354,8 @@ label ep06_madison_traingame:
                 $ ep06_detect_lie(70)  # Madison may notice the lie
 
     else:
-        # FALSE PATH - Madison asks if it was because she's MC's sister
-        mad "Was it because I'm your sister? Is that the only reason you stopped?"
+        # FALSE PATH - Madison asks if it was because she's MC's [si_full_r_low]
+        mad "Was it because I'm your [si_full_r_low]? Is that the only reason you stopped?"
 
         $ show_walkthrough("ep06_madison_response_round2_menu")
         menu:
@@ -2384,9 +2387,9 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "[Lie] Yes. Only because you're my sister.":
+            "[Lie] Yes. Only because you're my [si_full_r_low].":
                 hide screen walkthrough_screen
-                mc_s "Yes. Only because you're my sister."
+                mc_s "Yes. Only because you're my [si_full_r_low]."
                 $ rm.update("madison", "cor", 2)
                 $ check_levels("madison", "cor", 2)
 
@@ -2598,7 +2601,7 @@ label ep06_madison_traingame:
         mc_s "Protection from what?"
 
         show ep06_madisoncamera26 at ken_burns_corner_to_corner4 with clouds_inverse
-        mad "I won't let her end up like Mom. Used up. Discarded."
+        mad "I won't let her end up like [mo_r]. Used up. Discarded."
 
     else:
         # FALSE PATH - MC asks if Nanami knows Madison loves her
@@ -2618,6 +2621,11 @@ label ep06_madison_traingame:
         mad "If you breathe a word of this to her, I will kill you."
         mc_s "I believe you."
 
+    $ setChannelVolume("music", 1, 0.0, 1)
+    $ playAudio(bodyfall_carpet, "sfx", 1, False, 0)
+    $ setChannelVolume("sfx", 1, 0.8)
+    $ playAudio(sighbreathfem, "sfx", 2, False, 0)
+    $ setChannelVolume("sfx", 2, 0.5)
     # ROUND 4 - Train Lurch / Madison Falls
     show ep06_madisoncamera46 with vpunch
     mc_s "..."
@@ -2633,10 +2641,11 @@ label ep06_madison_traingame:
     mc_s "Need a hand?"
     mad "I can manage."
 
-    show ep06_madisoncamera47
+    show ep06_madisoncamera47 with fade
     mad "Where were we?"
     mc_s "Round—"
     mad "Round four."
+    $ setChannelVolume("music", 1, 0.3, 2)
 
     if ep05_confrontation_peaceful:
         # TRUE PATH - Madison asks if Isabella knows
@@ -2677,7 +2686,7 @@ label ep06_madison_traingame:
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
 
-            "[Truth] Maybe. I don't know.":
+            "[Lie] Maybe. I don't know.":
                 hide screen walkthrough_screen
                 mc_s "Maybe. I don't know."
                 $ rm.update("madison", "cor", 2)
@@ -2726,7 +2735,7 @@ label ep06_madison_traingame:
                 mad "There are academies in Tokyo."
                 mc_s "I needed distance."
                 mad "From what?"
-                mc_s "From the noise. From this family."
+                mc_s "From the noise. From this [fm_r_low]."
 
                 # 50% chance of detection
                 $ ep06_detect_lie(50)  # Madison may notice the lie
@@ -2771,14 +2780,14 @@ label ep06_madison_traingame:
                     show ep06_madisoncamera54
                     mad "He never touched me. That would be too simple."
                     mc_s "Explain."
-                    mad "He destroyed Mom without lifting a finger. He just... stopped looking at her."
+                    mad "He destroyed [mo_r] without lifting a finger. He just... stopped looking at her."
                     mad "He pointed at her one night. Laying there, crying, fading."
                     mad "He told me: 'Look at her, Madison. She used to be a luxury import. Now she's just used furniture.'"
                     mc_s "Jesus..."
 
                     show ep06_madisoncamera55
-                    mad "He taught me basic economics, brother."
-                    mad "Mom was a depreciating asset. Once her beauty faded, her value dropped to zero."
+                    mad "He taught me basic economics, [br_full_r_low]."
+                    mad "[mo_r] was a depreciating asset. Once her beauty faded, her value dropped to zero."
                     mc_s "That's horrible."
                     mad "That's reality. Michael didn't invent the market, he just stopped paying rent."
                     mad "I decided I'd never be a tenant, not for you, not for anyone."
@@ -2788,7 +2797,7 @@ label ep06_madison_traingame:
             mc_s "What did Michael do to you the night you stopped being good?"
 
             show ep06_madisoncamera53
-            mad "He showed me that Mom was disposable. And that I would be too."
+            mad "He showed me that [mo_r] was disposable. And that I would be too."
 
     else:
         # FALSE PATH - MC asks if Michael taught Madison to use sex as leverage
@@ -2798,7 +2807,7 @@ label ep06_madison_traingame:
                 "Did Michael teach you to use sex as leverage?":
                     hide screen walkthrough_screen
                     show ep06_madisoncamera53
-                    mad "Not directly. But through Mom."
+                    mad "Not directly. But through [mo_r]."
                     mc_s "Explain."
                     mad "He made me see that women have an expiration date."
                     mad "Once desire fades, you're trash. I decided never to be trash."
@@ -2814,7 +2823,7 @@ label ep06_madison_traingame:
                     mad "And she traded it all to be a housewife for a man who treated her like spoiled meat."
                     mc_s "So you vowed to be the opposite."
                     mad "I vowed to never kneel."
-                    mad "Mom gave her power to a man. I take power FROM men."
+                    mad "[mo_r] gave her power to a man. I take power FROM men."
                     mad "It's the only way to ensure I don't end up discarded in the corner."
 
                     $ ep06_mc_advantage_points -= 2
@@ -2923,7 +2932,7 @@ label ep06_madison_traingame:
                 mc_s "You asked for a hypothetical."
                 mad "I know men."
                 mc_s "So?"
-                mad "If you really wanted to fuck me, a little thing like 'family' wouldn't have stopped you."
+                mad "If you really wanted to fuck me, a little thing like '[fm_r_low]' wouldn't have stopped you."
                 mad "Men break rules for lust. You didn't."
                 mad "So you don't want me. At all."
 
@@ -3136,13 +3145,14 @@ label ep06_madison_traingame:
                     mad "Being good got me nothing. Being bad... at least I get control."
                     mc_s "Control over what?"
 
+                    $ stopAllSubchannels("music", 2.0)
                     show ep06_madisoncamera69 with fade
                     mad "Over not being hurt again."
                     mc_t "The good girl isn't gone. She's just armored."
 
                 "If you could kill Michael and get away with it, would you?":
                     hide screen walkthrough_screen
-                    mc_s "If you could kill Dad and get away with it, would you?"
+                    mc_s "If you could kill [da_r] and get away with it, would you?"
                     mad "Are you serious?"
                     mc_s "Dead serious. Would you end him?"
                     mad "I don't know."
@@ -3156,6 +3166,7 @@ label ep06_madison_traingame:
                     mc_s "So you wouldn't kill him?"
                     mad "Only if he hurt Nanami."
 
+                    $ stopAllSubchannels("music", 2.0)
                     show ep06_madisoncamera69 with fade
                     mc_s "Not for yourself—for Nanami."
                     mad "I told you. I don't feel anything for him."
@@ -3175,6 +3186,7 @@ label ep06_madison_traingame:
             mad "Being good got me nothing. Being bad... at least I get control."
             mc_s "Control over what?"
 
+            $ stopAllSubchannels("music", 2.0)
             show ep06_madisoncamera69 with fade
             mad "Over not being hurt again."
             mc_t "The good girl isn't gone. She's just armored."
@@ -3196,6 +3208,7 @@ label ep06_madison_traingame:
                     mad "Calling it a reflex makes me a victim. Choosing it makes me the villain."
                     mc_s "And you prefer being the villain."
 
+                    $ stopAllSubchannels("music", 2.0)
                     show ep06_madisoncamera69 with fade
                     mad "Villains have more fun. And they live longer."
                     mc_t "She wears the villainy like a shield."
@@ -3213,6 +3226,7 @@ label ep06_madison_traingame:
                     mad "It IS me. If I take it off, there's no skin underneath."
                     mad "Just raw nerves."
 
+                    $ stopAllSubchannels("music", 2.0)
                     show ep06_madisoncamera69 with fade
                     mc_s "That sounds lonely."
                     mad "It's safe."
@@ -3230,12 +3244,27 @@ label ep06_madison_traingame:
             mad "Calling it a reflex makes me a victim. Choosing it makes me the villain."
             mc_s "And you prefer being the villain."
 
+            $ stopAllSubchannels("music", 2.0)
             show ep06_madisoncamera69 with fade
             mad "Villains have more fun. And they live longer."
             mc_t "She wears the villainy like a shield."
 
 
     # Platform Scene - Final Choice
+    $ stopAllSubchannels("amb", 2.0)
+
+    scene eigengrau
+    pause 1.0
+
+    $ playAudio(trainstationquiet, "amb", 1, True, 2)
+    $ setChannelVolume("amb", 1, 1.0)
+    $ playAudio(stationamb, "amb", 2, False, 2)
+    $ setChannelVolume("amb", 2, 0.5)
+    $ playAudio(hallwalkfemale, "sfx", 2, True, 5)
+    $ setChannelVolume("sfx", 2, 0.5)
+    $ playAudio(hallwalkmale, "sfx", 3, True, 5)
+    $ setChannelVolume("sfx", 3, 0.5)
+
     show ep06_madisoncamera70 with fade
     mad "My studio's just two blocks from here. Second floor, above a convenience store."
     mc_s "I have a briefing."
@@ -3245,7 +3274,7 @@ label ep06_madison_traingame:
     if ep06_madison_path == "love":
         mad "Just ten minutes... My equipment is heavy."
         mc_s "Is that really what you need?"
-        mad "And... I don't want to be alone in that studio today. Please, Big Brother?"
+        mad "And... I don't want to be alone in that studio today. Please, Big [br_full_r]?"
         mc_t "There it is. The weaponized innocence."
 
     elif ep06_madison_path == "corruption":
@@ -3263,16 +3292,11 @@ label ep06_madison_traingame:
 
     jump ep06_madison_station_proposal
 
+
 # Madison's final proposal at the station
 label ep06_madison_station_proposal:
-    # Note: ep06_madisoncamera71 is already shown from previous label
-    # This is the station exit scene (e6_madisonintro_16)
-
-    # Madison's attitude varies based on:
-    # 1. Lies detected (0, 1-2, 3+)
-    # 2. Chosen path (love, corruption, neutral)
-    # 3. Whether they had sex in ep05 (ep05_confrontation_peaceful)
-
+    $ stopAllSubchannels("sfx", 2.0)
+    
     show ep06_madisoncamera71
 
     if ep06_mc_lies_detected >= 3:
@@ -3392,7 +3416,6 @@ label ep06_madison_station_proposal:
                 mad "After what happened between us..."
                 mad "My studio's two blocks away. Come with me?"
                 mad "Just ten minutes. I... I don't want to be alone right now."
-                mc_t "She sounds like a little girl now."
             else:
                 # MC threatened her in ep05, MC lied 0 times, love path
                 mad "You were honest with me. Even when it hurt."
@@ -3408,14 +3431,12 @@ label ep06_madison_station_proposal:
                 mad "Broken. Twisted. And completely honest about it."
                 mad "That night proved it. This train ride confirmed it."
                 mad "My studio. Now."
-                mc_t "This isn't a question. It's a summons."
             else:
                 # MC threatened her in ep05, MC lied 0 times, corruption path
                 mad "We both know what we are now."
                 mad "Broken. Complicated."
                 mad "You threatened me that night. But today you showed me your true face."
                 mad "My studio. Now."
-                mc_t "She likes what she saw. The darkness recognizes the darkness."
 
         else:  # neutral
             if ep05_confrontation_peaceful:
@@ -3481,5 +3502,4 @@ label ep06_madison_station_proposal:
             else:
                 mc_t "She doesn't look surprised. Just... resigned."
 
-            jump ep06_madison_rejection
             jump ep06_madison_rejection
