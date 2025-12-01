@@ -31,7 +31,7 @@ init python:
                 {
                     "option_num": 1,
                     "char_name": "Amber",
-                    "extra_text": "Corruption path (requires high corruption with Amber and a good relationship)"
+                    "extra_text": "Corruption path (requires high corruption with Amber and a good relationship). ACHIEVEMENT: Unlocks 'Schoolgirl's Secret'"
                 },
                 {"option_num": 2, "char_name": "Amber", "extra_text": "Playful response, no stat changes"},
                 {"option_num": 3, "char_name": "Amber", "points": 2, "type": "Love"},
@@ -48,7 +48,7 @@ init python:
                 {
                     "option_num": 1,
                     "char_name": "Amber",
-                    "extra_text": "Love path (requires high trust with Amber and a good relationship)"
+                    "extra_text": "Love path (requires high trust with Amber and a good relationship). ACHIEVEMENT: Unlocks 'Gothic Temptation'"
                 },
                 {
                     "option_num": 2,

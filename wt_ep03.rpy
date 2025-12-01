@@ -72,7 +72,7 @@ init python:
         # Amber room and sleep scenes
         "ep03_amberroom_menu": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "points": 2, "type": "Love"},
+                {"option_num": 1, "char_name": "Amber", "points": 2, "type": "Love", "extra_text": "ACHIEVEMENT: Get the sweater. If you have sex with Amber later, unlocks 'Silken Secrets'"},
                 {
                     "option_num": 2,
                     "char_name": "Amber",
@@ -80,15 +80,16 @@ init python:
                     "type": "Love",
                     "additional_effects": [
                         {"points": 5, "type": "Corruption"}
-                    ]
+                    ],
+                    "extra_text": "ACHIEVEMENT: Bring only underwear. If you have sex with Amber later, unlocks 'Passion's Price'"
                 }
             ])
         },
-        
+
         "ep03_ambersleep_menu": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "points": 3, "type": "Love"},
-                {"option_num": 2, "char_name": "Amber", "extra_text": "will skip several sex scenes involving Amber"}
+                {"option_num": 1, "char_name": "Amber", "points": 3, "type": "Love", "extra_text": "This choice opens Amber's intimate scenes and possible achievements"},
+                {"option_num": 2, "char_name": "Amber", "extra_text": "will skip several sex scenes involving Amber and block achievements"}
             ])
         },
         
