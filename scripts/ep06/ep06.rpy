@@ -711,7 +711,7 @@ label ep06_mornwithamber:
 
     $ show_walkthrough("ep06_amber_first_decision_menu")
     menu:
-        "[Corruption] Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 10:
+        "[Corruption] Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 20:
             hide screen walkthrough_screen
             mc_s "Show me what you were doing."
 

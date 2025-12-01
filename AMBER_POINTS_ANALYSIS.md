@@ -2,13 +2,15 @@
 
 ## RESUMEN EJECUTIVO
 
-**¿Es posible obtener trust >= 35 Y cor >= 10?**
+**¿Es posible obtener trust >= 35 Y cor >= 20?**
 
 ✅ **SÍ, ES COMPLETAMENTE POSIBLE**
 
 - Máximo Trust alcanzable: **50 puntos**
 - Máximo Cor alcanzable: **40.5 puntos**
 - Ruta Balance óptima: **41 trust + 40.5 cor**
+
+**NOTA**: El threshold de corruption fue ajustado de 10 a 20 para mejor balance del juego.
 
 ---
 
@@ -188,7 +190,7 @@ Según `scripts/systems/core.rpy`:
 
 ## CONCLUSIONES
 
-### ¿Es posible obtener trust >= 35 Y cor >= 10?
+### ¿Es posible obtener trust >= 35 Y cor >= 20?
 
 **✅ SÍ, CON LA RUTA BALANCE:**
 
@@ -203,21 +205,21 @@ TOTAL: 41 trust + 40.5 cor
 
 **Resultado:**
 - ✅ Trust = 41 >= 35 **(SOBRAN 6 PUNTOS)**
-- ✅ Cor = 40.5 >= 10 **(SOBRAN 30.5 PUNTOS)**
+- ✅ Cor = 40.5 >= 20 **(SOBRAN 20.5 PUNTOS)**
 
 ### Margen de Error
 
 El jugador puede perder:
-- Hasta **6 puntos de trust** y aún alcanzar threshold
-- Hasta **30.5 puntos de cor** y aún alcanzar threshold
+- Hasta **6 puntos de trust** y aún alcanzar threshold (permite ~12% error)
+- Hasta **20.5 puntos de cor** y aún alcanzar threshold (permite ~50% error)
 
 ### Recomendaciones
 
-Los thresholds actuales son **PERFECTAMENTE ALCANZABLES**:
-- `rm.get("amber", "trust") >= 35` ✅ **CORRECTO**
-- `rm.get("amber", "cor") >= 10` ✅ **CORRECTO**
+Los thresholds fueron **BALANCEADOS** para mejor game design:
+- `rm.get("amber", "trust") >= 35` ✅ **70% del máximo** - Requiere compromiso con ruta love
+- `rm.get("amber", "cor") >= 20` ✅ **50% del máximo** - Requiere compromiso con ruta corruption
 
-**NO ES NECESARIO CAMBIAR LOS THRESHOLDS.**
+**THRESHOLDS AJUSTADOS PARA MEJOR BALANCE** (cor ajustado de 10 a 20).
 
 Si los jugadores no están alcanzando estos valores, puede deberse a:
 1. Decisiones subóptimas en la historia
@@ -231,10 +233,17 @@ Si los jugadores no están alcanzando estos valores, puede deberse a:
 
 El archivo `scripts/ep06/ep06.rpy` línea 714 muestra:
 ```renpy
-"[Corruption] Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 10:
+"[Corruption] Show me." if ss.get("amber", "strike") == 0 and rm.get("amber", "cor") >= 20:
 ```
 
-Este threshold de **cor >= 10** es totalmente alcanzable con **40.5 puntos** disponibles.
+Y línea 761 muestra:
+```renpy
+"[Love] You see me." if ss.get("amber", "strike") == 0 and rm.get("amber", "trust") >= 35:
+```
+
+Ambos thresholds son **totalmente alcanzables** con los **40.5 cor** y **50 trust** disponibles:
+- **Corruption path**: Requiere 50% del máximo (20/40.5) - Balanceado
+- **Love path**: Requiere 70% del máximo (35/50) - Más estricto, apropiado para ruta emocional
 
 ---
 
