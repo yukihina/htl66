@@ -1059,7 +1059,7 @@ label ep04_amb_sms01:
     mc_nvl "Yeah, that's why I'm asking you"
 
     $ show_walkthrough("ep04_ambsms_m1")
-    show screen menu_button ("1. [Corruption] Take a picture of Nanami", "ep04_amb_sms01_photo", "2. [Love] Convince Amber", "ep04_amb_sms01_convince")
+    show screen menu_button ("1. Take a picture of Nanami", "ep04_amb_sms01_photo", "2. Convince Amber", "ep04_amb_sms01_convince")
 
     amb_nvl "Ugh! Fuck... {outlinecolor=#ffffff00}🙄{/outlinecolor}"
 
@@ -1085,8 +1085,8 @@ label ep04_amb_sms01_photo:
 
 label ep04_amb_sms01_convince:
     hide screen walkthrough_screen
-    $ rm.update("nanami", "trust", 4)
-    $ check_levels("nanami", "trust", 4)
+    $ rm.update("nanami", "trust", 3)
+    $ check_levels("nanami", "trust", 3)
 
     mc_nvl "Come on, Amber"
     mc_nvl "I wouldn't ask if it wasn't important. You know that"
@@ -1153,7 +1153,7 @@ label ep04_amb_sms03:
     amb_nvl "I'm planning a special stream tonight and I can't decide what to wear"
 
     $ show_walkthrough("ep04_ambsms_m2")
-    show screen menu_button ("1. [Love] Accept", "ep04_amb_sms03_yes", "2. [Reject] Deny", "ep04_amb_sms03_no")
+    show screen menu_button ("1. Accept", "ep04_amb_sms03_yes", "2. Deny", "ep04_amb_sms03_no")
 
     amb_nvl "Think you could help a girl out? {outlinecolor=#ffffff00}😏{/outlinecolor}"
 
@@ -1867,7 +1867,7 @@ label ep04_paz_sms:
     mc_nvl "..."
 
     $ show_walkthrough("ep04_pazsms_m1")
-    show screen menu_button ("1. [Corruption] Text something naughty", "ep04_paz_sms1c", "2. [Love] Text something friendly", "ep04_paz_sms_1t")
+    show screen menu_button ("1. Text something naughty", "ep04_paz_sms1c", "2. Text something friendly", "ep04_paz_sms_1t")
 
     paz_nvl "Cat got your tongue? {outlinecolor=#ffffff00}😏{/outlinecolor}"
 
@@ -1940,7 +1940,7 @@ label ep04_paz_sms_2:
         $ show_walkthrough("ep04_pazsms_m2_p1")
     elif ep04_pazpath == 2:
         $ show_walkthrough("ep04_pazsms_m2_p2")
-    show screen menu_button ("1. [Corruption] Accept", "ep04_paz_sms_2y", "2. [Reject] Don't wanna see", "ep04_paz_sms_2n")
+    show screen menu_button ("1. Accept", "ep04_paz_sms_2y", "2. Don't wanna see", "ep04_paz_sms_2n")
 
     paz_nvl "I know it's not part of the deal, but humor me! {outlinecolor=#ffffff00}😘{/outlinecolor}"
 

@@ -3,8 +3,8 @@ init python:
         # Nanami initial choices
         "ep04_nana_m1": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "extra_text": "wears a bikini"},
-                {"option_num": 2, "char_name": "Nanami", "extra_text": "wears a towel"}
+                {"option_num": 1, "char_name": "Nanami", "extra_text": "wears a bikini. ACHIEVEMENT: This path unlocks 'Innocent Exposure'"},
+                {"option_num": 2, "char_name": "Nanami", "extra_text": "wears a towel. ACHIEVEMENT: This path unlocks 'Gothic Transformation'"}
             ])
         },
 
@@ -17,7 +17,7 @@ init python:
 
         "ep04_nana_m3": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "points": 12, "type": "Love"},
+                {"option_num": 1, "char_name": "Nanami", "points": 9, "type": "Love"},
                 {"option_num": 2, "char_name": "Nanami", "points": -6, "type": "Love"}  # Nanami trust: -2 × 3.0 = -6
             ])
         },
@@ -26,7 +26,7 @@ init python:
         "ep04_ambsms_m1": {
             "nanami": create_wt_text([
                 {"option_num": 1, "char_name": "Nanami", "points": 5, "type": "Corruption"},
-                {"option_num": 2, "char_name": "Nanami", "points": 12, "type": "Love"}
+                {"option_num": 2, "char_name": "Nanami", "points": 9, "type": "Love"}
             ])
         },
 
@@ -73,10 +73,10 @@ init python:
 
         "ep04_nanamad_1": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "points": 12, "type": "Love", "extra_text": "You will side with Nanami"}
+                {"option_num": 1, "char_name": "Nanami", "points": 9, "type": "Love", "extra_text": "You will side with Nanami"}
             ]),
             "madison": create_wt_text([
-                {"option_num": 2, "char_name": "Madison", "points": 5, "type": "Love", "extra_text": "You will side with Madison"}
+                {"option_num": 2, "char_name": "Madison", "points": 10, "type": "Love", "extra_text": "You will side with Madison. ACHIEVEMENT: If you admitted Madison is attractive in EP03, unlocks 'Madison's Ally'"}
             ])
         },
 
@@ -108,7 +108,7 @@ init python:
         # Isabella choices
         "ep04_isa_m1": {
             "isabella": create_wt_text([
-                {"option_num": 1, "char_name": "Isabella", "points": 5, "type": "Love"},
+                {"option_num": 1, "char_name": "Isabella", "points": 5, "type": "Love", "extra_text": "ACHIEVEMENT: If you hugged Isabella in EP03, unlocks 'Complicated Affection'"},
                 {"option_num": 2, "char_name": "Isabella", "points": -2, "type": "Love"}
             ])
         },
@@ -210,7 +210,7 @@ init python:
 
         "ep04_nanamilkmenu": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "points": 3, "type": "Love"},
+                {"option_num": 1, "char_name": "Nanami", "points": 3, "type": "Love", "extra_text": "ACHIEVEMENT: Drinking with Nanami leads to dream sequence and unlocks 'Dream Walker'"},
                 {"option_num": 2, "char_name": "Nanami", "points": 6, "type": "Love"}  # Nanami trust: 2 × 3.0 = 6
             ])
         },
@@ -322,10 +322,11 @@ init python:
                     "type": "Love",
                     "additional_effects": [
                         {"points": 2, "type": "Corruption"}
-                    ]
+                    ],
+                    "extra_text": "ACHIEVEMENT: Cumming on Amber's breasts unlocks 'Midnight Snack'"
                 },
                 {
-                    "option_num": 1,
+                    "option_num": 2,
                     "char_name": "Amber",
                     "points": -2,
                     "type": "Love",
@@ -391,7 +392,7 @@ init python:
                 {
                     "option_num": 1,
                     "char_name": "Madison",
-                    "points": -2,
+                    "points": -6,
                     "type": "Love",
                     "additional_effects": [
                         {"points": 2, "type": "Corruption"}
@@ -400,11 +401,12 @@ init python:
                 {
                     "option_num": 2,
                     "char_name": "Madison",
-                    "points": 2,
+                    "points": 6,
                     "type": "Love",
                     "additional_effects": [
                         {"points": 4, "type": "Corruption"}
-                    ]
+                    ],
+                    "extra_text": "ACHIEVEMENT: Obeying Madison fully unlocks 'Good Boy's Reward'"
                 },
             ])
         },
@@ -449,7 +451,7 @@ init python:
 
         "ep04_eligolmenu": {
             "elizabeth": create_wt_text([
-                {"option_num": 1, "char_name": "Elizabeth", "points": 2, "type": "Love", "extra_text": "Warning: Pissing content"}
+                {"option_num": 1, "char_name": "Elizabeth", "points": 2, "type": "Love", "extra_text": "Warning: Pissing content. ACHIEVEMENT: Staying with Elizabeth unlocks 'Midnight Care'"}
             ])
         },
 

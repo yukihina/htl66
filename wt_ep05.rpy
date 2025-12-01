@@ -4,15 +4,15 @@ init python:
         "ep05_ambcofmenu": {
             "amber": create_wt_text([
                 {"option_num": 0, "char_name": "Important!", "extra_text": "A strike or clash with Amber gave you this rare scene... Chances to mend are few"},
-                {"option_num": 1, "char_name": "Amber", "points": 4, "type": "Love", "extra_text": "Erases a strike"},
-                {"option_num": 2, "char_name": "Amber", "points": -10, "type": "Love"}
+                {"option_num": 1, "char_name": "Amber", "points": 8, "type": "Love", "extra_text": "Erases a strike"},
+                {"option_num": 2, "char_name": "Amber", "points": -8, "type": "Love"}
             ])
         },
 
         "ep05_ambsexmenu": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "points": 4, "type": "Corruption"},  # Amber cor: 3 × 1.5 = 4.5 → round() = 4
-                {"option_num": 2, "char_name": "Amber", "points": -4, "type": "Corruption"}  # Amber cor: -3 × 1.5 = -4.5 → round() = -4
+                {"option_num": 1, "char_name": "Amber", "points": 5, "type": "Corruption"},  # Amber cor: 3 × 1.5 = 4.5 → round() = 5
+                {"option_num": 2, "char_name": "Amber", "points": -5, "type": "Corruption"}  # Amber cor: -3 × 1.5 = -4.5 → round() = -5
             ])
         },
 
@@ -22,11 +22,12 @@ init python:
                 {
                     "option_num": 2,
                     "char_name": "Isabella",
-                    "points": 4,
+                    "points": 3,
                     "type": "Love",
                     "additional_effects": [
                         {"points": -1, "type": "Corruption"}
-                    ]
+                    ],
+                    "extra_text": "ACHIEVEMENT: Choose this and similar pure options in all 4 cosplay scenes to unlock 'Pure Cosplayer'"
                 },
                 {
                     "option_num": 3,
@@ -34,8 +35,9 @@ init python:
                     "points": -1,
                     "type": "Love",
                     "additional_effects": [
-                        {"points": 4, "type": "Corruption"}
-                    ]
+                        {"points": 3, "type": "Corruption"}
+                    ],
+                    "extra_text": "ACHIEVEMENT: Choose this and similar corruption options in all 4 cosplay scenes to unlock 'Corrupted Cosplay'"
                 }
             ])
         },
@@ -132,7 +134,7 @@ init python:
 
         "ep05_2nd_elipst4": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "extra_text": "Amber will witness this scene, becoming suspicious of Elizabeth's behavior toward you"},
+                {"option_num": 1, "char_name": "Amber", "extra_text": "Amber will witness this scene, becoming suspicious of Elizabeth's behavior toward you. ACHIEVEMENT: Unlocks 'Forbidden Triangle'"},
                 {"option_num": 2, "char_name": "Amber", "extra_text": "You'll reject this before Amber arrives. She won't see what Elizabeth was trying to do"}
             ])
         },
@@ -155,8 +157,8 @@ init python:
 
         "ep05_2nd_paz": {
             "mc": create_wt_text([
-                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+10 Integrity to Darkness"},
-                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+10 Integrity to Light"}
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+8 Integrity to Darkness"},
+                {"option_num": 2, "char_name": "[mc_name]", "extra_text": "+8 Integrity to Light"}
             ])
         },
 
@@ -176,7 +178,7 @@ init python:
 
         "ep05_2nd_mnbath3": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "points": -10, "type": "Love",  "extra_text": "You will get a strike!"},
+                {"option_num": 1, "char_name": "Nanami", "points": -10, "type": "Love",  "extra_text": "You will get a strike! ACHIEVEMENT: Getting exactly 1 strike with Nanami unlocks 'Seductive Betrayal'"},
                 {"option_num": 2, "char_name": "Nanami", "points": 10, "type": "Love"}
             ])
         },
@@ -204,8 +206,8 @@ init python:
 
         "ep05_hosnan_m4": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": 2, "type": "Love"},
-                {"option_num": 2, "char_name": "Madison", "points": -2, "type": "Love"}
+                {"option_num": 1, "char_name": "Madison", "points": 6, "type": "Love"},
+                {"option_num": 2, "char_name": "Madison", "points": -6, "type": "Love"}
             ])
         },
 
@@ -220,13 +222,13 @@ init python:
         "ep05_hosmad_m1": {
             "madison": create_wt_text([
                 {"option_num": 1, "char_name": "Madison", "points": 1, "type": "Love"},
-                {"option_num": 2, "char_name": "Madison", "points": -2, "type": "Love",  "extra_text": "You will skip sex scenes!"}
+                {"option_num": 2, "char_name": "Madison", "points": -6, "type": "Love",  "extra_text": "You will skip sex scenes!"}
             ])
         },
 
         "ep05_hosmad_m2": {
             "madison": create_wt_text([
-                {"option_num": 1, "char_name": "Madison", "points": -2, "type": "Love"}
+                {"option_num": 1, "char_name": "Madison", "points": -6, "type": "Love"}
             ])
         },
 
@@ -252,7 +254,7 @@ init python:
                     "points": 2,
                     "type": "Love",
                     "additional_effects": [
-                        {"points": 4, "type": "Corruption"}
+                        {"points": 3, "type": "Corruption"}
                     ]
                 },
                 {"option_num": 2, "char_name": "Paz", "points": -2, "type": "Corruption"},
@@ -269,17 +271,17 @@ init python:
 
         "ep05_hosamb_m2": {
             "amber": create_wt_text([
-                {"option_num": 1, "char_name": "Amber", "points": 6, "type": "Love"},
+                {"option_num": 1, "char_name": "Amber", "points": 8, "type": "Love"},
                 {
                     "option_num": 2,
                     "char_name": "Amber",
                     "points": 2,
                     "type": "Love",
                     "additional_effects": [
-                        {"points": 4, "type": "Corruption"}
+                        {"points": 5, "type": "Corruption"}
                     ]
                 },
-                {"option_num": 3, "char_name": "Amber", "points": -6, "type": "Love",  "extra_text": "You will get a strike and skip sex scenes!"}
+                {"option_num": 3, "char_name": "Amber", "points": -8, "type": "Love",  "extra_text": "You will get a strike and skip sex scenes!"}
             ])
         },
 
@@ -293,8 +295,8 @@ init python:
 
         "ep05_elid_m2": {
             "elizabeth": create_wt_text([
-                {"option_num": 1, "char_name": "Elizabeth", "extra_text": "It won't change any score"},
-                {"option_num": 2, "char_name": "Elizabeth", "points": 1, "type": "Corruption"},
+                {"option_num": 1, "char_name": "Elizabeth", "extra_text": "It won't change any score. ACHIEVEMENT: Accumulate 3+ guilt points in this dream sequence to unlock 'Conflicted Desires'"},
+                {"option_num": 2, "char_name": "Elizabeth", "points": 1, "type": "Corruption", "extra_text": "ACHIEVEMENT: Accumulate 3+ curiosity points in this dream sequence to unlock 'Uninhibited Exploration'"},
                 {"option_num": 3, "char_name": "Elizabeth", "points": -1, "type": "Corruption"}
             ])
         },
@@ -349,7 +351,7 @@ init python:
 
         "ep05_mcmic_m4": {
             "mc": create_wt_text([
-                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+12 Integrity to Darkness"},
+                {"option_num": 1, "char_name": "[mc_name]", "extra_text": "+8 Integrity to Darkness"},
                 {"option_num": 2, "char_name": "[mc_name]", "extra_text": "It won't change any score"},
                 {"option_num": 3, "char_name": "[mc_name]", "extra_text": "+8 Integrity to Light"}
             ])

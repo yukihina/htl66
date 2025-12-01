@@ -213,8 +213,8 @@ label ep05_elisuicide:
             nana "But Madison says all close friends do this kind of stuff together."
             mc_s "Madison's wrong about that."
 
-            $ rm.update("madison", "trust", 4)
-            $ check_levels("madison", "trust", 4)
+            $ rm.update("madison", "trust", 3)
+            $ check_levels("madison", "trust", 3)
         "[Truth] What Madison does isn't okay":
             hide screen walkthrough_screen
             $ ep05_madison_is_bad = True
@@ -225,8 +225,8 @@ label ep05_elisuicide:
             nana "But Madison says this is how all girlfriends bond."
             mc_s "Madison's manipulating you when she says stuff like that."
 
-            $ rm.update("madison", "trust", -4)
-            $ check_levels("madison", "trust", -4)
+            $ rm.update("madison", "trust", -3)
+            $ check_levels("madison", "trust", -3)
     $ stopAudio("music", 3, 2)
     nana "But you're my friend too, right? And you never make me do that stuff!"
     mc_s "Exactly. That's how healthy friendships work."
@@ -387,8 +387,8 @@ label ep05_hosmadison:
             mad "At least I'm honest about what I want."
             mc_s "You're grooming her. Using her trust."
             mad "And what are you doing? Playing the hero while getting your rocks off?"
-            $ rm.update("madison", "trust", -4)
-            $ check_levels("madison", "trust", -4)
+            $ rm.update("madison", "trust", -3)
+            $ check_levels("madison", "trust", -3)
     $ setChannelVolume("sfx", 2, 0.7, 0)
     $ playAudio(sfx_punch, "sfx", 2, False, 0, 0)
 
@@ -727,7 +727,7 @@ label ep05_hosmadison:
     mad "We understand each other now, right? Nanami is mine. You stay away from her."
     $ show_walkthrough("ep05_hosmad_m4")
     menu:
-        "[Love] Accept defeat":
+        "Accept defeat":
             hide screen walkthrough_screen
             $ ep05_stance_surrender = True
 
@@ -737,7 +737,7 @@ label ep05_hosmadison:
             mad "Hurt her? I just sacrificed my body to protect her."
             $ rm.update("madison", "trust", 10)
             $ check_levels("madison", "trust", 10)
-        "[Reject] Challenge Madison":
+        "Challenge Madison":
             hide screen walkthrough_screen
             $ ep05_stance_surrender = False
 
@@ -912,7 +912,7 @@ label ep05_hospaz_vc:
 
     $ show_walkthrough("ep05_hospaz_m1")
     menu:
-        "[Corruption] Help her learn":
+        "Help her learn":
             $ ep05_paz_choice = 1
             hide screen walkthrough_screen
             show ep05_hosd2_paz14 at scale_down
@@ -925,8 +925,8 @@ label ep05_hospaz_vc:
 
             $ rm.update("paz", "trust", 2)
             $ check_levels("paz", "trust", 2)
-            $ rm.update("paz", "cor", 4)
-            $ check_levels("paz", "cor", 4)
+            $ rm.update("paz", "cor", 3)
+            $ check_levels("paz", "cor", 3)
 
             show ep05_hosd2_paz17 at scale_down
             mc_s "Eye contact is important. Don't look away when you want something."
@@ -950,7 +950,7 @@ label ep05_hospaz_vc:
             mc_s "Part of it. The physical stuff is easy."
             pa_s "I think I'm starting to get it."
             mc_t "Yeah, me too."
-        "[Reject] This isn't a good idea":
+        "This isn't a good idea":
             $ ep05_paz_choice = 2
             hide screen walkthrough_screen
             $ stopAudio("music", 1, 2)
@@ -973,7 +973,7 @@ label ep05_hospaz_vc:
             pa_s "Same fucking difference."
             mc_s "If he keeps pushing, we'll deal with it together."
             pa_s "Right. Partners."
-        "[Love] You don't need to change":
+        "You don't need to change":
             $ ep05_paz_choice = 3
             hide screen walkthrough_screen
             show ep05_hosd2_paz16 at scale_down
@@ -1239,8 +1239,8 @@ label ep05_hosamber:
             amb "God, you're going to make me cry."
             mc_s "Good tears or bad tears?"
             amb "Good tears, you idiot."
-            $ rm.update("amber", "trust", 6)
-            $ check_levels("amber", "trust", 6)
+            $ rm.update("amber", "trust", 5)
+            $ check_levels("amber", "trust", 5)
         "Be passionate and intense":
             hide screen walkthrough_screen
             $ ep05_amber_route = 2
@@ -1279,8 +1279,8 @@ label ep05_hosamber:
                 $ show_custom_notification("strike2")
             elif ss.get("amber", "strike") >= 3:
                 $ show_custom_notification("strike3")
-            $ rm.update("amber", "trust", -6)
-            $ check_levels("amber", "trust", -6)
+            $ rm.update("amber", "trust", -5)
+            $ check_levels("amber", "trust", -5)
             $ stopAllSubchannels("sfx", 2)
             $ stopAllSubchannels("amb", 2)
             jump ep05_elidream
@@ -2429,7 +2429,7 @@ label ep05_hosfinal:
     menu:
         "[Darkness] Threaten to take matters into your own hands":
             hide screen walkthrough_screen
-            $ rm.update("mc", "integrity", -12)
+            $ rm.update("mc", "integrity", -8)
 
             mc_s "I'll handle this myself. You won't get away with this."
             mic "Handle it yourself? Like you handled that arrest in Osaka?"
