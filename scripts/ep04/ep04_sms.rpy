@@ -1085,8 +1085,8 @@ label ep04_amb_sms01_photo:
 
 label ep04_amb_sms01_convince:
     hide screen walkthrough_screen
-    $ rm.update("nanami", "trust", 4)
-    $ check_levels("nanami", "trust", 4)
+    $ rm.update("nanami", "trust", 3)
+    $ check_levels("nanami", "trust", 3)
 
     mc_nvl "Come on, Amber"
     mc_nvl "I wouldn't ask if it wasn't important. You know that"

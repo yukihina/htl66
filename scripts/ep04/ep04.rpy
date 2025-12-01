@@ -639,8 +639,8 @@ label ep04_nanpool2:
         mc_t "What should I say?"
         "Accept her request":
             hide screen walkthrough_screen
-            $ rm.update("nanami", "trust", 4)
-            $ check_levels("nanami", "trust", 4)
+            $ rm.update("nanami", "trust", 3)
+            $ check_levels("nanami", "trust", 3)
             $ ep04_nanadad = True
 
             mc_s "I would be honored."
@@ -1277,8 +1277,8 @@ label ep04_nantowel2:
         mc_t "This is... unexpected. How do I handle this?"
         "Accept her request":
             hide screen walkthrough_screen
-            $ rm.update("nanami", "trust", 4)
-            $ check_levels("nanami", "trust", 4)
+            $ rm.update("nanami", "trust", 3)
+            $ check_levels("nanami", "trust", 3)
             $ ep04_nanadad = True
 
             mc_s "I would be honored."
@@ -1417,8 +1417,8 @@ label ep04_madcaught:
         "Defend Nanami":
             hide screen walkthrough_screen
             $ ep04_madpath += 1
-            $ rm.update("nanami", "trust", 4)
-            $ check_levels("nanami", "trust", 4)
+            $ rm.update("nanami", "trust", 3)
+            $ check_levels("nanami", "trust", 3)
 
             mc_s "I don't give a damn. You don't get to treat her like dirt."
 
@@ -1428,8 +1428,8 @@ label ep04_madcaught:
         "Make peace with Madison":
             hide screen walkthrough_screen
             $ ep04_madpath += 2
-            $ rm.update("madison", "trust", 10)
-            $ check_levels("madison", "trust", 10)
+            $ rm.update("madison", "trust", 5)
+            $ check_levels("madison", "trust", 5)
             jump ep04_madcaught_agree
 
 
@@ -6475,8 +6475,8 @@ label ep04_mad_assjob:
             mad "Did you just- Are you fucking serious?"
             mc_s "You offered."
             mad "You weren't supposed to actually do it!"
-            $ rm.update("madison", "trust", -4)
-            $ check_levels("madison", "trust", -4)
+            $ rm.update("madison", "trust", -3)
+            $ check_levels("madison", "trust", -3)
             $ rm.update("madison", "cor", 1)
             $ check_levels("madison", "cor", 1)
 
@@ -6591,8 +6591,8 @@ label ep04_mad_assjob:
             mc_s "I..."
             mad "Watch carefully."
             show ep04_madassj17 with normalfade
-            $ rm.update("madison", "trust", 4)
-            $ check_levels("madison", "trust", 4)
+            $ rm.update("madison", "trust", 3)
+            $ check_levels("madison", "trust", 3)
             $ rm.update("madison", "cor", 2)
             $ check_levels("madison", "cor", 2)
 

@@ -17,7 +17,7 @@ init python:
 
         "ep04_nana_m3": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "points": 12, "type": "Love"},
+                {"option_num": 1, "char_name": "Nanami", "points": 9, "type": "Love"},
                 {"option_num": 2, "char_name": "Nanami", "points": -6, "type": "Love"}  # Nanami trust: -2 × 3.0 = -6
             ])
         },
@@ -26,7 +26,7 @@ init python:
         "ep04_ambsms_m1": {
             "nanami": create_wt_text([
                 {"option_num": 1, "char_name": "Nanami", "points": 5, "type": "Corruption"},
-                {"option_num": 2, "char_name": "Nanami", "points": 12, "type": "Love"}
+                {"option_num": 2, "char_name": "Nanami", "points": 9, "type": "Love"}
             ])
         },
 
@@ -73,10 +73,10 @@ init python:
 
         "ep04_nanamad_1": {
             "nanami": create_wt_text([
-                {"option_num": 1, "char_name": "Nanami", "points": 12, "type": "Love", "extra_text": "You will side with Nanami"}
+                {"option_num": 1, "char_name": "Nanami", "points": 9, "type": "Love", "extra_text": "You will side with Nanami"}
             ]),
             "madison": create_wt_text([
-                {"option_num": 2, "char_name": "Madison", "points": 5, "type": "Love", "extra_text": "You will side with Madison"}
+                {"option_num": 2, "char_name": "Madison", "points": 10, "type": "Love", "extra_text": "You will side with Madison"}
             ])
         },
 
@@ -391,7 +391,7 @@ init python:
                 {
                     "option_num": 1,
                     "char_name": "Madison",
-                    "points": -2,
+                    "points": -6,
                     "type": "Love",
                     "additional_effects": [
                         {"points": 2, "type": "Corruption"}
@@ -400,7 +400,7 @@ init python:
                 {
                     "option_num": 2,
                     "char_name": "Madison",
-                    "points": 2,
+                    "points": 6,
                     "type": "Love",
                     "additional_effects": [
                         {"points": 4, "type": "Corruption"}

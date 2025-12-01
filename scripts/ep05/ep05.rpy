@@ -405,8 +405,8 @@ label ep05_ambercof:
                 mc_s "I was wrong."
                 amb "Yeah, you were. Don't do it again."
                 amb "... but thanks for saying it."
-                $ rm.update("amber", "trust",4)
-                $ check_levels("amber", "trust", 4)
+                $ rm.update("amber", "trust", 5)
+                $ check_levels("amber", "trust", 5)
                 $ ss.set("amber", "strike", ss.get("amber", "strike") - 1)
                 pass
             "Don't apologize to her":
@@ -416,8 +416,8 @@ label ep05_ambercof:
                 amb "You're blocking the coffee maker."
                 mc_t "Guess she's still mad..."
 
-                $ rm.update("amber", "trust", -10)
-                $ check_levels("amber", "trust", -10)
+                $ rm.update("amber", "trust", -5)
+                $ check_levels("amber", "trust", -5)
                 $ setChannelVolume("sfx", 2, 0.7, 0)
                 $ playAudio(sfx_coffee_mkr, "sfx", 2, False, 1, 0)
 
@@ -867,8 +867,8 @@ label ep05_isacos:
             mc_s "You know I can't say no when you look at me like that."
             mc_t "When did she learn to be so manipulative..."
 
-            $ rm.update("isabella", "trust", 4)
-            $ check_levels("isabella", "trust", 4)
+            $ rm.update("isabella", "trust", 3)
+            $ check_levels("isabella", "trust", 3)
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
@@ -908,8 +908,8 @@ label ep05_isacos:
 
             $ rm.update("isabella", "trust", -1)
             $ check_levels("isabella", "trust", -1)
-            $ rm.update("isabella", "cor", 4)
-            $ check_levels("isabella", "cor", 4)
+            $ rm.update("isabella", "cor", 3)
+            $ check_levels("isabella", "cor", 3)
             $ ep05_isacosplay -= 1
 
     show ep05_isaintro32 with slowfade
@@ -935,8 +935,8 @@ label ep05_isacos:
             isa "Yes... perfect... you're good at this..."
             mc_t "Almost done..."
 
-            $ rm.update("isabella", "trust", 4)
-            $ check_levels("isabella", "trust", 4)
+            $ rm.update("isabella", "trust", 3)
+            $ check_levels("isabella", "trust", 3)
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
@@ -960,8 +960,8 @@ label ep05_isacos:
 
             $ rm.update("isabella", "trust", -1)
             $ check_levels("isabella", "trust", -1)
-            $ rm.update("isabella", "cor", 4)
-            $ check_levels("isabella", "cor", 4)
+            $ rm.update("isabella", "cor", 3)
+            $ check_levels("isabella", "cor", 3)
             $ ep05_isacosplay -= 1
     scene eigengrau with slowfade
     show ep05_isaintro40
@@ -991,8 +991,8 @@ label ep05_isacos:
             isa "The other one needs the same... keep them even..."
             mc_t "Focus on the task, not her legs..."
 
-            $ rm.update("isabella", "trust", 4)
-            $ check_levels("isabella", "trust", 4)
+            $ rm.update("isabella", "trust", 3)
+            $ check_levels("isabella", "trust", 3)
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
@@ -1014,8 +1014,8 @@ label ep05_isacos:
 
             $ rm.update("isabella", "trust", -1)
             $ check_levels("isabella", "trust", -1)
-            $ rm.update("isabella", "cor", 4)
-            $ check_levels("isabella", "cor", 4)
+            $ rm.update("isabella", "cor", 3)
+            $ check_levels("isabella", "cor", 3)
             $ ep05_isacosplay -= 1
     scene eigengrau with slowfade
     show ep05_isaintro45 at ken_burns_corner_to_corner3 with vpunch
@@ -1041,8 +1041,8 @@ label ep05_isacos:
             isa "Help me step into it..."
             mc_t "Just like a regular skirt..."
 
-            $ rm.update("isabella", "trust", 4)
-            $ check_levels("isabella", "trust", 4)
+            $ rm.update("isabella", "trust", 3)
+            $ check_levels("isabella", "trust", 3)
             $ rm.update("isabella", "cor", -1)
             $ check_levels("isabella", "cor", -1)
             $ ep05_isacosplay += 1
@@ -1064,8 +1064,8 @@ label ep05_isacos:
 
             $ rm.update("isabella", "trust", -1)
             $ check_levels("isabella", "trust", -1)
-            $ rm.update("isabella", "cor", 4)
-            $ check_levels("isabella", "cor", 4)
+            $ rm.update("isabella", "cor", 3)
+            $ check_levels("isabella", "cor", 3)
             $ ep05_isacosplay -= 1
 
     show ep05_isaintro50 with normalfade
@@ -2103,11 +2103,11 @@ label ep05_pazvc:
     menu:
         "Support stealing evidence":
             hide screen walkthrough_screen
-            $ rm.update("mc", "integrity", -10)
+            $ rm.update("mc", "integrity", -8)
             $ ep05_integrity_choice = "negative"
         "Insist on legal methods":
             hide screen walkthrough_screen
-            $ rm.update("mc", "integrity", 10)
+            $ rm.update("mc", "integrity", 8)
             $ ep05_integrity_choice = "positive"
     # Final sequence with different dialogues based on choice
     show ep05_callpz22 at scale_down

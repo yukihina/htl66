@@ -107,8 +107,8 @@ label ep03_isatalk:
         "Comfort Isabella with a hug":
             hide screen walkthrough_screen
             $ ep03_isahug = True
-            $ rm.update("isabella", "trust", 5)
-            $ check_levels("isabella", "trust", 5)
+            $ rm.update("isabella", "trust", 3)
+            $ check_levels("isabella", "trust", 3)
             isa "You're too shy, [da_r]. If you won't hug me, I'll hug you."
             mc_s "U-um, it's not that, I-- Well... Okay, you can."
 
@@ -383,8 +383,8 @@ label ep03_madtalk:
         "Admit that Madison is attractive":
             hide screen walkthrough_screen
             $ ep03_madtalk = True
-            $ rm.update("madison", "trust", 10)
-            $ check_levels("madison", "trust", 10)
+            $ rm.update("madison", "trust", 5)
+            $ check_levels("madison", "trust", 5)
 
             mc_s "Yeah, you're beautiful, Madison. You take after [mo_r]."
             mad "So,  would you fuck me if I weren't your [si_full_r_low]?"
@@ -730,8 +730,8 @@ label ep03_reunion_stay1:
         mc_t "Should I say anything else to her?"
         "Tell her to stay":
             hide screen walkthrough_screen
-            $ rm.update("amber", "trust", 5)
-            $ check_levels("amber", "trust", 5)
+            $ rm.update("amber", "trust", 3)
+            $ check_levels("amber", "trust", 3)
 
             mc_s "It's okay. We're both stressed, and you're still upset about the past."
             amb "So, you're not mad at me for bringing this up?"
@@ -742,8 +742,8 @@ label ep03_reunion_stay1:
 
         "Tell her to leave":
             hide screen walkthrough_screen
-            $ rm.update("amber", "trust", -5)
-            $ check_levels("amber", "trust", -5)
+            $ rm.update("amber", "trust", -3)
+            $ check_levels("amber", "trust", -3)
             $ ep03_amberleft = True
             $ ep03_amberpastbehind = True
 
@@ -883,8 +883,8 @@ label ep03_reunion_stay2:
 
         "Decline Amber's invitation to the pool":
             hide screen walkthrough_screen
-            $ rm.update("amber", "trust", -15)
-            $ check_levels("amber", "trust", -15)
+            $ rm.update("amber", "trust", -5)
+            $ check_levels("amber", "trust", -5)
             $ ep03_amberstrike = True
 
             mc_s "I don't think so Amber, I can't do this."
@@ -1484,8 +1484,8 @@ label ep03_amberclothes:
         "Get the sweater":
             hide screen walkthrough_screen
             $ ep03_ambclothes += 2
-            $ rm.update("amber", "trust", 5)
-            $ check_levels("amber", "trust", 5)
+            $ rm.update("amber", "trust", 2)
+            $ check_levels("amber", "trust", 2)
 
             mc_t "Nah, better not. I'm an asshole, but not THAT much of an asshole."
             mc_t "Anyway, I better hurry or else she's gonna kill me."
@@ -1597,8 +1597,8 @@ label ep03_ambernite:
         mc_t "Huh? Does she want me to ask her to stay here?"
         "Invite Amber to spend the night":
             hide screen walkthrough_screen
-            $ rm.update("amber", "trust", 5)
-            $ check_levels("amber", "trust", 5)
+            $ rm.update("amber", "trust", 3)
+            $ check_levels("amber", "trust", 3)
 
             mc_s "I can make some space for you here, if you want to sleep together."
             amb "You mean...?"
