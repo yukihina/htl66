@@ -810,7 +810,7 @@ label ep05_hospaz:
 label ep05_hospaz_vc:
     show ep05_hosd2_paz02 at focus_shift_sms
     pause 1.0
-    $ stopAudio ("sfx", 1, 1)
+    $ stopAudio("sfx", 1, 1)
     $ setChannelVolume("music", 1, 0.3, 0)
     $ playAudio(paz_theme, "music", 1, True, 4, 0)
 

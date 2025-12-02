@@ -2960,7 +2960,7 @@ label ep05_elibdown:
     $ playAudio(sfx_dooropen, "sfx", 6, False, 0, 0)
     scene eigengrau with slowfade
     pause 1
-    $ setChannelVolume("sfx", 2, 7, 0)
+    $ setChannelVolume("sfx", 2, 0.7, 0)
     $ playAudio(sfx_doorclose, "sfx", 7, False, 0, 0)
 
     show ep05_elibreak24 with slowfade

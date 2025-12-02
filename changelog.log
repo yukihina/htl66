@@ -8,21 +8,22 @@ v0.28 Episode 6 - 1st part
   • 14 new animations
   • 2 new achievements for Episode 6
   • Some new SFX and BGM tracks
-  • Walkthrough updated for Episode 6 decisions
+  • Walkthrough updated for all episodes
   • Migration of save data for new system
 
 ~ CHANGED:
   • Episode title backgrounds now fully animated
   • All achievements remade and re-rendered in 8K UHD (7680x4320)
-  • Achievement images optimized for high-resolution displays
   • Character relationship tracking system enhanced
   • All walkthrough points updated to reflect new point system
+  • Walkthrough now shows all possible paths and Achievements tips
   • Audio management system updated
   • Choice menus now display Tone/Intent tags (e.g., [Lie], [Love]) for better clarity
 
 ! FIXED:
   • 01 render corrected from version 0.27
   • Achievement screen zoom and drag functionality fixed for 8K UHD images
+  • Sound bugs on episode 5 fixed
 
 * TECHNICAL:
   • Updated to Renpy 8.5

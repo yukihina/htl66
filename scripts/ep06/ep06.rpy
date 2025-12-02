@@ -1139,7 +1139,7 @@ label ep06_mornwithamber_postclimax:
 
 
 label ep06_mornwithamber_ending:
-    scene eigengreau 
+    scene eigengrau
     show ep06_ambermorn24 at ken_burns_right_to_left with fade
     if e6_amber_path == "corruption":
         amb "You going to the station like that?"
@@ -3449,10 +3449,10 @@ label ep06_madison_station_proposal:
             else:
                 # MC threatened her in ep05, MC lied 0 times, neutral path
                 mad "You were honest. I appreciate that."
-            mad "Even if the answer was no."
-            mad "You said no that night too. At least you're consistent."
-            mad "My studio. Ten minutes."
-            mad "The door will be unlocked."
+                mad "Even if the answer was no."
+                mad "You said no that night too. At least you're consistent."
+                mad "My studio. Ten minutes."
+                mad "The door will be unlocked."
 
 
     if htl_episodes == 6.1:
