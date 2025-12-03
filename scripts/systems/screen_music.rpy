@@ -911,7 +911,7 @@ screen music_player():
 
     ## Additional timer to ensure main menu music stops when first entering
     if not music_player_state.is_playing:
-        timer 0.1 action Function(renpy.music.stop, channel="music", fadeout=0)
+        timer 0.1 action Function(renpy.music.stop, "music", 0)
 
     ## Override the default return button action if present
     if main_menu:
