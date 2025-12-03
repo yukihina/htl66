@@ -575,7 +575,7 @@ init python:
                 ("戻らぬ時 (Modoranu Toki)", mc_theme),
                 ("帰らぬ昨日 (Kaeranu Kinō)", mc_broken_theme),
                 ("終わらない連鎖 (Owaranai Rensa)", mc_suspense_theme),
-                ("影の儀式 (Kage no Gishiki)", yakuza_theme),
+                ("影の儀式 (Kage no Gishiki)", kobeyamaguchi_theme),
                 ("鬼灯の影 (Hōzuki no Kage)", tobita_theme),
                 ("狂乱の刻 (Kyōran no Koku)", mc_action_theme),
                 ("夢と分析 (Yume to Bunseki)", mc_thinking_theme)
