@@ -19,6 +19,7 @@ v0.28 Episode 6 - 1st part
   • Walkthrough now shows all possible paths and Achievements tips
   • Audio management system updated
   • Choice menus now display Tone/Intent tags (e.g., [Lie], [Love]) for better clarity
+  • Adapted all core scripts to Renpy 8.5
 
 ! FIXED:
   • 01 render corrected from version 0.27

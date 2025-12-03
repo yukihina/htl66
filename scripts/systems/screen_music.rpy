@@ -496,10 +496,12 @@ init python:
                 ("Fading Lullaby", amber_sad_theme),
                 ("Fuel the Fire", amber_anger_theme),
                 ("Frost & Ashes", amber_theme),
+                ("In ewiger Umarmung", amber2_love_theme),
                 ("Shadow Waltz", amber_sexy_theme2),
                 ("Sin & Silence", amber_sexy_theme),
                 ("The Last Embrace", mc_amber_x_theme),
-                #("Veil of Joy", amber_happy_theme)
+                ("Unvergessliche Jahre", amber2_theme),
+                ("Veil of Joy", amber_happy_theme)
             ],
             "nanami": [
                 ("儚い願い (Hakanai Negai)", nanami_innocence_theme),
@@ -544,6 +546,7 @@ init python:
                 ("A Little Bit of Hope", antonella_past_theme),
                 ("Any Questions", antonella_game_theme),
                 ("Kitsune's Theme - Red", redkitsune_theme),
+                ("Queen of Carrion", antonella_horror_theme),
                 ("Race of Hearts", antonella_past_happy_theme),
                 ("Sakura in Spring", antonella_theme),
                 ("Sakura Memories", antonella_love),
@@ -552,6 +555,7 @@ init python:
                 ("桜散る夜 (Sakura Chiru Yoru)", antonella_singing_act1)
             ],
             "madison": [
+                ("Dior's Poison Kiss", madison_suspense_theme),
                 ("Glassfang", madison_bad_theme),
                 ("Queen of the Hollow", madison_dom_theme),
                 ("Residue of Me", madison_sad_theme),
@@ -561,7 +565,7 @@ init python:
             ],
             "paz": [
                 ("Ember Glow", paz_theme),
-                #("Golden Tide", paz_happy_theme)
+                ("Golden Tide", paz_happy_theme)
             ],
             "common": [
                 ("Diamond Pulse", photos_theme),
@@ -569,13 +573,14 @@ init python:
                 ("Fractured Identity", chaos_theme),
                 ("No Signal", dotonbori_theme),
                 ("The Serpent's Elegy", mic_theme),
+                ("The Silent Kumicho", kudokai_theme),
                 ("Valse pour l'Enfer", hell_theme),
                 ("闇の刻 (Yami no Koku)", title_theme),
-                #("怒れる地響き (Ikareru Jihibiki)", mc_action_theme2),
+                ("怒れる地響き (Ikareru Jihibiki)", mc_action_theme2),
                 ("戻らぬ時 (Modoranu Toki)", mc_theme),
                 ("帰らぬ昨日 (Kaeranu Kinō)", mc_broken_theme),
                 ("終わらない連鎖 (Owaranai Rensa)", mc_suspense_theme),
-                ("影の儀式 (Kage no Gishiki)", yakuza_theme),
+                ("影の儀式 (Kage no Gishiki)", kobeyamaguchi_theme),
                 ("鬼灯の影 (Hōzuki no Kage)", tobita_theme),
                 ("狂乱の刻 (Kyōran no Koku)", mc_action_theme),
                 ("夢と分析 (Yume to Bunseki)", mc_thinking_theme)

@@ -1893,8 +1893,7 @@ label ep02_lovemaking:
 
     show ep02_arlesex07 with hpunch
     arl "I'm sorry, it's just... I need you to fuck me in the ass."
-    mc_s "[renpy.substitute(dialogues['E01S24_d046'])]"
-    mc_s "[renpy.substitute(dialogues['E01S24_d052'])]"
+    mc_s "Are you sure that's what you need right now?"
     arl "I know it's sudden, but it's something I really need."
     arl "Right now, I mean..."
     arl "I don't know, I just... I feel like... if you fuck me in the ass, I can escape for a minute, you know?"
