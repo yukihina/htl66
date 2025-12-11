@@ -2418,7 +2418,7 @@ label ep04_mcnananight:
 
     show ep04_mcroom03
     mc_t "Fuck it... I need a drink to clear my head. I know it's not the best idea, but..."
-    if rm.get('nanami', 'trust') > 40:
+    if rm.get('nanami', 'trust') > 27:
         $ ep04_nanaskimpy = True
     else:
         $ ep04_nanaskimpy = False

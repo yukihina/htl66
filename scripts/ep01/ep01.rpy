@@ -1050,7 +1050,7 @@ label ep01_pregame2:
     anto "Ughh! Fine! My birthday is October 11th, a Saturday, at 3 pm. Come dressed appropriately and no presents. Got it?"
     mc_s "As friends, right? Or more than that? Haha."
     ##ADD POINTS... LOW POINT NO THE GAME, 5 POINTS GO TO  THE GAME
-    if rm.get("antonella", "trust") < 4:
+    if rm.get("antonella", "trust") < 2:
         anto "Not funny! Now let's get out of here before my [mo_r_low] comes back and asks who you are."
         jump q3_date
 
@@ -2017,7 +2017,7 @@ label q3_date:
 ##RM.POINTS.TRACK (antonella, trust, -1)
 # --
 #THE DATE
-    if not rm.get("antonella", "trust") < 4:
+    if not rm.get("antonella", "trust") < 2:
         show ep01_game128 with vpunch
         anto "Hurry up! She's coming! Quick! Follow me!"
         mc_s "Uh?! What?"
@@ -2066,7 +2066,7 @@ label q3_date:
     mc_t "Look at her... smiling like a kid at Christmas."
     mc_t "Huh? What is happening?"
     mc_t "Why is everything..."
-    if not rm.get("antonella", "trust") < 4:
+    if not rm.get("antonella", "trust") < 2:
         $ setChannelVolume(channel="sfx", subchannel=1, volume=0, fade_duration=2.5)
         $ setChannelVolume(channel="music", subchannel=2, volume=0.5, fade_duration=2.5)
 
