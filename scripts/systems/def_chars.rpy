@@ -83,8 +83,9 @@ init -1002 python:
 
     # Initialize patch_activated only if not already set by patch.rpy
     # This allows patch.rpy (init -1003) to set it True before we get here
-    global patch_activated
-    if 'patch_activated' not in dir():
+    # Note: Must use globals() not dir() since patch_activated is a global variable
+    if 'patch_activated' not in globals():
+        global patch_activated
         patch_activated = False
 
 
