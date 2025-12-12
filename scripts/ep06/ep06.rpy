@@ -2695,7 +2695,7 @@ label ep06_madison_traingame:
                 show ep06_madisoncamera50
                 mad "Liar."
                 mc_s "How—"
-                mad "Because if you thought there was even a 1% chance she knew..."
+                mad "Because if you thought there was even a 1%% chance she knew..."
                 mad "You wouldn't be standing here talking. You'd be panicked."
                 mc_t "She's right. Again."
 

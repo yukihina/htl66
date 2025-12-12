@@ -234,8 +234,8 @@ init:
     )
 
     image ep04_nanmad23 = ConditionSwitch(
-        "True", "ep04_09_23_b",
-        "ep04_nanpath == 1", "ep04_09_23_a"
+        "ep04_nanpath == 1", "ep04_09_23_a",
+        "True", "ep04_09_23_b"
     )
 
 

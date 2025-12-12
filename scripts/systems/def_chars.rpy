@@ -76,11 +76,16 @@
 # Always test thoroughly after making modifications!
 
 init -1002 python:
+    # Initialize patch_applied only if it doesn't exist yet
+    # (patch.rpy sets this to True at init -1003 if present)
     if not hasattr(renpy.persistent, "patch_applied"):
         renpy.persistent.patch_applied = False
 
+    # Initialize patch_activated only if not already set by patch.rpy
+    # This allows patch.rpy (init -1003) to set it True before we get here
     global patch_activated
-    patch_activated = False
+    if 'patch_activated' not in dir():
+        patch_activated = False
 
 
 init -1001 python:
