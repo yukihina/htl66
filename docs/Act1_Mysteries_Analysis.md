@@ -373,6 +373,7 @@ Add a brief scene where MC asks Paz to check his apartment for signs of intrusio
 
 ## ⚠️ INCONSISTENCY 4: Madison's Dual Personality
 **Episodes:** 03, 04, 05
+**Status:** 🔶 PARTIALLY RESOLVED (EP06)
 
 ### The Problem:
 Madison has two completely contradictory behavioral patterns:
@@ -393,20 +394,46 @@ Madison has two completely contradictory behavioral patterns:
 ### Why This Is Problematic:
 The shift is so extreme it breaks character consistency. A character who screams "men are the world's greatest disease" wouldn't quietly accept "the adults are talking, dear."
 
-### Possible Solutions:
-1. **Michael has power over her** — Blackmail, abuse, or medication keeping her compliant
-2. **She's playing a role** — Her submission is an act to manipulate Michael
-3. **Trauma response** — Specific trauma with Michael triggers shutdown
-4. **Michael is medicating her** — Same memory/compliance drugs he uses on Elizabeth
-5. **It's deliberate foreshadowing** — The inconsistency IS the mystery
+### Resolution in EP06 (Train Scene):
+The train conversation between Madison and MC reveals critical backstory:
 
-### Recommended Fix:
-Add a scene where Madison's submission is explained — either through internal monologue or a private moment that reveals her true feelings about Michael.
+| Revelation | Quote/Context |
+|------------|---------------|
+| **Michael was her "teacher"** | "Because Michael taught me how the world works. And you broke the rules." |
+| **No physical abuse, psychological conditioning** | "Physically? Nothing. He turned on the lights. He showed me the machinery behind the marriage." |
+| **Elizabeth as cautionary example** | Michael showed Madison how Elizabeth became "used furniture" once her beauty faded. He told her: "Look at her, Madison. She used to be a luxury import. Now she's just used furniture." |
+| **Madison's worldview shaped by Michael** | "He taught me basic economics... [Mother] was a depreciating asset. Once her beauty faded, her value dropped to zero." |
+| **Self-protection mechanism** | "I decided I'd never be a tenant, not for you, not for anyone." / "I vowed to never kneel." |
+
+### Why This Explains the Duality:
+Madison's submission to Michael isn't fear or weakness—it's **deference to her "mentor."** Michael is the one who "opened her eyes" to her worldview. She doesn't see him as a threat because:
+1. He already showed her "the truth" about men and women
+2. He represents the source of her philosophy
+3. In her mind, he's not prey—he's the one who taught her to hunt
+
+She's aggressive with other men because she sees them as threats to dominate. But Michael exists in a different category: the teacher who shaped her into what she is.
+
+### Remaining Questions:
+- ❓ Why does Madison still despise Elizabeth if she learned from Michael's treatment of her?
+- ❓ Is Madison's submission genuine respect, or is there blackmail/fear underneath?
+- ❓ Did Michael intentionally create Madison's psychology as another form of control?
+
+### Original Possible Solutions (For Reference):
+1. ~~**Michael has power over her** — Blackmail, abuse, or medication keeping her compliant~~
+2. **She's playing a role** — Her submission is an act to manipulate Michael (still possible)
+3. **Trauma response** — ~~Specific trauma with Michael triggers shutdown~~ (partially confirmed: not trauma, but conditioning)
+4. ~~**Michael is medicating her** — Same memory/compliance drugs he uses on Elizabeth~~
+5. **It's deliberate foreshadowing** — The inconsistency IS the mystery (CONFIRMED)
+
+### Status:
+~~Recommended Fix: Add a scene where Madison's submission is explained.~~
+**ADDRESSED in EP06:** The train game scene provides substantial explanation through Madison's own revelations about Michael's influence on her development.
 
 ---
 
 ## ⚠️ INCONSISTENCY 5: Paz's Injury Recovery
 **Episodes:** 04, 05
+**Status:** 🔶 PARTIALLY RESOLVED (EP06 Time Skip)
 
 ### The Problem:
 In EP04, Paz is attacked by the masked woman (Antonella) and knocked unconscious with a sword strike. She wakes up with a "massive headache."
@@ -416,14 +443,25 @@ In EP05, she's having video calls and planning to steal evidence, showing no sig
 ### Why This Is Problematic:
 A blow to the head severe enough to cause unconsciousness for hours should require medical attention and recovery time.
 
+### Resolution Context (EP06):
+EP06 opens with: *"Three months since the hospital."*
+
+This establishes a significant time skip between Act 1 and Act 2. If we accept that EP05's events occurred shortly after EP04, then by EP06 sufficient time has passed for Paz to have fully recovered from her injuries.
+
+**However:** The inconsistency between EP04 → EP05 (within the same act) remains unexplained. Paz shows no ill effects in EP05 despite being attacked just days/hours before.
+
 ### Possible Solutions:
-1. **Time skip** — Clarify more days passed between EP04 and EP05
-2. **Add recovery mention** — Paz mentions being treated or recovering
+1. ~~**Time skip** — Clarify more days passed between EP04 and EP05~~ (Addressed by EP06, but EP04→EP05 gap still unclear)
+2. **Add recovery mention** — Paz mentions being treated or recovering (still recommended for EP05)
 3. **Reduce injury severity** — She was choked/drugged rather than struck
 4. **Accept as narrative convenience** — Not all stories need medical accuracy
 
 ### Recommended Fix:
-Add a line in EP05 where Paz mentions "still having headaches" or "the doctors cleared her" to acknowledge the injury.
+- For EP04→EP05: Add a brief line in EP05 where Paz mentions recovery
+- For EP06: The 3-month time skip naturally explains full recovery
+
+### Status:
+**PARTIALLY ADDRESSED:** The EP06 time skip explains why Paz is fully recovered by Act 2, but the EP04→EP05 transition within Act 1 still lacks acknowledgment of her injury.
 
 ---
 
@@ -575,18 +613,21 @@ MC: "This photo shouldn't be here. Someone's been in my apartment."
 [SMS to Paz asking her to check for break-ins]
 ```
 
-### 4. Explain Madison's Duality (MEDIUM PRIORITY)
-Add internal monologue or a private scene that explains her submission to Michael.
+### 4. ~~Explain Madison's Duality~~ ✅ ADDRESSED IN EP06
+~~Add internal monologue or a private scene that explains her submission to Michael.~~
 
-**Options:**
-- She's scared of him (what does he have on her?)
-- She's playing an angle (manipulation)
-- He's medicating her (same drugs as Elizabeth)
+**Resolution:** EP06's train scene ("The Truth Game") provides extensive dialogue where Madison reveals Michael's psychological conditioning. She explains he "taught her how the world works" by showing her Elizabeth's degradation, which shaped her worldview and explains her deference to him as her "mentor" rather than prey.
 
-### 5. Add Paz Recovery Reference (LOW PRIORITY)
+**Remaining opportunity:** Could still add a scene showing Madison's *private* feelings about Michael (does she resent him? fear him? genuinely respect him?) to deepen the complexity.
+
+### 5. Add Paz Recovery Reference (LOW PRIORITY) — PARTIALLY ADDRESSED
 Brief mention that she's recovered or still feeling effects.
 
-**Suggested Addition:**
+**EP06 Context:** The 3-month time skip established at the start of EP06 ("Three months since the hospital") provides natural justification for Paz's full recovery by Act 2.
+
+**Still Recommended for EP05:** A brief acknowledgment of her injury would strengthen continuity within Act 1.
+
+**Suggested Addition (for EP05):**
 ```
 PAZ: "Still getting headaches from that bitch with the sword."
 PAZ: "Doctors said no permanent damage, but my pride's still bruised."
@@ -606,6 +647,20 @@ The major reveal that Antonella is alive fundamentally changes the story's stake
 
 The identified inconsistencies are fixable with minor dialogue additions and clarifications. None break the narrative irreparably, but addressing them would strengthen the story's internal logic.
 
+### EP06 Resolution Update:
+Episode 06 resolves or partially resolves several previously identified issues:
+
+| Inconsistency | Status After EP06 |
+|---------------|-------------------|
+| #4 Madison's Dual Personality | 🔶 PARTIALLY RESOLVED — Train scene explains Michael's psychological conditioning |
+| #5 Paz's Injury Recovery | 🔶 PARTIALLY RESOLVED — 3-month time skip explains recovery by Act 2 |
+
+**Remaining HIGH PRIORITY items:**
+1. Antonella's Recognition (add familiarity hints in EP02)
+2. Timeline of Isabella's Birth (clarify age when Antonella "died")
+3. The Photograph's Journey (connect to investigation)
+
 ---
 
-*Document prepared for narrative review. Recommended to address HIGH PRIORITY fixes before Act Two release.*
+*Document prepared for narrative review. Updated with EP06 analysis.*
+*Last updated: EP06 partial content review.*
