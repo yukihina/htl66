@@ -1,6 +1,25 @@
 =====================================================================
                              CHANGELOG
 =====================================================================
+v0.29 Episode 6
+---------------------------------------------------------------------
++ ADDED:
+  • Interactive phone system available only from Act 2
+
+~ CHANGED:
+  • Paz morph remodeled and her Episode 2 achievement re-rendered.
+  • Updated post-processing for images from version 0.28 and achievements
+
+! FIXED:
+  • Fixed the issue where the p-file wasn't working for some users
+  • Episode 1 and Episode 3: Fixed two content unlocks that were mathematically impossible due to the trust multiplier system
+  • Episode 6: Fixed text formatting error with % in '1% chance'
+  • Episode 4: Fixed issue where a image showed the incorrect variant
+  • Music Player: Fixed issue causing errors when starting playback
+
+* TECHNICAL:
+  • Characters updated to G8.1F
+
 v0.28 Episode 6 - 1st part
 ---------------------------------------------------------------------
 + ADDED:
